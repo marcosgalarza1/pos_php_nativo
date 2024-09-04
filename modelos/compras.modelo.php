@@ -168,7 +168,6 @@ class ModeloCompras{
 
 			}else{
 
-
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha_alta BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
@@ -202,5 +201,31 @@ class ModeloCompras{
 
 
 
+/*=============================================
+	RANGO FECHAS
+	=============================================*/	
+
+	static public function mdlRangoFechasComprasPdf($tabla, $fechaInicial, $fechaFinal, $idProveedor){
+
+			if($fechaInicial <= $fechaFinal){
+
+				$query = "SELECT compras.codigo, compras.fecha_alta, usuarios.nombre as usuario, proveedor.nombre as proveedor, compras.total
+				FROM $tabla 
+				JOIN proveedor ON compras.id_proveedor = proveedor.id
+				JOIN usuarios ON compras.id_usuario = usuarios.id
+				WHERE fecha_alta BETWEEN '$fechaInicial' AND '$fechaFinal' ";
+
+				// Añadir la condición del proveedor si $idProveedor no es 0
+				$query .= ($idProveedor == 0) ? "" : " AND compras.id_proveedor = $idProveedor";
+
+				$stmt = Conexion::conectar()->prepare($query);
+		
+				$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+	}
 
 }

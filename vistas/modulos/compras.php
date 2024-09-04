@@ -141,7 +141,7 @@ if($_SESSION["perfil"] == "Especial"){
                       // Comprobar el rol del usuario
                       if ($_SESSION["perfil"] == "Administrador") {
                         
-                        echo '<button class="btn btn-danger btnEliminarVenta" idVenta="'.$value["id"].'"><i class="fa fa-times"></i></button>';
+                        echo '<button class="btn btn-danger btnEliminarCompra" idCompra="'.$value["id"].'"><i class="fa fa-times"></i></button>';
                       }
 
                     echo '</div>  

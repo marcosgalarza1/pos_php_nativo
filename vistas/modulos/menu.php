@@ -177,7 +177,7 @@
 
 					<li>
 
-						<a href="crear-venta">
+						<a href="crear-compra">
 							
 							<i class="fa fa-circle-o"></i>
 							<span>Crear compra</span>
@@ -190,7 +190,7 @@
 
 					echo '<li>
 
-						<a href="reportes">
+						<a href="reporte-compra">
 							
 							<i class="fa fa-circle-o"></i>
 							<span>Reporte de compras</span>

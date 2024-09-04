@@ -673,25 +673,25 @@ $('.tablaCompras').on( 'draw.dt', function(){
 
 
 /*=============================================
-BORRAR VENTA
+BORRAR COMPRA
 =============================================*/
-$(".tablas").on("click", ".btnEliminarVenta", function(){
+$(".tablas").on("click", ".btnEliminarCompra", function(){
 
-	var idVenta = $(this).attr("idVenta");
+	var idCompra = $(this).attr("idCompra");
   
 	swal({
-		  title: '¿Está seguro de borrar la venta?',
+		  title: '¿Está seguro de borrar la compra?',
 		  text: "¡Si no lo está puede cancelar la accíón!",
 		  type: 'warning',
 		  showCancelButton: true,
 		  confirmButtonColor: '#3085d6',
 		  cancelButtonColor: '#d33',
 		  cancelButtonText: 'Cancelar',
-		  confirmButtonText: 'Si, borrar venta!'
+		  confirmButtonText: 'Si, borrar compra!'
 		}).then(function(result){
 		  if (result.value) {
 			
-			  window.location = "index.php?ruta=ventas&idVenta="+idVenta;
+			  window.location = "index.php?ruta=compras&idCompra="+idCompra;
 		  }
   
 	})
