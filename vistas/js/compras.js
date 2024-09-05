@@ -142,7 +142,7 @@ $(".tablaCompras tbody").on("click", "button.agregarProducto", function(){
 
 	        // SUMAR TOTAL DE PRECIOS
 
-	        sumarTotalPrecios()
+	        sumarTotalPreciosAComprar()
 
 	        // AGREGAR IMPUESTO
 
@@ -233,7 +233,7 @@ $(".formularioCompra").on("click", "button.quitarProducto", function(){
 
 		// SUMAR TOTAL DE PRECIOS
 
-    	sumarTotalPrecios()
+    	sumarTotalPreciosAComprar()
 
     	// AGREGAR IMPUESTO
 	        
@@ -338,7 +338,7 @@ $(".btnAgregarProducto").click(function(){
 
 	         // SUMAR TOTAL DE PRECIOS
 
-    		sumarTotalPrecios()
+    		sumarTotalPreciosAComprar()
 
     		// AGREGAR IMPUESTO
 	        
@@ -428,7 +428,7 @@ $(".formularioCompra").on("change", "input.nuevaCantidadProducto", function(){
 
 		precio.val(precioFinal);
 
-		sumarTotalPrecios();
+		sumarTotalPreciosAComprar();
 
 		swal({
 	      title: "La cantidad supera el Stock",
@@ -443,7 +443,7 @@ $(".formularioCompra").on("change", "input.nuevaCantidadProducto", function(){
 
 	// SUMAR TOTAL DE PRECIOS----------------
 
-	sumarTotalPrecios()
+	sumarTotalPreciosAComprar()
 
 	// AGREGAR IMPUESTO----------------
 	        
@@ -460,7 +460,7 @@ $(".formularioCompra").on("change", "input.nuevaCantidadProducto", function(){
 ---------SUMAR TODOS LOS PRECIOS-----------------
 =============================================*/
 
-function sumarTotalPrecios(){
+function sumarTotalPreciosAComprar(){
 
 	var precioItem = $(".nuevoPrecioProducto");
 	var arraySumaPrecio = [];  

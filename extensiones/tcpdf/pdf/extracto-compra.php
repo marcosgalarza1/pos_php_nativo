@@ -119,9 +119,12 @@ $fechaFormateada = $fechaHoraObj->format('d/m/Y h:i A'); // Formato 'dd/mm/yyyy 
         // Total de la compra
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(166, 5, 'Total ', 0, 0, 'R');
-        $pdf->Cell(30, 5, number_format($total, 2, '.', ',') . ' Bs.', 1, 0, 'R');
+        $pdf->Cell(30, 5, number_format($total, 2, '.', ',') . ' Bs.', 1, 1, 'R');
 
-   
+        // Nro de compras
+        $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->Cell(30, 5, 'Número de compras:  '.$contador-1, 0, 0, 'L');
+  
 
         // Salida del archivo PDF
         $pdf->Output('factura.pdf', 'I');
