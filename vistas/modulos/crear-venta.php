@@ -201,23 +201,11 @@ if($_SESSION["perfil"] == "Especial"){
                       <tbody>
                       
                         <tr>
-                          
-             
-                            
-                 
-                           
-                             
-  <input type="hidden" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" value="0">
+                                <input type="hidden" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" value="0">
 
                                <input type="hidden" name="nuevoPrecioImpuesto" id="nuevoPrecioImpuesto" required>
 
                                <input type="hidden" name="nuevoPrecioNeto" id="nuevoPrecioNeto" required>
-
-                         
-                        
-                         
-
-                          
 
                            <td>
                             
