@@ -225,6 +225,15 @@ class ControladorCompras{
 	
 		return $respuesta;
 	}
+	static public function ctrComprasRealizadas(){
+
+		$tabla = "compras";
+	
+		$respuesta = ModeloCompras::mdlComprasRealizadas($tabla);
+	
+		return $respuesta;
+	}
+
 
 	/*=============================================
 	SUMA TOTAL VENTAS

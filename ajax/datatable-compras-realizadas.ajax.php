@@ -11,11 +11,9 @@ class TablaProductosVentas{
 
 	public function mostrarTablaProductosVentas(){
 
-		$item = null;
-    	$valor = null;
-		$orden = "id";
+	
 
-  		$compras = ControladorCompras::ctrMostrarCompras($item, $valor, $orden);	
+  		$compras = ControladorCompras::ctrComprasRealizadas();	
 		
   		if(count($compras) == 0){
   			// En caso de que no haya compras, retornamos un JSON vacío
@@ -28,8 +26,18 @@ class TablaProductosVentas{
 
   		for($i = 0; $i < count($compras); $i++){
 
-		  	// Traemos las acciones (botones)
-		  	$botones =  "<div class='btn-group'><button class='btn btn-primary agregarProducto recuperarBoton' idProducto='".$compras[$i]["id"]."'>Agregar</button></div>"; 
+	
+			  $botones ="<div class='btn-group'>";
+			  /*=============================================
+			  TRAEMOS LAS ACCIONES
+			  =============================================*/
+			  $botones.= "<button class='btn btn-info btnImprimirCompra' codigoCompra='".$compras[$i]["codigo"]."'><i class='fa fa-print'></i></button>"; 
+
+			//   if(isset($_GET["perfilOculto"])  && $_GET["perfilOculto"] == "Administrador"){
+				  $botones.=  "<button class='btn btn-danger btnEliminarCompra' idCompra='".$compras[$i]["id"]."'><i class='fa fa-times'></i></button>"; 
+			//   }
+			
+			 $botones.="</div>";
 
 		  	// Formateamos cada registro de compra como un array
 		  	$datos[] = [
@@ -37,8 +45,8 @@ class TablaProductosVentas{
 			      $compras[$i]["codigo"],
 			      $compras[$i]["fecha_alta"],
 			      number_format($compras[$i]["total"], 2),
-			      $compras[$i]["id_usuario"],
-			      $compras[$i]["id_proveedor"],
+			      $compras[$i]["usuario"],
+			      $compras[$i]["proveedor"],
 			      $botones
 		  	];
   		}

@@ -277,6 +277,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/tabladinamica/categoriatabla.js"></script>
 <script src="vistas/js/tabladinamica/clientetabla.js"></script>
 <script src="vistas/js/tabladinamica/proveedortabla.js"></script>
+<script src="vistas/js/tabladinamica/comprastabla.js"></script>
 
 </body>
 </html>

@@ -228,4 +228,22 @@ class ModeloCompras{
 
 	}
 
+	static public function mdlComprasRealizadas($tabla){
+
+		$query = "SELECT compras.id ,compras.codigo, compras.fecha_alta, usuarios.nombre as usuario, proveedor.nombre as proveedor, compras.total
+		FROM $tabla 
+		JOIN proveedor ON compras.id_proveedor = proveedor.id
+		JOIN usuarios ON compras.id_usuario = usuarios.id
+		ORDER BY fecha_alta  DESC 
+		";
+
+		$stmt = Conexion::conectar()->prepare($query);
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+	}
+
+
 }
