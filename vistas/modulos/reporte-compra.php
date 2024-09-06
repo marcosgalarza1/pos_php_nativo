@@ -90,7 +90,7 @@ function generatePDF() {
     const fechaInicioObj = new Date(fechaInicio);
     const fechaFinObj = new Date(fechaFin);
 
-    if (fechaInicioObj >= fechaFinObj) {
+    if (fechaInicioObj > fechaFinObj) {
       swal({
             icon: 'warning',
             title: 'Advertencia',

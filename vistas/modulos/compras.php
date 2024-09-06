@@ -77,7 +77,6 @@ if($_SESSION["perfil"] == "Especial"){
 
         </thead>
         <tbody></tbody>
- 
 
        </table>
 

@@ -595,5 +595,30 @@ class ControladorVentas{
 		return $respuesta;
 
 	}
+		/*=============================================
+	SUMA TOTAL VENTAS
+	=============================================*/
 
+	static public function ctrVentasTotalMes(){
+
+		$tabla = "ventas";
+
+		$respuesta = ModeloVentas::mdlVentasTotalMes($tabla);
+
+		return $respuesta;
+
+	}
+			/*=============================================
+	SUMA TOTAL DEL DIA
+	=============================================*/
+
+	static public function ctrVentasTotalDia(){
+
+		$tabla = "ventas";
+
+		$respuesta = ModeloVentas::mdlVentasTotalMes($tabla);
+
+		return $respuesta;
+
+	}
 }

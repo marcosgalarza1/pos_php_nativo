@@ -200,8 +200,42 @@ class ModeloVentas{
 		$stmt = null;
 
 	}
+/*=============================================
+	SUMAR EL TOTAL DE VENTAS - MES
+	=============================================*/
 
+	static public function mdlVentasTotalMes($tabla){	
+		$yearactual= date('Y');
+		$mesActual= date('m');
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE MONTH(fecha)='$mesActual' AND YEAR(fecha) = '$yearactual'");
 
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+/*=============================================
+	SUMAR EL TOTAL DE VENTAS - DIA
+	=============================================*/
+
+	static public function mdlVentasTotalDia($tabla){	
+		$hoy= date('Y-m-d');
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE DATE(fecha)='$hoy'");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
 
 
 }

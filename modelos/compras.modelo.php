@@ -213,7 +213,7 @@ class ModeloCompras{
 				FROM $tabla 
 				JOIN proveedor ON compras.id_proveedor = proveedor.id
 				JOIN usuarios ON compras.id_usuario = usuarios.id
-				WHERE fecha_alta BETWEEN '$fechaInicial' AND '$fechaFinal' ";
+				WHERE DATE(fecha_alta) BETWEEN DATE('$fechaInicial') AND DATE('$fechaFinal') ";
 
 				// Añadir la condición del proveedor si $idProveedor no es 0
 				$query .= ($idProveedor == 0) ? "" : " AND compras.id_proveedor = $idProveedor";

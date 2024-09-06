@@ -131,22 +131,18 @@ if($_SESSION["perfil"] == "Especial"){
                     
                     <select class="form-control text-uppercase " id="seleccionarProveedor" name="seleccionarProveedor" required>
 
-                    <option value="">Seleccionar Proveedor</option>
+                    <option value="0" disabled>Seleccionar Proveedor</option>
 
-                    <?php
+                      <?php
 
-                      $item = null;
-                      $valor = null;
+                        $item = null;
+                        $valor = null;
+                        $proveedores = ControladorProveedors::ctrMostrarProveedors($item, $valor);
+                        foreach ($proveedores as $key => $value) {
+                          echo "<option value='" . $value['id'] . "' " . ($value['id'] == 1 ? 'selected' : '') . ">" . $value['nombre'] . "</option>";
+                        }
 
-                      $proveedores = ControladorProveedors::ctrMostrarProveedors($item, $valor);
-
-                       foreach ($proveedores as $key => $value) {
-
-                         echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-
-                       }
-
-                    ?>
+                      ?>
 
                     </select>
                     
