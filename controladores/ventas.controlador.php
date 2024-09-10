@@ -616,7 +616,7 @@ class ControladorVentas{
 
 		$tabla = "ventas";
 
-		$respuesta = ModeloVentas::mdlVentasTotalMes($tabla);
+		$respuesta = ModeloVentas::mdlVentasTotalDia($tabla);
 
 		return $respuesta;
 
