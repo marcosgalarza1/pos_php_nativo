@@ -227,12 +227,20 @@ MODAL AGREGAR PRODUCTO
                     
                     </span> 
 
-                    <input type="number" class="form-control input-lg" id="nuevoPrecioVenta" name="nuevoPrecioVenta" min="0" step="any" placeholder="Precio" required>
+                    <input type="number" class="form-control input-lg" id="nuevoPrecioVenta" name="nuevoPrecioVenta" min="0" step="any" placeholder="Precio Venta" required>
 
                   </div>
                   </div>
                  
-
+           <!-- ENTRADA PARA PRECIO COMPRA -->
+            <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAACO0lEQVR4nMWWO2gVQRSGv2seBjUoaiEoIhqbKKKCVQRFCxG0EAsJqCmSKpWiaGUCphFUMIgQEKzSJY3aWKmFKBIEg6IWIRhQUEJ8EOIjuTFy4F84LLvXnd174w9TzJnZ882ZOXtmoDpaxX/QSmAKuA/sWUxwL7Dg2hPgYK2hK4DJGNgv4ChQqgX4oiDvge/ADaADeOMWMAIcA5ZUC7oM+AyUga3O3iDIceCFW8Br4CRQVxR8Vg4HnW0T8AV46o7Cb//bopE3AR+BeaDV2XcBfzQWne0zBz5FQXXL0VDC2HZgnevv1dwxoL4ItEHJZJHtzjD/nsCdFFSXHN1VfzMwDEwAo8AVYL3GdmqBE0BjEag5Ghc4qlKjCf/wA40Nqd+dB2arvwC8SnBsUfQA7cCAks3GDynp5pVoTSHApcBt58y3NjfvgIqGnf054Lnsg5p7JjTSgZRS+NDN6dQZmv0ysBw4ooJSVoGxQpNZbc5hvFmEqAyWnb3ffX9HNiupmVUPvEyBRhVpP/DT2X8DWzS2UX27KptDwOdToFHS7AC+xuzXE47oUgh0AzCdArWtvwV8itmtNq923/8CvoW+SoYrRJvWLJMj9cvWFwI9nAM6p7J5E5gBZrVja7NCG1XEF3K0+H9+NSTaEvAoEDilRPzgbD9iN1MmtWqrsoL73G6dBt7F/uUgXcsItcxeE/u2Ti+OXGpWUa8Ete3cRw3UXgE6kvHyz6VSQqI9Bk5U44XIP7RND3K7h1tqDVtU/QUVFQvpsArJlQAAAABJRU5ErkJggg==">
+                  </span>
+                  <input type="number" class="form-control input-lg" id="nuevoPrecioCompra" name="nuevoPrecioCompra" min="0" step="any" placeholder="Precio Compra" required>
+                </div>
+            </div>
            
 
 
@@ -409,15 +417,23 @@ MODAL EDITAR
                     
                     </span> 
 
-                    <input type="number" class="form-control input-lg" id="editarPrecioVenta" name="editarPrecioVenta" min="0" step="any" placeholder="Precio" required>
+                    <input type="number" class="form-control input-lg" id="editarPrecioVenta" name="editarPrecioVenta" min="0" step="any" placeholder="Precio Venta" required>
 
                   </div>
                 
                   </div>
                   
 
+                <!-- ENTRADA PARA PRECIO COMPRA -->
 
-                  
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAACO0lEQVR4nMWWO2gVQRSGv2seBjUoaiEoIhqbKKKCVQRFCxG0EAsJqCmSKpWiaGUCphFUMIgQEKzSJY3aWKmFKBIEg6IWIRhQUEJ8EOIjuTFy4F84LLvXnd174w9TzJnZ882ZOXtmoDpaxX/QSmAKuA/sWUxwL7Dg2hPgYK2hK4DJGNgv4ChQqgX4oiDvge/ADaADeOMWMAIcA5ZUC7oM+AyUga3O3iDIceCFW8Br4CRQVxR8Vg4HnW0T8AV46o7Cb//bopE3AR+BeaDV2XcBfzQWne0zBz5FQXXL0VDC2HZgnevv1dwxoL4ItEHJZJHtzjD/nsCdFFSXHN1VfzMwDEwAo8AVYL3GdmqBE0BjEag5Ghc4qlKjCf/wA40Nqd+dB2arvwC8SnBsUfQA7cCAks3GDynp5pVoTSHApcBt58y3NjfvgIqGnf054Lnsg5p7JjTSgZRS+NDN6dQZmv0ysBw4ooJSVoGxQpNZbc5hvFmEqAyWnb3ffX9HNiupmVUPvEyBRhVpP/DT2X8DWzS2UX27KptDwOdToFHS7AC+xuzXE47oUgh0AzCdArWtvwV8itmtNq923/8CvoW+SoYrRJvWLJMj9cvWFwI9nAM6p7J5E5gBZrVja7NCG1XEF3K0+H9+NSTaEvAoEDilRPzgbD9iN1MmtWqrsoL73G6dBt7F/uUgXcsItcxeE/u2Ti+OXGpWUa8Ete3cRw3UXgE6kvHyz6VSQqI9Bk5U44XIP7RND3K7h1tqDVtU/QUVFQvpsArJlQAAAABJRU5ErkJggg==">
+                    </span> 
+                    <input type="number" class="form-control input-lg" id="editarPrecioCompra" name="editarPrecioCompra" min="0" step="any" placeholder="Precio Compra" required>
+                  </div>
+                </div>
                  
 
             <!-- ENTRADA PARA SUBIR FOTO -->

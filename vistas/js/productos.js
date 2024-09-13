@@ -186,14 +186,10 @@ $(".tablaProductos tbody").on("click", "button.btnEditarProducto", function(){
           })
 
            $("#editarCodigo").val(respuesta["codigo"]);
-
            $("#editarDescripcion").val(respuesta["descripcion"]);
-
            $("#editarStock").val(respuesta["stock"]);
-
-
            $("#editarPrecioVenta").val(respuesta["precio_venta"]);
-
+		   $("#editarPrecioCompra").val(respuesta["precio_compra"]);
            if(respuesta["imagen"] != ""){
 
 			$("#imagenActual").val(respuesta["imagen"]);

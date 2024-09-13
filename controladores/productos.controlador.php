@@ -27,7 +27,9 @@ class ControladorProductos{
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaDescripcion"]) &&
 			   preg_match('/^[0-9]+$/', $_POST["nuevoStock"]) &&	
-			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioVenta"])){
+			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioVenta"]) &&	
+			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioCompra"])
+			   ){
 
 		   		/*=============================================
 				VALIDAR IMAGEN
@@ -49,7 +51,9 @@ class ControladorProductos{
 
 					$directorio = "vistas/img/productos/".$_POST["nuevoCodigo"];
 
-					mkdir($directorio, 0755);
+					if (!file_exists($directorio)) {
+						mkdir($directorio, 0755);
+					}
 
 					/*=============================================
 					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
@@ -104,7 +108,9 @@ class ControladorProductos{
 							   "descripcion" => $_POST["nuevaDescripcion"],
 							   "stock" => $_POST["nuevoStock"],
 							   "precio_venta" => $_POST["nuevoPrecioVenta"],
+							   "precio_compra" => $_POST["nuevoPrecioCompra"],
 							   "imagen" => $ruta);
+			
 
 	     $respuesta = ModeloProductos::mdlIngresarProducto($tabla, $datos);
 		 if($respuesta == "ok"){
@@ -165,7 +171,9 @@ class ControladorProductos{
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarDescripcion"]) &&
 			   preg_match('/^[0-9]+$/', $_POST["editarStock"]) &&	
-			   preg_match('/^[0-9.]+$/', $_POST["editarPrecioVenta"])){
+			   preg_match('/^[0-9.]+$/', $_POST["editarPrecioVenta"]) &&
+			   preg_match('/^[0-9.]+$/', $_POST["editarPrecioCompra"])
+			   ){
 
 		   		/*=============================================
 				VALIDAR IMAGEN
@@ -253,6 +261,7 @@ class ControladorProductos{
 							   "descripcion" => $_POST["editarDescripcion"],
 							   "stock" => $_POST["editarStock"],
 							   "precio_venta" => $_POST["editarPrecioVenta"],
+							   "precio_compra" => $_POST["editarPrecioCompra"],
 							   "imagen" => $ruta);
 
 				$respuesta = ModeloProductos::mdlEditarProducto($tabla, $datos);
@@ -345,7 +354,6 @@ class ControladorProductos{
 
 
 	}
-
 
 
 	/*=============================================

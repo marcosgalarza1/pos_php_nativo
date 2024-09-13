@@ -77,7 +77,7 @@ $(".tablaCompras tbody").on("click", "button.agregarProducto", function(){
 
       	    var descripcion = respuesta["descripcion"];
           	var stock = respuesta["stock"];
-          	var precio = respuesta["precio_venta"];
+          	var precio = respuesta["precio_compra"];
 
           	/*=============================================
           	EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
@@ -391,7 +391,6 @@ $(".formularioCompra").on("change", "select.nuevaDescripcionProducto", function(
       	    $(nuevoPrecioProducto).attr("precioReal", respuesta["precio_venta"]);
 
   	      // AGRUPAR PRODUCTOS EN FORMATO JSON
-
 	        listarProductos()
 
       	}
