@@ -224,6 +224,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "reportes" ||
          $_GET["ruta"] == "reporte-compra" ||
          $_GET["ruta"] == "reporte-venta" ||
+         $_GET["ruta"] == "reporte-top-meseros-ventas" ||
          $_GET["ruta"] == "ganancias-ventas" ||
          $_GET["ruta"] == "proveedor" ||
          $_GET["ruta"] == "salir"){

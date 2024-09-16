@@ -632,4 +632,15 @@ class ControladorVentas{
 	
 		return $respuesta;
 	}
+	/*=============================================
+	rango de ventas top meseros:
+	=============================================*/
+	static public function ctrRangoFechasVentasTopMeserosPdf($fechaInicial, $fechaFinal){
+
+		$tabla = "ventas";
+	
+		$respuesta = ModeloVentas::mdlRangoFechasVentasTopMeseroPdf($tabla, $fechaInicial,$fechaFinal);
+	
+		return $respuesta;
+	}
 }

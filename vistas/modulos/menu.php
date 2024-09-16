@@ -239,6 +239,12 @@
 						</a>
 					</li>
 					<li>
+						<a href="reporte-top-meseros-ventas">
+							<i class="fa fa-circle-o"></i>
+							<span>Rpt. Top Vtas x Mesero</span>
+						</a>
+					</li>
+					<li>
 
 						<a href="compras">
 							
