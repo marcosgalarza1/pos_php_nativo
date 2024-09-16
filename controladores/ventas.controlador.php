@@ -608,7 +608,7 @@ class ControladorVentas{
 		return $respuesta;
 
 	}
-			/*=============================================
+	/*=============================================
 	SUMA TOTAL DEL DIA
 	=============================================*/
 
@@ -620,5 +620,16 @@ class ControladorVentas{
 
 		return $respuesta;
 
+	}
+	/*=============================================
+	rango de ventas:
+	=============================================*/
+	static public function ctrRangoFechasVentasPdf($fechaInicial, $fechaFinal,$id_proveedor){
+
+		$tabla = "ventas";
+	
+		$respuesta = ModeloVentas::mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal,$id_proveedor);
+	
+		return $respuesta;
 	}
 }

@@ -237,5 +237,30 @@ class ModeloVentas{
 
 	}
 
+/*=============================================
+	RANGO DE VENTAS - POR MESERO
+	=============================================*/
 
+	static public function mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal, $idMesero){
+
+		if($fechaInicial <= $fechaFinal){
+
+			$query = "SELECT ventas.codigo, ventas.fecha, usuarios.nombre as usuario, clientes.nombre as mesero, ventas.total
+			FROM $tabla 
+			JOIN clientes ON ventas.id_cliente = clientes.id
+			JOIN usuarios ON ventas.id_vendedor = usuarios.id
+			WHERE DATE(ventas.fecha) BETWEEN DATE('$fechaInicial') AND DATE('$fechaFinal') ";
+
+			// Añadir la condición del proveedor si $idProveedor no es 0
+			$query .= ($idMesero == 0) ? "" : " AND ventas.id = $idMesero";
+
+			$stmt = Conexion::conectar()->prepare($query);
+	
+			$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+	}
+
+}
 }
