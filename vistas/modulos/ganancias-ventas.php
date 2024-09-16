@@ -231,7 +231,7 @@ $datos = ControladorReportes::ctrGananciasMesesAnios();
             swal({
                 icon: 'warning',
                 title: 'Advertencia',
-                text: 'Por favor, seleccione una Mes.',
+                text: 'Por favor, seleccione el año de inicio.',
             });
             return;
         }
@@ -239,7 +239,7 @@ $datos = ControladorReportes::ctrGananciasMesesAnios();
             swal({
                 icon: 'warning',
                 title: 'Advertencia',
-                text: 'Por favor, seleccione el Año.',
+                text: 'Por favor, seleccione el año de fin.',
             });
             return;
         }
