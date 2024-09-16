@@ -171,6 +171,42 @@ class ModeloProductos{
 		$stmt = null;
 	}
 
+	/*=============================================
+	PRODUCTO SEGUN CATEGORIA
+	=============================================*/	
+	static public function mdlProductoPorCategoriaPdf($tabla, $idCategoria)
+	{
+
+		$query = "SELECT productos.*, c.categoria AS categoria
+		FROM $tabla 
+		JOIN categorias AS c ON productos.id_categoria=c.id";
+
+		// Añadir la condición del proveedor si $idProveedor no es 0
+		$query .= ($idCategoria == 0) ? "" : " WHERE  c.id = $idCategoria";
+
+		$stmt = Conexion::conectar()->prepare($query);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+	}
+
+	/*=============================================
+	PRODUCTO SEGUN CATEGORIA
+	=============================================*/	
+	static public function mdlProductoFaltantePdf($tabla)
+	{
+
+		$query = "SELECT * FROM $tabla WHERE productos.stock<=0";
+
+
+		$stmt = Conexion::conectar()->prepare($query);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+	}
+
 
 }
 

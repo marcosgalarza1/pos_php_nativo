@@ -271,5 +271,56 @@ class ModeloVentas
 		}
 	}
 
+	/*=============================================
+	TOP PRODUCTO MAS VENDIDOS SEGUNN RANGO FECHAS
+	=============================================*/
+	static public function mdlRangoFechasTopProductoVendidos($tabla, $fechaInicial, $fechaFinal)
+	{
 
+		if ($fechaInicial <= $fechaFinal) {
+
+			// Consulta SQL para obtener las ventas en el rango de fechas
+			$query = "SELECT productos FROM $tabla WHERE DATE(fecha) BETWEEN :fechaInicio AND :fechaFin ORDER BY ventas.fecha ASC";
+
+
+			$stmt = Conexion::conectar()->prepare($query);
+			// Vincular los parámetros de las fechas
+			$stmt->bindParam(':fechaInicio', $fechaInicial);
+			$stmt->bindParam(':fechaFin', $fechaFinal);
+
+			$stmt->execute();
+			// Obtener los resultados
+			$ventas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+			// Crear un array para contar las cantidades por producto
+			$productosVendidos = [];
+
+			// Iterar sobre cada venta
+			foreach ($ventas as $venta) {
+				// Decodificar el JSON de productos
+				$productos = json_decode($venta['productos'], true);
+
+				// Iterar sobre cada producto en la venta
+				foreach ($productos as $producto) {
+					$nombreProducto = $producto['descripcion'];
+					$cantidad = intval($producto['cantidad']);
+
+					// Si el producto ya existe en el array, sumamos la cantidad
+					if (isset($productosVendidos[$nombreProducto])) {
+						$productosVendidos[$nombreProducto] += $cantidad;
+					} else {
+						// Si no, lo añadimos al array
+						$productosVendidos[$nombreProducto] = $cantidad;
+					}
+				}
+			}
+
+			// Ordenar los productos por cantidad en orden descendente
+			arsort($productosVendidos);
+
+			// Devolver los productos más vendidos
+			return $productosVendidos;
+			// return $stmt->fetchAll();
+		}
+	}
 }

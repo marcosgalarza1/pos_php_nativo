@@ -643,4 +643,15 @@ class ControladorVentas{
 	
 		return $respuesta;
 	}
+	/*=============================================
+	rango fechas para obtener top productos mas vendidos:
+	=============================================*/
+	static public function ctrRangoFechasTopProductoMasVendidosPdf($fechaInicial, $fechaFinal){
+
+		$tabla = "ventas";
+	
+		$respuesta = ModeloVentas::mdlRangoFechasTopProductoVendidos($tabla, $fechaInicial,$fechaFinal);
+	
+		return $respuesta;
+	}
 }

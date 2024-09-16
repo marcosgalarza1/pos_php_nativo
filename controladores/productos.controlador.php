@@ -370,6 +370,30 @@ class ControladorProductos{
 
 	}
 
+	/*=============================================
+	MOSTRAR PRODUCTOS SEGUN CATEGORIA
+	=============================================*/
+	static public function ctrMostrarProductosSegunCategoria($idCategoria){
+
+		$tabla = "productos";
+
+		$respuesta = ModeloProductos::mdlProductoPorCategoriaPdf($tabla,$idCategoria);
+
+		return $respuesta;
+
+	}
+	/*=============================================
+	MOSTRAR PRODUCTOS SEGUN CATEGORIA
+	=============================================*/
+	static public function ctrMostrarProductosFaltante(){
+
+		$tabla = "productos";
+
+		$respuesta = ModeloProductos::mdlProductoFaltantePdf($tabla);
+
+		return $respuesta;
+
+	}
 
 }
 

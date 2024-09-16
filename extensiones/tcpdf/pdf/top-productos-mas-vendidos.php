@@ -3,14 +3,11 @@
 require_once "../../../controladores/ventas.controlador.php";
 require_once "../../../modelos/ventas.modelo.php";
 
-require_once "../../../controladores/clientes.controlador.php";
-require_once "../../../modelos/clientes.modelo.php";
-
 require_once "../../../controladores/usuarios.controlador.php";
 require_once "../../../modelos/usuarios.modelo.php";
 
 
-class reporteTopVentasMeseros
+class reporteTopProductosMasVendidos
 {
 
 
@@ -18,7 +15,7 @@ class reporteTopVentasMeseros
     public $fechaFin;
     public $idUsuario;
 
-    public function generarPdfVentasTopMeseros()
+    public function generarPdfVentasTopProducto()
     {
         // Establecer la zona horaria de Bolivia
         date_default_timezone_set('America/La_Paz');
@@ -26,7 +23,7 @@ class reporteTopVentasMeseros
         $fechaFin = $this->fechaFin;
         $idUsuario = $this->idUsuario;
 
-        $respuestaVentas = ControladorVentas::ctrRangoFechasVentasTopMeserosPdf($fechaInicio, $fechaFin);
+        $respuestaDatos = ControladorVentas::ctrRangoFechasTopProductoMasVendidosPdf($fechaInicio, $fechaFin);
         $itemUsuario = "id";
         $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $idUsuario);
 
@@ -42,11 +39,11 @@ class reporteTopVentasMeseros
 
         // Ajustar márgenes a cero
         $pdf->SetMargins(10, 10, 10);
-        $pdf->SetTitle('Top Ventas por meseros');
+        $pdf->SetTitle('Top Producto Mas Vendidos');
         $pdf->AddPage();
 
         $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(0, 5, 'Top Ventas por Meseros', 0, 1, 'C');
+        $pdf->Cell(0, 5, 'Top Producto Mas Vendidos', 0, 1, 'C');
         $pdf->Image('images/logo-negro-bloque.jpg', 185, 10, 18, 16, 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
         $pdf->Ln(10); // Espacio después de la imagen
@@ -71,23 +68,23 @@ class reporteTopVentasMeseros
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->SetFillColor(0, 0, 0);
         $pdf->SetTextColor(255, 255, 255);
-        $pdf->Cell(0, 5, 'Detalle de Top Ventas por Meseros', 1, 1, 'C', 1);
+        $pdf->Cell(0, 5, 'Detalle de Top', 1, 1, 'C', 1);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Cell(18, 5, 'Nro Top', 1, 0, 'L');
-        $pdf->Cell(70, 5, 'Mesero', 1, 0, 'L');
-        $pdf->Cell(48, 5, 'Cantidad Ventas', 1, 0, 'L');
-        $pdf->Cell(60, 5, 'Monto Ventas', 1, 1, 'L');
+        $pdf->Cell(140, 5, 'Producto', 1, 0, 'L');
+        $pdf->Cell(38, 5, 'Cantidad Vendida', 1, 1, 'L');
+        // $pdf->Cell(60, 5, 'Monto Ventas', 1, 1, 'L');
         $pdf->SetFont('helvetica', '', 8);
 
         //Imprimir los detalles de los productos
         $contador = 1;
         $sumTotal = 0;
-        foreach ($respuestaVentas as $item) {
-            $total =  $item["total"];
+
+        foreach ($respuestaDatos as $producto => $cantidad) {
+            $total =  $cantidad;
             $pdf->Cell(18, 5,  $contador, 1, 0, 'L');
-            $pdf->Cell(70, 5, $item["mesero"], 1, 0, 'L');
-            $pdf->Cell(48, 5, $item["cantidad"], 1, 0, 'L');
-            $pdf->Cell(60, 5, $item["total"], 1, 1, 'R');
+            $pdf->Cell(140, 5,  $producto, 1, 0, 'L');
+            $pdf->Cell(38, 5, $cantidad, 1, 1, 'R');
     
             $contador++;
             $sumTotal += $total;
@@ -95,21 +92,19 @@ class reporteTopVentasMeseros
 
         // Total de la compra
         $pdf->SetFont('helvetica', 'B', 9);
-        $pdf->Cell(166, 5, 'Total ', 0, 0, 'R');
-        $pdf->Cell(30, 5, number_format($sumTotal, 2, '.', ',') . ' Bs.', 1, 1, 'R');
+        $pdf->Cell(158, 5, 'Total ', 0, 0, 'R');
+        $pdf->Cell(38, 5, number_format($sumTotal, 2, '.', ',') . ' Bs.', 1, 1, 'R');
 
 
-        // Nro de compras
-        $pdf->SetFont('helvetica', 'B', 9);
-        $pdf->Cell(30, 5, 'Total Meseros:  ' . $contador - 1, 0, 0, 'L');
+
 
         // Salida del archivo PDF
         $pdf->Output('factura.pdf', 'I');
     }
 }
 
-$factura = new reporteTopVentasMeseros();
+$factura = new reporteTopProductosMasVendidos();
 $factura->fechaInicio = $_GET["fechaInicio"];
 $factura->fechaFin = $_GET["fechaFin"];
 $factura->idUsuario = $_GET["idUsuario"];
-$factura->generarPdfVentasTopMeseros();
+$factura->generarPdfVentasTopProducto();

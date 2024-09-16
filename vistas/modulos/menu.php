@@ -77,7 +77,7 @@
 
 				<a href="#">
 
-					<i class="fa fa-list-ul"></i>
+				<i class="fa fa-money" aria-hidden="true"></i>
 					
 					<span>Ventas</span>
 					
@@ -141,7 +141,7 @@
 
 				<a href="#">
 
-					<i class="fa fa-list-ul"></i>
+			<i class="fa fa-opencart" aria-hidden="true"></i>
 					
 					<span>Compras</span>
 					
@@ -219,8 +219,8 @@
 
 				<a href="#">
 
-					<i class="fa fa-list-ul"></i>
-					
+			
+					<i class="fa fa-print" aria-hidden="true"></i>
 					<span>Reportes</span>
 					
 					<span class="pull-right-container">
@@ -245,20 +245,21 @@
 						</a>
 					</li>
 					<li>
-
-						<a href="compras">
-							
+						<a href="reporte-categoria">
 							<i class="fa fa-circle-o"></i>
 							<span>Rpt. Categorias</span>
-
 						</a>
-
 					</li>
-					
+					<li>
+						<a href="ver-productos-faltantes">
+							<i class="fa fa-circle-o"></i>
+							<span>Rpt. Product Faltante</span>
+						</a>
+					</li>
 
 					<li>
 
-						<a href="crear-compra">
+						<a href="reporte-top-productos">
 							
 							<i class="fa fa-circle-o"></i>
 							<span>Prod. más vendido</span>
