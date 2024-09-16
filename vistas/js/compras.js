@@ -83,19 +83,6 @@ $(".tablaCompras tbody").on("click", "button.agregarProducto", function(){
           	EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
           	=============================================*/
 
-          	if(stock == 0){
-
-      			swal({
-			      title: "No hay stock disponible",
-			      type: "error",
-			      confirmButtonText: "¡Cerrar!"
-			    });
-
-			    $("button[idProducto='"+idProducto+"']").addClass("btn-primary agregarProducto");
-
-			    return;
-
-          	}
 
           	$(".nuevoProducto").append(
 
@@ -150,7 +137,7 @@ $(".tablaCompras tbody").on("click", "button.agregarProducto", function(){
 
 	        // AGRUPAR PRODUCTOS EN FORMATO JSON
 
-	        listarProductos()
+	        listarProductosParaCompras()
 
 	        // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
 
@@ -241,7 +228,7 @@ $(".formularioCompra").on("click", "button.quitarProducto", function(){
 
         // AGRUPAR PRODUCTOS EN FORMATO JSON
 
-        listarProductos()
+        listarProductosParaCompras()
 
 	}
 
@@ -391,7 +378,7 @@ $(".formularioCompra").on("change", "select.nuevaDescripcionProducto", function(
       	    $(nuevoPrecioProducto).attr("precioReal", respuesta["precio_venta"]);
 
   	      // AGRUPAR PRODUCTOS EN FORMATO JSON
-	        listarProductos()
+	        listarProductosParaCompras()
 
       	}
 
@@ -450,7 +437,7 @@ $(".formularioCompra").on("change", "input.nuevaCantidadProducto", function(){
 
     // AGRUPAR PRODUCTOS EN FORMATO JSON------------------
 
-    listarProductos()
+    listarProductosParaCompras()
 
 })
 
@@ -568,7 +555,7 @@ $(".formularioCompra").on("change", "input#nuevoCodigoTransaccion", function(){
 LISTAR TODOS LOS PRODUCTOS
 =============================================*/
 
-function listarProductos(){
+function listarProductosParaCompras(){
 
 	var listaProductos = [];
 

@@ -1,5 +1,6 @@
 <?php
 
+
 require_once "../../../controladores/ventas.controlador.php";
 require_once "../../../modelos/ventas.modelo.php";
 
@@ -25,7 +26,8 @@ class imprimirFactura {
 
         $respuestaVenta = ControladorVentas::ctrMostrarVentas($itemVenta, $valorVenta);
 
-        $fecha = substr($respuestaVenta["fecha"],0,-8);
+        $fecha = date('Y-m-d H:i:s', strtotime($respuestaVenta["fecha"])); // Formatear la fecha y hora
+
         $productos = json_decode($respuestaVenta["productos"], true);
         $neto = number_format($respuestaVenta["neto"],2);
         $impuesto = number_format($respuestaVenta["impuesto"],2);
@@ -67,11 +69,12 @@ class imprimirFactura {
                 <td style="text-align:center;">
                     <strong style="font-size: 14px;">Cabañas "El Gallito"</strong><br>
                     <span style="font-size: 12px;">N°. '.$valorVenta.'</span><br>
-                    <span style="font-size: 10px;">Fecha: '.$fecha.'</span>
+                    <span style="font-size: 10px;">Fecha-Hora: '.$fecha.'</span> <!-- Aquí ahora se incluirá la hora -->
                 </td>
             </tr>
         </table>
         ';
+        
         $pdf->writeHTML($html, false, false, false, false, '');
 
         // Espacio
@@ -110,14 +113,13 @@ class imprimirFactura {
             
             $precioTotal = number_format($item["total"], 2);
             $html .= '
-            
-            <tr style="height: 15px;"> <!-- Ajustar la altura mínima de la fila según sea necesario -->
+            <tr style="height: 15px;">
                 <td style="padding: 5px;">'.$item["descripcion"].'</td>
                 <td style="text-align:center; padding: 5px;">'.$item["cantidad"].'</td>
                 <td style="text-align:right; padding: 5px;">'.$valorUnitario.'</td>
-                <td style="text-align:right; padding: 5px;">'.$precioTotal.'</td>
-            </tr>
-            ';
+                <td style="text-align:right; padding: 5px; width:27%;">'.$precioTotal.'</td>
+            </tr>';
+            
         }
         $html .= '</table>';
         $pdf->writeHTML($html, false, false, false, false, '');

@@ -63,7 +63,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 
 	var datos = new FormData();
     datos.append("idProducto", idProducto);
-
+	
      $.ajax({
 
      	url:"ajax/productos.ajax.php",
@@ -78,6 +78,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
       	    var descripcion = respuesta["descripcion"];
           	var stock = respuesta["stock"];
           	var precio = respuesta["precio_venta"];
+          	var precioCompra = respuesta["precio_compra"];
 
           	/*=============================================
           	EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
@@ -133,6 +134,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 	                 
 	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="'+precio+'" name="nuevoPrecioProducto" value="'+
                   precio+'" readonly required>'+
+				  '<input type="hidden" precioRealCompra="'+precioCompra+'" name="nuevoPrecioCompraProducto"  class="nuevoPrecioCompraProducto" value="'+ precioCompra+'"  >'+
 	 
 	            '</div>'+
 	             
@@ -151,11 +153,10 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 	        // AGRUPAR PRODUCTOS EN FORMATO JSON
 
 	        listarProductos()
-
+			
 	        // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
 
 	        $(".nuevoPrecioProducto").number(true, 2);
-
       	}
 
      })
@@ -311,6 +312,8 @@ $(".btnAgregarProducto").click(function(){
 	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 	                 
 	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>'+
+
+				  '<input type="hidden" precioRealCompra="" name="nuevoPrecioCompraProducto"  class="nuevoPrecioCompraProducto" >'+
 	 
 	            '</div>'+
 	             
@@ -362,12 +365,11 @@ SELECCIONAR PRODUCTO
 $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function(){
 
 	var nombreProducto = $(this).val();
-
 	var nuevaDescripcionProducto = $(this).parent().parent().parent().children().children().children(".nuevaDescripcionProducto");
-
 	var nuevoPrecioProducto = $(this).parent().parent().parent().children(".ingresoPrecio").children().children(".nuevoPrecioProducto");
-
+	var nuevoPrecioCompraProducto = $(this).parent().parent().parent().children(".ingresoPrecio").children().children(".nuevoPrecioCompraProducto");
 	var nuevaCantidadProducto = $(this).parent().parent().parent().children(".ingresoCantidad").children(".nuevaCantidadProducto");
+
 
 	var datos = new FormData();
     datos.append("nombreProducto", nombreProducto);
@@ -384,14 +386,14 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
       	dataType:"json",
       	success:function(respuesta){
       	    
-      	     $(nuevaDescripcionProducto).attr("idProducto", respuesta["id"]);
+      	    $(nuevaDescripcionProducto).attr("idProducto", respuesta["id"]);
       	    $(nuevaCantidadProducto).attr("stock", respuesta["stock"]);
       	    $(nuevaCantidadProducto).attr("nuevoStock", Number(respuesta["stock"])-1);
       	    $(nuevoPrecioProducto).val(respuesta["precio_venta"]);
       	    $(nuevoPrecioProducto).attr("precioReal", respuesta["precio_venta"]);
-
+      	    $(nuevoPrecioCompraProducto).attr("precioRealCompra", respuesta["precio_compra"]);
   	      // AGRUPAR PRODUCTOS EN FORMATO JSON
-
+			console.log(respuesta)
 	        listarProductos()
 
       	}
@@ -650,10 +652,9 @@ function listarProductos(){
 	var listaProductos = [];
 
 	var descripcion = $(".nuevaDescripcionProducto");
-
 	var cantidad = $(".nuevaCantidadProducto");
-
 	var precio = $(".nuevoPrecioProducto");
+	var precioCompra = $(".nuevoPrecioCompraProducto");
 
 	for(var i = 0; i < descripcion.length; i++){
 
@@ -662,12 +663,11 @@ function listarProductos(){
 							  "cantidad" : $(cantidad[i]).val(),
 							  "stock" : $(cantidad[i]).attr("nuevoStock"),
 							  "precio" : $(precio[i]).attr("precioReal"),
+							  "precioCompra" : $(precioCompra[i]).attr("precioRealCompra"),
 							  "total" : $(precio[i]).val()})
-
 	}
-
 	$("#listaProductos").val(JSON.stringify(listaProductos)); 
-
+	console.log(listaProductos);
 }
 
 /*=============================================

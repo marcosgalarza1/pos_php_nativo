@@ -3,7 +3,6 @@
 require_once "../../../controladores/compras.controlador.php";
 require_once "../../../modelos/compras.modelo.php";
 
-
 require_once "../../../controladores/proveedor.controlador.php";
 require_once "../../../modelos/proveedor.modelo.php";
 
@@ -19,46 +18,40 @@ class imprimirCompra {
 
     public function traerImpresionCompra() {
 
-        //TRAEMOS LA INFORMACIÓN DE LA VENTA
-
+        // TRAEMOS LA INFORMACIÓN DE LA VENTA
         $itemCompra = "codigo";
         $valorCompra = $this->codigo;
-
         $respuestaCompra = ControladorCompras::ctrMostrarCompras($itemCompra, $valorCompra);
-      
-        $fecha = substr($respuestaCompra["fecha_alta"],0,-8);
+
+        $fecha = substr($respuestaCompra["fecha_alta"], 0, -8);
         $productos = json_decode($respuestaCompra["productos"], true);
 
-// Convertir la fecha y hora a un objeto DateTime
-$fechaHoraObj = new DateTime($respuestaCompra["fecha_alta"]);
+        // Convertir la fecha y hora a un objeto DateTime
+        $fechaHoraObj = new DateTime($respuestaCompra["fecha_alta"]);
 
-// Formatear la fecha y hora
-$fechaFormateada = $fechaHoraObj->format('d/m/Y h:i A'); // Formato 'dd/mm/yyyy hh:mm AM/PM'
-        // $neto = number_format($respuestaCompra["neto"],2);
-        // $impuesto = number_format($respuestaCompra["impuesto"],2);
-        $total = number_format($respuestaCompra["total"],2);
-      
-        //TRAEMOS LA INFORMACIÓN DEL CLIENTE
+        // Formatear la fecha y hora
+        $fechaFormateada = $fechaHoraObj->format('d/m/Y h:i A');
 
+        // Limpiar y convertir el total a float
+        $total = str_replace(',', '', $respuestaCompra["total"]); 
+        $total = (float) $total;
+        $total = number_format($total, 2, '.', ',');
+
+        // TRAEMOS LA INFORMACIÓN DEL CLIENTE
         $itemUsuario = "id";
         $valorUsuario = $respuestaCompra["id_usuario"];
+        $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
 
-        $respuestaUsuario= ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
-
-        //TRAEMOS LA INFORMACIÓN DEL VENDEDOR
-
+        // TRAEMOS LA INFORMACIÓN DEL PROVEEDOR
         $itemVendedor = "id";
         $valorVendedor = $respuestaCompra["id_proveedor"];
-
         $respuestaProveedor = ControladorProveedors::ctrMostrarProveedors($itemVendedor, $valorVendedor);
 
-        //REQUERIMOS LA CLASE TCPDF
-
+        // REQUERIMOS LA CLASE TCPDF
         require_once('tcpdf_include.php');
 
         // Configuración del PDF para UTF-8
         $pdf = new TCPDF('P', 'mm', 'LETTER', true, 'UTF-8', false);
-   
 
         // Desactivar encabezado y pie de página
         $pdf->setPrintHeader(false);
@@ -107,10 +100,12 @@ $fechaFormateada = $fechaHoraObj->format('d/m/Y h:i A'); // Formato 'dd/mm/yyyy 
         $contador = 1;
         foreach ($productos as $item) {
             $descripcion = isset($item["descripcion"]) ? $item["descripcion"] : '';
-            $importe = number_format($item["precio"] * $item["cantidad"], 2, '.', ',');
+            $precio = str_replace(',', '', $item["precio"]); // Eliminar comas del precio
+            $precio = (float) $precio; // Convertir a float
+            $importe = number_format($precio * $item["cantidad"], 2, '.', ',');
             $pdf->Cell(14, 5, $contador, 1, 0, 'L');
             $pdf->Cell(102, 5, $descripcion, 1, 0, 'L');
-            $pdf->Cell(25, 5, $item["precio"], 1, 0, 'L');
+            $pdf->Cell(25, 5, number_format($precio, 2, '.', ','), 1, 0, 'L');
             $pdf->Cell(25, 5, $item["cantidad"], 1, 0, 'L');
             $pdf->Cell(30, 5, $importe, 1, 1, 'R');
             $contador++;
@@ -119,21 +114,20 @@ $fechaFormateada = $fechaHoraObj->format('d/m/Y h:i A'); // Formato 'dd/mm/yyyy 
         // Total de la compra
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(166, 5, 'Total ', 0, 0, 'R');
-        $pdf->Cell(30, 5, number_format($total, 2, '.', ',') . ' Bs.', 1, 1, 'R');
+        $pdf->Cell(30, 5, $total . ' Bs.', 1, 1, 'R');
 
         // Nro de compras
         $pdf->SetFont('helvetica', 'B', 9);
-        $pdf->Cell(30, 5, 'Número de compras:  '.$contador-1, 0, 0, 'L');
-  
+        $pdf->Cell(30, 5, 'Número de compras:  ' . ($contador - 1), 0, 0, 'L');
 
         // Salida del archivo PDF
         $pdf->Output('factura.pdf', 'I');
 
-            }
-        }
+    }
+}
 
-        $factura = new imprimirCompra();
-        $factura->codigo = $_GET["codigo"];
-        $factura->traerImpresionCompra();
+$factura = new imprimirCompra();
+$factura->codigo = $_GET["codigo"];
+$factura->traerImpresionCompra();
 
 ?>

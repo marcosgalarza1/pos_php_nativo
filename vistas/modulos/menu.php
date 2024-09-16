@@ -273,7 +273,7 @@
 
 					echo '<li>
 
-						<a href="reporte-compra">
+						<a href="ganancias-ventas">
 							<i class="fa fa-circle-o"></i>
 							<span>Rpt. de Ganancias</span>
 						</a>
