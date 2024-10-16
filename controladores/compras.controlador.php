@@ -103,7 +103,8 @@ class ControladorCompras{
 
 			    $codigoCompra = $_POST["nuevaCompra"];
 				echo "<script type='text/javascript'>
-					generatePDFVenta(" . json_encode($codigoCompra) . "); 
+				     window.open('extensiones/tcpdf/pdf/extracto-compra.php?codigo={$codigoCompra}', '_blank');
+					 window.location = "crear-compra";
 				</script>";
 			}
 
