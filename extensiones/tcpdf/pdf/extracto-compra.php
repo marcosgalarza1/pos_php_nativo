@@ -90,7 +90,8 @@ class imprimirCompra {
         $pdf->Cell(0, 5, 'Detalle de productos', 1, 1, 'C', 1);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Cell(14, 5, 'No', 1, 0, 'L');
-        $pdf->Cell(102, 5, 'Nombre', 1, 0, 'L');
+        $pdf->Cell(22, 5, 'codigo', 1, 0, 'L'); 
+        $pdf->Cell(80, 5, 'Nombre', 1, 0, 'L');
         $pdf->Cell(25, 5, 'Precio', 1, 0, 'L');
         $pdf->Cell(25, 5, 'Cantidad', 1, 0, 'L');
         $pdf->Cell(30, 5, 'Subtotal', 1, 1, 'L');
@@ -99,12 +100,14 @@ class imprimirCompra {
         // Imprimir los detalles de los productos
         $contador = 1;
         foreach ($productos as $item) {
+
             $descripcion = isset($item["descripcion"]) ? $item["descripcion"] : '';
             $precio = str_replace(',', '', $item["precio"]); // Eliminar comas del precio
             $precio = (float) $precio; // Convertir a float
             $importe = number_format($precio * $item["cantidad"], 2, '.', ',');
             $pdf->Cell(14, 5, $contador, 1, 0, 'L');
-            $pdf->Cell(102, 5, $descripcion, 1, 0, 'L');
+            $pdf->Cell(22, 5, $respuestaCompra["codigo"], 1, 0, 'L'); 
+            $pdf->Cell(80, 5, $descripcion, 1, 0, 'L');
             $pdf->Cell(25, 5, number_format($precio, 2, '.', ','), 1, 0, 'L');
             $pdf->Cell(25, 5, $item["cantidad"], 1, 0, 'L');
             $pdf->Cell(30, 5, $importe, 1, 1, 'R');

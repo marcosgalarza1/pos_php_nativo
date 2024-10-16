@@ -30,7 +30,7 @@ class ControladorCompras{
 
 			if($_POST["listaProductos"] == ""){
 
-					echo'<script>
+					 echo'<script>
 
 				swal({
 					  type: "error",
@@ -45,7 +45,7 @@ class ControladorCompras{
 								}
 							})
 
-				</script>';
+				</script>'; 
 
 				return;
 			}
@@ -100,9 +100,20 @@ class ControladorCompras{
 				$codigoCompra = $_POST["nuevaCompra"];
 				echo "<script type='text/javascript'>
 				     window.open('extensiones/tcpdf/pdf/extracto-compra.php?codigo={$codigoCompra}', '_blank');
-				      </script>";
+				      ";
 
-				echo'<script>
+					  
+					  echo '
+
+				
+
+					window.location = "crear-compra";
+
+							
+
+				</script>'; 
+
+				/* echo'<script>
 
 				localStorage.removeItem("rango");
 
@@ -120,7 +131,7 @@ class ControladorCompras{
 							})
 				
 				</script>';
-
+ */
 				
                  
 			}
@@ -198,7 +209,7 @@ class ControladorCompras{
 							})
 
 				</script>';
-
+ 
 			}		
 		}
 

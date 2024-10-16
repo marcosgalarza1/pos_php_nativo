@@ -16,12 +16,13 @@ class PdfGananciasYear
 
     public function generarpdfgananciaYear()
     {
+        date_default_timezone_set('America/La_Paz');
 
         $yearini = $this->yearini;
         $yearfin = $this->yearfin;
         // if (!isset($this->session->id_usuario)) {return redirect()->to(base_url());}
-        $nombreTienda = "Tienda"; //$this->configuracion->select('valor')->where('nombre','tienda_nombre')->get()->getRow()->valor;
-        $direccionTienda = "Direccion"; // $this->configuracion->select('valor')->where('nombre','tienda_direccion')->get()->getRow()->valor;
+        $nombreTienda = "Cabañas El Gallito"; //$this->configuracion->select('valor')->where('nombre','tienda_nombre')->get()->getRow()->valor;
+        $direccionTienda = "Rio Pirai"; // $this->configuracion->select('valor')->where('nombre','tienda_direccion')->get()->getRow()->valor;
 
         $DateAndTime = date('d-m-Y h:i:s a', time());
         // $db     =\Config\Database::connect();
@@ -32,7 +33,7 @@ class PdfGananciasYear
         $pdf->SetFont('Arial', 'B', 15);
         // $pdf->image(base_url().'/images/logotipo.png',185,10,18,16,'PNG');
         $pdf->Cell(195, 5, utf8_decode("Reporte General"), 0, 1, 'C');
-
+        $pdf->Image('images/logo-negro-bloque.jpg', 185, 10, 18, 16, 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false);
         $pdf->Ln(5);
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->Cell(40, 5, utf8_decode('Restaurante:'), 0, 0, 'L');

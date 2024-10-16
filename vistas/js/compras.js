@@ -241,7 +241,7 @@ AGREGANDO PRODUCTOS DESDE EL BOTÓN PARA DISPOSITIVOS
 
 var numProducto = 0;
 
-$(".btnAgregarProducto").click(function(){
+$(".btnAgregarProductoCompra").click(function(){
 
 	numProducto ++;
 
@@ -689,13 +689,37 @@ $(".tablas").on("click", ".btnEliminarCompra", function(){
 IMPRIMIR FACTURA
 =============================================*/
 
-$(".tablas").on("click", ".btnImprimirCompra", function(){
+/*=============================================
+IMPRIMIR COMPRA
+=============================================*/
 
-	var codigoCompra = $(this).attr("codigoCompra");
+// Variable global para mantener la referencia de la ventana emergente
+var popupWindow = null;
 
-	window.open("extensiones/tcpdf/pdf/extracto-compra.php?codigo="+codigoCompra, "_blank");
+$(".tablas").on("click", ".btnImprimirCompra", function() {
+    var codigoCompra = $(this).attr("codigoCompra");
 
-})
+    // Tamaño de la ventana emergente
+    var width = 800;
+    var height = 600;
+
+    // Configuración de la ventana emergente
+    var left = (screen.width / 2) - (width / 2);
+    var top = (screen.height / 2) - (height / 2);
+    var windowFeatures = `menubar=no,toolbar=no,status=no,width=${width},height=${height},left=${left},top=${top}`;
+
+    // Cierra la ventana emergente existente si está abierta
+    if (popupWindow && !popupWindow.closed) {
+        popupWindow.close();
+    }
+
+    // Abre la URL en una nueva ventana (popup)
+    popupWindow = window.open("extensiones/tcpdf/pdf/extracto-compra.php?codigo=" + codigoCompra, "_blank", windowFeatures);
+});
+
+
+
+
 
 
 /*=============================================
@@ -736,12 +760,12 @@ $('#daterange-btn-compras').daterangepicker(
 CANCELAR RANGO DE FECHAS
 =============================================*/
 
-$(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function(){
+// $(".daterangepickensleft .range_inputs .cancelBtnr.ope").on("click", function(){
 
-	localStorage.removeItem("capturarRango");
-	localStorage.clear();
-	window.location = "compras";
-})
+// 	localStorage.removeItem("capturarRango");
+// 	localStorage.clear();
+// 	window.location = "compras";
+// })
 
 
 
@@ -749,46 +773,46 @@ $(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function(){
 CAPTURAR HOY
 =============================================*/
 
-$(".daterangepicker.opensleft .ranges li").on("click", function(){
+// $(".daterangepicker.opensleft .ranges li").on("click", function(){
 
-	var textoHoy = $(this).attr("data-range-key");
+// 	var textoHoy = $(this).attr("data-range-key");
 
-	if(textoHoy == "Hoy"){
+// 	if(textoHoy == "Hoy"){
 
-		var d = new Date();
+// 		var d = new Date();
 		
-		var dia = d.getDate();
-		var mes = d.getMonth()+1;
-		var año = d.getFullYear();
+// 		var dia = d.getDate();
+// 		var mes = d.getMonth()+1;
+// 		var año = d.getFullYear();
 
-		if(mes < 10){
+// 		if(mes < 10){
 
-			var fechaInicial = año+"-0"+mes+"-"+dia;
-			var fechaFinal = año+"-0"+mes+"-"+dia;
+// 			var fechaInicial = año+"-0"+mes+"-"+dia;
+// 			var fechaFinal = año+"-0"+mes+"-"+dia;
 
-		}else if(dia < 10){
+// 		}else if(dia < 10){
 
-			var fechaInicial = año+"-"+mes+"-0"+dia;
-			var fechaFinal = año+"-"+mes+"-0"+dia;
+// 			var fechaInicial = año+"-"+mes+"-0"+dia;
+// 			var fechaFinal = año+"-"+mes+"-0"+dia;
 
-		}else if(mes < 10 && dia < 10){
+// 		}else if(mes < 10 && dia < 10){
 
-			var fechaInicial = año+"-0"+mes+"-0"+dia;
-			var fechaFinal = año+"-0"+mes+"-0"+dia;
+// 			var fechaInicial = año+"-0"+mes+"-0"+dia;
+// 			var fechaFinal = año+"-0"+mes+"-0"+dia;
 
-		}else{
+// 		}else{
 
-			var fechaInicial = año+"-"+mes+"-"+dia;
-	    	var fechaFinal = año+"-"+mes+"-"+dia;
+// 			var fechaInicial = año+"-"+mes+"-"+dia;
+// 	    	var fechaFinal = año+"-"+mes+"-"+dia;
 
-		}	
+// 		}	
 
-    	localStorage.setItem("capturarRango", "Hoy");
+//     	localStorage.setItem("capturarRango", "Hoy");
 
-    	window.location = "index.php?ruta=compras&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+//     	window.location = "index.php?ruta=compras&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
 
-	}
+// 	}
 
-})
+// })
 
 

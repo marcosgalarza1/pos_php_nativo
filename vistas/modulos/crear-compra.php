@@ -129,7 +129,7 @@ if($_SESSION["perfil"] == "Especial"){
                     
                     <span class="input-group-addon"><i class="fa fa-users"></i></span>
                     
-                    <select class="form-control text-uppercase " id="seleccionarProveedor" name="seleccionarProveedor" required>
+                    <select class="form-control text-uppercase select2" id="seleccionarProveedor" name="seleccionarProveedor" required>
 
                     <option value="0" disabled>Seleccionar Proveedor</option>
 
@@ -168,7 +168,7 @@ if($_SESSION["perfil"] == "Especial"){
                 BOTÓN PARA AGREGAR PRODUCTO
                 ======================================-->
 
-                <button type="button" class="btn btn-default hidden-lg btnAgregarProducto">  Agregar producto</button>
+                <button type="button" class="btn btn-default hidden-lg btnAgregarProductoCompra">  Agregar producto</button>
 
                 <hr>
 

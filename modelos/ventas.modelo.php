@@ -42,16 +42,16 @@ class ModeloVentas
 	static public function mdlIngresarVenta($tabla, $datos)
 	{
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, productos, impuesto, neto, total, metodo_pago) VALUES (:codigo, :id_cliente, :id_vendedor, :productos, :impuesto, :neto, :total, :metodo_pago)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, productos, total) VALUES (:codigo, :id_cliente, :id_vendedor, :productos,  :total)");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
 		$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
-		$stmt->bindParam(":impuesto", $datos["impuesto"], PDO::PARAM_STR);
-		$stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
+	
+		
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-		$stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
+		
 
 		if ($stmt->execute()) {
 
@@ -72,16 +72,16 @@ class ModeloVentas
 	static public function mdlEditarVenta($tabla, $datos)
 	{
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  id_cliente = :id_cliente, id_vendedor = :id_vendedor, productos = :productos, impuesto = :impuesto, neto = :neto, total= :total, metodo_pago = :metodo_pago WHERE codigo = :codigo");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  id_cliente = :id_cliente, id_vendedor = :id_vendedor, productos = :productos = : =  total= :total  WHERE codigo = :codigo");
 
 		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
 		$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
-		$stmt->bindParam(":impuesto", $datos["impuesto"], PDO::PARAM_STR);
-		$stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
+		
+		
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-		$stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
+	
 
 		if ($stmt->execute()) {
 
@@ -177,15 +177,18 @@ class ModeloVentas
 	static public function mdlSumaTotalVentas($tabla)
 	{
 
-		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla");
+	$anio = date('Y'); // Obtener el año actual
 
-		$stmt->execute();
+    $stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE YEAR(fecha) = :anio");
 
-		return $stmt->fetch();
+    $stmt->bindParam(":anio", $anio, PDO::PARAM_INT);
+    $stmt->execute();
 
-		$stmt->close();
+    return $stmt->fetch();
 
-		$stmt = null;
+    $stmt->close();
+    $stmt = null;
+	
 	}
 	/*=============================================
 	SUMAR EL TOTAL DE VENTAS - MES
@@ -212,6 +215,7 @@ class ModeloVentas
 
 	static public function mdlVentasTotalDia($tabla)
 	{
+		date_default_timezone_set('America/La_Paz');
 		$hoy = date('Y-m-d');
 		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE DATE(fecha)='$hoy'");
 
@@ -228,27 +232,40 @@ class ModeloVentas
 	RANGO DE VENTAS - POR MESERO
 	=============================================*/
 
-	static public function mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal, $idMesero)
-	{
+	public static function mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal, $idMesero)
+{
+    $query = "SELECT ventas.codigo, ventas.fecha, usuarios.nombre as usuario, clientes.nombre as mesero, ventas.total
+              FROM $tabla 
+              JOIN clientes ON ventas.id_cliente = clientes.id
+              JOIN usuarios ON ventas.id_vendedor = usuarios.id
+              WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal)";
 
-		if ($fechaInicial <= $fechaFinal) {
+    // Añadir la condición del cliente solo si $idMesero no es 0
+    if ($idMesero != 0) {
+        $query .= " AND ventas.id_cliente = :idMesero";
+    }
 
-			$query = "SELECT ventas.codigo, ventas.fecha, usuarios.nombre as usuario, clientes.nombre as mesero, ventas.total
-			FROM $tabla 
-			JOIN clientes ON ventas.id_cliente = clientes.id
-			JOIN usuarios ON ventas.id_vendedor = usuarios.id
-			WHERE DATE(ventas.fecha) BETWEEN DATE('$fechaInicial') AND DATE('$fechaFinal') ";
+    $query .= " ORDER BY ventas.codigo, ventas.fecha DESC";
 
-			// Añadir la condición del proveedor si $idProveedor no es 0
-			$query .= ($idMesero == 0) ? "" : " AND ventas.id_cliente = $idMesero";
+    // Preparar la consulta
+    $stmt = Conexion::conectar()->prepare($query);
 
-			$stmt = Conexion::conectar()->prepare($query);
+    // Enlazar parámetros
+    $stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+    $stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
 
-			$stmt->execute();
+    // Si $idMesero no es 0, enlazar también el parámetro del cliente
+    if ($idMesero != 0) {
+        $stmt->bindParam(":idMesero", $idMesero, PDO::PARAM_INT);
+    }
 
-			return $stmt->fetchAll();
-		}
-	}
+    // Ejecutar la consulta
+    $stmt->execute();
+
+    // Retornar los resultados
+    return $stmt->fetchAll();
+}
+
 	/*=============================================
 	RANGO DE VENTAS - TOP POR MESERO
 	=============================================*/
@@ -323,4 +340,37 @@ class ModeloVentas
 			// return $stmt->fetchAll();
 		}
 	}
+
+	static public function mdlRangoFechaVentasRealizadas($tabla, $fechaInicial, $fechaFinal) {
+		date_default_timezone_set('America/La_Paz');
+	
+		$query = "SELECT ventas.id, ventas.codigo, ventas.fecha, usuarios.nombre as usuario, clientes.nombre as cliente, ventas.total
+				  FROM $tabla 
+				  JOIN usuarios ON ventas.id_vendedor = usuarios.id
+				  JOIN clientes ON ventas.id_cliente = clientes.id";
+	
+
+
+		if ($fechaInicial == null && $fechaFinal == null) {
+			$stmt = Conexion::conectar()->prepare($query . " ORDER BY ventas.fecha DESC");
+			$stmt->execute();
+			return $stmt->fetchAll();
+		}
+
+		if ($fechaInicial == null) {
+			$stmt = Conexion::conectar()->prepare($query . " ORDER BY ventas.fecha DESC");
+		} else if ($fechaInicial == $fechaFinal) {
+			$stmt = Conexion::conectar()->prepare($query . " WHERE DATE(ventas.fecha) = :fecha ORDER BY ventas.fecha DESC");
+			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+		} else {
+			$stmt = Conexion::conectar()->prepare($query . " WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal) ORDER BY ventas.fecha DESC");
+			$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+			$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+		}
+	
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+	
+
 }

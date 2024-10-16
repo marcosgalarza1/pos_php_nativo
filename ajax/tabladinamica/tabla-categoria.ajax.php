@@ -32,6 +32,7 @@ class TablaCategorias
 			}else{
 
 				 $botones =  "<div class='btn-group'><button class='btn btn-primary btnEditarCategoria' idCategoria='".$categorias[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCategoria'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCategoria' idCategoria='".$categorias[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
+                 
 
 			}
 

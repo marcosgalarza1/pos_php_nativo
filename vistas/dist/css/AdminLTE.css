@@ -11,6 +11,7 @@
  */
 
 
+
  html,
  body {
    height: 100%;
@@ -357,7 +358,7 @@
  .content-header > h1 {
    margin: 0;
    font-size: 24px;
-   text-align: center;
+
   
  
  }

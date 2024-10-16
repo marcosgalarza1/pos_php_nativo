@@ -3,13 +3,13 @@
 require_once "../controladores/compras.controlador.php";
 require_once "../modelos/compras.modelo.php";
 
-class TablaProductosVentas{
+class TablaProductosVentas2{
 
  	/*=============================================
  	 MOSTRAR LA TABLA DE PRODUCTOS
   	=============================================*/ 
 
-	public function mostrarTablaProductosVentas(){
+	public function mostrarTablaProductosVentas2(){
 
 	
 
@@ -43,10 +43,10 @@ class TablaProductosVentas{
 		  	$datos[] = [
 			      ($i+1),
 			      $compras[$i]["codigo"],
-			      $compras[$i]["fecha_alta"],
+				  $compras[$i]["proveedor"],
+				  $compras[$i]["usuario"],
 			      number_format($compras[$i]["total"], 2),
-			      $compras[$i]["usuario"],
-			      $compras[$i]["proveedor"],
+				  $compras[$i]["fecha_alta"],
 			      $botones
 		  	];
   		}
@@ -59,7 +59,7 @@ class TablaProductosVentas{
 /*=============================================
 ACTIVAR TABLA DE PRODUCTOS
 =============================================*/ 
-$activarProductosVentas = new TablaProductosVentas();
-$activarProductosVentas->mostrarTablaProductosVentas();
+$activarProductosVentas = new TablaProductosVentas2();
+$activarProductosVentas->mostrarTablaProductosVentas2();
 
 ?>

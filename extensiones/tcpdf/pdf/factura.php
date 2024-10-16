@@ -1,6 +1,5 @@
 <?php
 
-
 require_once "../../../controladores/ventas.controlador.php";
 require_once "../../../modelos/ventas.modelo.php";
 
@@ -19,148 +18,111 @@ class imprimirFactura {
 
     public function traerImpresionFactura() {
 
-        //TRAEMOS LA INFORMACIÓN DE LA VENTA
-
+        // TRAEMOS LA INFORMACIÓN DE LA VENTA
         $itemVenta = "codigo";
         $valorVenta = $this->codigo;
 
         $respuestaVenta = ControladorVentas::ctrMostrarVentas($itemVenta, $valorVenta);
-
-        $fecha = date('Y-m-d H:i:s', strtotime($respuestaVenta["fecha"])); // Formatear la fecha y hora
-
+        $fecha = date('d/m/Y H:i:s', strtotime($respuestaVenta["fecha"])); // Formatear la fecha y hora
         $productos = json_decode($respuestaVenta["productos"], true);
-        $neto = number_format($respuestaVenta["neto"],2);
-        $impuesto = number_format($respuestaVenta["impuesto"],2);
-        $total = number_format($respuestaVenta["total"],2);
+        $total = number_format($respuestaVenta["total"], 2);
+        
 
-        //TRAEMOS LA INFORMACIÓN DEL CLIENTE
-
+        // TRAEMOS LA INFORMACIÓN DEL CLIENTE
         $itemCliente = "id";
         $valorCliente = $respuestaVenta["id_cliente"];
-
         $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-        //TRAEMOS LA INFORMACIÓN DEL VENDEDOR
-
+        // TRAEMOS LA INFORMACIÓN DEL VENDEDOR
         $itemVendedor = "id";
         $valorVendedor = $respuestaVenta["id_vendedor"];
-
         $respuestaVendedor = ControladorUsuarios::ctrMostrarUsuarios($itemVendedor, $valorVendedor);
 
-        //REQUERIMOS LA CLASE TCPDF
-
+        // REQUERIMOS LA CLASE TCPDF
         require_once('tcpdf_include.php');
-
         $pdf = new TCPDF('P', 'mm', array(80, 200), true, 'UTF-8', false);
-
         $pdf->startPageGroup();
         $pdf->AddPage();
         $pdf->SetFont('helvetica', '', 10);
 
-        // Imagen del restaurante centrada
-        $pdf->Image('images/logo-negro-bloque.jpg', 25, 15, 30, '', 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
-        $pdf->Ln(20); // Espacio después de la imagen
-
         // Información de la tienda
         $html = '
-        <table>
+        <table style="border-bottom: 1px solid #000;">
             <tr>
-                <td style="text-align:center;">
-                    <strong style="font-size: 14px;">Cabañas "El Gallito"</strong><br>
-                    <span style="font-size: 12px;">N°. '.$valorVenta.'</span><br>
-                    <span style="font-size: 10px;">Fecha-Hora: '.$fecha.'</span> <!-- Aquí ahora se incluirá la hora -->
+                <td style="text-align:center; font-size: 13px;">
+                    <strong>COMANDA</strong><br>
+                    <span style="font-size: 15px;">'.$valorVenta.'</span><br>
+                    <span style="font-size: 10px;">Fecha: '.$fecha.'</span>
                 </td>
-            </tr>
-        </table>
-        ';
-        
+            </tr>;
+        </table>';
+
         $pdf->writeHTML($html, false, false, false, false, '');
 
-        // Espacio
+        // Línea de separación
         $pdf->Ln(2);
-
-        // Información del cliente y vendedor
+        
+        // Información del cliente y mesero
         $html = '
-        <table>
+        <table style="font-size: 11px;">
             <tr>
                 <td>
-                    <strong>Mesero/a:</strong> '.$respuestaCliente["nombre"].'<br>
-                    <strong>Cajero/a:</strong> '.$respuestaVendedor["nombre"].'
+                    <strong>Mesero/a:</strong> '.$respuestaVendedor["nombre"].'<br>
+                    <strong>Cajero/a:</strong> '.$respuestaCliente["nombre"].'
                 </td>
             </tr>
-        </table>
-        ';
+        </table>';
+
         $pdf->writeHTML($html, false, false, false, false, '');
 
-        // Espacio
-        $pdf->Ln(2);
-
-        // Productos
+        // Tabla de productos
         $html = '
-        <table border="0" cellpadding="4">
+        <table border="0" cellpadding="4" style="width:100%;">
             <tr style="background-color:#f2f2f2;">
-                <th style="width:40%; text-align:left;">Producto</th>
+                <th style="width:45%; text-align:left;">Concepto</th>
                 <th style="width:20%; text-align:center;">Cant.</th>
                 <th style="width:25%; text-align:right;">Precio</th>
-                <th style="width:25%; text-align:right;">Total</th>
-            </tr>
-        ';
+                <th style="width:20%; text-align:right;">Total</th>
+            </tr>';
 
-        
         foreach ($productos as $item) {
             $valorUnitario = number_format($item["precio"], 2);
-            
             $precioTotal = number_format($item["total"], 2);
             $html .= '
-            <tr style="height: 15px;">
-                <td style="padding: 5px;">'.$item["descripcion"].'</td>
-                <td style="text-align:center; padding: 5px;">'.$item["cantidad"].'</td>
-                <td style="text-align:right; padding: 5px;">'.$valorUnitario.'</td>
-                <td style="text-align:right; padding: 5px; width:27%;">'.$precioTotal.'</td>
+            <tr>
+                <td>'.$item["descripcion"].'</td>
+                <td style="text-align:center;">'.$item["cantidad"].'</td>
+                <td style="text-align:right;">'.$valorUnitario.'</td>
+                <td style="text-align:right;">'.$precioTotal.'</td>
             </tr>';
-            
         }
+
         $html .= '</table>';
         $pdf->writeHTML($html, false, false, false, false, '');
 
         // Espacio
         $pdf->Ln(2);
+        $pdf->writeHTML('<hr style="border:1px solid #000;">', false, false, false, false, '');
 
-        // Totales
+        // Total
         $html = '
         <table>
             <tr>
                 <td style="text-align:right;">
-                    <strong style="font-size: 13px;">Total: Bs '.$total.'</strong>
+                    <strong>Total: Bs '.$total.'</strong>
                 </td>
             </tr>
-        </table>
-        ';
+        </table>';
         $pdf->writeHTML($html, false, false, false, false, '');
 
-        // Mensaje de agradecimiento
-        $html = '
-        <table>
-            <tr>
-                <td style="text-align:center;">
-                    <br><br>
-                    <strong>¡Gracias por su compra!</strong><br>
-                </td>
-            </tr>
-        </table>
-        ';
-        $pdf->writeHTML($html, false, false, false, false, '');
-
-        //SALIDA DEL ARCHIVO
+        // SALIDA DEL ARCHIVO
         $pdf->Output('factura.pdf', 'I');
-
     }
 
 }
 
 $factura = new imprimirFactura();
-$factura -> codigo = $_GET["codigo"];
-$factura -> traerImpresionFactura();
+$factura->codigo = $_GET["codigo"];
+$factura->traerImpresionFactura();
 
 ?>

@@ -1,0 +1,24 @@
+-- Tabla Detalle_Venta (Relaciona Producto y Venta)
+CREATE TABLE detalle_venta (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_producto INT NOT NULL,
+    id_venta INT NOT NULL,
+ 	producto VARCHAR(200) NOT NULL,
+    cantidad INT NOT NULL,
+    precio_venta DECIMAL(10, 2) NOT NULL,
+    subtotal DECIMAL(10, 2) GENERATED ALWAYS AS (cantidad * precio_venta) VIRTUAL, -- Subtotal calculado automáticamente
+    CONSTRAINT fk_producto FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_venta FOREIGN KEY (id_venta) REFERENCES ventas(id) ON DELETE CASCADE
+);
+
+CREATE TABLE detalle_compra (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_producto INT NOT NULL,
+    id_compra INT NOT NULL,
+    producto VARCHAR(200) NOT NULL,
+    cantidad INT NOT NULL,
+    precio_compra DECIMAL(10, 2) NOT NULL,
+    subtotal DECIMAL(10, 2) GENERATED ALWAYS AS (cantidad * precio_compra) VIRTUAL, -- Subtotal calculado automáticamente
+    CONSTRAINT fk_detalle_compra_producto FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
+    CONSTRAINT fk_detalle_compra_compra FOREIGN KEY (id_compra) REFERENCES compras(id) ON DELETE CASCADE
+);

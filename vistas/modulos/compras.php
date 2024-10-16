@@ -68,15 +68,19 @@ if($_SESSION["perfil"] == "Especial"){
          <tr>
            <th style="width:10px">#</th>
            <th>Codigo</th>
+           <th>proveedor</th>
+           <th>usuario</th>
            <th>total</th>
            <th>fecha</th> 
-           <th>usuario</th>
-           <th>proveedor</th>
            <th>acciones</th>
          </tr> 
 
         </thead>
-        <tbody></tbody>
+        <tbody>
+
+
+        
+        </tbody>
 
        </table>
 

@@ -241,7 +241,7 @@
 					<li>
 						<a href="reporte-top-meseros-ventas">
 							<i class="fa fa-circle-o"></i>
-							<span>Rpt. Top Vtas x Mesero</span>
+							<span>Meseros.Con mas Vtas</span>
 						</a>
 					</li>
 					<li>

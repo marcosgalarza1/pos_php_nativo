@@ -1,7 +1,9 @@
-<div class="content-wrapper">
+
+
+<div class="content-wrapper text-uppercase">
 
     <section class="content-header">
-        <h1>Reportes Top Ventas por Meseros</h1>
+        <h1>REPORTE DE MESEROS CON MAS VENTAS</h1>
         <ol class="breadcrumb">
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
             <li class="active">Top Ventas por Meseros</li>
@@ -46,11 +48,14 @@
                                             <i class="fa fa-print"></i> Generate PDF
                                         </button>
                                     </div>
+                                   
                                 </div>
+                            
                             </div>
                         </div>
 
-
+                       
+                        <img src="vistas/img/plantilla/mesero-1.jpg" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
                     </div><!--/body card-->
                 </div><!--/CARD FIN-->
 

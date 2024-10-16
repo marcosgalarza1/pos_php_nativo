@@ -54,8 +54,8 @@
 
 <!-- Morris chart -->
 <link rel="stylesheet" href="vistas/bower_components/morris.js/morris.css">
-
-
+<!-- Select2 -->
+<link rel="stylesheet" href="vistas/bower_components/select2/dist/css/select2.min.css">
 
   <!--=====================================
   plugin DE java scrip
@@ -82,7 +82,8 @@
   <script src="vistas/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
   <script src="vistas/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
   <script src="vistas/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
-
+  <!-- Select2 -->
+  <script src="vistas/bower_components/select2/dist/js/select2.full.min.js"></script>
   <!-- SweetAlert 2 -->
   <script src="vistas/plugins/sweetalert2/sweetalert2.all.js"></script>
 
@@ -117,6 +118,7 @@
 
 <style>
 .skin-blue .main-header .navbar {
+ 
   background-color: #6c757d;
 
     color: white; /* Cambiar el color del texto a blanco para que sea legible en el degradado oscuro */
@@ -213,7 +215,10 @@ CUERPO DOCUMENTO
 
       if($_GET["ruta"] == "inicio" ||
          $_GET["ruta"] == "usuarios" ||
+         $_GET["ruta"] == "agregar-usuario" ||
          $_GET["ruta"] == "categorias" ||
+         $_GET["ruta"] == "agregar-categoria" ||
+         $_GET["ruta"] == "editar-categoria" ||
          $_GET["ruta"] == "productos" ||
          $_GET["ruta"] == "clientes" ||
          $_GET["ruta"] == "ventas" ||
@@ -268,13 +273,10 @@ CUERPO DOCUMENTO
 <script src="vistas/js/categorias.js"></script>
 <script src="vistas/js/productos.js"></script>
 <script src="vistas/js/clientes.js"></script>
-<script src="vistas/js/ventas.js"></script>
-<script src="vistas/js/compras.js"></script>
+<script src="vistas/js/compras.js"></script>  
 <script src="vistas/js/reportes.js"></script>
 <script src="vistas/js/proveedor.js"></script>
-
-
-
+<script src="vistas/js/ventas.js"></script> 
 
 <!-- ------------------------- -->
 <!-- vinculamos  LAS CARPETAS de la tablas dinamicas -->
@@ -284,6 +286,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/tabladinamica/clientetabla.js"></script>
 <script src="vistas/js/tabladinamica/proveedortabla.js"></script>
 <script src="vistas/js/tabladinamica/comprastabla.js"></script>
+<script src="vistas/js/tabladinamica/ventastabla.js"></script>
 
 </body>
 </html>

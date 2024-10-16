@@ -139,8 +139,8 @@ class ModeloReportes{
 			$ganancia_total = 0;
 	
 			foreach ($productos as $producto) {
-				$precio = $producto['precio'];
-				$precioCompra = isset($producto['precioCompra']) ? $producto['precioCompra'] : 0;
+				$precio = (float)$producto['precio'];
+				$precioCompra = isset($producto['precioCompra']) ? (float)$producto['precioCompra'] : 0;
 				
 				$ganancia = ($precio - $precioCompra) * $producto['cantidad'];
 				$ganancia_total += ($precioCompra>0)?$ganancia:0;

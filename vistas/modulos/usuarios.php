@@ -42,10 +42,12 @@ if($_SESSION["perfil"] == "Especial" || $_SESSION["perfil"] == "Vendedor"){
 
       <div class="box-header with-border">
   
-      <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
+       <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
       
           Agregar Usuario
-        </button>
+        </button> 
+
+  
         <a class="btn btn-primary" target="_blank" href="reporte_usuario.php">
             <i class="material-icons"></i>
             <span class="icon-name"> Imprimir </span>

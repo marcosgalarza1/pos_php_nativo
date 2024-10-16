@@ -1,7 +1,7 @@
 /*=============================================
 CARGAR LA TABLA DINÁMICA DE PROVEEDORES
 =============================================*/
-
+/* 
 $.ajax({
     url: "ajax/tabladinamica/tabla-proveedor.ajax.php",
     success: function (respuesta) {
@@ -9,7 +9,7 @@ $.ajax({
     },
   });
  
-
+ */
   
   
   

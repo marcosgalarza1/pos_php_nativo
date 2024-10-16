@@ -22,6 +22,7 @@ if($_SESSION["perfil"] == "Especial"){
   <h1 style="font-family: Arial, sans-serif; font-weight: bold;">
       
       Administrar ventas
+      
     
     </h1>
 
@@ -44,6 +45,7 @@ if($_SESSION["perfil"] == "Especial"){
         <a href="crear-venta">
 
           <button class="btn btn-primary">
+            
             Agregar venta
           </button>
           </a>
@@ -62,20 +64,20 @@ if($_SESSION["perfil"] == "Especial"){
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablas text-uppercase " width="100%">
+       <table class="table table-bordered table-striped dt-responsive tablas text-uppercase tablaVentasRealizadas " width="100%">
          
         <thead>
          
          <tr>
            
-           <th style="width:10px">#</th>
+         <th style="width:10px">#</th>
            <th>Código factura</th>
            <th>Meseros</th>
            <th>Usuario</th>
-      
            <th>Total</th> 
            <th>Fecha</th>
            <th>Acciones</th>
+
 
          </tr> 
 
@@ -85,7 +87,7 @@ if($_SESSION["perfil"] == "Especial"){
 
         <?php
 
-              if(isset($_GET["fechaInicial"])){
+           /*    if(isset($_GET["fechaInicial"])){
 
                 $fechaInicial = $_GET["fechaInicial"];
                 $fechaFinal = $_GET["fechaFinal"];
@@ -150,7 +152,7 @@ if($_SESSION["perfil"] == "Especial"){
 
                 </tr>';
             }
-
+ */
         ?>
                
         </tbody>

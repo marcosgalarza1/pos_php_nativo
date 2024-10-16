@@ -1,7 +1,7 @@
-<div class="content-wrapper">
+<div class="content-wrapper text-uppercase">
 
   <section class="content-header">
-    <h1>Reportes Ventas</h1>
+    <h1>REPORTE DE VENTAS POR MESEROS</h1>
     <ol class="breadcrumb">
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       <li class="active">Administrar ventas</li>
@@ -12,7 +12,7 @@
 
     <div class="box">
 
-  
+ 
 
       <div class="box-body">
        
@@ -57,12 +57,14 @@
                 </div>
               </div>
             </div>
-
+         
             <div class="text-right">
               <button type="button" class="btn btn-sm btn-warning" onclick="generatePDF()"> 
                 <i class="fa fa-print"></i> Generate PDF
               </button>
             </div>
+            <img src="vistas/img/plantilla/mesero-1.jpg" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
+
 
           </div><!--/body card-->
         </div><!--/CARD FIN-->

@@ -93,7 +93,7 @@ class reporteTopProductosMasVendidos
         // Total de la compra
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(158, 5, 'Total ', 0, 0, 'R');
-        $pdf->Cell(38, 5, number_format($sumTotal, 2, '.', ',') . ' Bs.', 1, 1, 'R');
+        $pdf->Cell(38, 5, $sumTotal, 1, 1, 'R');
 
 
 

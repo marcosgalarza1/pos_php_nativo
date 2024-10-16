@@ -155,7 +155,7 @@ MODAL AGREGAR PRODUCTO
                   
                   </span> 
 
-                    <select class="form-control input-lg"  id="nuevaCategoria" name="nuevaCategoria" required>
+                    <select class="form-control input-lg select2"  id="nuevaCategoria" name="nuevaCategoria" required>
                       
                       <option value="">Categoria</option>
 
@@ -209,7 +209,7 @@ MODAL AGREGAR PRODUCTO
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB2klEQVR4nO3WS6hNcRTH8Y9H4URcj4wMkAyUDGSgkLqpO3AnMiATiWJwSynFSAyU3JHCwMSAokSKYiAjGUjJozzHJI/IFXH0r3XqtDv75Wyi7q9W+6y91////e+113/9D+P6D7Qv7K/rfVhjWoxW5t58bMZhnMEFfMMYtmNhv9A5eIc3uIybeIl2if3ELazpB74RL3pM/hH3cAlXY1H38SUTlzIy+3fhp2KSR1iFeT1iZoVNxTBud8Hf4iiGsAWbqkBn4lOkOKVwSY3iGo4sZLP1LBZYqJEIHsR3HK8BTpqA1fFZ2lGIrTJoGvQET8O/EcXWqrmdpkdNfMVzTCwDD8Yqj4S/M/wdNcF7YtyBuA7lASfF5J0CSend1TXwYfgzKoIfROam4EPsglydKNmr1yu+8bqIPxT+WfwoajKtWFkv6F3MLQFPxgAuxpi14W/ryuJA3vdOKd+Ka3gcTWJ3zlbIgqfhVUnW7lQptDL1SvV6fM6BvsayfqF54KSVmS6WmtCVgkbUGLijVBPLo63+2+dxkZZGS90fZ/FY/B6JZ39EKwoKpx3PUkzj2hBvV2QppjEtwumwk3HOduxgF3RvtNVkC5oAH6vw1ydro02Az0UHq2PnmwCPSxP6BYJmxG07r6OGAAAAAElFTkSuQmCC">
               </span> 
 
-                <input type="number" class="form-control input-lg" name="nuevoStock" min="0" placeholder="cantidad" required>
+                <input value="0" readonly type="number" class="form-control input-lg" name="nuevoStock" min="0" placeholder="cantidad" required>
 
               </div>
 
@@ -362,10 +362,9 @@ MODAL EDITAR
                      
                                           
                     </select>
-
-                    </div>
                 </div>
             </div>
+        </div>
 
             <!-- ENTRADA PARA LA DESCRIPCIÓN -->
 
@@ -385,7 +384,6 @@ MODAL EDITAR
 
             </div>
 
-             
 
              <!-- ENTRADA PARA La STOCK -->
 
@@ -397,13 +395,11 @@ MODAL EDITAR
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB2klEQVR4nO3WS6hNcRTH8Y9H4URcj4wMkAyUDGSgkLqpO3AnMiATiWJwSynFSAyU3JHCwMSAokSKYiAjGUjJozzHJI/IFXH0r3XqtDv75Wyi7q9W+6y91////e+113/9D+P6D7Qv7K/rfVhjWoxW5t58bMZhnMEFfMMYtmNhv9A5eIc3uIybeIl2if3ELazpB74RL3pM/hH3cAlXY1H38SUTlzIy+3fhp2KSR1iFeT1iZoVNxTBud8Hf4iiGsAWbqkBn4lOkOKVwSY3iGo4sZLP1LBZYqJEIHsR3HK8BTpqA1fFZ2lGIrTJoGvQET8O/EcXWqrmdpkdNfMVzTCwDD8Yqj4S/M/wdNcF7YtyBuA7lASfF5J0CSend1TXwYfgzKoIfROam4EPsglydKNmr1yu+8bqIPxT+WfwoajKtWFkv6F3MLQFPxgAuxpi14W/ryuJA3vdOKd+Ka3gcTWJ3zlbIgqfhVUnW7lQptDL1SvV6fM6BvsayfqF54KSVmS6WmtCVgkbUGLijVBPLo63+2+dxkZZGS90fZ/FY/B6JZ39EKwoKpx3PUkzj2hBvV2QppjEtwumwk3HOduxgF3RvtNVkC5oAH6vw1ydro02Az0UHq2PnmwCPSxP6BYJmxG07r6OGAAAAAElFTkSuQmCC">
               </span> 
 
-                <input type="number" class="form-control input-lg" id="editarStock" name="editarStock" min="0" required>
+                <input  readonly ="number" class="form-control input-lg" id="editarStock" name="editarStock" min="0" required>
 
               </div>
 
             </div>
-
-            
 
                 <!-- ENTRADA PARA  VENTA -->
 

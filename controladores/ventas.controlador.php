@@ -30,9 +30,10 @@ class ControladorVentas{
 
 			if($_POST["listaProductos"] == ""){
 
+
 					echo'<script>
 
-				swal({
+				swal({ bv 
 					  type: "error",
 					  title: "La venta no se ha ejecuta si no hay productos",
 					  showConfirmButton: true,
@@ -40,12 +41,12 @@ class ControladorVentas{
 					  }).then(function(result){
 								if (result.value) {
 
-								window.location = "ventas";
+								window.location = "crear-venta";
 
 								}
 							})
 
-				</script>';
+				</script>'; 
 
 				return;
 			}
@@ -111,10 +112,8 @@ class ControladorVentas{
 						   "id_cliente"=>$_POST["seleccionarCliente"],
 						   "codigo"=>$_POST["nuevaVenta"],
 						   "productos"=>$_POST["listaProductos"],
-						   "impuesto"=>$_POST["nuevoPrecioImpuesto"],
-						   "neto"=>$_POST["nuevoPrecioNeto"],
-						   "total"=>$_POST["totalVenta"],
-						   "metodo_pago"=>$_POST["listaMetodoPago"]);
+						   "total"=>$_POST["totalVenta"]);
+						
 
 			$respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
 
@@ -125,7 +124,18 @@ class ControladorVentas{
 				     window.open('extensiones/tcpdf/pdf/factura.php?codigo={$codigoVenta}', '_blank');
 				      </script>";
 
-				echo'<script>
+
+					  echo'<script>
+
+				
+
+					window.location = "crear-venta";
+
+							
+
+				</script>'; 
+
+				/* echo'<script>
 
 				localStorage.removeItem("rango");
 
@@ -143,7 +153,7 @@ class ControladorVentas{
 							})
 				
 				</script>';
-
+ */
 				
                  
 			}
@@ -292,16 +302,12 @@ class ControladorVentas{
 						   "id_cliente"=>$_POST["seleccionarCliente"],
 						   "codigo"=>$_POST["editarVenta"],
 						   "productos"=>$listaProductos,
-						   "impuesto"=>$_POST["nuevoPrecioImpuesto"],
-						   "neto"=>$_POST["nuevoPrecioNeto"],
-						   "total"=>$_POST["totalVenta"],
-						   "metodo_pago"=>$_POST["listaMetodoPago"]);
-
-
+						   "total"=>$_POST["totalVenta"]);
 			$respuesta = ModeloVentas::mdlEditarVenta($tabla, $datos);
 
 			if($respuesta == "ok"){
 
+				
 				echo'<script>
 
 				localStorage.removeItem("rango");
@@ -319,7 +325,7 @@ class ControladorVentas{
 								}
 							})
 
-				</script>';
+				</script>'; 
 
 			}
 
@@ -449,7 +455,9 @@ class ControladorVentas{
 
 			if($respuesta == "ok"){
 
-				echo'<script>
+				
+
+				 echo'<script>
 
 				swal({
 					  type: "success",
@@ -464,7 +472,7 @@ class ControladorVentas{
 								}
 							})
 
-				</script>';
+				</script>'; 
 
 			}		
 		}
@@ -480,6 +488,16 @@ class ControladorVentas{
 		$tabla = "ventas";
 
 		$respuesta = ModeloVentas::mdlRangoFechasVentas($tabla, $fechaInicial, $fechaFinal);
+
+		return $respuesta;
+		
+	}
+
+	static public function ctrRangoFechasVentasRealizadas($fechaInicial, $fechaFinal){
+
+		$tabla = "ventas";
+
+		$respuesta = ModeloVentas::mdlRangoFechaVentasRealizadas($tabla, $fechaInicial, $fechaFinal);
 
 		return $respuesta;
 		
@@ -596,7 +614,7 @@ class ControladorVentas{
 
 	}
 		/*=============================================
-	SUMA TOTAL VENTAS
+	SUMA TOTAL VENTAS DEL MES
 	=============================================*/
 
 	static public function ctrVentasTotalMes(){
