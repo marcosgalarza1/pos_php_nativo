@@ -35,6 +35,27 @@ class ModeloCompras{
 		$stmt = null;
 
 	}
+	
+	
+	static public function mdlMostrarDetalleCompras($idCompra) {
+		if ($idCompra != null) {
+			// Preparar la consulta SQL correctamente
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM detalle_compra WHERE id_compra = :id_compra ORDER BY id ASC");
+	
+			// Enlazar el parámetro correctamente
+			$stmt->bindParam(":id_compra", $idCompra, PDO::PARAM_INT); // Cambiado a PDO::PARAM_INT si el ID es un entero
+	
+			// Ejecutar la consulta
+			$stmt->execute();
+	
+			// Devolver todos los resultados en lugar de solo uno
+			return $stmt->fetchAll(PDO::FETCH_ASSOC); // Cambiado a fetchAll para obtener todos los registros
+		}
+	
+		// No se necesita cerrar el stmt aquí si no se ejecuta
+		return null; // Devolver null si no hay ID de compra
+	}
+	
 
 	/*=============================================
 	REGISTRO DE COMPRAS
@@ -67,37 +88,78 @@ class ModeloCompras{
 
 	}
 
-	/*=============================================
-	EDITAR COMPRA
-	=============================================*/
+/*=============================================
+	REGISTRO DE COMPRAS Y DETALLE (OPTIMIZADO PARA COLUMNAS VIRTUALES)
+=============================================*/
+static public function mdlRegistrarCompra($tabla, $datos){
 
-	// static public function mdlEditarCompra($tabla, $datos){
+	// Conexión a la base de datos
+	$conexion = Conexion::conectar();
 
-	// 	$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET  id_cliente = :id_cliente, id_vendedor = :id_vendedor, productos = :productos, impuesto = :impuesto, neto = :neto, total= :total, metodo_pago = :metodo_pago WHERE codigo = :codigo");
+	try {
+		// Iniciar la transacción
+		$conexion->beginTransaction();
 
-	// 	$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
-	// 	$stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
-	// 	$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
-	// 	$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
-	// 	$stmt->bindParam(":impuesto", $datos["impuesto"], PDO::PARAM_STR);
-	// 	$stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
-	// 	$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-	// 	$stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
+		// 1. Registrar la compra principal en la tabla "compras"
+		$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, total,id_usuario, id_proveedor) 
+									VALUES (:codigo, :total, :id_usuario, :id_proveedor)");
 
-	// 	if($stmt->execute()){
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
+		$stmt->bindParam(":id_proveedor", $datos["id_proveedor"], PDO::PARAM_INT);
 
-	// 		return "ok";
+		if (!$stmt->execute()) {
+			throw new Exception("Error al registrar la compra");
+		}
 
-	// 	}else{
+		// Obtener el ID de la compra recién registrada
+		$idCompra = $conexion->lastInsertId();
+		// Decodificar el JSON de productos a un array
+		$productos = json_decode($datos["productos"], true);  // true para convertir a array asociativo
 
-	// 		return "error";
-		
-	// 	}
+		if (!is_array($productos)) {
+			throw new Exception("Error: los productos no son un array válido.");
+		}
+		// 2. Preparar el statement para insertar los productos en "detalle_compra"
+		$stmtDetalle = $conexion->prepare("INSERT INTO detalle_compra(id_compra, id_producto, producto, cantidad, precio_compra,subtotal) 
+										   VALUES (:id_compra, :id_producto, :producto, :cantidad, :precio_compra, :subtotal)");
 
-	// 	$stmt->close();
-	// 	$stmt = null;
+		// Enlazamos los parámetros estáticos (que no cambian en el bucle)
+		$stmtDetalle->bindParam(":id_compra", $idCompra, PDO::PARAM_INT);
 
-	// }
+		// 3. Iterar sobre los productos para registrar el detalle de la compra
+		foreach ($productos as $producto) {
+
+			// Enlazar los parámetros dinámicos (que cambian en cada iteración)
+			$stmtDetalle->bindValue(":id_producto", $producto["id"], PDO::PARAM_INT);
+			$stmtDetalle->bindValue(":producto", $producto["descripcion"], PDO::PARAM_STR);
+			$stmtDetalle->bindValue(":cantidad", $producto["cantidad"], PDO::PARAM_INT);
+			$stmtDetalle->bindValue(":precio_compra", $producto["precio"], PDO::PARAM_INT);
+			$stmtDetalle->bindValue(":subtotal", $producto["total"], PDO::PARAM_STR);
+
+			// Ejecutar el registro para cada producto
+			if (!$stmtDetalle->execute()) {
+				throw new Exception("Error al registrar el detalle de la compra: " . implode(", ", $stmtDetalle->errorInfo()));
+			}
+		}
+
+		// Confirmar la transacción si todo sale bien
+		$conexion->commit();
+
+		return "ok";
+
+	} catch (Exception $e) {
+		// Revertir la transacción en caso de error y mostrar el mensaje de error detallado
+		$conexion->rollBack();
+		return "error: " . $e->getMessage();
+	} finally {
+		// Cerrar las conexiones
+		$stmt = null;
+		$stmtDetalle = null;
+		$conexion = null;
+	}
+}
 
 	/*=============================================
 	ELIMINAR VENTA

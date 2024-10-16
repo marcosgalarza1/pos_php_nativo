@@ -426,3 +426,24 @@ MODAL AGREGAR CLIENTE
   </div>
 
 </div>
+<script>
+var popupWindow = null;
+
+function generatePDFVenta(idcompra) {
+  const codigoCompra = idcompra;
+  const url = 'extensiones/tcpdf/pdf/extracto-compra.php?codigo=' + encodeURIComponent(codigoCompra);
+  
+  // Abrir el PDF en una nueva pestaña
+  var popupWindow = window.open(url, '_blank');
+
+  // Comprobar si la ventana emergente se ha abierto
+  if (popupWindow) {
+      popupWindow.focus(); // Enfocar la nueva ventana
+      setTimeout(function() {
+          window.location.reload(); // Recargar la página actual
+      }, 100); // Espera 100 ms para asegurarse de que la nueva pestaña se abra
+  } else {
+      alert('Por favor, permita las ventanas emergentes para este sitio.'); // Mensaje si se bloqueó la ventana emergente
+  }
+}
+</script>

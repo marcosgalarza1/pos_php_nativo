@@ -15,6 +15,12 @@ class ControladorCompras{
 		return $respuesta;
 
 	}
+	static public function ctrMostrarDetalleCompras($idCompra){
+
+		$respuesta = ModeloCompras::mdlMostrarDetalleCompras($idCompra);
+		return $respuesta;
+
+	}
 
 	/*=============================================
 	CREAR COMPRA
@@ -87,53 +93,18 @@ class ControladorCompras{
 						   "id_proveedor"=>$_POST["seleccionarProveedor"],
 						   "codigo"=>$_POST["nuevaCompra"],
 						   "productos"=>$_POST["listaProductos"],
-						//    "impuesto"=>$_POST["nuevoPrecioImpuesto"],
-						//    "neto"=>$_POST["nuevoPrecioNeto"],
 						   "total"=>$_POST["totalCompra"]
-						//    "metodo_pago"=>$_POST["listaMetodoPago"]
 						);
 			
-			$respuesta = ModeloCompras::mdlIngresarCompra($tabla, $datos);
+			// $respuesta = ModeloCompras::mdlIngresarCompra($tabla, $datos);
+			$respuesta = ModeloCompras::mdlRegistrarCompra($tabla, $datos);
 
 			if($respuesta == "ok"){
 
-				$codigoCompra = $_POST["nuevaCompra"];
+			    $codigoCompra = $_POST["nuevaCompra"];
 				echo "<script type='text/javascript'>
-				     window.open('extensiones/tcpdf/pdf/extracto-compra.php?codigo={$codigoCompra}', '_blank');
-				      ";
-
-					  
-					  echo '
-
-				
-
-					window.location = "crear-compra";
-
-							
-
-				</script>'; 
-
-				/* echo'<script>
-
-				localStorage.removeItem("rango");
-
-				swal({
-					  type: "success",
-					  title: "La compra ha sido guardada correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar"
-					  }).then(function(result){
-								if (result.value) {
-
-								window.location = "compras";
-
-								}
-							})
-				
-				</script>';
- */
-				
-                 
+					generatePDFVenta(" . json_encode($codigoCompra) . "); 
+				</script>";
 			}
 
 		}
@@ -160,7 +131,8 @@ class ControladorCompras{
 			FORMATEAR TABLA DE PRODUCTOS Y LA DE CLIENTES
 			=============================================*/
 
-			$productos =  json_decode($traerCompra["productos"], true);
+			// $productos =  json_decode($traerCompra["productos"], true);
+			$productos = ModeloCompras::mdlMostrarDetalleCompras($valor);
 
 			$totalProductosComprados = array();
 
@@ -171,7 +143,7 @@ class ControladorCompras{
 				$tablaProductos = "productos";
 
 				$item = "id";
-				$valor = $value["id"];
+				$valor = $value["id_producto"];
 				$orden = "id";
 
 				$traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor, $orden);
@@ -183,7 +155,6 @@ class ControladorCompras{
 				$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
 
 			}
-
 
 			/*=============================================
 			ELIMINAR VENTA

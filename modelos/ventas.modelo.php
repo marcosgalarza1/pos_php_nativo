@@ -48,8 +48,6 @@ class ModeloVentas
 		$stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
 		$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
-	
-		
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
 		
 
@@ -65,6 +63,77 @@ class ModeloVentas
 		$stmt = null;
 	}
 
+
+	static public function mdlRegistrarVenta($tabla, $datos) {
+		// Conexión a la base de datos
+		$conexion = Conexion::conectar();
+	
+		try {
+			// Iniciar la transacción
+			$conexion->beginTransaction();
+	
+			// 1. Registrar la venta principal en la tabla "ventas"
+			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, productos, total) VALUES (:codigo, :id_cliente, :id_vendedor, :productos,  :total)");
+
+			$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
+			$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
+			$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
+			$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+
+			if (!$stmt->execute()) {
+				throw new Exception("Error al registrar la venta");
+			}
+	
+			// Obtener el ID de la venta recién registrada
+			$idVenta = $conexion->lastInsertId();
+	
+			// 2. Preparar el statement para insertar los productos en "detalle_venta"
+			$stmtDetalle = $conexion->prepare("INSERT INTO detalle_venta(id_venta, id_producto, producto, cantidad, precio_venta, precio_compra, subtotal) 
+											   VALUES (:id_venta, :id_producto, :producto, :cantidad, :precio_venta, :precio_compra, :subtotal)");
+	
+			// Enlazamos los parámetros estáticos (que no cambian en el bucle)
+			$stmtDetalle->bindParam(":id_venta", $idVenta, PDO::PARAM_INT);
+
+			$productos = json_decode($datos["productos"], true);  // true para convertir a array asociativo
+			// 3. Iterar sobre los productos para registrar el detalle de la venta
+			foreach ($productos as $producto) {
+				// Validar que las claves necesarias están definidas
+				if (!isset($producto["id"], $producto["descripcion"], $producto["cantidad"], $producto["precio"], $producto["precioCompra"], $producto["total"])) {
+					throw new Exception("Error: Producto incompleto. Asegúrate de que contiene id, descripcion, cantidad, precioVenta, precioCompra y subtotal.");
+				}
+				// Enlazar los parámetros dinámicos
+				$stmtDetalle->bindValue(":id_producto", $producto["id"], PDO::PARAM_INT);
+				$stmtDetalle->bindValue(":producto", $producto["descripcion"], PDO::PARAM_STR);
+				$stmtDetalle->bindValue(":cantidad", $producto["cantidad"], PDO::PARAM_INT);
+				$stmtDetalle->bindValue(":precio_venta", $producto["precio"], PDO::PARAM_STR);
+				$stmtDetalle->bindValue(":precio_compra", $producto["precioCompra"], PDO::PARAM_STR);
+				$stmtDetalle->bindValue(":subtotal", $producto["total"], PDO::PARAM_STR);
+	
+				// Ejecutar el registro para cada producto
+				if (!$stmtDetalle->execute()) {
+					throw new Exception("Error al registrar el detalle de la venta: " . implode(", ", $stmtDetalle->errorInfo()));
+				}
+			}
+	
+			// Confirmar la transacción si todo sale bien
+			$conexion->commit();
+	
+			return "ok";
+	
+		} catch (Exception $e) {
+			// Revertir la transacción en caso de error
+			$conexion->rollBack();
+			return "error: " . $e->getMessage();
+		} finally {
+			// Cerrar las conexiones
+			$stmt = null;
+			$stmtDetalle = null;
+			$conexion = null;
+		}
+	}
+
+	
 	/*=============================================
 	EDITAR VENTA
 	=============================================*/

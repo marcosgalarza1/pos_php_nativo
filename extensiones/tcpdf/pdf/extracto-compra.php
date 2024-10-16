@@ -22,9 +22,7 @@ class imprimirCompra {
         $itemCompra = "codigo";
         $valorCompra = $this->codigo;
         $respuestaCompra = ControladorCompras::ctrMostrarCompras($itemCompra, $valorCompra);
-
-        $fecha = substr($respuestaCompra["fecha_alta"], 0, -8);
-        $productos = json_decode($respuestaCompra["productos"], true);
+        $detalleCompra = ControladorCompras::ctrMostrarDetalleCompras($respuestaCompra['id']);
 
         // Convertir la fecha y hora a un objeto DateTime
         $fechaHoraObj = new DateTime($respuestaCompra["fecha_alta"]);
@@ -99,10 +97,10 @@ class imprimirCompra {
 
         // Imprimir los detalles de los productos
         $contador = 1;
-        foreach ($productos as $item) {
+        foreach ($detalleCompra as $item) {
 
-            $descripcion = isset($item["descripcion"]) ? $item["descripcion"] : '';
-            $precio = str_replace(',', '', $item["precio"]); // Eliminar comas del precio
+            $descripcion = isset($item["producto"]) ? $item["producto"] : '';
+            $precio = isset($item["precio_compra"]) ? str_replace(',', '', $item["precio_compra"]) : 0; // Asignar 0 si no está definido
             $precio = (float) $precio; // Convertir a float
             $importe = number_format($precio * $item["cantidad"], 2, '.', ',');
             $pdf->Cell(14, 5, $contador, 1, 0, 'L');

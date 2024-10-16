@@ -115,8 +115,9 @@ class ControladorVentas{
 						   "total"=>$_POST["totalVenta"]);
 						
 
-			$respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
-
+			// $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
+			$respuesta = ModeloVentas::mdlRegistrarVenta($tabla, $datos);
+			
 			if($respuesta == "ok"){
 
 				$codigoVenta = $_POST["nuevaVenta"];
