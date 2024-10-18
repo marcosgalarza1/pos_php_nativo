@@ -24,7 +24,8 @@ class imprimirFactura {
 
         $respuestaVenta = ControladorVentas::ctrMostrarVentas($itemVenta, $valorVenta);
         $fecha = date('d/m/Y H:i:s', strtotime($respuestaVenta["fecha"])); // Formatear la fecha y hora
-        $productos = json_decode($respuestaVenta["productos"], true);
+        $productos = ControladorVentas::ctrMostrarDetalleVentas($respuestaVenta['id']);
+
         $total = number_format($respuestaVenta["total"], 2);
         
 
@@ -86,11 +87,11 @@ class imprimirFactura {
             </tr>';
 
         foreach ($productos as $item) {
-            $valorUnitario = number_format($item["precio"], 2);
-            $precioTotal = number_format($item["total"], 2);
+            $valorUnitario = number_format($item["precio_venta"], 2);
+            $precioTotal = number_format($item["subtotal"], 2);
             $html .= '
             <tr>
-                <td>'.$item["descripcion"].'</td>
+                <td>'.$item["producto"].'</td>
                 <td style="text-align:center;">'.$item["cantidad"].'</td>
                 <td style="text-align:right;">'.$valorUnitario.'</td>
                 <td style="text-align:right;">'.$precioTotal.'</td>

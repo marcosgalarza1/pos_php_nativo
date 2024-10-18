@@ -80,11 +80,11 @@ class reporteTopProductosMasVendidos
         $contador = 1;
         $sumTotal = 0;
 
-        foreach ($respuestaDatos as $producto => $cantidad) {
-            $total =  $cantidad;
+        foreach ($respuestaDatos as $item) {
+            $total =  $item['cantidad'];
             $pdf->Cell(18, 5,  $contador, 1, 0, 'L');
-            $pdf->Cell(140, 5,  $producto, 1, 0, 'L');
-            $pdf->Cell(38, 5, $cantidad, 1, 1, 'R');
+            $pdf->Cell(140, 5,  $item['descripcion'], 1, 0, 'L');
+            $pdf->Cell(38, 5, $total, 1, 1, 'R');
     
             $contador++;
             $sumTotal += $total;
@@ -99,7 +99,7 @@ class reporteTopProductosMasVendidos
 
 
         // Salida del archivo PDF
-        $pdf->Output('factura.pdf', 'I');
+        $pdf->Output('top-producto-mas-vendidos.pdf', 'I');
     }
 }
 

@@ -35,6 +35,26 @@ class ModeloVentas
 		$stmt = null;
 	}
 
+	static public function mdlMostrarDetalleVentas($idVenta) {
+		if ($idVenta != null) {
+			// Preparar la consulta SQL correctamente
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM detalle_venta WHERE id_venta = :id_venta ORDER BY id ASC");
+	
+			// Enlazar el parámetro correctamente
+			$stmt->bindParam(":id_venta", $idVenta, PDO::PARAM_INT); // Cambiado a PDO::PARAM_INT si el ID es un entero
+	
+			// Ejecutar la consulta
+			$stmt->execute();
+	
+			// Devolver todos los resultados en lugar de solo uno
+			return $stmt->fetchAll(PDO::FETCH_ASSOC); // Cambiado a fetchAll para obtener todos los registros
+		}
+	
+		// No se necesita cerrar el stmt aquí si no se ejecuta
+		return null; // Devolver null si no hay ID de compra
+	}
+
+
 	/*=============================================
 	REGISTRO DE VENTA
 	=============================================*/
@@ -73,12 +93,11 @@ class ModeloVentas
 			$conexion->beginTransaction();
 	
 			// 1. Registrar la venta principal en la tabla "ventas"
-			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, productos, total) VALUES (:codigo, :id_cliente, :id_vendedor, :productos,  :total)");
+			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, total) VALUES (:codigo, :id_cliente, :id_vendedor,  :total)");
 
 			$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
 			$stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
 			$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
-			$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
 			$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
 
 			if (!$stmt->execute()) {
@@ -96,6 +115,7 @@ class ModeloVentas
 			$stmtDetalle->bindParam(":id_venta", $idVenta, PDO::PARAM_INT);
 
 			$productos = json_decode($datos["productos"], true);  // true para convertir a array asociativo
+			
 			// 3. Iterar sobre los productos para registrar el detalle de la venta
 			foreach ($productos as $producto) {
 				// Validar que las claves necesarias están definidas
@@ -366,8 +386,17 @@ class ModeloVentas
 		if ($fechaInicial <= $fechaFinal) {
 
 			// Consulta SQL para obtener las ventas en el rango de fechas
-			$query = "SELECT productos FROM $tabla WHERE DATE(fecha) BETWEEN :fechaInicio AND :fechaFin ORDER BY ventas.fecha ASC";
-
+			$query	= 	"SELECT 
+							COUNT(dv.id_producto) AS cant_ventas, 
+							dv.id_producto, 
+							SUM(dv.cantidad) AS cantidad, 
+							p.descripcion
+						FROM $tabla
+						JOIN detalle_venta AS dv ON ventas.id = dv.id_venta
+						JOIN productos AS p ON p.id = dv.id_producto
+						WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicio) AND DATE(:fechaFin)
+						GROUP BY dv.id_producto, p.descripcion
+						ORDER BY SUM(dv.cantidad) DESC;";
 
 			$stmt = Conexion::conectar()->prepare($query);
 			// Vincular los parámetros de las fechas
@@ -377,35 +406,9 @@ class ModeloVentas
 			$stmt->execute();
 			// Obtener los resultados
 			$ventas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-			// Crear un array para contar las cantidades por producto
-			$productosVendidos = [];
-
-			// Iterar sobre cada venta
-			foreach ($ventas as $venta) {
-				// Decodificar el JSON de productos
-				$productos = json_decode($venta['productos'], true);
-
-				// Iterar sobre cada producto en la venta
-				foreach ($productos as $producto) {
-					$nombreProducto = $producto['descripcion'];
-					$cantidad = intval($producto['cantidad']);
-
-					// Si el producto ya existe en el array, sumamos la cantidad
-					if (isset($productosVendidos[$nombreProducto])) {
-						$productosVendidos[$nombreProducto] += $cantidad;
-					} else {
-						// Si no, lo añadimos al array
-						$productosVendidos[$nombreProducto] = $cantidad;
-					}
-				}
-			}
-
-			// Ordenar los productos por cantidad en orden descendente
-			arsort($productosVendidos);
-
+	
 			// Devolver los productos más vendidos
-			return $productosVendidos;
+			return $ventas;
 			// return $stmt->fetchAll();
 		}
 	}

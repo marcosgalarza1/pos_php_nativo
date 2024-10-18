@@ -15,6 +15,13 @@ class ControladorVentas{
 		return $respuesta;
 
 	}
+	
+	static public function ctrMostrarDetalleVentas($idVenta){
+
+		$respuesta = ModeloVentas::mdlMostrarDetalleVentas($idVenta);
+		return $respuesta;
+
+	}
 
 	/*=============================================
 	CREAR VENTA
@@ -122,19 +129,9 @@ class ControladorVentas{
 
 				$codigoVenta = $_POST["nuevaVenta"];
 				echo "<script type='text/javascript'>
-				     window.open('extensiones/tcpdf/pdf/factura.php?codigo={$codigoVenta}', '_blank');
-				      </script>";
-
-
-					  echo'<script>
-
-				
-
-					window.location = "crear-venta";
-
-							
-
-				</script>'; 
+				     	window.open('extensiones/tcpdf/pdf/factura.php?codigo={$codigoVenta}', '_blank');
+				  		window.location = 'crear-venta';
+					</script>"; 
 
 				/* echo'<script>
 

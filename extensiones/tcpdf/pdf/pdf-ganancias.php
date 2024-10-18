@@ -128,9 +128,9 @@ class PdfGanancias
             $pdf->Cell(30, 5, utf8_decode($ganancia['vendedor']), 1, 0, 'L');
             $pdf->Cell(50, 5, utf8_decode($ganancia['cliente']), 1, 0, 'L');
             $pdf->Cell(24, 5, $ganancia['total'], 1, 0, 'L');
-            $pdf->Cell(24, 5, $ganancia['ganancias'], 1, 1, 'R');
+            $pdf->Cell(24, 5, $ganancia['ganancia'], 1, 1, 'R');
             $sum = $sum + $ganancia['total'];
-            $sum_ganancias = $sum_ganancias + $ganancia['ganancias'];
+            $sum_ganancias = $sum_ganancias + $ganancia['ganancia'];
             $contador++;
 
             if ($contador == $cortar) {

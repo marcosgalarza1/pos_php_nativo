@@ -1,3 +1,6 @@
+ALTER TABLE ventas DROP COLUMN productos;
+ALTER TABLE compras DROP COLUMN productos;
+
 -- Tabla Detalle_Venta (Relaciona Producto y Venta)
 CREATE TABLE detalle_venta (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -23,3 +26,4 @@ CREATE TABLE detalle_compra (
     CONSTRAINT fk_detalle_compra_producto FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
     CONSTRAINT fk_detalle_compra_compra FOREIGN KEY (id_compra) REFERENCES compras(id) ON DELETE CASCADE
 );
+

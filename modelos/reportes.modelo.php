@@ -95,29 +95,19 @@ class ModeloReportes{
     static public function mdlObtenerGanancias($mes,$anio){
 
 		// Consulta SQL
-		$sql = "
-		SELECT 
-			v.id AS id_venta,
-			v.codigo AS codigo,
-			DATE(v.fecha) AS fecha,
-			c.nombre AS cliente,
-			u.nombre AS vendedor,
-			v.productos,
-			v.total
-		FROM 
-			ventas v
-		JOIN 
-			clientes c ON v.id_cliente = c.id
-		JOIN 
-			usuarios u ON v.id_vendedor = u.id
-		WHERE MONTH(v.fecha) = :mes 
-		AND	YEAR(v.fecha) = :anio 
-		ORDER BY 
-			v.fecha ASC;
-		";
+		$sql = "SELECT dv.id_venta,v.codigo,DATE(v.fecha) AS fecha,u.usuario as vendedor,c.nombre as cliente,v.total,SUM((p.precio_venta-p.precio_compra)*dv.cantidad) as ganancia
+				FROM detalle_venta as dv
+				JOIN ventas AS v ON dv.id_venta = v.id
+				JOIN productos AS p ON dv.id_producto = p.id
+				JOIN clientes AS c ON v.id_cliente = c.id
+				JOIN usuarios AS u ON v.id_vendedor = u.id
+				WHERE MONTH(v.fecha)= :mes 
+				AND YEAR(v.fecha)= :anio 
+				GROUP BY (dv.id_venta)
+				ORDER BY v.fecha ASC;";
+
         $ganancias = Conexion::conectar()->prepare($sql);
     
-
         $ganancias->bindParam(':mes', $mes, PDO::PARAM_INT);
         $ganancias->bindParam(':anio', $anio, PDO::PARAM_INT);
     
@@ -128,34 +118,9 @@ class ModeloReportes{
     
         // Liberar los recursos
         $ganancias->closeCursor();
-    
-
-		// Procesar los resultados y calcular las ganancias
-		$datosGanancias = [];
-
-		foreach ($datos as $fila) {
-			// Decodificar el JSON de productos
-			$productos = json_decode($fila['productos'], true);
-			$ganancia_total = 0;
-	
-			foreach ($productos as $producto) {
-				$precio = (float)$producto['precio'];
-				$precioCompra = isset($producto['precioCompra']) ? (float)$producto['precioCompra'] : 0;
-				
-				$ganancia = ($precio - $precioCompra) * $producto['cantidad'];
-				$ganancia_total += ($precioCompra>0)?$ganancia:0;
-			}
-	
-			// Agregar la columna 'ganancias' al resultado
-			$fila['ganancias'] = $ganancia_total;
-	
-			// Agregar la fila actualizada al nuevo array
-			$datosGanancias[] = $fila;
-		}
 
         // Retornar los datos
-        return $datosGanancias;
-
+        return $datos;
 		
     }
 
@@ -227,7 +192,6 @@ class ModeloReportes{
         $ganancias->bindParam(':yearFin', $yearFin, PDO::PARAM_INT);
         $ganancias->execute();
     
-        // Obtener los resultados
         $datos = $ganancias->fetchAll();
     
         // Liberar los recursos

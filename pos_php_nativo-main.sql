@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-09-2024 a las 06:14:38
+-- Tiempo de generación: 18-10-2024 a las 10:23:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pos_php_nativo-main`
+-- Base de datos: `pos2`
 --
 
 -- --------------------------------------------------------
@@ -87,7 +87,6 @@ CREATE TABLE `compras` (
   `id` int(11) NOT NULL,
   `codigo` int(11) NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `productos` text NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_proveedor` int(11) NOT NULL,
   `fecha_alta` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -97,10 +96,52 @@ CREATE TABLE `compras` (
 -- Volcado de datos para la tabla `compras`
 --
 
-INSERT INTO `compras` (`id`, `codigo`, `total`, `productos`, `id_usuario`, `id_proveedor`, `fecha_alta`) VALUES
-(1, 10001, 24740.00, '[{\"id\":\"1\",\"descripcion\":\"sopa de mani\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"7\",\"total\":\"140\"},{\"id\":\"2\",\"descripcion\":\"locro de gallina\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"10\",\"total\":\"200\"},{\"id\":\"3\",\"descripcion\":\"majadito de charque\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"10\",\"total\":\"200\"},{\"id\":\"4\",\"descripcion\":\"majadito de pato\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"10\",\"total\":\"200\"},{\"id\":\"5\",\"descripcion\":\"lomo montado\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"15\",\"total\":\"300\"},{\"id\":\"6\",\"descripcion\":\"keperi\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"15\",\"total\":\"300\"},{\"id\":\"7\",\"descripcion\":\"picante sencillo\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"15\",\"total\":\"300\"},{\"id\":\"8\",\"descripcion\":\"milaneza de pollo\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"15\",\"total\":\"300\"},{\"id\":\"9\",\"descripcion\":\"milaneza de carne\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"15\",\"total\":\"300\"},{\"id\":\"10\",\"descripcion\":\"chicharron de pollo\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"15\",\"total\":\"300\"},{\"id\":\"11\",\"descripcion\":\"picante mixto\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"20\",\"total\":\"400\"},{\"id\":\"12\",\"descripcion\":\"picante de lengua\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"20\",\"total\":\"400\"},{\"id\":\"13\",\"descripcion\":\"chorrellana\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"20\",\"total\":\"400\"},{\"id\":\"14\",\"descripcion\":\"pique macho entero\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"50\",\"total\":\"1000\"},{\"id\":\"15\",\"descripcion\":\"pique macho medio\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"30\",\"total\":\"600\"},{\"id\":\"16\",\"descripcion\":\"charque entero\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"60\",\"total\":\"1200\"},{\"id\":\"17\",\"descripcion\":\"charque medio\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"30\",\"total\":\"600\"},{\"id\":\"18\",\"descripcion\":\"chicharrón de chancho entero\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"50\",\"total\":\"1000\"},{\"id\":\"19\",\"descripcion\":\"chicharron de chancho medio\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"30\",\"total\":\"600\"},{\"id\":\"20\",\"descripcion\":\"milanesa picada de pollo\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"40\",\"total\":\"800\"},{\"id\":\"21\",\"descripcion\":\"milanesa picada de carne\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"40\",\"total\":\"800\"},{\"id\":\"22\",\"descripcion\":\"cola de lagarto\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"30\",\"total\":\"600\"},{\"id\":\"23\",\"descripcion\":\"chicharrón de surubí\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"40\",\"total\":\"800\"},{\"id\":\"24\",\"descripcion\":\"chancho a la cruz\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"50\",\"total\":\"1000\"},{\"id\":\"25\",\"descripcion\":\"cordero\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"70\",\"total\":\"1400\"},{\"id\":\"26\",\"descripcion\":\"pato entero\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"130\",\"total\":\"2600\"},{\"id\":\"27\",\"descripcion\":\"pato medio\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"50\",\"total\":\"1000\"},{\"id\":\"28\",\"descripcion\":\"pacumuto\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"50\",\"total\":\"1000\"},{\"id\":\"29\",\"descripcion\":\"costilla de cordero\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"50\",\"total\":\"1000\"},{\"id\":\"30\",\"descripcion\":\"planchita\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"80\",\"total\":\"1600\"},{\"id\":\"31\",\"descripcion\":\"jarra de chicha entera\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"10\",\"total\":\"200\"},{\"id\":\"32\",\"descripcion\":\"jarra de chicha media\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"4\",\"total\":\"80\"},{\"id\":\"33\",\"descripcion\":\"jarra de maracuyá entera\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"10\",\"total\":\"200\"},{\"id\":\"34\",\"descripcion\":\"jarra de maracuya media\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"4\",\"total\":\"80\"},{\"id\":\"35\",\"descripcion\":\"jarra de limonada entera\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"10\",\"total\":\"200\"},{\"id\":\"36\",\"descripcion\":\"jarra de limonada media\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"4\",\"total\":\"80\"},{\"id\":\"37\",\"descripcion\":\"jarra de mocochinchi entera\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"10\",\"total\":\"200\"},{\"id\":\"38\",\"descripcion\":\"jarra de mocochinchi media\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"4\",\"total\":\"80\"},{\"id\":\"39\",\"descripcion\":\"agua chica\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"6\",\"total\":\"120\"},{\"id\":\"40\",\"descripcion\":\"coca cola popular\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"8\",\"total\":\"160\"},{\"id\":\"41\",\"descripcion\":\"coca cola 2l\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"12\",\"total\":\"240\"},{\"id\":\"42\",\"descripcion\":\"cabaña 2l\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"13\",\"total\":\"260\"},{\"id\":\"43\",\"descripcion\":\"paceña\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"15\",\"total\":\"300\"},{\"id\":\"44\",\"descripcion\":\"huari\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"20\",\"total\":\"400\"},{\"id\":\"45\",\"descripcion\":\"cordillera\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"10\",\"total\":\"200\"},{\"id\":\"46\",\"descripcion\":\"vinos\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"30\",\"total\":\"600\"}]', 1, 1, '2024-09-23 04:20:51'),
-(2, 10002, 230.00, '[{\"id\":\"47\",\"descripcion\":\"agua  vital sin gas  2l\",\"cantidad\":\"10\",\"stock\":\"-10\",\"precio\":\"15\",\"total\":\"150\"},{\"id\":\"48\",\"descripcion\":\"vaso de mocochinchi\",\"cantidad\":\"10\",\"stock\":\"-10\",\"precio\":\"2\",\"total\":\"20\"},{\"id\":\"49\",\"descripcion\":\"vaso de limonada\",\"cantidad\":\"10\",\"stock\":\"-10\",\"precio\":\"2\",\"total\":\"20\"},{\"id\":\"50\",\"descripcion\":\"vaso de maracuya\",\"cantidad\":\"10\",\"stock\":\"-10\",\"precio\":\"2\",\"total\":\"20\"},{\"id\":\"51\",\"descripcion\":\"vaso de chicha\",\"cantidad\":\"10\",\"stock\":\"-10\",\"precio\":\"2\",\"total\":\"20\"}]', 1, 1, '2024-09-23 16:27:32'),
-(3, 10003, 80.00, '[{\"id\":\"51\",\"descripcion\":\"vaso de chicha\",\"cantidad\":\"20\",\"stock\":\"-20\",\"precio\":\"2\",\"total\":\"40\"},{\"id\":\"50\",\"descripcion\":\"vaso de maracuya\",\"cantidad\":\"20\",\"stock\":\"-11\",\"precio\":\"2\",\"total\":\"40\"}]', 1, 1, '2024-09-24 22:26:23');
+INSERT INTO `compras` (`id`, `codigo`, `total`, `id_usuario`, `id_proveedor`, `fecha_alta`) VALUES
+(1, 10001, 24740.00, 1, 1, '2024-09-23 04:20:51'),
+(2, 10002, 230.00, 1, 1, '2024-09-23 16:27:32'),
+(3, 10003, 80.00, 1, 1, '2024-09-24 22:26:23'),
+(6, 10004, 6.00, 1, 1, '2024-10-18 08:22:59');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_compra`
+--
+
+CREATE TABLE `detalle_compra` (
+  `id` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `id_compra` int(11) NOT NULL,
+  `producto` varchar(200) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_compra` decimal(10,2) NOT NULL,
+  `subtotal` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_compra`
+--
+
+INSERT INTO `detalle_compra` (`id`, `id_producto`, `id_compra`, `producto`, `cantidad`, `precio_compra`, `subtotal`) VALUES
+(1, 51, 6, 'vaso de chicha', 1, 2.00, 2.00),
+(2, 50, 6, 'vaso de maracuya', 2, 2.00, 4.00);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_venta`
+--
+
+CREATE TABLE `detalle_venta` (
+  `id` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `id_venta` int(11) NOT NULL,
+  `producto` varchar(200) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_venta` decimal(10,2) NOT NULL,
+  `precio_compra` decimal(10,2) NOT NULL,
+  `subtotal` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -175,8 +216,8 @@ INSERT INTO `productos` (`id`, `id_categoria`, `codigo`, `descripcion`, `imagen`
 (47, 2, '209', 'agua  vital sin gas  2l', 'vistas/img/productos/209/935.jpg', 8, 18, 15, 2, '2024-09-25 00:56:17'),
 (48, 4, '210', 'vaso de mocochinchi', 'vistas/img/productos/210/489.jpg', 4, 5, 2, 6, '2024-09-25 01:07:28'),
 (49, 4, '211', 'vaso de limonada', 'vistas/img/productos/211/142.png', 7, 5, 2, 3, '2024-09-25 02:09:38'),
-(50, 4, '212', 'vaso de maracuya', 'vistas/img/productos/212/630.png', 29, 5, 2, 1, '2024-09-24 22:26:23'),
-(51, 4, '213', 'vaso de chicha', 'vistas/img/productos/213/796.png', 19, 5, 2, 11, '2024-09-25 01:39:47'),
+(50, 4, '212', 'vaso de maracuya', 'vistas/img/productos/212/630.png', 31, 5, 2, 1, '2024-10-18 08:22:59'),
+(51, 4, '213', 'vaso de chicha', 'vistas/img/productos/213/796.png', 20, 5, 2, 11, '2024-10-18 08:22:59'),
 (52, 8, '801', 'prueba', 'vistas/img/productos/default/anonymous.png', 0, 12, 5, 0, '2024-09-25 05:35:10');
 
 -- --------------------------------------------------------
@@ -240,7 +281,6 @@ CREATE TABLE `ventas` (
   `codigo` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `id_vendedor` int(11) NOT NULL,
-  `productos` text NOT NULL,
   `total` float NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -249,27 +289,27 @@ CREATE TABLE `ventas` (
 -- Volcado de datos para la tabla `ventas`
 --
 
-INSERT INTO `ventas` (`id`, `codigo`, `id_cliente`, `id_vendedor`, `productos`, `total`, `fecha`) VALUES
-(1, 10001, 2, 2, '[{\"id\":\"1\",\"descripcion\":\"sopa de mani\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"10\",\"precioCompra\":\"7\",\"total\":\"10\"},{\"id\":\"31\",\"descripcion\":\"jarra de chicha entera\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"15\",\"precioCompra\":\"10\",\"total\":\"15\"}]', 25, '2023-09-23 04:23:21'),
-(2, 10002, 6, 2, '[{\"id\":\"14\",\"descripcion\":\"pique macho entero\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"70\",\"precioCompra\":\"50\",\"total\":\"70\"},{\"id\":\"41\",\"descripcion\":\"coca cola 2l\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"18\",\"precioCompra\":\"12\",\"total\":\"18\"}]', 88, '2024-09-23 04:23:47'),
-(3, 10003, 1, 1, '[{\"id\":\"14\",\"descripcion\":\"pique macho entero\",\"cantidad\":\"1\",\"stock\":\"18\",\"precio\":\"70\",\"precioCompra\":\"50\",\"total\":\"70\"},{\"id\":\"37\",\"descripcion\":\"jarra de mocochinchi entera\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"15\",\"precioCompra\":\"10\",\"total\":\"15\"}]', 85, '2024-09-23 05:14:41'),
-(4, 10004, 5, 1, '[{\"id\":\"5\",\"descripcion\":\"lomo montado\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"20\",\"precioCompra\":\"15\",\"total\":\"20\"},{\"id\":\"48\",\"descripcion\":\"vaso de mocochinchi\",\"cantidad\":\"1\",\"stock\":\"9\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"5\"}]', 25, '2024-09-23 16:28:10'),
-(5, 10005, 2, 1, '[{\"id\":\"1\",\"descripcion\":\"sopa de mani\",\"cantidad\":\"1\",\"stock\":\"18\",\"precio\":\"10\",\"precioCompra\":\"7\",\"total\":\"10\"},{\"id\":\"4\",\"descripcion\":\"majadito de pato\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"15\",\"precioCompra\":\"10\",\"total\":\"15\"},{\"id\":\"5\",\"descripcion\":\"lomo montado\",\"cantidad\":\"1\",\"stock\":\"18\",\"precio\":\"20\",\"precioCompra\":\"15\",\"total\":\"20\"},{\"id\":\"6\",\"descripcion\":\"keperi\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"20\",\"precioCompra\":\"15\",\"total\":\"20\"},{\"id\":\"48\",\"descripcion\":\"vaso de mocochinchi\",\"cantidad\":\"4\",\"stock\":\"5\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"20\"}]', 85, '2024-09-23 18:51:16'),
-(6, 10006, 1, 1, '[{\"id\":\"3\",\"descripcion\":\"majadito de charque\",\"cantidad\":\"10\",\"stock\":\"10\",\"precio\":\"15\",\"precioCompra\":\"10\",\"total\":\"150\"},{\"id\":\"2\",\"descripcion\":\"locro de gallina\",\"cantidad\":\"10\",\"stock\":\"10\",\"precio\":\"15\",\"precioCompra\":\"10\",\"total\":\"150\"},{\"id\":\"11\",\"descripcion\":\"picante mixto\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"25\",\"precioCompra\":\"20\",\"total\":\"25\"},{\"id\":\"51\",\"descripcion\":\"vaso de chicha\",\"cantidad\":\"10\",\"stock\":\"0\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"50\"}]', 375, '2024-09-22 18:53:38'),
-(9, 10007, 1, 1, '[{\"id\":\"50\",\"descripcion\":\"vaso de maracuya\",\"cantidad\":\"1\",\"stock\":\"9\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"5\"}]', 5, '2024-09-24 15:57:40'),
-(10, 10008, 1, 1, '[{\"id\":\"49\",\"descripcion\":\"vaso de limonada\",\"cantidad\":\"1\",\"stock\":\"9\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"5\"}]', 5, '2024-09-24 15:57:50'),
-(11, 10009, 6, 2, '[{\"id\":\"15\",\"descripcion\":\"pique macho medio\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"45\",\"total\":\"45\"},{\"id\":\"1\",\"descripcion\":\"sopa de mani\",\"cantidad\":\"1\",\"stock\":\"17\",\"precio\":\"10\",\"total\":\"10\"}]', 45, '2024-09-24 19:44:11'),
-(12, 10010, 1, 1, '[{\"id\":\"25\",\"descripcion\":\"cordero\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"80\",\"precioCompra\":\"70\",\"total\":\"80\"},{\"id\":\"47\",\"descripcion\":\"agua  vital sin gas  2l\",\"cantidad\":\"1\",\"stock\":\"9\",\"precio\":\"18\",\"precioCompra\":\"15\",\"total\":\"18\"}]', 98, '2024-09-24 23:04:42'),
-(13, 10011, 1, 1, '[{\"id\":\"11\",\"descripcion\":\"picante mixto\",\"cantidad\":\"1\",\"stock\":\"18\",\"precio\":\"25\",\"precioCompra\":\"20\",\"total\":\"25\"},{\"id\":\"47\",\"descripcion\":\"agua  vital sin gas  2l\",\"cantidad\":\"1\",\"stock\":\"8\",\"precio\":\"18\",\"precioCompra\":\"15\",\"total\":\"18\"}]', 43, '2024-09-25 00:56:17'),
-(14, 10012, 1, 1, '[{\"id\":\"48\",\"descripcion\":\"vaso de mocochinchi\",\"cantidad\":\"1\",\"stock\":\"4\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"5\"}]', 5, '2024-09-25 01:07:28'),
-(15, 10013, 1, 1, '[{\"id\":\"51\",\"descripcion\":\"vaso de chicha\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"5\"}]', 5, '2024-09-25 01:39:47'),
-(16, 10014, 2, 1, '[{\"id\":\"1\",\"descripcion\":\"sopa de mani\",\"cantidad\":\"1\",\"stock\":\"16\",\"precio\":\"10\",\"precioCompra\":\"7\",\"total\":\"10\"},{\"id\":\"49\",\"descripcion\":\"vaso de limonada\",\"cantidad\":\"1\",\"stock\":\"8\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"5\"}]', 15, '2024-09-25 02:02:12'),
-(17, 10015, 1, 1, '[{\"id\":\"20\",\"descripcion\":\"milanesa picada de pollo\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"50\",\"precioCompra\":\"40\",\"total\":\"50\"},{\"id\":\"19\",\"descripcion\":\"chicharron de chancho medio\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"45\",\"precioCompra\":\"30\",\"total\":\"45\"},{\"id\":\"18\",\"descripcion\":\"chicharrón de chancho entero\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"70\",\"precioCompra\":\"50\",\"total\":\"70\"}]', 165, '2024-09-25 02:02:23'),
-(18, 10016, 2, 1, '[{\"id\":\"46\",\"descripcion\":\"vinos tinto \",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"45\",\"precioCompra\":\"30\",\"total\":\"45\"},{\"id\":\"45\",\"descripcion\":\"cerveza cordillera\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"15\",\"precioCompra\":\"10\",\"total\":\"15\"},{\"id\":\"44\",\"descripcion\":\"cerveza huari\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"25\",\"precioCompra\":\"20\",\"total\":\"25\"}]', 85, '2024-09-25 02:02:31'),
-(19, 10017, 2, 1, '[{\"id\":\"42\",\"descripcion\":\"cabaña 2l\",\"cantidad\":\"1\",\"stock\":\"19\",\"precio\":\"18\",\"precioCompra\":\"13\",\"total\":\"18\"},{\"id\":\"43\",\"descripcion\":\"cerveza paceña\",\"cantidad\":\"10\",\"stock\":\"10\",\"precio\":\"22\",\"precioCompra\":\"15\",\"total\":\"220\"},{\"id\":\"45\",\"descripcion\":\"cerveza cordillera\",\"cantidad\":\"15\",\"stock\":\"4\",\"precio\":\"15\",\"precioCompra\":\"10\",\"total\":\"225\"}]', 463, '2024-09-25 02:02:48'),
-(20, 10018, 1, 1, '[{\"id\":\"1\",\"descripcion\":\"sopa de mani\",\"cantidad\":\"1\",\"stock\":\"15\",\"precio\":\"10\",\"precioCompra\":\"7\",\"total\":\"10\"}]', 10, '2024-09-25 02:08:11'),
-(21, 10019, 1, 1, '[{\"id\":\"49\",\"descripcion\":\"vaso de limonada\",\"cantidad\":\"1\",\"stock\":\"7\",\"precio\":\"5\",\"precioCompra\":\"2\",\"total\":\"5\"}]', 5, '2024-09-25 02:09:38'),
-(22, 10020, 1, 1, '[{\"id\":\"1\",\"descripcion\":\"sopa de mani\",\"cantidad\":\"1\",\"stock\":\"-2147483649\",\"precio\":\"10\",\"precioCompra\":\"7\",\"total\":\"10\"}]', 10, '2024-09-25 05:27:42');
+INSERT INTO `ventas` (`id`, `codigo`, `id_cliente`, `id_vendedor`, `total`, `fecha`) VALUES
+(1, 10001, 2, 2, 25, '2023-09-23 04:23:21'),
+(2, 10002, 6, 2, 88, '2024-09-23 04:23:47'),
+(3, 10003, 1, 1, 85, '2024-09-23 05:14:41'),
+(4, 10004, 5, 1, 25, '2024-09-23 16:28:10'),
+(5, 10005, 2, 1, 85, '2024-09-23 18:51:16'),
+(6, 10006, 1, 1, 375, '2024-09-22 18:53:38'),
+(9, 10007, 1, 1, 5, '2024-09-24 15:57:40'),
+(10, 10008, 1, 1, 5, '2024-09-24 15:57:50'),
+(11, 10009, 6, 2, 45, '2024-09-24 19:44:11'),
+(12, 10010, 1, 1, 98, '2024-09-24 23:04:42'),
+(13, 10011, 1, 1, 43, '2024-09-25 00:56:17'),
+(14, 10012, 1, 1, 5, '2024-09-25 01:07:28'),
+(15, 10013, 1, 1, 5, '2024-09-25 01:39:47'),
+(16, 10014, 2, 1, 15, '2024-09-25 02:02:12'),
+(17, 10015, 1, 1, 165, '2024-09-25 02:02:23'),
+(18, 10016, 2, 1, 85, '2024-09-25 02:02:31'),
+(19, 10017, 2, 1, 463, '2024-09-25 02:02:48'),
+(20, 10018, 1, 1, 10, '2024-09-25 02:08:11'),
+(21, 10019, 1, 1, 5, '2024-09-25 02:09:38'),
+(22, 10020, 1, 1, 10, '2024-09-25 05:27:42');
 
 --
 -- Índices para tablas volcadas
@@ -294,6 +334,22 @@ ALTER TABLE `compras`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_compra_usuario` (`id_usuario`),
   ADD KEY `fk_compra_proveedor` (`id_proveedor`);
+
+--
+-- Indices de la tabla `detalle_compra`
+--
+ALTER TABLE `detalle_compra`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_detalle_compra_producto` (`id_producto`),
+  ADD KEY `fk_detalle_compra_compra` (`id_compra`);
+
+--
+-- Indices de la tabla `detalle_venta`
+--
+ALTER TABLE `detalle_venta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_producto` (`id_producto`),
+  ADD KEY `fk_venta` (`id_venta`);
 
 --
 -- Indices de la tabla `productos`
@@ -342,7 +398,19 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_compra`
+--
+ALTER TABLE `detalle_compra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_venta`
+--
+ALTER TABLE `detalle_venta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -378,6 +446,20 @@ ALTER TABLE `ventas`
 ALTER TABLE `compras`
   ADD CONSTRAINT `fk_compra_proveedor` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedor` (`id`),
   ADD CONSTRAINT `fk_compra_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
+
+--
+-- Filtros para la tabla `detalle_compra`
+--
+ALTER TABLE `detalle_compra`
+  ADD CONSTRAINT `fk_detalle_compra_compra` FOREIGN KEY (`id_compra`) REFERENCES `compras` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_detalle_compra_producto` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `detalle_venta`
+--
+ALTER TABLE `detalle_venta`
+  ADD CONSTRAINT `fk_producto` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_venta` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
