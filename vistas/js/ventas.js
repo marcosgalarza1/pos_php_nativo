@@ -148,7 +148,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 
 	        // AGREGAR IMPUESTO
 
-	        agregarImpuesto()
+	        //agregarImpuesto()
 
 	        // AGRUPAR PRODUCTOS EN FORMATO JSON
 
@@ -238,7 +238,7 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 
     	// AGREGAR IMPUESTO
 	        
-        agregarImpuesto()
+        //agregarImpuesto()
 
         // AGRUPAR PRODUCTOS EN FORMATO JSON
 
@@ -312,7 +312,7 @@ $(".btnAgregarProducto").click(function(){
 	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 	                 
 	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>'+
-	 
+				  '<input type="hidden" precioRealCompra="" name="nuevoPrecioCompraProducto"  class="nuevoPrecioCompraProducto" value=""  >'+
 	            '</div>'+
 	             
 	          '</div>'+
@@ -343,7 +343,7 @@ $(".btnAgregarProducto").click(function(){
 
     		// AGREGAR IMPUESTO
 	        
-	        agregarImpuesto()
+	        //agregarImpuesto()
 
 	        // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
 
@@ -447,7 +447,7 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 
 	// AGREGAR IMPUESTO----------------
 	        
-    agregarImpuesto()
+    //agregarImpuesto()
 
     // AGRUPAR PRODUCTOS EN FORMATO JSON------------------
 
