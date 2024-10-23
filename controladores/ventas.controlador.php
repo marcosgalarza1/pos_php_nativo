@@ -564,18 +564,19 @@ class ControladorVentas{
 			 			<td style='border:1px solid #eee;'>".$vendedor["nombre"]."</td>
 			 			<td style='border:1px solid #eee;'>");
 
-			 	$productos =  json_decode($item["productos"], true);
+			
+				$productos = ModeloVentas::mdlMostrarDetalleVentas($item["id"]);
 
-			 	foreach ($productos as $key => $valueProductos) {
+			 	foreach ($productos as $valueProductos) {
 			 			
 			 			echo utf8_decode($valueProductos["cantidad"]."<br>");
 			 		}
 
 			 	echo utf8_decode("</td><td style='border:1px solid #eee;'>");	
 
-		 		foreach ($productos as $key => $valueProductos) {
+		 		foreach ($productos as $valueProductos) {
 			 			
-		 			echo utf8_decode($valueProductos["descripcion"]."<br>");
+		 			echo utf8_decode($valueProductos["producto"]."<br>");
 		 		
 		 		}
 
