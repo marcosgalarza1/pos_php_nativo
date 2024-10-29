@@ -614,21 +614,25 @@ $("#nuevoMetodoPago").change(function(){
 
 })|
 
-
 /*=============================================
 CAMBIO EN EFECTIVO
 =============================================*/
-$(".formularioVenta").on("change", "input#nuevoValorEfectivo", function(){
+$(".formularioVenta").on("input", "input#nuevoValorEfectivo", function() {
 
-	var efectivo = $(this).val();
+    var efectivo = $(this).val();
+    var totalVenta = Number($('#nuevoTotalVenta').val());
+    var cambio = Number(efectivo) - totalVenta;
 
-	var cambio =  Number(efectivo) - Number($('#nuevoTotalVenta').val());
+    // Asegurarse de que el cambio no sea negativo
+    cambio = cambio < 0 ? 0 : cambio;
 
-	var nuevoCambioEfectivo = $(this).parent().parent().parent().children('#capturarCambioEfectivo').children().children('#nuevoCambioEfectivo');
+    var nuevoCambioEfectivo = $(this).closest('.cajasMetodoPago')
+        .find('#nuevoCambioEfectivo');
 
-	nuevoCambioEfectivo.val(cambio);
+    nuevoCambioEfectivo.val(cambio.toFixed(2)); // Asegura dos decimales
 
-})
+});
+
 
 /*=============================================
 CAMBIO TRANSACCIÓN
