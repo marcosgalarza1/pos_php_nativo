@@ -37,9 +37,14 @@ if($_SESSION["perfil"] == "Especial"){
     <div class="box">
 
       <div class="box-header with-border">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">
+      <!--   <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">
           Agregar Meseros
-        </button>
+        </button> -->
+        <a href="agregar-cliente" class="btn btn-primary">
+       Agregar Meseros
+       </a>
+      &nbsp;
+
         <a class="btn btn-primary" target="_blank" href="reporte_cliente.php">
             <i class="material-icons"></i>
             <span class="icon-name"> Imprimir </span>

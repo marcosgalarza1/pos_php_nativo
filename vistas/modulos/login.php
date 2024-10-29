@@ -9,8 +9,8 @@
   </div>
 
   <div class="login-box-body">
-
-    <p class="login-box-msg">INGRESAR AL SISTEMA</p>
+    
+    <p class="login-box-msg">¡INTRODUZCA SU USUARIO Y CONTRASEÑA!</p>
 
     <form method="post">
 
@@ -32,7 +32,7 @@
 
             <div class="col-xs-12 tex-center">
         <button type="submit" class="btn btn- btn-block btn-flat mx-auto"
-             style="border-radius: 10px; background: black; color: white;">INICIAR</button>
+             style="border-radius: 10px; background: black; color: white;">INICIAR SESIÓN</button>
             </div>
     </div>
 

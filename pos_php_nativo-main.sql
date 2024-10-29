@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2024 a las 10:23:53
+-- Tiempo de generación: 28-10-2024 a las 02:35:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pos2`
+-- Base de datos: `pos_php_nativo-main`
 --
 
 -- --------------------------------------------------------
@@ -41,8 +41,7 @@ INSERT INTO `categorias` (`id`, `categoria`, `fecha`) VALUES
 (1, 'comidas', '2024-09-23 02:51:11'),
 (2, 'bebidas', '2024-09-23 02:57:54'),
 (3, 'horneados', '2024-09-23 02:58:10'),
-(4, 'jugos ', '2024-09-23 02:58:38'),
-(8, 'bottellas', '2024-09-25 03:32:24');
+(4, 'jugos ', '2024-09-23 02:58:38');
 
 -- --------------------------------------------------------
 
@@ -66,16 +65,11 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `nombre`, `documento`, `telefono`, `direccion`, `compras`, `ultima_compra`, `fecha`) VALUES
-(1, 'publico en general', 's/n', ' 000-00-000', 's/n', 47, '2024-09-25 01:27:42', '2024-09-25 05:27:42'),
-(2, 'axel justiniano', '9814785 sc', ' 778-55-454', '4to anillo', 41, '2024-09-24 22:02:48', '2024-09-25 02:02:48'),
-(3, 'jhoel cortjiri lopez', '5838014 sc', ' 778-85-781', 'tres pasos al frente', 0, '0000-00-00 00:00:00', '2024-09-23 04:10:07'),
-(4, 'edil gutierrez', '2858364 sc', ' 787-45-654', 'plan 3000', 0, '0000-00-00 00:00:00', '2024-09-23 04:11:19'),
-(5, 'andrea pacheco', '14160832 SC', ' 776-70-470', 'av cañoto', 2, '2024-09-23 12:28:10', '2024-09-23 16:28:10'),
-(6, 'carla pinto ', '13653407 sc', ' 713-10-387', 'el bation', 4, '2024-09-24 15:44:11', '2024-09-24 19:44:11'),
-(7, 'anyi gongora', '14160832 SC', ' 776-70-470', 'dulce hogar', 0, '0000-00-00 00:00:00', '2024-09-23 04:14:26'),
-(8, 'sebastian gongora', '13030292 SC', ' 745-11-837', 'dulce hogar', 0, '0000-00-00 00:00:00', '2024-09-23 04:15:10'),
-(9, 'israel mendoza', '12503126 sc', ' 687-54-834', 'cabañas el gallito', 0, '0000-00-00 00:00:00', '2024-09-23 04:16:44'),
-(10, 'rodrigo quisbert', '13030291 sc', ' 622-16-145', 'plan 3000', 0, '0000-00-00 00:00:00', '2024-09-23 04:17:46');
+(1, 'publico en general', 's/n', ' 000-00-000', 's/n', 106, '2024-10-27 21:02:35', '2024-10-28 01:02:35'),
+(2, 'axel justitiano', '8485456', ' 776-34-88_', 'moscu', 23, '2024-10-24 00:16:17', '2024-10-24 04:16:17'),
+(3, 'andrea pacheco', '48758897 SC', ' 776-30-477', '2do anillo', 4, '2024-10-21 21:34:36', '2024-10-22 01:34:36'),
+(4, 'alexander cespedes', '98945484', ' 776-30-484', 'barrio caminero', 0, '0000-00-00 00:00:00', '2024-10-27 23:46:45'),
+(5, 'china', '747484768sc', '787-84-854', 'barrio cabañas', 0, '0000-00-00 00:00:00', '2024-10-27 23:50:50');
 
 -- --------------------------------------------------------
 
@@ -97,10 +91,11 @@ CREATE TABLE `compras` (
 --
 
 INSERT INTO `compras` (`id`, `codigo`, `total`, `id_usuario`, `id_proveedor`, `fecha_alta`) VALUES
-(1, 10001, 24740.00, 1, 1, '2024-09-23 04:20:51'),
-(2, 10002, 230.00, 1, 1, '2024-09-23 16:27:32'),
-(3, 10003, 80.00, 1, 1, '2024-09-24 22:26:23'),
-(6, 10004, 6.00, 1, 1, '2024-10-18 08:22:59');
+(1, 10001, 100.00, 1, 1, '2024-10-18 15:24:53'),
+(2, 10002, 90.00, 1, 1, '2024-10-18 15:35:00'),
+(3, 10003, 225.00, 1, 1, '2024-10-19 01:33:39'),
+(4, 10004, 60.00, 1, 1, '2024-10-19 01:34:45'),
+(5, 10005, 400.00, 1, 1, '2024-10-26 19:12:08');
 
 -- --------------------------------------------------------
 
@@ -123,8 +118,11 @@ CREATE TABLE `detalle_compra` (
 --
 
 INSERT INTO `detalle_compra` (`id`, `id_producto`, `id_compra`, `producto`, `cantidad`, `precio_compra`, `subtotal`) VALUES
-(1, 51, 6, 'vaso de chicha', 1, 2.00, 2.00),
-(2, 50, 6, 'vaso de maracuya', 2, 2.00, 4.00);
+(1, 48, 1, 'vaso de mocochinchi', 50, 2.00, 100.00),
+(2, 46, 2, 'vinos tinto ', 2, 45.00, 90.00),
+(3, 46, 3, 'vinos tinto ', 5, 45.00, 225.00),
+(4, 46, 4, 'vinos tinto ', 2, 30.00, 60.00),
+(5, 53, 5, 'pollo ala broaster economico', 50, 8.00, 400.00);
 
 -- --------------------------------------------------------
 
@@ -142,6 +140,116 @@ CREATE TABLE `detalle_venta` (
   `precio_compra` decimal(10,2) NOT NULL,
   `subtotal` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_venta`
+--
+
+INSERT INTO `detalle_venta` (`id`, `id_producto`, `id_venta`, `producto`, `cantidad`, `precio_venta`, `precio_compra`, `subtotal`) VALUES
+(1, 1, 1, 'sopa de mani', 1, 10.00, 7.00, 10.00),
+(2, 20, 2, 'milanesa picada de pollo', 1, 50.00, 40.00, 50.00),
+(3, 51, 8, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(4, 46, 9, 'vinos tinto ', 1, 45.00, 30.00, 45.00),
+(5, 47, 10, 'agua  vital sin gas  2l', 2, 18.00, 15.00, 36.00),
+(6, 50, 10, 'vaso de maracuya', 1, 5.00, 2.00, 5.00),
+(7, 47, 11, 'agua  vital sin gas  2l', 2, 18.00, 15.00, 36.00),
+(8, 48, 11, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(9, 1, 12, 'sopa de mani', 1, 10.00, 7.00, 10.00),
+(10, 11, 12, 'picante mixto', 1, 25.00, 20.00, 25.00),
+(11, 10, 12, 'chicharron de pollo', 1, 20.00, 15.00, 20.00),
+(12, 9, 12, 'milaneza de carne', 1, 20.00, 15.00, 20.00),
+(13, 8, 12, 'milaneza de pollo', 1, 20.00, 15.00, 20.00),
+(14, 7, 12, 'picante sencillo', 2, 20.00, 15.00, 40.00),
+(15, 51, 13, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(16, 50, 13, 'vaso de maracuya', 1, 5.00, 2.00, 5.00),
+(17, 49, 13, 'vaso de limonada', 1, 5.00, 2.00, 5.00),
+(18, 48, 13, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(19, 47, 13, 'agua  vital sin gas  2l', 1, 18.00, 15.00, 18.00),
+(20, 46, 13, 'vinos tinto ', 1, 45.00, 30.00, 45.00),
+(21, 45, 13, 'cerveza cordillera', 1, 15.00, 10.00, 15.00),
+(22, 44, 13, 'cerveza huari', 1, 25.00, 20.00, 25.00),
+(23, 43, 13, 'cerveza paceña', 1, 22.00, 15.00, 22.00),
+(24, 42, 13, 'cabaña 2l', 2, 18.00, 13.00, 36.00),
+(25, 1, 14, 'sopa de mani', 1, 10.00, 7.00, 10.00),
+(26, 46, 15, 'vinos tinto ', 1, 45.00, 30.00, 45.00),
+(27, 51, 18, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(28, 1, 18, 'sopa de mani', 1, 10.00, 7.00, 10.00),
+(29, 41, 18, 'coca cola 2l', 1, 18.00, 12.00, 18.00),
+(30, 46, 19, 'vinos tinto ', 2, 45.00, 30.00, 90.00),
+(31, 3, 20, 'majadito de charque', 1, 15.00, 10.00, 15.00),
+(32, 41, 20, 'coca cola 2l', 1, 18.00, 12.00, 18.00),
+(33, 51, 21, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(34, 1, 22, 'sopa de mani', 1, 10.00, 7.00, 10.00),
+(35, 5, 22, 'lomo montado', 1, 20.00, 15.00, 20.00),
+(36, 3, 23, 'majadito de charque', 1, 15.00, 10.00, 15.00),
+(37, 6, 23, 'keperi', 1, 20.00, 15.00, 20.00),
+(38, 41, 23, 'coca cola 2l', 1, 18.00, 12.00, 18.00),
+(39, 1, 24, 'sopa de mani', 1, 10.00, 7.00, 10.00),
+(40, 45, 25, 'cerveza cordillera', 2, 15.00, 10.00, 30.00),
+(41, 6, 26, 'keperi', 1, 20.00, 15.00, 20.00),
+(44, 50, 29, 'vaso de maracuya', 1, 5.00, 2.00, 5.00),
+(45, 49, 30, 'vaso de limonada', 1, 5.00, 2.00, 5.00),
+(46, 51, 31, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(47, 44, 32, 'cerveza huari', 2, 25.00, 20.00, 50.00),
+(48, 41, 33, 'coca cola 2l', 1, 18.00, 12.00, 18.00),
+(49, 1, 33, 'sopa de mani', 1, 10.00, 7.00, 10.00),
+(50, 49, 34, 'vaso de limonada', 1, 5.00, 2.00, 5.00),
+(51, 30, 35, 'planchita', 1, 100.00, 80.00, 100.00),
+(52, 51, 35, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(53, 2, 36, 'locro de gallina', 1, 15.00, 10.00, 15.00),
+(54, 48, 37, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(55, 53, 38, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(56, 48, 38, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(57, 51, 39, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(58, 51, 40, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(59, 53, 41, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(60, 49, 42, 'vaso de limonada', 1, 5.00, 2.00, 5.00),
+(61, 51, 43, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(62, 48, 43, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(63, 47, 43, 'agua  vital sin gas  2l', 1, 18.00, 15.00, 18.00),
+(64, 43, 43, 'cerveza paceña', 1, 22.00, 15.00, 22.00),
+(65, 44, 43, 'cerveza huari', 1, 25.00, 20.00, 25.00),
+(66, 4, 43, 'majadito de pato', 1, 15.00, 10.00, 15.00),
+(67, 5, 43, 'lomo montado', 1, 20.00, 15.00, 20.00),
+(68, 6, 43, 'keperi', 1, 20.00, 15.00, 20.00),
+(69, 7, 43, 'picante sencillo', 1, 20.00, 15.00, 20.00),
+(70, 10, 43, 'chicharron de pollo', 1, 20.00, 15.00, 20.00),
+(71, 9, 43, 'milaneza de carne', 1, 20.00, 15.00, 20.00),
+(72, 8, 43, 'milaneza de pollo', 1, 20.00, 15.00, 20.00),
+(73, 12, 43, 'picante de lengua', 1, 25.00, 20.00, 25.00),
+(74, 11, 43, 'picante mixto', 1, 25.00, 20.00, 25.00),
+(75, 2, 43, 'locro de gallina', 1, 15.00, 10.00, 15.00),
+(76, 1, 43, 'sopa de mani', 1, 10.00, 7.00, 10.00),
+(77, 53, 44, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(78, 50, 44, 'vaso de maracuya', 1, 5.00, 2.00, 5.00),
+(79, 51, 44, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(80, 49, 44, 'vaso de limonada', 1, 5.00, 2.00, 5.00),
+(81, 48, 44, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(82, 53, 45, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(83, 46, 45, 'vinos tinto ', 1, 45.00, 30.00, 45.00),
+(84, 48, 45, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(85, 51, 46, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(86, 48, 47, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(87, 50, 48, 'vaso de maracuya', 1, 5.00, 2.00, 5.00),
+(88, 51, 49, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(89, 53, 50, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(90, 53, 51, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(91, 53, 52, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(92, 53, 53, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(93, 53, 54, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(94, 50, 54, 'vaso de maracuya', 1, 5.00, 2.00, 5.00),
+(95, 51, 54, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(96, 49, 54, 'vaso de limonada', 1, 5.00, 2.00, 5.00),
+(97, 48, 54, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(98, 46, 54, 'vinos tinto ', 1, 45.00, 30.00, 45.00),
+(99, 43, 54, 'cerveza paceña', 1, 22.00, 15.00, 22.00),
+(100, 44, 54, 'cerveza huari', 1, 25.00, 20.00, 25.00),
+(101, 38, 54, 'jarra de mocochinchi media', 1, 8.00, 4.00, 8.00),
+(102, 37, 54, 'jarra de mocochinchi entera', 1, 15.00, 10.00, 15.00),
+(103, 39, 54, 'agua  vital chica 600ml', 1, 8.00, 6.00, 8.00),
+(104, 40, 54, 'coca cola popular', 1, 10.00, 8.00, 10.00),
+(105, 41, 54, 'coca cola 2l', 1, 18.00, 12.00, 18.00),
+(106, 42, 54, 'cabaña 2l', 1, 18.00, 13.00, 18.00);
 
 -- --------------------------------------------------------
 
@@ -167,18 +275,18 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `id_categoria`, `codigo`, `descripcion`, `imagen`, `stock`, `precio_venta`, `precio_compra`, `ventas`, `fecha`) VALUES
-(1, 1, '101', 'sopa de mani', 'vistas/img/productos/101/845.png', 14, 10, 7, 6, '2024-09-25 05:33:16'),
-(2, 1, '102', 'locro de gallina', 'vistas/img/productos/102/485.png', 10, 15, 10, 10, '2024-09-23 18:53:38'),
-(3, 1, '103', 'majadito de charque', 'vistas/img/productos/103/784.png', 10, 15, 10, 10, '2024-09-23 18:53:38'),
-(4, 1, '104', 'majadito de pato', 'vistas/img/productos/104/370.png', 19, 15, 10, 1, '2024-09-23 18:51:16'),
-(5, 1, '105', 'lomo montado', 'vistas/img/productos/105/639.png', 18, 20, 15, 2, '2024-09-23 18:51:16'),
-(6, 1, '106', 'keperi', 'vistas/img/productos/106/341.png', 19, 20, 15, 1, '2024-09-23 18:51:16'),
-(7, 1, '107', 'picante sencillo', 'vistas/img/productos/107/494.png', 20, 20, 15, 0, '2024-09-23 04:38:08'),
-(8, 1, '108', 'milaneza de pollo', 'vistas/img/productos/108/260.png', 20, 20, 15, 0, '2024-09-23 04:38:34'),
-(9, 1, '109', 'milaneza de carne', 'vistas/img/productos/109/919.png', 20, 20, 15, 0, '2024-09-23 15:56:31'),
-(10, 1, '110', 'chicharron de pollo', 'vistas/img/productos/110/564.jpg', 20, 20, 15, 0, '2024-09-23 16:08:22'),
-(11, 1, '111', 'picante mixto', 'vistas/img/productos/111/878.png', 18, 25, 20, 2, '2024-09-25 00:56:17'),
-(12, 1, '112', 'picante de lengua', 'vistas/img/productos/112/243.png', 20, 25, 20, 0, '2024-09-23 04:40:32'),
+(1, 1, '101', 'sopa de mani', 'vistas/img/productos/101/845.png', 6, 10, 7, 14, '2024-10-27 14:30:16'),
+(2, 1, '102', 'locro de gallina', 'vistas/img/productos/102/485.png', 8, 15, 10, 12, '2024-10-27 14:30:16'),
+(3, 1, '103', 'majadito de charque', 'vistas/img/productos/103/784.png', 8, 15, 10, 12, '2024-10-19 14:27:51'),
+(4, 1, '104', 'majadito de pato', 'vistas/img/productos/104/370.png', 18, 15, 10, 2, '2024-10-27 14:30:16'),
+(5, 1, '105', 'lomo montado', 'vistas/img/productos/105/639.png', 16, 20, 15, 4, '2024-10-27 14:30:16'),
+(6, 1, '106', 'keperi', 'vistas/img/productos/106/341.png', 16, 20, 15, 4, '2024-10-27 14:30:16'),
+(7, 1, '107', 'picante sencillo', 'vistas/img/productos/107/494.png', 17, 20, 15, 3, '2024-10-27 14:30:16'),
+(8, 1, '108', 'milaneza de pollo', 'vistas/img/productos/108/260.png', 18, 20, 15, 2, '2024-10-27 14:30:16'),
+(9, 1, '109', 'milaneza de carne', 'vistas/img/productos/109/919.png', 18, 20, 15, 2, '2024-10-27 14:30:16'),
+(10, 1, '110', 'chicharron de pollo', 'vistas/img/productos/110/564.jpg', 18, 20, 15, 2, '2024-10-27 14:30:16'),
+(11, 1, '111', 'picante mixto', 'vistas/img/productos/111/878.png', 16, 25, 20, 4, '2024-10-27 14:30:16'),
+(12, 1, '112', 'picante de lengua', 'vistas/img/productos/112/243.png', 19, 25, 20, 1, '2024-10-27 14:30:16'),
 (13, 1, '113', 'chorrellana', 'vistas/img/productos/113/676.png', 20, 25, 20, 0, '2024-09-23 04:40:58'),
 (14, 1, '114', 'pique macho entero', 'vistas/img/productos/114/339.png', 18, 70, 50, 2, '2024-09-23 05:14:41'),
 (15, 1, '115', 'pique macho medio', 'vistas/img/productos/115/508.png', 19, 45, 30, 1, '2024-09-24 19:44:11'),
@@ -186,7 +294,7 @@ INSERT INTO `productos` (`id`, `id_categoria`, `codigo`, `descripcion`, `imagen`
 (17, 1, '117', 'charque medio', 'vistas/img/productos/117/857.png', 20, 45, 30, 0, '2024-09-23 04:42:02'),
 (18, 1, '118', 'chicharrón de chancho entero', 'vistas/img/productos/118/617.png', 19, 70, 50, 1, '2024-09-25 02:02:23'),
 (19, 1, '119', 'chicharron de chancho medio', 'vistas/img/productos/119/234.png', 19, 45, 30, 1, '2024-09-25 02:02:23'),
-(20, 1, '120', 'milanesa picada de pollo', 'vistas/img/productos/120/678.png', 19, 50, 40, 1, '2024-09-25 02:02:23'),
+(20, 1, '120', 'milanesa picada de pollo', 'vistas/img/productos/120/678.png', 18, 50, 40, 2, '2024-10-18 15:23:39'),
 (21, 1, '121', 'milanesa picada de carne', 'vistas/img/productos/121/837.png', 20, 50, 40, 0, '2024-09-23 16:06:45'),
 (22, 1, '122', 'cola de lagarto', 'vistas/img/productos/122/741.png', 20, 50, 30, 0, '2024-09-23 04:44:48'),
 (23, 1, '123', 'chicharrón de surubí', 'vistas/img/productos/123/582.png', 20, 60, 40, 0, '2024-09-23 16:12:46'),
@@ -196,29 +304,29 @@ INSERT INTO `productos` (`id`, `id_categoria`, `codigo`, `descripcion`, `imagen`
 (27, 1, '127', 'pato medio', 'vistas/img/productos/127/431.png', 20, 80, 50, 0, '2024-09-23 16:17:54'),
 (28, 1, '128', 'pacumuto', 'vistas/img/productos/128/234.png', 20, 80, 50, 0, '2024-09-23 16:19:57'),
 (29, 1, '129', 'costilla de cordero', 'vistas/img/productos/129/255.png', 20, 80, 50, 0, '2024-09-23 16:09:43'),
-(30, 1, '130', 'planchita', 'vistas/img/productos/130/499.png', 20, 100, 80, 0, '2024-09-24 00:51:32'),
+(30, 1, '130', 'planchita', 'vistas/img/productos/130/499.png', 19, 100, 80, 1, '2024-10-24 04:16:17'),
 (31, 4, '401', 'jarra de chicha entera', 'vistas/img/productos/401/240.png', 19, 15, 10, 1, '2024-09-23 15:51:01'),
 (32, 4, '402', 'jarra de chicha media', 'vistas/img/productos/402/880.png', 20, 8, 4, 0, '2024-09-23 15:53:45'),
 (33, 4, '403', 'jarra de maracuyá entera', 'vistas/img/productos/403/800.png', 20, 15, 10, 0, '2024-09-23 15:45:54'),
 (34, 4, '404', 'jarra de maracuya media', 'vistas/img/productos/404/275.png', 20, 8, 4, 0, '2024-09-23 15:47:57'),
 (35, 4, '405', 'jarra de limonada entera', 'vistas/img/productos/405/460.png', 20, 15, 10, 0, '2024-09-23 15:40:12'),
 (36, 4, '406', 'jarra de limonada media', 'vistas/img/productos/406/864.png', 20, 8, 4, 0, '2024-09-23 15:43:44'),
-(37, 4, '407', 'jarra de mocochinchi entera', 'vistas/img/productos/407/988.jpg', 19, 15, 10, 1, '2024-09-23 05:14:41'),
-(38, 4, '408', 'jarra de mocochinchi media', 'vistas/img/productos/408/850.jpg', 20, 8, 4, 0, '2024-09-23 05:10:42'),
-(39, 2, '201', 'agua  vital chica 600ml', 'vistas/img/productos/201/314.jpg', 20, 8, 6, 0, '2024-09-23 05:03:31'),
-(40, 2, '202', 'coca cola popular', 'vistas/img/productos/202/572.jpg', 20, 10, 8, 0, '2024-09-23 05:01:13'),
-(41, 2, '203', 'coca cola 2l', 'vistas/img/productos/203/922.jpg', 19, 18, 12, 1, '2024-09-24 00:51:32'),
-(42, 2, '204', 'cabaña 2l', 'vistas/img/productos/204/211.jpg', 19, 18, 13, 1, '2024-09-25 02:02:48'),
-(43, 2, '205', 'cerveza paceña', 'vistas/img/productos/205/918.jpg', 10, 22, 15, 10, '2024-09-25 02:02:48'),
-(44, 2, '206', 'cerveza huari', 'vistas/img/productos/206/447.jpg', 19, 25, 20, 1, '2024-09-25 02:02:31'),
-(45, 2, '207', 'cerveza cordillera', 'vistas/img/productos/207/655.jpg', 4, 15, 10, 16, '2024-09-25 02:02:48'),
-(46, 2, '208', 'vinos tinto ', 'vistas/img/productos/208/641.jpg', 19, 45, 30, 1, '2024-09-25 02:02:31'),
-(47, 2, '209', 'agua  vital sin gas  2l', 'vistas/img/productos/209/935.jpg', 8, 18, 15, 2, '2024-09-25 00:56:17'),
-(48, 4, '210', 'vaso de mocochinchi', 'vistas/img/productos/210/489.jpg', 4, 5, 2, 6, '2024-09-25 01:07:28'),
-(49, 4, '211', 'vaso de limonada', 'vistas/img/productos/211/142.png', 7, 5, 2, 3, '2024-09-25 02:09:38'),
-(50, 4, '212', 'vaso de maracuya', 'vistas/img/productos/212/630.png', 31, 5, 2, 1, '2024-10-18 08:22:59'),
-(51, 4, '213', 'vaso de chicha', 'vistas/img/productos/213/796.png', 20, 5, 2, 11, '2024-10-18 08:22:59'),
-(52, 8, '801', 'prueba', 'vistas/img/productos/default/anonymous.png', 0, 12, 5, 0, '2024-09-25 05:35:10');
+(37, 4, '407', 'jarra de mocochinchi entera', 'vistas/img/productos/407/988.jpg', 18, 15, 10, 2, '2024-10-28 01:02:35'),
+(38, 4, '408', 'jarra de mocochinchi media', 'vistas/img/productos/408/850.jpg', 19, 8, 4, 1, '2024-10-28 01:02:35'),
+(39, 2, '201', 'agua  vital chica 600ml', 'vistas/img/productos/201/314.jpg', 19, 8, 6, 1, '2024-10-28 01:02:35'),
+(40, 2, '202', 'coca cola popular', 'vistas/img/productos/202/572.jpg', 19, 10, 8, 1, '2024-10-28 01:02:35'),
+(41, 2, '203', 'coca cola 2l', 'vistas/img/productos/203/922.jpg', 14, 18, 12, 6, '2024-10-28 01:02:35'),
+(42, 2, '204', 'cabaña 2l', 'vistas/img/productos/204/211.jpg', 14, 18, 13, 8, '2024-10-28 01:02:35'),
+(43, 2, '205', 'cerveza paceña', 'vistas/img/productos/205/918.jpg', 7, 22, 15, 13, '2024-10-28 01:02:35'),
+(44, 2, '206', 'cerveza huari', 'vistas/img/productos/206/447.jpg', 14, 25, 20, 6, '2024-10-28 01:02:35'),
+(45, 2, '207', 'cerveza cordillera', 'vistas/img/productos/207/655.jpg', 0, 15, 10, 20, '2024-10-22 01:32:34'),
+(46, 2, '208', 'vinos tinto ', 'vistas/img/productos/208/641.jpg', 16, 45, 30, 17, '2024-10-28 01:02:35'),
+(47, 2, '209', 'agua  vital sin gas  2l', 'vistas/img/productos/209/935.jpg', 0, 18, 15, 12, '2024-10-27 14:30:16'),
+(48, 4, '210', 'vaso de mocochinchi', 'vistas/img/productos/210/489.jpg', 45, 5, 2, 15, '2024-10-28 01:02:35'),
+(49, 4, '211', 'vaso de limonada', 'vistas/img/productos/211/142.png', 1, 5, 2, 9, '2024-10-28 01:02:35'),
+(50, 4, '212', 'vaso de maracuya', 'vistas/img/productos/212/630.png', 23, 5, 2, 7, '2024-10-28 01:02:35'),
+(51, 4, '213', 'vaso de chicha', 'vistas/img/productos/213/796.png', 5, 5, 2, 25, '2024-10-28 01:02:35'),
+(53, 1, '131', 'pollo ala broaster economico', 'vistas/img/productos/131/417.jpg', 41, 12, 8, 9, '2024-10-28 01:02:35');
 
 -- --------------------------------------------------------
 
@@ -266,9 +374,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`) VALUES
-(1, 'Maria mendoza', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/660.jpg', 1, '2024-09-25 14:16:53', '2024-09-25 18:16:53'),
-(2, 'yobana mendoza', 'yoba28', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Vendedor', 'vistas/img/usuarios/yoba28/681.jpg', 1, '2024-09-24 15:43:01', '2024-09-24 19:43:01'),
-(3, 'zajir mendoza', 'zajir12', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Especial', 'vistas/img/usuarios/zajir12/199.jpg', 1, '2024-09-23 14:34:48', '2024-09-23 18:34:48');
+(1, 'Maria mendoza', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/266.jpg', 1, '2024-10-27 21:33:55', '2024-10-28 01:33:55'),
+(2, 'yobana mendoza', 'yoba28', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Vendedor', 'vistas/img/usuarios/yoba28/681.jpg', 1, '2024-10-27 10:43:37', '2024-10-27 14:43:37'),
+(3, 'zajir mendoza', 'zajir12', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Especial', 'vistas/img/usuarios/zajir12/199.jpg', 1, '2024-10-18 21:56:36', '2024-10-19 01:56:36');
 
 -- --------------------------------------------------------
 
@@ -290,26 +398,51 @@ CREATE TABLE `ventas` (
 --
 
 INSERT INTO `ventas` (`id`, `codigo`, `id_cliente`, `id_vendedor`, `total`, `fecha`) VALUES
-(1, 10001, 2, 2, 25, '2023-09-23 04:23:21'),
-(2, 10002, 6, 2, 88, '2024-09-23 04:23:47'),
-(3, 10003, 1, 1, 85, '2024-09-23 05:14:41'),
-(4, 10004, 5, 1, 25, '2024-09-23 16:28:10'),
-(5, 10005, 2, 1, 85, '2024-09-23 18:51:16'),
-(6, 10006, 1, 1, 375, '2024-09-22 18:53:38'),
-(9, 10007, 1, 1, 5, '2024-09-24 15:57:40'),
-(10, 10008, 1, 1, 5, '2024-09-24 15:57:50'),
-(11, 10009, 6, 2, 45, '2024-09-24 19:44:11'),
-(12, 10010, 1, 1, 98, '2024-09-24 23:04:42'),
-(13, 10011, 1, 1, 43, '2024-09-25 00:56:17'),
-(14, 10012, 1, 1, 5, '2024-09-25 01:07:28'),
-(15, 10013, 1, 1, 5, '2024-09-25 01:39:47'),
-(16, 10014, 2, 1, 15, '2024-09-25 02:02:12'),
-(17, 10015, 1, 1, 165, '2024-09-25 02:02:23'),
-(18, 10016, 2, 1, 85, '2024-09-25 02:02:31'),
-(19, 10017, 2, 1, 463, '2024-09-25 02:02:48'),
-(20, 10018, 1, 1, 10, '2024-09-25 02:08:11'),
-(21, 10019, 1, 1, 5, '2024-09-25 02:09:38'),
-(22, 10020, 1, 1, 10, '2024-09-25 05:27:42');
+(1, 10001, 1, 1, 10, '2023-10-18 15:23:15'),
+(2, 10002, 1, 1, 50, '2024-10-18 15:23:39'),
+(8, 10003, 2, 1, 5, '2024-10-18 15:45:14'),
+(9, 10004, 2, 1, 45, '2024-10-18 15:48:17'),
+(10, 10005, 1, 1, 41, '2024-10-18 15:48:34'),
+(11, 10006, 2, 1, 41, '2024-10-18 15:49:29'),
+(12, 10007, 1, 1, 135, '2024-10-18 15:52:17'),
+(13, 10008, 2, 1, 181, '2024-10-18 15:53:02'),
+(14, 10009, 2, 1, 10, '2024-10-18 16:12:14'),
+(15, 10010, 1, 1, 45, '2024-10-19 01:31:36'),
+(18, 10011, 1, 1, 33, '2024-10-19 02:01:35'),
+(19, 10012, 1, 1, 90, '2024-10-19 02:53:32'),
+(20, 10013, 2, 2, 33, '2024-10-19 03:08:08'),
+(21, 10014, 1, 2, 5, '2024-10-19 03:21:09'),
+(22, 10015, 2, 1, 30, '2024-10-19 14:25:12'),
+(23, 10016, 3, 1, 53, '2024-10-19 14:27:51'),
+(24, 10017, 1, 1, 10, '2024-10-20 01:01:35'),
+(25, 10018, 1, 1, 30, '2024-10-22 01:26:36'),
+(26, 10019, 1, 1, 15, '2024-10-22 01:27:06'),
+(29, 10020, 3, 1, 0, '2024-10-22 01:34:36'),
+(30, 10021, 1, 1, 5, '2024-10-22 01:35:07'),
+(31, 10022, 1, 1, 5, '2024-10-22 01:43:07'),
+(32, 10023, 1, 1, 50, '2024-10-24 00:02:44'),
+(33, 10024, 1, 1, 28, '2024-10-24 03:41:58'),
+(34, 10025, 1, 1, 5, '2024-10-24 03:47:57'),
+(35, 10026, 2, 1, 105, '2024-10-24 04:16:17'),
+(36, 10027, 1, 1, 15, '2024-10-24 04:25:40'),
+(37, 10028, 1, 1, 5, '2024-10-24 04:26:08'),
+(38, 10029, 1, 1, 17, '2024-10-26 19:15:42'),
+(39, 10030, 1, 1, 5, '2024-10-27 13:31:18'),
+(40, 10031, 1, 1, 5, '2024-10-27 13:33:18'),
+(41, 10032, 1, 1, 12, '2024-10-27 13:39:34'),
+(42, 10033, 1, 1, 5, '2024-10-27 14:03:24'),
+(43, 10034, 1, 1, 285, '2024-10-27 14:30:16'),
+(44, 10035, 1, 1, 32, '2024-10-27 14:30:57'),
+(45, 10036, 1, 1, 62, '2024-10-27 14:31:38'),
+(46, 10037, 1, 1, 5, '2024-10-27 14:35:54'),
+(47, 10038, 1, 1, 5, '2024-10-27 14:42:55'),
+(48, 10039, 1, 2, 5, '2024-10-27 14:44:23'),
+(49, 10040, 1, 2, 5, '2024-10-27 14:45:52'),
+(50, 10041, 1, 2, 12, '2024-10-27 14:47:36'),
+(51, 10042, 1, 1, 12, '2024-10-27 22:44:01'),
+(52, 10043, 1, 1, 12, '2024-10-27 22:51:40'),
+(53, 10044, 1, 1, 12, '2024-10-28 00:57:28'),
+(54, 10045, 1, 1, 201, '2024-10-28 01:02:35');
 
 --
 -- Índices para tablas volcadas
@@ -386,37 +519,37 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
 --
 ALTER TABLE `detalle_compra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -434,7 +567,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- Restricciones para tablas volcadas

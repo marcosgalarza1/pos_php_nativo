@@ -18,71 +18,64 @@ class imprimirFactura {
 
     public function traerImpresionFactura() {
 
-        // TRAEMOS LA INFORMACIÓN DE LA VENTA
+        // Obtener información de la venta
         $itemVenta = "codigo";
         $valorVenta = $this->codigo;
 
         $respuestaVenta = ControladorVentas::ctrMostrarVentas($itemVenta, $valorVenta);
-        $fecha = date('d/m/Y H:i:s', strtotime($respuestaVenta["fecha"])); // Formatear la fecha y hora
+        $fecha = date('d/m/Y H:i', strtotime($respuestaVenta["fecha"]));
         $productos = ControladorVentas::ctrMostrarDetalleVentas($respuestaVenta['id']);
 
         $total = number_format($respuestaVenta["total"], 2);
-        
 
-        // TRAEMOS LA INFORMACIÓN DEL CLIENTE
+        // Obtener información del cliente
         $itemCliente = "id";
         $valorCliente = $respuestaVenta["id_cliente"];
         $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-        // TRAEMOS LA INFORMACIÓN DEL VENDEDOR
+        // Obtener información del vendedor
         $itemVendedor = "id";
         $valorVendedor = $respuestaVenta["id_vendedor"];
         $respuestaVendedor = ControladorUsuarios::ctrMostrarUsuarios($itemVendedor, $valorVendedor);
 
-        // REQUERIMOS LA CLASE TCPDF
+        // Configuración del PDF para impresora térmica
         require_once('tcpdf_include.php');
-        $pdf = new TCPDF('P', 'mm', array(80, 200), true, 'UTF-8', false);
-        $pdf->startPageGroup();
+        $pdf = new TCPDF('P', 'mm', array(80, 80), true, 'UTF-8', false);
+        $pdf->SetMargins(2, 2, 2); // Márgenes mínimos
         $pdf->AddPage();
-        $pdf->SetFont('helvetica', '', 10);
+        $pdf->SetFont('helvetica', '', 8);
 
-        // Información de la tienda
+        // Encabezado
         $html = '
-        <table style="border-bottom: 1px solid #000;">
+        <table style="text-align:center; font-size: 9px;">
             <tr>
-                <td style="text-align:center; font-size: 13px;">
-                    <strong>COMANDA</strong><br>
-                    <span style="font-size: 15px;">'.$valorVenta.'</span><br>
-                    <span style="font-size: 10px;">Fecha: '.$fecha.'</span>
-                </td>
-            </tr>;
-        </table>';
-
-        $pdf->writeHTML($html, false, false, false, false, '');
-
-        // Línea de separación
-        $pdf->Ln(2);
-        
-        // Información del cliente y mesero
-        $html = '
-        <table style="font-size: 11px;">
+                <td><strong>COMANDA</strong><br>'.$valorVenta.'<br>Fecha: '.$fecha.'</td>
+            </tr>
             <tr>
-                <td>
-                    <strong>Mesero/a:</strong> '.$respuestaVendedor["nombre"].'<br>
-                    <strong>Cajero/a:</strong> '.$respuestaCliente["nombre"].'
-                </td>
+                <td>=======================================</td>
             </tr>
         </table>';
-
         $pdf->writeHTML($html, false, false, false, false, '');
 
-        // Tabla de productos
+        // Datos de mesero/a y cliente
         $html = '
-        <table border="0" cellpadding="4" style="width:100%;">
-            <tr style="background-color:#f2f2f2;">
-                <th style="width:45%; text-align:left;">Concepto</th>
-                <th style="width:20%; text-align:center;">Cant.</th>
-                <th style="width:25%; text-align:right;">Precio</th>
+        <table style="font-size: 8px;">
+            <tr>
+                <td><strong>Mesero/a:</strong> '.$respuestaCliente["nombre"].'<br><strong>Cajero/a:</strong> '. $respuestaVendedor["nombre"].'</td>
+            </tr>
+            <tr>
+                <td>============================================</td>
+            </tr>
+        </table>';
+        $pdf->writeHTML($html, false, false, false, false, '');
+
+        // Productos
+        $html = '
+        <table border="0" cellpadding="1" style="width:100%; font-size: 7px;">
+            <tr>
+                <th style="width:40%; text-align:left;">Producto</th>
+                <th style="width:15%; text-align:center;">Cant.</th>
+                <th style="width:20%; text-align:right;">Precio</th>
                 <th style="width:20%; text-align:right;">Total</th>
             </tr>';
 
@@ -98,28 +91,30 @@ class imprimirFactura {
             </tr>';
         }
 
-        $html .= '</table>';
+        $html .= '
+        <tr>
+            <td colspan="4" style="text-align:center;">=================================================</td>
+        </tr>
+        </table>';
         $pdf->writeHTML($html, false, false, false, false, '');
-
-        // Espacio
-        $pdf->Ln(2);
-        $pdf->writeHTML('<hr style="border:1px solid #000;">', false, false, false, false, '');
 
         // Total
         $html = '
         <table>
             <tr>
-                <td style="text-align:right;">
+                <td style=" font-size: 9px;">
                     <strong>Total: Bs '.$total.'</strong>
                 </td>
+            </tr>
+            <tr>
+                <td style="text-align:center;">=============================================</td>
             </tr>
         </table>';
         $pdf->writeHTML($html, false, false, false, false, '');
 
-        // SALIDA DEL ARCHIVO
+        // Generar el PDF
         $pdf->Output('factura.pdf', 'I');
     }
-
 }
 
 $factura = new imprimirFactura();

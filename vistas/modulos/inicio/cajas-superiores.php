@@ -190,11 +190,6 @@ $ventasTotaldDiaActual = ControladorVentas::ctrVentasTotalDia();
 
 </div>
 
-
-
-
-
-
 <div class="col-lg-3 col-xs-6 text-uppercase">
 
   <div class="small-box bg-black">
@@ -226,7 +221,7 @@ $ventasTotaldDiaActual = ControladorVentas::ctrVentasTotalDia();
 
 <div class="col-lg-3 col-xs-6 text-uppercase">
 
-  <div class="small-box bg-gray">
+  <div class="small-box bg-blue">
 
     <div class="inner">
 

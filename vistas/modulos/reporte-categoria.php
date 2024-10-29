@@ -44,6 +44,8 @@
                             </div>
                         </div>
                     </div><!--/body panel-->
+                    <img src="vistas/img/plantilla/cat.png" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
+
                 </div><!--/PANEL FIN-->
             </div><!--/box body-->
         </div><!--/box-->
