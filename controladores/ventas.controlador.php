@@ -108,9 +108,24 @@ class ControladorVentas{
 			$valor1b = $fecha.' '.$hora;
 
 			$fechaCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1b, $valor1b, $valor);
+			$tipoPago = "";
 
+			switch ($_POST["tipoPago"]) {
+				case 1:
+					$tipoPago = "Efectivo";
+					break;
+				case 2:
+					$tipoPago = "QR";
+					break;
+				case 3:
+					$tipoPago = "Transferencia";
+					break;
+				default:
+					$tipoPago = "No especificado";
+					break;
+			}
 			/*=============================================
-			GUARDAR LA COMPRA
+			GUARDAR LA VENTA
 			=============================================*/	
 
 			$tabla = "ventas";
@@ -119,9 +134,12 @@ class ControladorVentas{
 						   "id_cliente"=>$_POST["seleccionarCliente"],
 						   "codigo"=>$_POST["nuevaVenta"],
 						   "productos"=>$_POST["listaProductos"],
-						   "total"=>$_POST["totalVenta"]);
+						   "total"=>$_POST["totalVenta"],
+						   "nota"=>$_POST["nota"],
+						   "tipo_pago"=>$tipoPago,
+						   "cambio"=>$_POST["nuevoCambioEfectivo"],
+							"total_pagado"=>$_POST["nuevoValorEfectivo"]);
 						
-
 			// $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
 			$respuesta = ModeloVentas::mdlRegistrarVenta($tabla, $datos);
 			

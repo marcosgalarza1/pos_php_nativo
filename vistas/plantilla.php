@@ -124,8 +124,17 @@
     color: white; /* Cambiar el color del texto a blanco para que sea legible en el degradado oscuro */
   
 } 
+.select2-container--default .select2-selection--single {
+     border: 1px solid #d2d6de !important;
+    border-radius: 0 !important;
+}
+.select2-container .select2-selection--single {
+    height: auto !important;
+}
+.select2-container--default .select2-selection--single, .select2-selection .select2-selection--single {
+    height: auto !important;
+}
 </style>
-
 
 <!-- 
 resto bar -->

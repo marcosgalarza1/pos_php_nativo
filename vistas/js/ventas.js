@@ -108,9 +108,9 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 	          
 	            '<div class="input-group">'+
 	              
-	              '<span class="input-group-addon  "><button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="'+idProducto+'"><i class="fa fa-times"></i></button></span>'+
+	              '<span class="input-group-addon" style="padding: 0px 4px 0px 4px;"><button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="'+idProducto+'"><i class="fa fa-times"></i></button></span>'+
 
-	              '<input type="text" class="form-control nuevaDescripcionProducto text-uppercase " idProducto="'+idProducto+'" name="agregarProducto" value="'+descripcion+'" readonly required>'+
+	              '<input type="text" class="form-control input-sm nuevaDescripcionProducto text-uppercase " idProducto="'+idProducto+'" name="agregarProducto" value="'+descripcion+'" readonly required>'+
 
 	            '</div>'+
 
@@ -120,7 +120,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 
 	          '<div class="col-xs-3">'+
 	            
-	             '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="1" stock="'+stock+'" nuevoStock="'+Number(stock-1)+'" required>'+
+	             '<input type="number" class="form-control input-sm nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="1" stock="'+stock+'" nuevoStock="'+Number(stock-1)+'" required>'+
 
 	          '</div>' +
 
@@ -132,7 +132,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function(){
 
 				'<span class="input-group-addon"><i><b>Bs</b></i></span>'+
 	                 
-	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="'+precio+'" name="nuevoPrecioProducto" value="'+
+	              '<input type="text" class="form-control input-sm nuevoPrecioProducto" precioReal="'+precio+'" name="nuevoPrecioProducto" value="'+
                   precio+'" readonly required>'+
 				  '<input type="hidden" precioRealCompra="'+precioCompra+'" name="nuevoPrecioCompraProducto"  class="nuevoPrecioCompraProducto" value="'+ precioCompra+'"  >'+
 	 
@@ -228,6 +228,8 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 		$("#nuevoImpuestoVenta").val(0);
 		$("#nuevoTotalVenta").val(0);
 		$("#totalVenta").val(0);
+		$("#nota").val(0);
+		$("#tipoPago").val(0);
 		$("#nuevoTotalVenta").attr("total",0);
 
 	}else{
@@ -283,9 +285,9 @@ $(".btnAgregarProducto").click(function(){
 	          
 	            '<div class="input-group">'+
 	              
-	              '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto><i class="fa fa-times"></i></button></span>'+
+	              '<span class="input-group-addon" style="padding: 0px 4px 0px 4px;" ><button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto><i class="fa fa-times"></i></button></span>'+
 
-	              '<select class="form-control nuevaDescripcionProducto" id="producto'+numProducto+'" idProducto name="nuevaDescripcionProducto" required>'+
+	              '<select class="form-control input-sm nuevaDescripcionProducto" id="producto'+numProducto+'" idProducto name="nuevaDescripcionProducto" required>'+
 
 	              '<option>Seleccione el producto</option>'+
 
@@ -299,7 +301,7 @@ $(".btnAgregarProducto").click(function(){
 
 	          '<div class="col-xs-3 ingresoCantidad">'+
 	            
-	             '<input type="number" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="1" stock nuevoStock required>'+
+	             '<input type="number" class="form-control input-sm nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="1" stock nuevoStock required>'+
 
 	          '</div>' +
 
@@ -311,7 +313,7 @@ $(".btnAgregarProducto").click(function(){
 
 	              '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>'+
 	                 
-	              '<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>'+
+	              '<input type="text" class="form-control input-sm nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>'+
 				  '<input type="hidden" precioRealCompra="" name="nuevoPrecioCompraProducto"  class="nuevoPrecioCompraProducto" value=""  >'+
 	            '</div>'+
 	             

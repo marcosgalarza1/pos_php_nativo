@@ -93,12 +93,16 @@ class ModeloVentas
 			$conexion->beginTransaction();
 	
 			// 1. Registrar la venta principal en la tabla "ventas"
-			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, total) VALUES (:codigo, :id_cliente, :id_vendedor,  :total)");
+			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_cliente, id_vendedor, total,total_pagado,nota,tipo_pago,cambio) VALUES (:codigo, :id_cliente, :id_vendedor, :total,:total_pagado, :nota, :tipo_pago,:cambio)");
 
 			$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
 			$stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
 			$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
 			$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
+			$stmt->bindParam(":total_pagado", $datos["total_pagado"], PDO::PARAM_STR);
+			$stmt->bindParam(":nota", $datos["nota"], PDO::PARAM_STR);
+			$stmt->bindParam(":tipo_pago", $datos["tipo_pago"], PDO::PARAM_STR);
+			$stmt->bindParam(":cambio", $datos["cambio"], PDO::PARAM_STR);
 
 			if (!$stmt->execute()) {
 				throw new Exception("Error al registrar la venta");
