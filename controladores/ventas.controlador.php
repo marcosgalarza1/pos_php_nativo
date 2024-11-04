@@ -163,35 +163,28 @@ class ControladorVentas{
 
 
 			
-			if($respuesta == "ok" && $_POST["sinImprimir"] == false){
+			if($respuesta == "ok"){
 				
-				
-				$codigoVenta = $_POST["nuevaVenta"];
-				echo "<script type='text/javascript'>
-				     	window.open('extensiones/tcpdf/pdf/factura.php?codigo={$codigoVenta}', '_blank');
-				  		window.location = 'crear-venta';
-					</script>"; 
-
-				/* echo'<script>
-
-				localStorage.removeItem("rango");
-
-				swal({
-					  type: "success",
-					  title: "La venta ha sido guardada correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar"
-					  }).then(function(result){
+				if( $_POST["sinImprimir"] == false){
+					$codigoVenta = $_POST["nuevaVenta"];
+					echo "<script type='text/javascript'>
+							 window.open('extensiones/tcpdf/pdf/factura.php?codigo={$codigoVenta}', '_blank');
+							  window.location = 'crear-venta';
+						</script>"; 
+				}else{
+					echo'<script> swal({
+						  type: "success",
+						  title: "La venta ha sido guardada correctamente",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
 								if (result.value) {
-
-								window.location = "ventas";
-
+								window.location = "crear-venta";
 								}
 							})
-				
-				</script>';
- */
-                 
+					</script>';
+				}
+		
 			}
 
 		}

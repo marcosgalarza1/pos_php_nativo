@@ -51,7 +51,7 @@ if ($_SESSION["perfil"] == "Especial") {
 
           <div class="box-header "></div>
 
-          <form role="form" method="post" class="formularioVenta ">
+          <form role="form" method="post" class="formularioVenta" id="ventaForm">
 
             <div class="box-body">
 
@@ -317,7 +317,7 @@ if ($_SESSION["perfil"] == "Especial") {
                   </div>
                 </div>
                 <div class="col-xs-6 text-right">
-                  <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
+                  <button type="button" id="guardarVentaBtn" class="btn btn-primary pull-right">Guardar venta</button>
                 </div>
               </div>
             </div>
@@ -553,6 +553,25 @@ $(document).ready(function() {
             $("#id_cliente").val(0); // Establece id_cliente a 0
         }
     });
+});
+
+document.getElementById("guardarVentaBtn").addEventListener("click", function() {
+  var totalVenta = Number($('#nuevoTotalVenta').val());
+  var efectivo = Number($('#nuevoValorEfectivo').val());
+  var cambio = Number(efectivo) - totalVenta;
+
+  if(cambio>=0){
+    document.getElementById("ventaForm").submit();
+   
+  }else{
+    swal({
+    type: "error",
+    title: "Lo que Canceló debe ser igual o mayor al total",
+    showConfirmButton: true,
+    confirmButtonText: "Cerrar"
+    });
+  }
+   
 });
 
 </script>
