@@ -350,7 +350,7 @@ class ControladorVentas{
 					  title: "La venta ha sido editada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
-					  }).then((result) => {
+			 		  }).then((result) => {
 								if (result.value) {
 
 								window.location = "ventas";
@@ -373,12 +373,12 @@ class ControladorVentas{
 
 	static public function ctrEliminarVenta(){
 
-		if(isset($_GET["idVentaEliminar"]) ){
+		if(isset($_GET["idVenta"]) ){
 		
 			$tabla = "ventas";
 
 			$item = "id";
-			$valor = $_GET["idVentaEliminar"];
+			$valor = $_GET["idVenta"];
 
 			$traerVenta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
 			
@@ -487,23 +487,27 @@ class ControladorVentas{
 			ELIMINAR VENTA
 			=============================================*/
 
-			$respuesta = ModeloVentas::mdlEliminarVenta($tabla, $_GET["idVentaEliminar"]);
+			$respuesta = ModeloVentas::mdlEliminarVenta($tabla, $_GET["idVenta"]);
 			
 			if($respuesta == "ok"){
+			
 				echo'<script>
+
 				swal({
 					  type: "success",
 					  title: "La venta ha sido borrada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
-								if (result.value) 
-								window.location = "ventas"
+								if (result.value) {
+
+								window.location = "ventas";
+
 								}
 							})
-				</script>'; 
 
-			}		
+				</script>'; 
+			}
 		}
 
 	}

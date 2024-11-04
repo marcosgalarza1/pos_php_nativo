@@ -755,7 +755,7 @@ BORRAR VENTA
 =============================================*/
 $(".tablas").on("click", ".btnEliminarVenta", function(){
 
-	var idVentaEliminar = $(this).attr("idVentaEliminar");
+	var idVenta = $(this).attr("idVenta");
   
 	swal({
 		  title: '¿Está seguro de borrar la venta?',
@@ -768,8 +768,7 @@ $(".tablas").on("click", ".btnEliminarVenta", function(){
 		  confirmButtonText: 'Si, borrar venta!'
 		}).then(function(result){
 		  if (result.value) {
-			
-			  window.location = "index.php?ruta=ventas&idVentaEliminar="+idVentaEliminar;
+			  window.location = "index.php?ruta=ventas&idVenta="+idVenta;
 		  }
   
 	})
