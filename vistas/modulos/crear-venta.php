@@ -116,7 +116,7 @@ if ($_SESSION["perfil"] == "Especial") {
                 </div>
 
                 <!--=====================================
-                ENTRADA DEL CLIENTE
+                ENTRADA DEL MESERO
                 ======================================-->
 
                 <div class="form-group">
@@ -125,7 +125,7 @@ if ($_SESSION["perfil"] == "Especial") {
 
                     <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                    <select class="select2 text-uppercase form-control" id="seleccionarCliente" name="seleccionarCliente" required>
+                    <select class="select2 text-uppercase form-control" id="seleccionarMesero" name="seleccionarMesero" required>
 
                       <option value="0" disabled>Seleccionar Meseros</option>
 
@@ -134,7 +134,7 @@ if ($_SESSION["perfil"] == "Especial") {
                       $item = null;
                       $valor = null;
 
-                      $categorias = ControladorClientes::ctrMostrarClientes($item, $valor);
+                      $categorias = ControladorMeseros::ctrMostrarMeseros($item, $valor);
 
 
 
@@ -149,10 +149,22 @@ if ($_SESSION["perfil"] == "Especial") {
 
                     </select>
 
-                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs text-uppercase" data-toggle="modal" data-target="#modalAgregarCliente" data-dismiss="modal">Agregar Meseros</button></span>
+                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs text-uppercase" data-toggle="modal" data-target="#modalAgregarMesero" data-dismiss="modal">Agregar Meseros</button></span>
 
                   </div>
 
+                </div>
+
+               <!--=====================================
+                ENTRADA DEL CLIENTE
+                ======================================-->
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" class="form-control text-uppercase" id="cliente" name="cliente" value="" placeholder="Ingrese el Cliente" autocomplete="off" required >
+                    <input type="hidden" id="id_cliente" name="id_cliente" value="0"/>
+                  </div>
                 </div>
 
                 <!--=====================================
@@ -172,7 +184,7 @@ if ($_SESSION["perfil"] == "Especial") {
 
                 <button type="button" class="btn btn-default hidden-lg btnAgregarProducto"> Agregar producto</button>
 
-              
+
                 <div class="row">
 
                   <!--=====================================
@@ -221,13 +233,13 @@ if ($_SESSION["perfil"] == "Especial") {
                     </table>
 
                   </div>
-                
+
                 </div>
-                <hr >
-           
+                <hr>
 
 
-           
+
+
 
                 <!--=====================================
                 ENTRADA MÉTODO DE PAGO
@@ -239,10 +251,17 @@ if ($_SESSION["perfil"] == "Especial") {
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="tipo_pago">TIPO DE PAGO:</label>
-                      <select class="form-control input-sm" id="tipoPago" name="tipoPago" >
+                      <select class="form-control input-sm" id="tipoPago" name="tipoPago">
                         <option value="1">Efectivo</option>
                         <option value="2">QR</option>
                         <option value="3">Transferencia</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="tipo_pago">FORMA DE ATENCIÓN:</label>
+                      <select class="form-control input-sm" id="formaAtencion" name="formaAtencion">
+                        <option value="1">🥡 Para Llevar</option>
+                        <option value="2" selected>🍽️ En Mesa</option>
                       </select>
                     </div>
                   </div>
@@ -261,12 +280,12 @@ if ($_SESSION["perfil"] == "Especial") {
                         <span class="input-group-addon"><i><b>Bs</b></i></span>
                         <input type="text" class="form-control input-sm" id="nuevoCambioEfectivo" name="nuevoCambioEfectivo" placeholder="000000" readonly
                           required>
-
                       </div>
                     </div>
                   </div>
                   <input type="hidden" id="listaMetodoPago" name="listaMetodoPago">
                 </div>
+
 
                 <!--=====================================
                 ENTRADA DEL NOTA
@@ -283,13 +302,24 @@ if ($_SESSION["perfil"] == "Especial") {
                     </div>
                   </div>
                 </div>
-          
+
               </div>
 
             </div>
 
+
             <div class="box-footer">
-              <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
+              <div class="row">
+                <div class="col-xs-6 text-left">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="sinImprimir" name="sinImprimir">
+                    <label class="form-check-label" for="sinImprimir"> Sin Imprimir</label>
+                  </div>
+                </div>
+                <div class="col-xs-6 text-right">
+                  <button type="submit" class="btn btn-primary pull-right">Guardar venta</button>
+                </div>
+              </div>
             </div>
 
           </form>
@@ -348,10 +378,10 @@ if ($_SESSION["perfil"] == "Especial") {
 </div>
 
 <!--=====================================
-MODAL AGREGAR CLIENTE
+MODAL AGREGAR MESERO
 ======================================-->
 
-<div id="modalAgregarCliente" class="modal fade" role="dialog">
+<div id="modalAgregarMesero" class="modal fade" role="dialog">
 
   <div class="modal-dialog">
 
@@ -390,7 +420,7 @@ MODAL AGREGAR CLIENTE
                   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA7ElEQVR4nMXUwSqEURQH8B9Zi2RjOytZDAtLXsGSKWvvIUuyoMGChWnK2htYKmXlHUQRK5GiW3dqFue75Q459a9b5/Trfl+nyz/UBFax/hvYGu7xlXOIdi22jI8hbJB3LNaA5wE2SLcGvCqAlzXgaQHs1YBHBXC/BuwWwIMacBJPAZbWaFplHQfgnhFqLgCnRgHbAdiqgcawggXs4AGP2MU8ln7yEGziLt/mDWf501NO8Jp7t/nBGG/CZnHTsCbbOVHvGjMReFHYu42cpn4/Al8ahj/zDdLupXM08xyBHWwFGX5Y0zmaSf/9b+obeeR7t6oVkbEAAAAASUVORK5CYII=">
                 </span>
 
-                <input type="text" class="form-control input-lg" name="nuevoCliente" placeholder="Ingresar Nombre" required>
+                <input type="text" class="form-control input-lg" name="nuevoMesero" placeholder="Ingresar Nombre" required>
 
               </div>
 
@@ -464,7 +494,7 @@ MODAL AGREGAR CLIENTE
 
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-          <button type="submit" class="btn btn-" style="background:#6c757d; color:white">Guardar Cliente </button>
+          <button type="submit" class="btn btn-" style="background:#6c757d; color:white">Guardar Mesero </button>
 
         </div>
 
@@ -472,8 +502,8 @@ MODAL AGREGAR CLIENTE
 
       <?php
 
-      $crearCliente = new ControladorClientes();
-      $crearCliente->ctrCrearCliente();
+      $crearMesero = new ControladorMeseros();
+      $crearMesero->ctrCrearMesero();
 
       ?>
 
@@ -482,3 +512,47 @@ MODAL AGREGAR CLIENTE
   </div>
 
 </div>
+
+<script>
+
+$(document).ready(function() {
+    $("#cliente").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: 'ajax/clientes.ajax.php',
+                dataType: 'json',
+                data: {
+                    term: request.term // Envío el término buscado
+                },
+                success: function(data) {
+                    // Verifica si no hay coincidencias
+                    if (data.length === 0) {
+                        $("#id_cliente").val(0); // Establece el valor en 0 si no hay coincidencias
+                    }
+                    response(data); // Envía los datos de vuelta a autocomplete
+                }
+            });
+        },
+        minLength: 3,
+        select: function(event, ui) {
+            event.preventDefault();
+            $("#id_cliente").val(ui.item.id); // Asigna el ID del cliente
+            $("#cliente").val(ui.item.value); // Asigna el nombre del cliente
+        },
+        change: function(event, ui) {
+            // Si el campo es cambiado manualmente y no se encuentra el valor, establece id_cliente a 0
+            if (!ui.item) {
+                $("#id_cliente").val(0);
+            }
+        }
+    });
+
+    // Manejo del evento keydown para detectar la tecla DEL
+    $("#cliente").keydown(function(event) {
+        if (event.key === "Delete") { // Verifica si la tecla presionada es "DEL"
+            $("#id_cliente").val(0); // Establece id_cliente a 0
+        }
+    });
+});
+
+</script>

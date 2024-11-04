@@ -33,7 +33,7 @@
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Fecha de fin:</label>
                   <div class="input-group date">
-                    <input type="date" id="fecha_fin" name="fecha_fin"  value="<?php echo date('Y-m-t'); ?>" class="form-control" required/>
+                    <input type="date" id="fecha_fin" name="fecha_fin"  value="<?php echo date('Y-m-d'); ?>" class="form-control" required/>
                   </div>
                 </div>
               </div>
@@ -47,7 +47,7 @@
                     <?php
                       $item = null;
                       $valor = null;
-                      $meseros = ControladorClientes::ctrMostrarClientes($item, $valor);
+                      $meseros = ControladorMeseros::ctrMostrarMeseros($item, $valor);
 
                        foreach ($meseros as $key => $value) {
                          echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
@@ -78,47 +78,51 @@
 
 </div>
 <script>
+
+
+
+// Asignar la fecha actual a una variable global en JavaScript
+const fechaActual = "<?php echo $fechaActual; ?>";
+const fechaInicio = document.getElementById('fecha_inicio');
+const fechaFin = document.getElementById('fecha_fin');
+fechaInicio.setAttribute('max', fechaActual);
+fechaFin.setAttribute('max', fechaActual);
+
 // Variable global para mantener la referencia de la ventana emergente
 var popupWindow = null;
 
 function generatePDF() {
-    // Capturar valores de los inputs
-    const fechaInicio = document.getElementById('fecha_inicio').value;
-    const fechaFin = document.getElementById('fecha_fin').value;
-    const idMesero = document.getElementById('id_mesero').value;
-    const idUsuario = document.getElementById('id_usuario').value;
 
+  const idMesero = document.getElementById('id_mesero').value;
+  const idUsuario = document.getElementById('id_usuario').value;
 
-    // Validar campos
-    const fechaInicioObj = new Date(fechaInicio);
-    const fechaFinObj = new Date(fechaFin);
+  // Validar campos
 
-    if (fechaInicioObj > fechaFinObj) {
+  if (!fechaInicio.value || !fechaFin.value) {
       swal({
-            icon: 'warning',
-            title: 'Advertencia',
-            text: 'Por favor, seleccione una fecha de inicio menor a la fecha fin.',
-        });
-
-        return;
-    }
-    // Validar campos
-    if (!fechaInicio) {
+          icon: 'warning',
+          title: 'Advertencia',
+          text: 'Por favor, seleccione las fechas requeridas.',
+      });
+      return;
+  }
+  if (fechaFin.value > fechaActual) {
       swal({
-            icon: 'warning',
-            title: 'Advertencia',
-            text: 'Por favor, seleccione una fecha de inicio.',
-        });
-        return;
-    }
-    if (!fechaFin) {
-        swal({
-            icon: 'warning',
-            title: 'Advertencia',
-            text: 'Por favor, seleccione una fecha de fin.',
-        });
-        return;
-    }
+          icon: 'warning',
+          title: 'Advertencia',
+          text: 'Por favor, la fecha fin seleccionada no puede ser mayor a la fecha actual: ' + fechaActual,
+      });
+      return;
+  }
+
+  if (fechaInicio.value > fechaFin.value) { 
+      swal({
+          icon: 'warning',
+          title: 'Advertencia',
+          text: 'Por favor, seleccione una fecha de inicio menor a la fecha fin.',
+      });
+      return;
+  } 
 
 
     // Tamaño de la ventana emergente
@@ -137,12 +141,14 @@ function generatePDF() {
 
     // Abre la URL en una nueva ventana (popup)
     popupWindow = window.open(
-        "extensiones/tcpdf/pdf/reporte-ventas.php?fechaInicio=" + encodeURIComponent(fechaInicio) +
-        "&fechaFin=" + encodeURIComponent(fechaFin) +
+        "extensiones/tcpdf/pdf/reporte-ventas.php?fechaInicio=" + encodeURIComponent(fechaInicio.value) +
+        "&fechaFin=" + encodeURIComponent(fechaFin.value) +
         "&idMesero=" + encodeURIComponent(idMesero) +
         "&idUsuario=" + encodeURIComponent(idUsuario),
         "_blank",
         windowFeatures
     );
 }
+
+
 </script>

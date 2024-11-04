@@ -32,7 +32,7 @@ class ControladorReportes{
 		if(isset($_POST["nuevaCompra"])){
 
 			/*=============================================
-			ACTUALIZAR LAS COMPRAS DEL CLIENTE Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
+			ACTUALIZAR LAS COMPRAS DEL MESERO Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
 			=============================================*/
 
 			if($_POST["listaProductos"] == ""){
@@ -153,7 +153,7 @@ class ControladorReportes{
 			$traerCompra = ModeloCompras::mdlMostrarCompras($tabla, $item, $valor);
 
 			/*=============================================
-			FORMATEAR TABLA DE PRODUCTOS Y LA DE CLIENTES
+			FORMATEAR TABLA DE PRODUCTOS Y LA DE MESEROS
 			=============================================*/
 
 			$productos =  json_decode($traerCompra["productos"], true);

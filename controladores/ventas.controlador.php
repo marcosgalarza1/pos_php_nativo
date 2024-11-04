@@ -32,7 +32,7 @@ class ControladorVentas{
 		if(isset($_POST["nuevaVenta"])){
 
 			/*=============================================
-			ACTUALIZAR LAS COMPRAS DEL CLIENTE Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
+			ACTUALIZAR LAS COMPRAS DEL MESERO Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
 			=============================================*/
 
 			if($_POST["listaProductos"] == ""){
@@ -87,17 +87,17 @@ class ControladorVentas{
 
 			}
 
-			$tablaClientes = "clientes";
+			$tablaMeseros = "meseros";
 
 			$item = "id";
-			$valor = $_POST["seleccionarCliente"];
+			$valor = $_POST["seleccionarMesero"];
 
-			$traerCliente = ModeloClientes::mdlMostrarClientes($tablaClientes, $item, $valor);
+			$traerMesero = ModeloMeseros::mdlMostrarMeseros($tablaMeseros, $item, $valor);
 
 			$item1a = "compras";
-			$valor1a = array_sum($totalProductosComprados) + $traerCliente["compras"];
+			$valor1a = array_sum($totalProductosComprados) + $traerMesero["compras"];
 
-			$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valor);
+			$comprasMesero = ModeloMeseros::mdlActualizarMesero($tablaMeseros, $item1a, $valor1a, $valor);
 
 			$item1b = "ultima_compra";
 
@@ -107,21 +107,34 @@ class ControladorVentas{
 			$hora = date('H:i:s');
 			$valor1b = $fecha.' '.$hora;
 
-			$fechaCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1b, $valor1b, $valor);
+			$fechaMesero = ModeloMeseros::mdlActualizarMesero($tablaMeseros, $item1b, $valor1b, $valor);
 			$tipoPago = "";
 
 			switch ($_POST["tipoPago"]) {
 				case 1:
-					$tipoPago = "Efectivo";
+					$tipoPago = "EFECTIVO";
 					break;
 				case 2:
 					$tipoPago = "QR";
 					break;
 				case 3:
-					$tipoPago = "Transferencia";
+					$tipoPago = "TRANSFERENCIA";
 					break;
 				default:
-					$tipoPago = "No especificado";
+					$tipoPago = "NO ESPECIFICADO";
+					break;
+			}
+			$formaAtencion = "";
+
+			switch ($_POST["formaAtencion"]) {
+				case 1:
+					$formaAtencion = "PARA LLEVAR";
+					break;
+				case 2:
+					$formaAtencion = "EN MESA";
+					break;
+				default:
+					$formaAtencion = "NO ESPECIFICADO";
 					break;
 			}
 			/*=============================================
@@ -131,20 +144,23 @@ class ControladorVentas{
 			$tabla = "ventas";
 
 			$datos = array("id_vendedor"=>$_POST["idVendedor"],
-						   "id_cliente"=>$_POST["seleccionarCliente"],
+						   "id_mesero"=>$_POST["seleccionarMesero"],
+						   "id_cliente"=>$_POST["id_cliente"],
 						   "codigo"=>$_POST["nuevaVenta"],
 						   "productos"=>$_POST["listaProductos"],
 						   "total"=>$_POST["totalVenta"],
-						   "nota"=>$_POST["nota"],
+						   "nota"=>strtoupper($_POST["nota"]),
 						   "tipo_pago"=>$tipoPago,
 						   "cambio"=>$_POST["nuevoCambioEfectivo"],
+						   "forma_atencion"=>$formaAtencion,
 							"total_pagado"=>$_POST["nuevoValorEfectivo"]);
 						
 			// $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
 			$respuesta = ModeloVentas::mdlRegistrarVenta($tabla, $datos);
 			
-			if($respuesta == "ok"){
-
+			if($respuesta == "ok" && $_POST["sinImprimir"] == false){
+				
+				
 				$codigoVenta = $_POST["nuevaVenta"];
 				echo "<script type='text/javascript'>
 				     	window.open('extensiones/tcpdf/pdf/factura.php?codigo={$codigoVenta}', '_blank');
@@ -170,7 +186,6 @@ class ControladorVentas{
 				
 				</script>';
  */
-				
                  
 			}
 
@@ -187,7 +202,7 @@ class ControladorVentas{
 		if(isset($_POST["editarVenta"])){
 
 			/*=============================================
-			FORMATEAR TABLA DE PRODUCTOS Y LA DE CLIENTES
+			FORMATEAR TABLA DE PRODUCTOS Y LA DE MESEROS
 			=============================================*/
 			$tabla = "ventas";
 
@@ -215,6 +230,7 @@ class ControladorVentas{
 			if($cambioProducto){
 
 				$productos =  json_decode($traerVenta["productos"], true);
+				// $productos = ModeloVentas::mdlMostrarDetalleVentas($traerVenta["id"]);
 
 				$totalProductosComprados = array();
 
@@ -242,20 +258,20 @@ class ControladorVentas{
 
 				}
 
-				$tablaClientes = "clientes";
+				$tablaMeseros = "meseros";
 
-				$itemCliente = "id";
-				$valorCliente = $_POST["seleccionarCliente"];
+				$itemMesero = "id";
+				$valorMesero = $_POST["seleccionarMesero"];
 
-				$traerCliente = ModeloClientes::mdlMostrarClientes($tablaClientes, $itemCliente, $valorCliente);
+				$traerMesero = ModeloMeseros::mdlMostrarMeseros($tablaMeseros, $itemMesero, $valorMesero);
 
 				$item1a = "compras";
-				$valor1a = $traerCliente["compras"] - array_sum($totalProductosComprados);
+				$valor1a = $traerMesero["compras"] - array_sum($totalProductosComprados);
 
-				$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valorCliente);
+				$comprasMesero = ModeloMeseros::mdlActualizarMesero($tablaMeseros, $item1a, $valor1a, $valorMesero);
 
 				/*=============================================
-				ACTUALIZAR LAS COMPRAS DEL CLIENTE Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
+				ACTUALIZAR LAS COMPRAS DEL MESERO Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
 				=============================================*/
 
 				$listaProductos_2 = json_decode($listaProductos, true);
@@ -286,17 +302,17 @@ class ControladorVentas{
 
 				}
 
-				$tablaClientes_2 = "clientes";
+				$tablaMeseros_2 = "meseros";
 
 				$item_2 = "id";
-				$valor_2 = $_POST["seleccionarCliente"];
+				$valor_2 = $_POST["seleccionarMesero"];
 
-				$traerCliente_2 = ModeloClientes::mdlMostrarClientes($tablaClientes_2, $item_2, $valor_2);
+				$traerMesero_2 = ModeloMeseros::mdlMostrarMeseros($tablaMeseros_2, $item_2, $valor_2);
 
 				$item1a_2 = "compras";
-				$valor1a_2 = array_sum($totalProductosComprados_2) + $traerCliente_2["compras"];
+				$valor1a_2 = array_sum($totalProductosComprados_2) + $traerMesero_2["compras"];
 
-				$comprasCliente_2 = ModeloClientes::mdlActualizarCliente($tablaClientes_2, $item1a_2, $valor1a_2, $valor_2);
+				$comprasMesero_2 = ModeloMeseros::mdlActualizarMesero($tablaMeseros_2, $item1a_2, $valor1a_2, $valor_2);
 
 				$item1b_2 = "ultima_compra";
 
@@ -306,7 +322,7 @@ class ControladorVentas{
 				$hora = date('H:i:s');
 				$valor1b_2 = $fecha.' '.$hora;
 
-				$fechaCliente_2 = ModeloClientes::mdlActualizarCliente($tablaClientes_2, $item1b_2, $valor1b_2, $valor_2);
+				$fechaMesero_2 = ModeloMeseros::mdlActualizarMesero($tablaMeseros_2, $item1b_2, $valor1b_2, $valor_2);
 
 			}
 
@@ -315,10 +331,11 @@ class ControladorVentas{
 			=============================================*/	
 
 			$datos = array("id_vendedor"=>$_POST["idVendedor"],
-						   "id_cliente"=>$_POST["seleccionarCliente"],
+						   "id_mesero"=>$_POST["seleccionarMesero"],
 						   "codigo"=>$_POST["editarVenta"],
 						   "productos"=>$listaProductos,
 						   "total"=>$_POST["totalVenta"]);
+
 			$respuesta = ModeloVentas::mdlEditarVenta($tabla, $datos);
 
 			if($respuesta == "ok"){
@@ -356,20 +373,20 @@ class ControladorVentas{
 
 	static public function ctrEliminarVenta(){
 
-		if(isset($_GET["idVenta"])){
-
+		if(isset($_GET["idVentaEliminar"]) ){
+		
 			$tabla = "ventas";
 
 			$item = "id";
-			$valor = $_GET["idVenta"];
+			$valor = $_GET["idVentaEliminar"];
 
 			$traerVenta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
-
+			
 			/*=============================================
 			ACTUALIZAR FECHA ÚLTIMA COMPRA
 			=============================================*/
 
-			$tablaClientes = "clientes";
+			$tablaMeseros = "meseros";
 
 			$itemVentas = null;
 			$valorVentas = null;
@@ -378,33 +395,34 @@ class ControladorVentas{
 
 			$guardarFechas = array();
 
-			foreach ($traerVentas as $key => $value) {
-				
-				if($value["id_cliente"] == $traerVenta["id_cliente"]){
 
-					array_push($guardarFechas, $value["fecha"]);
-
+			// Verificar que $traerVenta y $traerVenta["id_mesero"] existen
+			if (isset($traerVenta["id_mesero"]) && is_array($traerVentas)) {
+				foreach ($traerVentas as $value) {
+					if (isset($value["id_mesero"]) && $value["id_mesero"] == $traerVenta["id_mesero"]) {
+						array_push($guardarFechas, $value["fecha"]);
+					}
 				}
+			} 
 
-			}
-
+			
 			if(count($guardarFechas) > 1){
 
 				if($traerVenta["fecha"] > $guardarFechas[count($guardarFechas)-2]){
 
 					$item = "ultima_compra";
 					$valor = $guardarFechas[count($guardarFechas)-2];
-					$valorIdCliente = $traerVenta["id_cliente"];
+					$valorIdMesero = $traerVenta["id_mesero"];
 
-					$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item, $valor, $valorIdCliente);
+					$comprasMesero = ModeloMeseros::mdlActualizarMesero($tablaMeseros, $item, $valor, $valorIdMesero);
 
 				}else{
 
 					$item = "ultima_compra";
 					$valor = $guardarFechas[count($guardarFechas)-1];
-					$valorIdCliente = $traerVenta["id_cliente"];
+					$valorIdMesero = $traerVenta["id_mesero"];
 
-					$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item, $valor, $valorIdCliente);
+					$comprasMesero = ModeloMeseros::mdlActualizarMesero($tablaMeseros, $item, $valor, $valorIdMesero);
 
 				}
 
@@ -413,31 +431,33 @@ class ControladorVentas{
 
 				$item = "ultima_compra";
 				$valor = "0000-00-00 00:00:00";
-				$valorIdCliente = $traerVenta["id_cliente"];
+				$valorIdMesero = $traerVenta["id_mesero"];
 
-				$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item, $valor, $valorIdCliente);
+				$comprasMesero = ModeloMeseros::mdlActualizarMesero($tablaMeseros, $item, $valor, $valorIdMesero);
 
 			}
-
+		
 			/*=============================================
-			FORMATEAR TABLA DE PRODUCTOS Y LA DE CLIENTES
+			FORMATEAR TABLA DE PRODUCTOS Y LA DE MESEROS
 			=============================================*/
 
-			$productos =  json_decode($traerVenta["productos"], true);
-
+			// $productos =  json_decode($traerVenta["productos"], true);
+			$productos = ModeloVentas::mdlMostrarDetalleVentas($traerVenta["id"]);
+	
 			$totalProductosComprados = array();
 
-			foreach ($productos as $key => $value) {
+			foreach ($productos as $value) {
 
 				array_push($totalProductosComprados, $value["cantidad"]);
 				
 				$tablaProductos = "productos";
 
 				$item = "id";
-				$valor = $value["id"];
+				$valor = $value["id_producto"];
 				$orden = "id";
 
 				$traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor, $orden);
+
 
 				$item1a = "ventas";
 				$valor1a = $traerProducto["ventas"] - $value["cantidad"];
@@ -451,43 +471,36 @@ class ControladorVentas{
 
 			}
 
-			$tablaClientes = "clientes";
+			$tablaMeseros = "meseros";
 
-			$itemCliente = "id";
-			$valorCliente = $traerVenta["id_cliente"];
+			$itemMesero = "id";
+			$valorMesero = $traerVenta["id_mesero"];
 
-			$traerCliente = ModeloClientes::mdlMostrarClientes($tablaClientes, $itemCliente, $valorCliente);
+			$traerMesero = ModeloMeseros::mdlMostrarMeseros($tablaMeseros, $itemMesero, $valorMesero);
 
 			$item1a = "compras";
-			$valor1a = $traerCliente["compras"] - array_sum($totalProductosComprados);
+			$valor1a = $traerMesero["compras"] - array_sum($totalProductosComprados);
 
-			$comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valorCliente);
+			$comprasMesero = ModeloMeseros::mdlActualizarMesero($tablaMeseros, $item1a, $valor1a, $valorMesero);
 
 			/*=============================================
 			ELIMINAR VENTA
 			=============================================*/
 
-			$respuesta = ModeloVentas::mdlEliminarVenta($tabla, $_GET["idVenta"]);
-
+			$respuesta = ModeloVentas::mdlEliminarVenta($tabla, $_GET["idVentaEliminar"]);
+			
 			if($respuesta == "ok"){
-
-				
-
-				 echo'<script>
-
+				echo'<script>
 				swal({
 					  type: "success",
 					  title: "La venta ha sido borrada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
-								if (result.value) {
-
-								window.location = "ventas";
-
+								if (result.value) 
+								window.location = "ventas"
 								}
 							})
-
 				</script>'; 
 
 			}		
@@ -573,12 +586,12 @@ class ControladorVentas{
 
 			foreach ($ventas as $row => $item){
 
-				$cliente = ControladorClientes::ctrMostrarClientes("id", $item["id_cliente"]);
+				$mesero = ControladorMeseros::ctrMostrarMeseros("id", $item["id_mesero"]);
 				$vendedor = ControladorUsuarios::ctrMostrarUsuarios("id", $item["id_vendedor"]);
 
 			 echo utf8_decode("<tr>
 			 			<td style='border:1px solid #eee;'>".$item["codigo"]."</td> 
-			 			<td style='border:1px solid #eee;'>".$cliente["nombre"]."</td>
+			 			<td style='border:1px solid #eee;'>".$mesero["nombre"]."</td>
 			 			<td style='border:1px solid #eee;'>".$vendedor["nombre"]."</td>
 			 			<td style='border:1px solid #eee;'>");
 

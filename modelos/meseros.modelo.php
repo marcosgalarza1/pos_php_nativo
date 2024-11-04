@@ -2,13 +2,13 @@
 
 require_once "conexion.php";
 
-class ModeloClientes{
+class ModeloMeseros{
 
 	/*=============================================
-	CREAR CLIENTE
+	CREAR MESERO
 	=============================================*/
 
-	static public function mdlIngresarCliente($tabla, $datos){
+	static public function mdlIngresarMesero($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, documento, telefono, direccion) VALUES (:nombre, :documento,:telefono, :direccion)");
 
@@ -34,10 +34,10 @@ class ModeloClientes{
 	}
 
 	/*=============================================
-	MOSTRAR CLIENTES
+	MOSTRAR MESEROS
 	=============================================*/
 
-	static public function mdlMostrarClientes($tabla, $item, $valor){
+	static public function mdlMostrarMeseros($tabla, $item, $valor){
 
 		if($item != null){
 
@@ -67,10 +67,10 @@ class ModeloClientes{
 
 
 	/*=============================================
-	EDITAR CLIENTE
+	EDITAR MESERO
 	=============================================*/
 
-	static public function mdlEditarCliente($tabla, $datos){
+	static public function mdlEditarMesero($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, documento = :documento,  telefono = :telefono, direccion = :direccion  WHERE id = :id");
 
@@ -98,10 +98,10 @@ class ModeloClientes{
 	}
 
 	/*=============================================
-	ELIMINAR CLIENTE
+	ELIMINAR MESERO
 	=============================================*/
 
-	static public function mdlEliminarCliente($tabla, $datos){
+	static public function mdlEliminarMesero($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 
@@ -124,10 +124,10 @@ class ModeloClientes{
 	}
 
 	/*=============================================
-	ACTUALIZAR CLIENTE
+	ACTUALIZAR MESERO
 	=============================================*/
 
-	static public function mdlActualizarCliente($tabla, $item1, $valor1, $valor){
+	static public function mdlActualizarMesero($tabla, $item1, $valor1, $valor){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item1 = :$item1 WHERE id = :id");
 
@@ -150,23 +150,5 @@ class ModeloClientes{
 
 	}
 
-	public static function mdlBuscarClientes($tabla, $valor) {
-		// Preparar la consulta
-		$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE nombre LIKE :valor ");
-		// Agregar comodines para la búsqueda
-		$searchValue = "%" . $valor . "%";
-		$stmt->bindParam(':valor', $searchValue, PDO::PARAM_STR);
-		
-		// Ejecutar la consulta
-		$stmt->execute();
 	
-		// Obtener los resultados
-		$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		
-		// Retornar los resultados
-		return $clientes;
-	}
-
-	
-
 }

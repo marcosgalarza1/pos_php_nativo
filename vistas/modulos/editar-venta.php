@@ -49,10 +49,10 @@
 
                     $vendedor = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
 
-                    $itemCliente = "id";
-                    $valorCliente = $venta["id_cliente"];
+                    $itemMesero = "id";
+                    $valorMesero = $venta["id_mesero"];
 
-                    $cliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
+                    $mesero = ControladorMeseros::ctrMostrarMeseros($itemMesero, $valorMesero);
 
                     $porcentajeImpuesto = $venta["impuesto"] * 100 / $venta["neto"];
 
@@ -94,7 +94,7 @@
                 </div>
 
                 <!--=====================================
-                ENTRADA DEL CLIENTE
+                ENTRADA DEL MESEROS
                 ======================================--> 
 
                 <div class="form-group">
@@ -103,16 +103,16 @@
                     
                     <span class="input-group-addon"><i class="fa fa-users"></i></span>
                     
-                    <select class="form-control" id="seleccionarCliente" name="seleccionarCliente" required>
+                    <select class="form-control" id="seleccionarMesero" name="seleccionarMesero" required>
 
-                    <option value="<?php echo $cliente["id"]; ?>"><?php echo $cliente["nombre"]; ?></option>
+                    <option value="<?php echo $mesero["id"]; ?>"><?php echo $mesero["nombre"]; ?></option>
 
                     <?php
 
                       $item = null;
                       $valor = null;
 
-                      $categorias = ControladorClientes::ctrMostrarClientes($item, $valor);
+                      $categorias = ControladorMeseros::ctrMostrarMeseros($item, $valor);
 
                        foreach ($categorias as $key => $value) {
 
@@ -124,7 +124,7 @@
 
                     </select>
                     
-                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalAgregarCliente" data-dismiss="modal">Agregar cliente</button></span>
+                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalAgregarMesero" data-dismiss="modal">Agregar mesero</button></span>
                   
                   </div>
                 
@@ -361,10 +361,10 @@
 </div>
 
 <!--=====================================
-MODAL AGREGAR CLIENTE
+MODAL AGREGAR MESERO
 ======================================-->
 
-<div id="modalAgregarCliente" class="modal fade" role="dialog">
+<div id="modalAgregarMesero" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -380,7 +380,7 @@ MODAL AGREGAR CLIENTE
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Agregar cliente</h4>
+          <h4 class="modal-title">Agregar mesero</h4>
 
         </div>
 
@@ -403,7 +403,7 @@ MODAL AGREGAR CLIENTE
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA7ElEQVR4nMXUwSqEURQH8B9Zi2RjOytZDAtLXsGSKWvvIUuyoMGChWnK2htYKmXlHUQRK5GiW3dqFue75Q459a9b5/Trfl+nyz/UBFax/hvYGu7xlXOIdi22jI8hbJB3LNaA5wE2SLcGvCqAlzXgaQHs1YBHBXC/BuwWwIMacBJPAZbWaFplHQfgnhFqLgCnRgHbAdiqgcawggXs4AGP2MU8ln7yEGziLt/mDWf501NO8Jp7t/nBGG/CZnHTsCbbOVHvGjMReFHYu42cpn4/Al8ahj/zDdLupXM08xyBHWwFGX5Y0zmaSf/9b+obeeR7t6oVkbEAAAAASUVORK5CYII=">
                 </span> 
 
-                <input type="text" class="form-control input-lg" name="nuevoCliente" placeholder="Ingresar Nombre" required>
+                <input type="text" class="form-control input-lg" name="nuevoMesero" placeholder="Ingresar Nombre" required>
 
               </div>
 
@@ -443,7 +443,7 @@ MODAL AGREGAR CLIENTE
 
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
 
-         <button type="submit" class="btn btn-"style="background:#6c757d; color:white">Guardar Cliente </button>
+         <button type="submit" class="btn btn-"style="background:#6c757d; color:white">Guardar Mesero </button>
 
         </div>
 
@@ -451,8 +451,8 @@ MODAL AGREGAR CLIENTE
 
       <?php
 
-        $crearCliente = new ControladorClientes();
-        $crearCliente -> ctrCrearCliente();
+        $crearMesero = new ControladorMeseros();
+        $crearMesero -> ctrCrearMesero();
 
       ?>
 

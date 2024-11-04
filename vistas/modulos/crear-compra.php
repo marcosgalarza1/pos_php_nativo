@@ -120,7 +120,7 @@ if($_SESSION["perfil"] == "Especial"){
                 </div>
 
                 <!--=====================================
-                ENTRADA DEL CLIENTE
+                ENTRADA DEL MESERO
                 ======================================--> 
 
                 <div class="form-group">
@@ -146,7 +146,7 @@ if($_SESSION["perfil"] == "Especial"){
 
                     </select>
                     
-                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs text-uppercase" data-toggle="modal" data-target="#modalAgregarCliente" data-dismiss="modal">Agregar Proveedores</button></span>
+                    <span class="input-group-addon"><button type="button" class="btn btn-default btn-xs text-uppercase" data-toggle="modal" data-target="#modalAgregarMesero" data-dismiss="modal">Agregar Proveedores</button></span>
                   
                   </div>
                 
@@ -292,10 +292,10 @@ if($_SESSION["perfil"] == "Especial"){
 </div>
 
 <!--=====================================
-MODAL AGREGAR CLIENTE
+MODAL AGREGAR MESERO
 ======================================-->
 
-<div id="modalAgregarCliente" class="modal fade" role="dialog">
+<div id="modalAgregarMesero" class="modal fade" role="dialog">
   
   <div class="modal-dialog">
 
@@ -416,8 +416,8 @@ MODAL AGREGAR CLIENTE
 
       <?php
 
-        $crearCliente = new ControladorProveedors();
-        $crearCliente -> ctrCrearProveedor();
+        $crearMesero = new ControladorProveedors();
+        $crearMesero -> ctrCrearProveedor();
 
       ?>
 

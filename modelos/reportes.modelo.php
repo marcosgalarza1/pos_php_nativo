@@ -95,11 +95,11 @@ class ModeloReportes{
     static public function mdlObtenerGanancias($mes,$anio){
 
 		// Consulta SQL
-		$sql = "SELECT dv.id_venta,v.codigo,DATE(v.fecha) AS fecha,u.usuario as vendedor,c.nombre as cliente,v.total,SUM((p.precio_venta-p.precio_compra)*dv.cantidad) as ganancia
+		$sql = "SELECT dv.id_venta,v.codigo,DATE(v.fecha) AS fecha,u.usuario as vendedor,c.nombre as mesero,v.total,SUM((p.precio_venta-p.precio_compra)*dv.cantidad) as ganancia
 				FROM detalle_venta as dv
 				JOIN ventas AS v ON dv.id_venta = v.id
 				JOIN productos AS p ON dv.id_producto = p.id
-				JOIN clientes AS c ON v.id_cliente = c.id
+				JOIN meseros AS c ON v.id_mesero = c.id
 				JOIN usuarios AS u ON v.id_vendedor = u.id
 				WHERE MONTH(v.fecha)= :mes 
 				AND YEAR(v.fecha)= :anio 
@@ -185,7 +185,7 @@ class ModeloReportes{
     static public function mdlObtenerGananciasYear($yearIni,$yearFin){
 
 		// Consulta SQL
-		$sql = "SELECT YEAR(v.fecha) AS 'year',MONTH(v.fecha) AS mes,COUNT(v.id) AS cantventas,SUM(total) as ventas,COUNT(DISTINCT v.id_cliente) AS clientes FROM `ventas` as v JOIN clientes AS c ON v.id_cliente = c.id WHERE YEAR(v.fecha) BETWEEN :yearIni AND :yearFin GROUP BY YEAR(v.fecha),MONTH(v.fecha) ORDER BY (v.fecha) ASC;";
+		$sql = "SELECT YEAR(v.fecha) AS 'year',MONTH(v.fecha) AS mes,COUNT(v.id) AS cantventas,SUM(total) as ventas,COUNT(DISTINCT v.id_mesero) AS meseros FROM `ventas` as v JOIN meseros AS c ON v.id_mesero = c.id WHERE YEAR(v.fecha) BETWEEN :yearIni AND :yearFin GROUP BY YEAR(v.fecha),MONTH(v.fecha) ORDER BY (v.fecha) ASC;";
 
         $ganancias = Conexion::conectar()->prepare($sql);
         $ganancias->bindParam(':yearIni', $yearIni, PDO::PARAM_INT);

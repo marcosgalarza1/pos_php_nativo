@@ -93,7 +93,7 @@ class PdfGananciasYear
                 $pdf->SetXY($posicion_MulticeldaDX + 46, $posicion_MulticeldaDY + 5);
                 $pdf->Cell(23, 5, 'Ganancias', 0, 1, 'C');
                 $pdf->SetXY($posicion_MulticeldaDX + 69, $posicion_MulticeldaDY + 5);
-                $pdf->Cell(23, 5, utf8_decode('Clientes'), 0, 1, 'C', 0);
+                $pdf->Cell(23, 5, utf8_decode('Meseros'), 0, 1, 'C', 0);
 
                 $primeravez = false;
                 $years = $dato['year'];
@@ -160,10 +160,10 @@ class PdfGananciasYear
 
                 $pdf->Cell(23, 5, number_format($ganancia, 2, '.', ','), 0, 1, 'C', 0);
                 $pdf->SetXY($posicion_MulticeldaDX + 69, $posicion_MulticeldaDY + $aumentar);
-                $pdf->Cell(23, 5, $dato['clientes'], 0, 1, 'C', 0);
+                $pdf->Cell(23, 5, $dato['meseros'], 0, 1, 'C', 0);
                 $sum1 = $sum1 + $dato['ventas'];
                 $sum2 = $sum2 + $ganancia;
-                $sum3 = $sum3 + $dato['clientes'];
+                $sum3 = $sum3 + $dato['meseros'];
                 $aumentar += 5;
 
                 if ($dato['mes'] == '12') {
@@ -280,7 +280,7 @@ class PdfGananciasYear
                     $pdf->SetXY($posicion_MulticeldaDX + 46, $posicion_MulticeldaDY + 5);
                     $pdf->Cell(23, 5, 'Ganancias', 0, 1, 'C');
                     $pdf->SetXY($posicion_MulticeldaDX + 69, $posicion_MulticeldaDY + 5);
-                    $pdf->Cell(23, 5, utf8_decode('Clientes'), 0, 1, 'C', 0);
+                    $pdf->Cell(23, 5, utf8_decode('Meseros'), 0, 1, 'C', 0);
 
                     $primeravez = false;
                     $years = $dato['year'];
@@ -302,11 +302,11 @@ class PdfGananciasYear
 
                     $pdf->Cell(23, 5, number_format($ganancia, 2, '.', ','), 0, 1, 'C', 0);
                     $pdf->SetXY($posicion_MulticeldaDX + 69, $posicion_MulticeldaDY + $aumentar);
-                    $pdf->Cell(23, 5, $dato['clientes'], 0, 1, 'C', 0);
+                    $pdf->Cell(23, 5, $dato['meseros'], 0, 1, 'C', 0);
 
                     $sum1 = $sum1 + $dato['ventas'];
                     $sum2 = $sum2 + $ganancia;
-                    $sum3 = $sum3 + $dato['clientes'];
+                    $sum3 = $sum3 + $dato['meseros'];
                     $aumentar += 5;
                 } else {
                     $x = 13;
@@ -369,7 +369,7 @@ class PdfGananciasYear
                     $pdf->SetXY($posicion_MulticeldaDX + 46, $posicion_MulticeldaDY + 5);
                     $pdf->Cell(23, 5, 'Ganancias', 0, 1, 'C');
                     $pdf->SetXY($posicion_MulticeldaDX + 69, $posicion_MulticeldaDY + 5);
-                    $pdf->Cell(23, 5, utf8_decode('Clientes'), 0, 1, 'C', 0);
+                    $pdf->Cell(23, 5, utf8_decode('Meseros'), 0, 1, 'C', 0);
                     $primeravez = false;
                     $years = $dato['year'];
                     $x = 110;
@@ -389,12 +389,12 @@ class PdfGananciasYear
 
                     $pdf->Cell(23, 5, number_format($ganancia, 2, '.', ','), 0, 1, 'C', 0);
                     $pdf->SetXY($posicion_MulticeldaDX + 69, $posicion_MulticeldaDY + $aumentar);
-                    $pdf->Cell(23, 5, $dato['clientes'], 0, 1, 'C', 0);
+                    $pdf->Cell(23, 5, $dato['meseros'], 0, 1, 'C', 0);
 
 
                     $sum1 = $sum1 + $dato['ventas'];
                     $sum2 = $sum2 + $ganancia;
-                    $sum3 = $sum3 + $dato['clientes'];
+                    $sum3 = $sum3 + $dato['meseros'];
                     $aumentar += 5;
                 }
 

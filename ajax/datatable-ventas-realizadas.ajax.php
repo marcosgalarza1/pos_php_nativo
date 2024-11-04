@@ -47,7 +47,7 @@ class TablaProductosVentas{
 			  $botones.= "<button class='btn btn-info btnImprimirFactura' codigoVenta='".$ventas[$i]["codigo"]."'><i class='fa fa-print'></i></button>"; 
 
 			//   if(isset($_GET["perfilOculto"])  && $_GET["perfilOculto"] == "Administrador"){
-				  $botones.=  "<button class='btn btn-danger btnEliminarVenta' idVenta='".$ventas[$i]["id"]."'><i class='fa fa-times'></i></button>"; 
+				  $botones.=  "<button class='btn btn-danger btnEliminarVenta' idVentaEliminar='".$ventas[$i]["id"]."'><i class='fa fa-times'></i></button>"; 
 			//   }
 			
 			 $botones.="</div>";
@@ -56,7 +56,7 @@ class TablaProductosVentas{
 		  	$datos[] = [
 			      ($i+1),
 			      $ventas[$i]["codigo"],
-				  $ventas[$i]["cliente"],
+				  $ventas[$i]["mesero"],
                   $ventas[$i]["usuario"],
 			      number_format($ventas[$i]["total"], 2),
 				  $ventas[$i]["fecha"],

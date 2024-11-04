@@ -4,8 +4,8 @@ require_once "../../../controladores/ventas.controlador.php";
 require_once "../../../modelos/ventas.modelo.php";
 
 
-require_once "../../../controladores/clientes.controlador.php";
-require_once "../../../modelos/clientes.modelo.php";
+require_once "../../../controladores/meseros.controlador.php";
+require_once "../../../modelos/meseros.modelo.php";
 
 require_once "../../../controladores/usuarios.controlador.php";
 require_once "../../../modelos/usuarios.modelo.php";
@@ -41,9 +41,9 @@ class reporteVenta
         // $valorVendedor = $respuestaVentas["id_proveedor"];
 
         if ($idMesero != 0) {
-            $respuestaProveedor = ControladorClientes::ctrMostrarClientes($itemMesero, $idMesero);
+            $respuestaMesero = ControladorMeseros::ctrMostrarMeseros($itemMesero, $idMesero);
         } else {
-            $respuestaProveedor["nombre"] = "Todos";
+            $respuestaMesero["nombre"] = "Todos";
         }
 
         //REQUERIMOS LA CLASE TCPDF
@@ -77,7 +77,7 @@ class reporteVenta
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Mesero: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
-        $pdf->Cell(50, 5, $respuestaProveedor["nombre"], 0, 1, 'L');
+        $pdf->Cell(50, 5, $respuestaMesero["nombre"], 0, 1, 'L');
 
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Periodo: ', 0, 0, 'L');

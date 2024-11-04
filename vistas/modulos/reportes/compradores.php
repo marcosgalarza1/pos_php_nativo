@@ -4,27 +4,27 @@ $item = null;
 $valor = null;
 
 $ventas = ControladorVentas::ctrMostrarVentas($item, $valor);
-$clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
+$meseros = ControladorMeseros::ctrMostrarMeseros($item, $valor);
 
-$arrayClientes = array();
-$arraylistaClientes = array();
+$arrayMeseros = array();
+$arraylistaMeseros = array();
 
 foreach ($ventas as $key => $valueVentas) {
   
-  foreach ($clientes as $key => $valueClientes) {
+  foreach ($meseros as $key => $valueMeseros) {
     
-      if($valueClientes["id"] == $valueVentas["id_cliente"]){
+      if($valueMeseros["id"] == $valueVentas["id_mesero"]){
 
-        #Capturamos los Clientes en un array
-        array_push($arrayClientes, $valueClientes["nombre"]);
+        #Capturamos los Meseros en un array
+        array_push($arrayMeseros, $valueMeseros["nombre"]);
 
         #Capturamos las nombres y los valores netos en un mismo array
-        $arraylistaClientes = array($valueClientes["nombre"] => $valueVentas["total"]);
+        $arraylistaMeseros = array($valueMeseros["nombre"] => $valueVentas["total"]);
 
-        #Sumamos los netos de cada cliente
-        foreach ($arraylistaClientes as $key => $value) {
+        #Sumamos los netos de cada mesero
+        foreach ($arraylistaMeseros as $key => $value) {
           
-          $sumaTotalClientes[$key] += $value;
+          $sumaTotalMeseros[$key] += $value;
         
         }
 
@@ -34,7 +34,7 @@ foreach ($ventas as $key => $valueVentas) {
 }
 
 #Evitamos repetir nombre
-$noRepetirNombres = array_unique($arrayClientes);
+$noRepetirNombres = array_unique($arrayMeseros);
 
 ?>
 
@@ -73,7 +73,7 @@ var bar = new Morris.Bar({
     
     foreach($noRepetirNombres as $value){
 
-      echo "{y: '".$value."', a: '".$sumaTotalClientes[$value]."'},";
+      echo "{y: '".$value."', a: '".$sumaTotalMeseros[$value]."'},";
 
     }
 

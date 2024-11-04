@@ -180,7 +180,6 @@ $(".tablaVentas").on("draw.dt", function(){
 
 		}
 
-
 	}
 
 
@@ -228,8 +227,7 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 		$("#nuevoImpuestoVenta").val(0);
 		$("#nuevoTotalVenta").val(0);
 		$("#totalVenta").val(0);
-		$("#nota").val(0);
-		$("#tipoPago").val(0);
+
 		$("#nuevoTotalVenta").attr("total",0);
 
 	}else{
@@ -704,7 +702,6 @@ $(".tablas").on("click", ".btnEditarVenta", function(){
 
 	window.location = "index.php?ruta=editar-venta&idVenta="+idVenta;
 
-
 })
 
 
@@ -713,6 +710,7 @@ FUNCIÓN PARA DESACTIVAR LOS BOTONES AGREGAR CUANDO EL PRODUCTO YA HABÍA SIDO S
 =============================================*/
 
 function quitarAgregarProducto(){
+
 
 	//Capturamos todos los id de productos que fueron elegidos en la venta
 	var idProductos = $(".quitarProducto");
@@ -757,7 +755,7 @@ BORRAR VENTA
 =============================================*/
 $(".tablas").on("click", ".btnEliminarVenta", function(){
 
-	var idVenta = $(this).attr("idVenta");
+	var idVentaEliminar = $(this).attr("idVentaEliminar");
   
 	swal({
 		  title: '¿Está seguro de borrar la venta?',
@@ -771,7 +769,7 @@ $(".tablas").on("click", ".btnEliminarVenta", function(){
 		}).then(function(result){
 		  if (result.value) {
 			
-			  window.location = "index.php?ruta=ventas&idVenta="+idVenta;
+			  window.location = "index.php?ruta=ventas&idVentaEliminar="+idVentaEliminar;
 		  }
   
 	})
@@ -914,4 +912,9 @@ $(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function(){
 	localStorage.clear();
 	window.location = "ventas";
 })
+
+
+/*=============================================
+VALIDAR QUE LA FECHA NO PERMITA SELECIONAR UNA FECHA MAYOR A LA ACTUAL
+=============================================*/
 

@@ -10,8 +10,8 @@ $ventas = ControladorVentas::ctrSumaTotalVentas();
 $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
 $totalCategorias = count($categorias);
 
-$clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
-$totalClientes = count($clientes);
+$meseros = ControladorMeseros::ctrMostrarMeseros($item, $valor);
+$totalMeseros = count($meseros);
 
 $usuario = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
 $totalusuarios=count($usuario);
@@ -196,7 +196,7 @@ $ventasTotaldDiaActual = ControladorVentas::ctrVentasTotalDia();
 
     <div class="inner">
 
-      <h3><?php echo number_format($totalClientes); ?></h3>
+      <h3><?php echo number_format($totalMeseros); ?></h3>
 
       <p>Meseros</p>
 
@@ -208,7 +208,7 @@ $ventasTotaldDiaActual = ControladorVentas::ctrVentasTotalDia();
 
     </div>
 
-    <a href="clientes" class="small-box-footer">
+    <a href="meseros" class="small-box-footer">
 
       Más info <i class="fa fa-arrow-circle-right"></i>
 

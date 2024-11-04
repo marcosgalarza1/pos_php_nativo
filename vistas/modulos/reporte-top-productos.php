@@ -31,7 +31,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label><i class="text-danger">*</i> Fecha de fin:</label>
-                                        <input type="date" id="fecha_fin" name="fecha_fin" value="<?php echo date('Y-m-t'); ?>" class="form-control" required>
+                                        <input type="date" id="fecha_fin" name="fecha_fin" value="<?php echo date('Y-m-d'); ?>" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4 text-right">
@@ -55,30 +55,43 @@
 </div>
 
 <script>
+    // Asignar la fecha actual a una variable global en JavaScript
+const fechaActual = "<?php echo $fechaActual; ?>";
+const fechaInicio = document.getElementById('fecha_inicio');
+const fechaFin = document.getElementById('fecha_fin');
+fechaInicio.setAttribute('max', fechaActual);
+fechaFin.setAttribute('max', fechaActual);
+
     var popupWindow = null;
 
     function generatePDF() {
-        const fechaInicio = document.getElementById('fecha_inicio').value;
-        const fechaFin = document.getElementById('fecha_fin').value;
+
         const idUsuario = document.getElementById('id_usuario').value;
 
-        const fechaInicioObj = new Date(fechaInicio);
-        const fechaFinObj = new Date(fechaFin);
 
-        if (fechaInicioObj > fechaFinObj) {
-            swal({
-                icon: 'warning',
-                title: 'Advertencia',
-                text: 'Por favor, seleccione una fecha de inicio menor a la fecha fin.',
-            });
-            return;
-        }
 
-        if (!fechaInicio || !fechaFin) {
+
+        if (!fechaInicio.value || !fechaFin.value) {
             swal({
                 icon: 'warning',
                 title: 'Advertencia',
                 text: 'Por favor, seleccione las fechas requeridas.',
+            });
+            return;
+        }
+        if (fechaFin.value > fechaActual) {
+            swal({
+                icon: 'warning',
+                title: 'Advertencia',
+                text: 'Por favor, la fecha fin seleccionada no puede ser mayor a la fecha actual: ' + fechaActual,
+            });
+            return;
+        }
+        if (fechaInicio.value > fechaFin.value) {
+            swal({
+                icon: 'warning',
+                title: 'Advertencia',
+                text: 'Por favor, seleccione una fecha de inicio menor a la fecha fin.',
             });
             return;
         }
@@ -94,8 +107,8 @@
         }
 
         popupWindow = window.open(
-            "extensiones/tcpdf/pdf/top-productos-mas-vendidos.php?fechaInicio=" + encodeURIComponent(fechaInicio) +
-            "&fechaFin=" + encodeURIComponent(fechaFin) +
+            "extensiones/tcpdf/pdf/top-productos-mas-vendidos.php?fechaInicio=" + encodeURIComponent(fechaInicio.value) +
+            "&fechaFin=" + encodeURIComponent(fechaFin.value) +
             "&idUsuario=" + encodeURIComponent(idUsuario),
             "_blank",
             windowFeatures

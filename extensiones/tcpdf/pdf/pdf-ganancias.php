@@ -109,7 +109,7 @@ class PdfGanancias
         $pdf->Cell(26, 5, utf8_decode('Folio'), 1, 0, 'L');
         $pdf->Cell(26, 5, utf8_decode('fecha'), 1, 0, 'L');
         $pdf->Cell(30, 5, utf8_decode('vendedor'), 1, 0, 'L');
-        $pdf->Cell(50, 5, utf8_decode('cliente'), 1, 0, 'L');
+        $pdf->Cell(50, 5, utf8_decode('mesero'), 1, 0, 'L');
         $pdf->Cell(24, 5, utf8_decode('Monto'), 1, 0, 'L');
         $pdf->Cell(24, 5, utf8_decode('Ganancia'), 1, 1, 'L');
         $pdf->SetFont('Arial', '', 11);
@@ -126,7 +126,7 @@ class PdfGanancias
             $pdf->Cell(26, 5, $ganancia['codigo'], 1, 0, 'L');
             $pdf->Cell(26, 5, utf8_decode($ganancia['fecha']), 1, 0, 'L');
             $pdf->Cell(30, 5, utf8_decode($ganancia['vendedor']), 1, 0, 'L');
-            $pdf->Cell(50, 5, utf8_decode($ganancia['cliente']), 1, 0, 'L');
+            $pdf->Cell(50, 5, utf8_decode($ganancia['mesero']), 1, 0, 'L');
             $pdf->Cell(24, 5, $ganancia['total'], 1, 0, 'L');
             $pdf->Cell(24, 5, $ganancia['ganancia'], 1, 1, 'R');
             $sum = $sum + $ganancia['total'];

@@ -1,7 +1,8 @@
  <?php
 
  session_start();
-
+  // Obtener la fecha actual en PHP en formato YYYY-MM-DD
+  $fechaActual = date("Y-m-d");
  ?>
 
 <!DOCTYPE html>
@@ -61,9 +62,12 @@
   plugin DE java scrip
   ======================================-->
 
+
   <!-- jQuery 3 -->
-  <script src="vistas/bower_components/jquery/dist/jquery.min.js"></script>
-  
+  <link rel="stylesheet" href="vistas/bower_components/jquery-ui/themes/base/jquery-ui.min.css">
+  <script src="vistas/bower_components/jquery/dist/jquery.min.js"></script> 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
   <!-- Bootstrap 3.3.7 -->
   <script src="vistas/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -111,7 +115,6 @@
 
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
-
 
 
  
@@ -228,9 +231,11 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "categorias" ||
          $_GET["ruta"] == "agregar-categoria" ||
          $_GET["ruta"] == "agregar-cliente" ||
+         $_GET["ruta"] == "agregar-mesero" ||
          $_GET["ruta"] == "editar-categoria" ||
          $_GET["ruta"] == "productos" ||
          $_GET["ruta"] == "clientes" ||
+         $_GET["ruta"] == "meseros" ||
          $_GET["ruta"] == "ventas" ||
          $_GET["ruta"] == "crear-venta" ||
          $_GET["ruta"] == "editar-venta" ||
@@ -283,6 +288,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/categorias.js"></script>
 <script src="vistas/js/productos.js"></script>
 <script src="vistas/js/clientes.js"></script>
+<script src="vistas/js/meseros.js"></script>
 <script src="vistas/js/compras.js"></script>  
 <script src="vistas/js/reportes.js"></script>
 <script src="vistas/js/proveedor.js"></script>
@@ -294,6 +300,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/tabladinamica/usuariotabla.js"></script>
 <script src="vistas/js/tabladinamica/categoriatabla.js"></script>
 <script src="vistas/js/tabladinamica/clientetabla.js"></script>
+<script src="vistas/js/tabladinamica/meserotabla.js"></script>
 <script src="vistas/js/tabladinamica/proveedortabla.js"></script>
 <script src="vistas/js/tabladinamica/comprastabla.js"></script>
 <script src="vistas/js/tabladinamica/ventastabla.js"></script>

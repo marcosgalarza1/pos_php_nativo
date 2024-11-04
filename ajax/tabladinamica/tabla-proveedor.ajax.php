@@ -6,7 +6,7 @@ require_once "../../modelos/proveedor.modelo.php";
 class TablaProveedor
 {
     /*=============================================
-	MOSTRAR LA TABLA DE CLIENTES
+	MOSTRAR LA TABLA DE PROVEEDOR
 	=============================================*/
     public function mostrarTablaProveedor()
     {

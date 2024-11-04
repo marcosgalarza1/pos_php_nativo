@@ -110,12 +110,12 @@ if($_SESSION["perfil"] == "Especial"){
 
                   <td>'.$value["codigo"].'</td>';
 
-                  $itemCliente = "id";
-                  $valorCliente = $value["id_cliente"];
+                  $itemMesero = "id";
+                  $valorMesero = $value["id_mesero"];
 
-                  $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
+                  $respuestaMesero = ControladorMeseros::ctrMostrarMeseros($itemMesero, $valorMesero);
 
-                  echo '<td>'.$respuestaCliente["nombre"].'</td>';
+                  echo '<td>'.$respuestaMesero["nombre"].'</td>';
 
                   $itemUsuario = "id";
                   $valorUsuario = $value["id_vendedor"];

@@ -35,7 +35,7 @@ class imprimirCompra {
         $total = (float) $total;
         $total = number_format($total, 2, '.', ',');
 
-        // TRAEMOS LA INFORMACIÓN DEL CLIENTE
+        // TRAEMOS LA INFORMACIÓN DEL MESERO
         $itemUsuario = "id";
         $valorUsuario = $respuestaCompra["id_usuario"];
         $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);

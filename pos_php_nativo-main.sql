@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2024 a las 10:05:00
+-- Tiempo de generación: 04-11-2024 a las 03:22:03
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -52,11 +52,6 @@ INSERT INTO `categorias` (`id`, `categoria`, `fecha`) VALUES
 CREATE TABLE `clientes` (
   `id` int(11) NOT NULL,
   `nombre` text NOT NULL,
-  `documento` varchar(11) NOT NULL,
-  `telefono` text NOT NULL,
-  `direccion` text NOT NULL,
-  `compras` int(11) NOT NULL,
-  `ultima_compra` datetime NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -64,12 +59,8 @@ CREATE TABLE `clientes` (
 -- Volcado de datos para la tabla `clientes`
 --
 
-INSERT INTO `clientes` (`id`, `nombre`, `documento`, `telefono`, `direccion`, `compras`, `ultima_compra`, `fecha`) VALUES
-(1, 'publico en general', 's/n', ' 000-00-000', 's/n', 163, '2024-10-30 04:57:55', '2024-10-30 08:57:55'),
-(2, 'axel justitiano', '8485456', ' 776-34-88_', 'moscu', 32, '2024-10-29 23:22:50', '2024-10-30 03:22:50'),
-(3, 'andrea pacheco', '48758897 SC', ' 776-30-477', '2do anillo', 4, '2024-10-21 21:34:36', '2024-10-22 01:34:36'),
-(4, 'alexander cespedes', '98945484', ' 776-30-484', 'barrio caminero', 4, '2024-10-30 01:08:07', '2024-10-30 05:08:07'),
-(5, 'china', '747484768sc', '787-84-854', 'barrio cabañas', 0, '0000-00-00 00:00:00', '2024-10-27 23:50:50');
+INSERT INTO `clientes` (`id`, `nombre`, `fecha`) VALUES
+(1, 'Enrique Condori', '2024-11-03 22:43:50');
 
 -- --------------------------------------------------------
 
@@ -291,7 +282,48 @@ INSERT INTO `detalle_venta` (`id`, `id_producto`, `id_venta`, `producto`, `canti
 (145, 28, 61, 'pacumuto', 3, 80.00, 50.00, 240.00),
 (146, 29, 61, 'costilla de cordero', 3, 80.00, 50.00, 240.00),
 (147, 30, 61, 'planchita', 2, 100.00, 80.00, 200.00),
-(148, 31, 61, 'jarra de chicha entera', 2, 15.00, 10.00, 30.00);
+(148, 31, 61, 'jarra de chicha entera', 2, 15.00, 10.00, 30.00),
+(149, 51, 62, 'vaso de chicha', 1, 5.00, 2.00, 5.00),
+(150, 50, 62, 'vaso de maracuya', 2, 5.00, 2.00, 10.00),
+(151, 48, 63, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(152, 53, 63, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(153, 48, 64, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(154, 53, 65, 'pollo ala broaster economico', 1, 12.00, 8.00, 12.00),
+(155, 48, 65, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(156, 53, 66, 'pollo ala broaster economico', 3, 12.00, 8.00, 36.00),
+(157, 48, 66, 'vaso de mocochinchi', 1, 5.00, 2.00, 5.00),
+(158, 53, 67, 'pollo ala broaster economico', 4, 12.00, 8.00, 48.00),
+(159, 48, 67, 'vaso de mocochinchi', 5, 5.00, 2.00, 25.00),
+(160, 44, 67, 'cerveza huari', 1, 25.00, 20.00, 25.00);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `meseros`
+--
+
+CREATE TABLE `meseros` (
+  `id` int(11) NOT NULL,
+  `nombre` text NOT NULL,
+  `documento` varchar(11) NOT NULL,
+  `telefono` text NOT NULL,
+  `direccion` text NOT NULL,
+  `compras` int(11) NOT NULL,
+  `ultima_compra` datetime NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `meseros`
+--
+
+INSERT INTO `meseros` (`id`, `nombre`, `documento`, `telefono`, `direccion`, `compras`, `ultima_compra`, `fecha`) VALUES
+(1, 'publico en general', 's/n', ' 000-00-000', 's/n', 182, '2024-11-03 22:16:01', '2024-11-04 02:16:01'),
+(2, 'Enrique Condori', '61335228', ' 776-34-882', 'moscú', 32, '2024-10-29 23:22:50', '2024-11-03 21:25:25'),
+(3, 'andrea pacheco', '48758897 SC', ' 776-30-477', '2do anillo', 4, '2024-10-21 21:34:36', '2024-10-22 01:34:36'),
+(4, 'alexander cespedes', '98945484', ' 776-30-484', 'barrio caminero', 4, '2024-10-30 01:08:07', '2024-10-30 05:08:07'),
+(5, 'china', '747484768sc', '787-84-854', 'barrio cabañas', 0, '0000-00-00 00:00:00', '2024-10-27 23:50:50'),
+(6, 'Lisbeth Heredia', '623423424', '613-35-235', 'Callle 16 de Julio', 0, '0000-00-00 00:00:00', '2024-11-03 21:25:52');
 
 -- --------------------------------------------------------
 
@@ -360,15 +392,15 @@ INSERT INTO `productos` (`id`, `id_categoria`, `codigo`, `descripcion`, `imagen`
 (41, 2, '203', 'coca cola 2l', 'vistas/img/productos/203/922.jpg', 14, 18, 12, 6, '2024-10-28 01:02:35'),
 (42, 2, '204', 'cabaña 2l', 'vistas/img/productos/204/211.jpg', 14, 18, 13, 8, '2024-10-28 01:02:35'),
 (43, 2, '205', 'cerveza paceña', 'vistas/img/productos/205/918.jpg', 7, 22, 15, 13, '2024-10-28 01:02:35'),
-(44, 2, '206', 'cerveza huari', 'vistas/img/productos/206/447.jpg', 11, 25, 20, 9, '2024-10-30 08:57:55'),
+(44, 2, '206', 'cerveza huari', 'vistas/img/productos/206/447.jpg', 10, 25, 20, 10, '2024-11-04 02:16:01'),
 (45, 2, '207', 'cerveza cordillera', 'vistas/img/productos/207/655.jpg', 0, 15, 10, 20, '2024-10-22 01:32:34'),
 (46, 2, '208', 'vinos tinto ', 'vistas/img/productos/208/641.jpg', 14, 45, 30, 19, '2024-10-30 08:57:55'),
 (47, 2, '209', 'agua  vital sin gas  2l', 'vistas/img/productos/209/935.jpg', 0, 18, 15, 12, '2024-10-27 14:30:16'),
-(48, 4, '210', 'vaso de mocochinchi', 'vistas/img/productos/210/489.jpg', 43, 5, 2, 17, '2024-10-30 08:57:55'),
+(48, 4, '210', 'vaso de mocochinchi', 'vistas/img/productos/210/489.jpg', 34, 5, 2, 26, '2024-11-04 02:16:01'),
 (49, 4, '211', 'vaso de limonada', 'vistas/img/productos/211/142.png', 0, 5, 2, 10, '2024-10-30 05:08:07'),
-(50, 4, '212', 'vaso de maracuya', 'vistas/img/productos/212/630.png', 12, 5, 2, 18, '2024-10-30 08:57:55'),
-(51, 4, '213', 'vaso de chicha', 'vistas/img/productos/213/796.png', 1, 5, 2, 29, '2024-10-30 03:22:50'),
-(53, 1, '131', 'pollo ala broaster economico', 'vistas/img/productos/131/417.jpg', 33, 12, 8, 17, '2024-10-30 08:57:55');
+(50, 4, '212', 'vaso de maracuya', 'vistas/img/productos/212/630.png', 10, 5, 2, 20, '2024-11-03 23:01:14'),
+(51, 4, '213', 'vaso de chicha', 'vistas/img/productos/213/796.png', 0, 5, 2, 30, '2024-11-03 23:01:14'),
+(53, 1, '131', 'pollo ala broaster economico', 'vistas/img/productos/131/417.jpg', 24, 12, 8, 26, '2024-11-04 02:16:01');
 
 -- --------------------------------------------------------
 
@@ -416,7 +448,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`) VALUES
-(1, 'Maria mendoza', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/266.jpg', 1, '2024-10-27 21:33:55', '2024-10-28 01:33:55'),
+(1, 'Maria mendoza', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/266.jpg', 1, '2024-11-03 16:10:41', '2024-11-03 20:10:41'),
 (2, 'yobana mendoza', 'yoba28', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Vendedor', 'vistas/img/usuarios/yoba28/681.jpg', 1, '2024-10-27 10:43:37', '2024-10-27 14:43:37'),
 (3, 'zajir mendoza', 'zajir12', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Especial', 'vistas/img/usuarios/zajir12/199.jpg', 1, '2024-10-18 21:56:36', '2024-10-19 01:56:36');
 
@@ -429,73 +461,81 @@ INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`,
 CREATE TABLE `ventas` (
   `id` int(11) NOT NULL,
   `codigo` int(11) NOT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `id_vendedor` int(11) NOT NULL,
+  `id_mesero` int(11) DEFAULT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `id_vendedor` int(11) DEFAULT NULL,
   `total` float NOT NULL,
   `total_pagado` float DEFAULT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `nota` varchar(300) DEFAULT NULL,
   `tipo_pago` varchar(100) DEFAULT NULL,
-  `cambio` float DEFAULT NULL
+  `cambio` float DEFAULT NULL,
+  `forma_atencion` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `ventas`
 --
 
-INSERT INTO `ventas` (`id`, `codigo`, `id_cliente`, `id_vendedor`, `total`, `total_pagado`, `fecha`, `nota`, `tipo_pago`, `cambio`) VALUES
-(1, 10001, 1, 1, 10, NULL, '2023-10-18 15:23:15', NULL, NULL, NULL),
-(2, 10002, 1, 1, 50, NULL, '2024-10-18 15:23:39', NULL, NULL, NULL),
-(8, 10003, 2, 1, 5, NULL, '2024-10-18 15:45:14', NULL, NULL, NULL),
-(9, 10004, 2, 1, 45, NULL, '2024-10-18 15:48:17', NULL, NULL, NULL),
-(10, 10005, 1, 1, 41, NULL, '2024-10-18 15:48:34', NULL, NULL, NULL),
-(11, 10006, 2, 1, 41, NULL, '2024-10-18 15:49:29', NULL, NULL, NULL),
-(12, 10007, 1, 1, 135, NULL, '2024-10-18 15:52:17', NULL, NULL, NULL),
-(13, 10008, 2, 1, 181, NULL, '2024-10-18 15:53:02', NULL, NULL, NULL),
-(14, 10009, 2, 1, 10, NULL, '2024-10-18 16:12:14', NULL, NULL, NULL),
-(15, 10010, 1, 1, 45, NULL, '2024-10-19 01:31:36', NULL, NULL, NULL),
-(18, 10011, 1, 1, 33, NULL, '2024-10-19 02:01:35', NULL, NULL, NULL),
-(19, 10012, 1, 1, 90, NULL, '2024-10-19 02:53:32', NULL, NULL, NULL),
-(20, 10013, 2, 2, 33, NULL, '2024-10-19 03:08:08', NULL, NULL, NULL),
-(21, 10014, 1, 2, 5, NULL, '2024-10-19 03:21:09', NULL, NULL, NULL),
-(22, 10015, 2, 1, 30, NULL, '2024-10-19 14:25:12', NULL, NULL, NULL),
-(23, 10016, 3, 1, 53, NULL, '2024-10-19 14:27:51', NULL, NULL, NULL),
-(24, 10017, 1, 1, 10, NULL, '2024-10-20 01:01:35', NULL, NULL, NULL),
-(25, 10018, 1, 1, 30, NULL, '2024-10-22 01:26:36', NULL, NULL, NULL),
-(26, 10019, 1, 1, 15, NULL, '2024-10-22 01:27:06', NULL, NULL, NULL),
-(29, 10020, 3, 1, 0, NULL, '2024-10-22 01:34:36', NULL, NULL, NULL),
-(30, 10021, 1, 1, 5, NULL, '2024-10-22 01:35:07', NULL, NULL, NULL),
-(31, 10022, 1, 1, 5, NULL, '2024-10-22 01:43:07', NULL, NULL, NULL),
-(32, 10023, 1, 1, 50, NULL, '2024-10-24 00:02:44', NULL, NULL, NULL),
-(33, 10024, 1, 1, 28, NULL, '2024-10-24 03:41:58', NULL, NULL, NULL),
-(34, 10025, 1, 1, 5, NULL, '2024-10-24 03:47:57', NULL, NULL, NULL),
-(35, 10026, 2, 1, 105, NULL, '2024-10-24 04:16:17', NULL, NULL, NULL),
-(36, 10027, 1, 1, 15, NULL, '2024-10-24 04:25:40', NULL, NULL, NULL),
-(37, 10028, 1, 1, 5, NULL, '2024-10-24 04:26:08', NULL, NULL, NULL),
-(38, 10029, 1, 1, 17, NULL, '2024-10-26 19:15:42', NULL, NULL, NULL),
-(39, 10030, 1, 1, 5, NULL, '2024-10-27 13:31:18', NULL, NULL, NULL),
-(40, 10031, 1, 1, 5, NULL, '2024-10-27 13:33:18', NULL, NULL, NULL),
-(41, 10032, 1, 1, 12, NULL, '2024-10-27 13:39:34', NULL, NULL, NULL),
-(42, 10033, 1, 1, 5, NULL, '2024-10-27 14:03:24', NULL, NULL, NULL),
-(43, 10034, 1, 1, 285, NULL, '2024-10-27 14:30:16', NULL, NULL, NULL),
-(44, 10035, 1, 1, 32, NULL, '2024-10-27 14:30:57', NULL, NULL, NULL),
-(45, 10036, 1, 1, 62, NULL, '2024-10-27 14:31:38', NULL, NULL, NULL),
-(46, 10037, 1, 1, 5, NULL, '2024-10-27 14:35:54', NULL, NULL, NULL),
-(47, 10038, 1, 1, 5, NULL, '2024-10-27 14:42:55', NULL, NULL, NULL),
-(48, 10039, 1, 2, 5, NULL, '2024-10-27 14:44:23', NULL, NULL, NULL),
-(49, 10040, 1, 2, 5, NULL, '2024-10-27 14:45:52', NULL, NULL, NULL),
-(50, 10041, 1, 2, 12, NULL, '2024-10-27 14:47:36', NULL, NULL, NULL),
-(51, 10042, 1, 1, 12, NULL, '2024-10-27 22:44:01', NULL, NULL, NULL),
-(52, 10043, 1, 1, 12, NULL, '2024-10-27 22:51:40', NULL, NULL, NULL),
-(53, 10044, 1, 1, 12, NULL, '2024-10-28 00:57:28', NULL, NULL, NULL),
-(54, 10045, 1, 1, 201, NULL, '2024-10-28 01:02:35', NULL, NULL, NULL),
-(55, 10046, 2, 1, 52, NULL, '2024-10-30 03:22:50', NULL, NULL, NULL),
-(56, 10047, 1, 1, 24, NULL, '2024-10-30 04:04:39', 'prueba de mi nota', 'Efectivo', NULL),
-(57, 10048, 1, 1, 17, NULL, '2024-10-30 04:10:28', 'purega', 'Efectivo', 3),
-(58, 10049, 4, 1, 27, NULL, '2024-10-30 05:08:07', 'EL POLLO QUE SEA PRESA PECHO', 'QR', 2),
-(59, 10050, 1, 1, 22, 30, '2024-10-30 07:49:39', 'hola', 'Efectivo', 8),
-(60, 10051, 1, 1, 712, 789, '2024-10-30 08:13:19', 'EL POLLO QUE SEA PRESA PECHO, COCA COLA 3L, ALITAS', 'Efectivo', 77),
-(61, 10052, 1, 1, 1494, 2000, '2024-10-30 09:03:35', 'TODOS LOS PEDIDOS DEBERÁN SER ENTREGADOS EN PLATOS DESECHABLES, INCLUYENDO LAS SALSAS CORRESPONDIENTES Y CUBIERTOS DESECHABLES PARA SU COMODIDAD.', 'Transferencia', 506);
+INSERT INTO `ventas` (`id`, `codigo`, `id_mesero`, `id_cliente`, `id_vendedor`, `total`, `total_pagado`, `fecha`, `nota`, `tipo_pago`, `cambio`, `forma_atencion`) VALUES
+(1, 10001, 1, 1, 1, 10, NULL, '2023-10-18 19:23:15', NULL, NULL, NULL, NULL),
+(2, 10002, 1, 1, 1, 50, NULL, '2024-10-18 19:23:39', NULL, NULL, NULL, NULL),
+(8, 10003, 2, 1, 1, 5, NULL, '2024-10-18 19:45:14', NULL, NULL, NULL, NULL),
+(9, 10004, 2, 1, 1, 45, NULL, '2024-10-18 19:48:17', NULL, NULL, NULL, NULL),
+(10, 10005, 1, 1, 1, 41, NULL, '2024-10-18 19:48:34', NULL, NULL, NULL, NULL),
+(11, 10006, 2, 1, 1, 41, NULL, '2024-10-18 19:49:29', NULL, NULL, NULL, NULL),
+(12, 10007, 1, 1, 1, 135, NULL, '2024-10-18 19:52:17', NULL, NULL, NULL, NULL),
+(13, 10008, 2, 1, 1, 181, NULL, '2024-10-18 19:53:02', NULL, NULL, NULL, NULL),
+(14, 10009, 2, 1, 1, 10, NULL, '2024-10-18 20:12:14', NULL, NULL, NULL, NULL),
+(15, 10010, 1, 1, 1, 45, NULL, '2024-10-19 05:31:36', NULL, NULL, NULL, NULL),
+(18, 10011, 1, 1, 1, 33, NULL, '2024-10-19 06:01:35', NULL, NULL, NULL, NULL),
+(19, 10012, 1, 1, 1, 90, NULL, '2024-10-19 06:53:32', NULL, NULL, NULL, NULL),
+(20, 10013, 2, 1, 2, 33, NULL, '2024-10-19 07:08:08', NULL, NULL, NULL, NULL),
+(21, 10014, 1, 1, 2, 5, NULL, '2024-10-19 07:21:09', NULL, NULL, NULL, NULL),
+(22, 10015, 2, 1, 1, 30, NULL, '2024-10-19 18:25:12', NULL, NULL, NULL, NULL),
+(23, 10016, 3, 1, 1, 53, NULL, '2024-10-19 18:27:51', NULL, NULL, NULL, NULL),
+(24, 10017, 1, 1, 1, 10, NULL, '2024-10-20 05:01:35', NULL, NULL, NULL, NULL),
+(25, 10018, 1, 1, 1, 30, NULL, '2024-10-22 05:26:36', NULL, NULL, NULL, NULL),
+(26, 10019, 1, 1, 1, 15, NULL, '2024-10-22 05:27:06', NULL, NULL, NULL, NULL),
+(29, 10020, 3, 1, 1, 0, NULL, '2024-10-22 05:34:36', NULL, NULL, NULL, NULL),
+(30, 10021, 1, 1, 1, 5, NULL, '2024-10-22 05:35:07', NULL, NULL, NULL, NULL),
+(31, 10022, 1, 1, 1, 5, NULL, '2024-10-22 05:43:07', NULL, NULL, NULL, NULL),
+(32, 10023, 1, 1, 1, 50, NULL, '2024-10-24 04:02:44', NULL, NULL, NULL, NULL),
+(33, 10024, 1, 1, 1, 28, NULL, '2024-10-24 07:41:58', NULL, NULL, NULL, NULL),
+(34, 10025, 1, 1, 1, 5, NULL, '2024-10-24 07:47:57', NULL, NULL, NULL, NULL),
+(35, 10026, 2, 1, 1, 105, NULL, '2024-10-24 08:16:17', NULL, NULL, NULL, NULL),
+(36, 10027, 1, 1, 1, 15, NULL, '2024-10-24 08:25:40', NULL, NULL, NULL, NULL),
+(37, 10028, 1, 1, 1, 5, NULL, '2024-10-24 08:26:08', NULL, NULL, NULL, NULL),
+(38, 10029, 1, 1, 1, 17, NULL, '2024-10-26 23:15:42', NULL, NULL, NULL, NULL),
+(39, 10030, 1, 1, 1, 5, NULL, '2024-10-27 17:31:18', NULL, NULL, NULL, NULL),
+(40, 10031, 1, 1, 1, 5, NULL, '2024-10-27 17:33:18', NULL, NULL, NULL, NULL),
+(41, 10032, 1, 1, 1, 12, NULL, '2024-10-27 17:39:34', NULL, NULL, NULL, NULL),
+(42, 10033, 1, 1, 1, 5, NULL, '2024-10-27 18:03:24', NULL, NULL, NULL, NULL),
+(43, 10034, 1, 1, 1, 285, NULL, '2024-10-27 18:30:16', NULL, NULL, NULL, NULL),
+(44, 10035, 1, 1, 1, 32, NULL, '2024-10-27 18:30:57', NULL, NULL, NULL, NULL),
+(45, 10036, 1, 1, 1, 62, NULL, '2024-10-27 18:31:38', NULL, NULL, NULL, NULL),
+(46, 10037, 1, 1, 1, 5, NULL, '2024-10-27 18:35:54', NULL, NULL, NULL, NULL),
+(47, 10038, 1, 1, 1, 5, NULL, '2024-10-27 18:42:55', NULL, NULL, NULL, NULL),
+(48, 10039, 1, 1, 2, 5, NULL, '2024-10-27 18:44:23', NULL, NULL, NULL, NULL),
+(49, 10040, 1, 1, 2, 5, NULL, '2024-10-27 18:45:52', NULL, NULL, NULL, NULL),
+(50, 10041, 1, 1, 2, 12, NULL, '2024-10-27 18:47:36', NULL, NULL, NULL, NULL),
+(51, 10042, 1, 1, 1, 12, NULL, '2024-10-28 02:44:01', NULL, NULL, NULL, NULL),
+(52, 10043, 1, 1, 1, 12, NULL, '2024-10-28 02:51:40', NULL, NULL, NULL, NULL),
+(53, 10044, 1, 1, 1, 12, NULL, '2024-10-28 04:57:28', NULL, NULL, NULL, NULL),
+(54, 10045, 1, 1, 1, 201, NULL, '2024-10-28 05:02:35', NULL, NULL, NULL, NULL),
+(55, 10046, 2, 1, 1, 52, NULL, '2024-10-30 07:22:50', NULL, NULL, NULL, NULL),
+(56, 10047, 1, 1, 1, 24, NULL, '2024-10-30 08:04:39', 'prueba de mi nota', 'Efectivo', NULL, NULL),
+(57, 10048, 1, 1, 1, 17, NULL, '2024-10-30 08:10:28', 'purega', 'Efectivo', 3, NULL),
+(58, 10049, 4, 1, 1, 27, NULL, '2024-10-30 09:08:07', 'EL POLLO QUE SEA PRESA PECHO', 'QR', 2, NULL),
+(59, 10050, 1, 1, 1, 22, 30, '2024-10-30 11:49:39', 'hola', 'Efectivo', 8, NULL),
+(60, 10051, 1, 1, 1, 712, 789, '2024-10-30 12:13:19', 'EL POLLO QUE SEA PRESA PECHO, COCA COLA 3L, ALITAS', 'Efectivo', 77, NULL),
+(61, 10052, 1, 1, 1, 1494, 2000, '2024-10-30 13:03:35', 'TODOS LOS PEDIDOS DEBERÁN SER ENTREGADOS EN PLATOS DESECHABLES, INCLUYENDO LAS SALSAS CORRESPONDIENTES Y CUBIERTOS DESECHABLES PARA SU COMODIDAD.', 'Transferencia', 506, NULL),
+(62, 10053, NULL, NULL, 1, 15, 20, '2024-11-03 23:01:14', 'pruebas hoy', 'QR', 5, NULL),
+(63, 10054, 1, NULL, 1, 17, 20, '2024-11-03 23:52:04', 'moasd', 'QR', 3, NULL),
+(64, 10055, 1, 1, 1, 5, 32, '2024-11-04 02:03:48', 'prueba', 'Efectivo', 27, 'En Mesa'),
+(65, 10055, 1, 1, 1, 17, 23, '2024-11-04 02:04:24', 'sasd', 'Transferencia', 6, 'En Mesa'),
+(66, 10056, 1, 1, 1, 41, 331, '2024-11-04 02:09:23', 'Con estos cambios, tu sistema debería manejar correctamente la situación en la que no se encuentran coincidencias para el autocompletado y asegurar que el ID del cliente se establezca.', 'Efectivo', 290, 'En Mesa'),
+(67, 10057, 1, 1, 1, 98, 100, '2024-11-04 02:16:01', 'CON ESTOS CAMBIOS, TU SISTEMA DEBERíA MANEJAR\r\nCORRECTAMENTE LA SITUACIóN EN LA QUE NO SE\r\nENCUENTRAN COINCIDENCIAS PARA EL\r\nAUTOCOMPLETADO Y ASEGURAR QUE EL ID DEL CLIENTE\r\nSE ESTABLEZCA.', 'TRANSFERENCIA', 2, 'PARA LLEVAR');
 
 --
 -- Índices para tablas volcadas
@@ -538,6 +578,12 @@ ALTER TABLE `detalle_venta`
   ADD KEY `fk_venta` (`id_venta`);
 
 --
+-- Indices de la tabla `meseros`
+--
+ALTER TABLE `meseros`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
@@ -561,6 +607,7 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `ventas`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `id_mesero` (`id_mesero`),
   ADD KEY `id_cliente` (`id_cliente`),
   ADD KEY `id_vendedor` (`id_vendedor`);
 
@@ -578,7 +625,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `compras`
@@ -596,7 +643,13 @@ ALTER TABLE `detalle_compra`
 -- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+
+--
+-- AUTO_INCREMENT de la tabla `meseros`
+--
+ALTER TABLE `meseros`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -620,7 +673,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- Restricciones para tablas volcadas
@@ -646,6 +699,14 @@ ALTER TABLE `detalle_compra`
 ALTER TABLE `detalle_venta`
   ADD CONSTRAINT `fk_producto` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_venta` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `ventas`
+--
+ALTER TABLE `ventas`
+  ADD CONSTRAINT `fk_ventas_clientes` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_ventas_meseros` FOREIGN KEY (`id_mesero`) REFERENCES `meseros` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_ventas_usuarios` FOREIGN KEY (`id_vendedor`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
