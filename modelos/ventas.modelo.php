@@ -81,6 +81,25 @@ class ModeloVentas
 		try {
 			// Iniciar la transacción
 			$conexion->beginTransaction();
+
+			if($datos["id_cliente"]==0){
+				$tabla = "clientes";
+				$nombreCliente = empty($datos["cliente"]) ? 'S/N' : $datos["cliente"];
+
+				// Prepara la consulta de inserción
+				$stmt = $conexion->prepare("INSERT INTO clientes(nombre) VALUES (:nombre)");
+				$stmt->bindParam(":nombre", $nombreCliente, PDO::PARAM_STR);
+			
+				// Ejecuta la consulta
+				if ($stmt->execute()) {
+					// Obtiene el último ID insertado
+					$datos["id_cliente"] = $conexion->lastInsertId();
+				} else {
+					// Manejo de errores en caso de que la inserción falle
+					$datos["id_cliente"] = null;
+					echo "Error al insertar el cliente";
+				}
+			}
 	
 			// 1. Registrar la venta principal en la tabla "ventas"
 			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_mesero,id_cliente, id_vendedor, total,total_pagado,nota,tipo_pago,cambio, forma_atencion) VALUES (:codigo, :id_mesero,:id_cliente, :id_vendedor, :total,:total_pagado, :nota, :tipo_pago,:cambio,:forma_atencion)");

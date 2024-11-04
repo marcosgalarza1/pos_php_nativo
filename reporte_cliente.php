@@ -21,7 +21,7 @@ class PDF extends FPDF
 
         // Título en cada página
         $this->SetFont("Arial", "B", 12);
-        $this->Cell(0, 0, "REPORTE DE MESEROS", 0, 1, "C");
+        $this->Cell(0, 0, "REPORTE DE CLIENTE", 0, 1, "C");
         $this->Ln(5); // Espacio entre el título y la tabla
     }
 
@@ -41,9 +41,8 @@ class PDF extends FPDF
 
         // Imprimir cabeceras de la tabla
         $this->Cell($anchoColumna[0], 10, "NOMBRE", 1, 0, "C", true);
-        $this->Cell($anchoColumna[1], 10, "DOCUMENTO", 1, 0, "C", true);
-        $this->Cell($anchoColumna[2], 10, "TELEFONO", 1, 0, "C", true);
-        $this->Cell($anchoColumna[3], 10, "DIRECCION", 1, 1, "C", true);
+        $this->Cell($anchoColumna[1], 10, "FECHA", 1, 0, "C", true);
+       
     }
 
     // Pie de página
@@ -73,7 +72,7 @@ $tablaAncho = 185; // Ancho total de la tabla en mm (210 mm - 2 * 10 mm de márg
 $anchoColumna = array(60, 40, 40, 50); // Ancho de cada columna
 
 // Ejecutar la consulta y agregar los datos al PDF
-$sql = "SELECT nombre, documento, telefono, direccion FROM clientes";
+$sql = "SELECT nombre, fecha FROM clientes";
 if ($resultado = $mysqli->query($sql)) {
     while ($fila = $resultado->fetch_assoc()) {
 
@@ -86,9 +85,7 @@ if ($resultado = $mysqli->query($sql)) {
 
         // Imprimir datos de la fila
         $pdf->Cell($anchoColumna[0], 10, strtoupper($fila['nombre']), 1, 0, "L");
-        $pdf->Cell($anchoColumna[1], 10, strtoupper($fila['documento']), 1, 0, "L");
-        $pdf->Cell($anchoColumna[2], 10, strtoupper($fila['telefono']), 1, 0, "L");
-        $pdf->Cell($anchoColumna[3], 10, strtoupper($fila['direccion']), 1, 1, "L");
+        $pdf->Cell($anchoColumna[1], 10, strtoupper($fila['fecha']), 1, 0, "L");
     }
     $resultado->free();
 } else {

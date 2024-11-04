@@ -39,11 +39,6 @@ class TablaClientes
             $datosJson .= '[
                 "' . ($i + 1) . '",
                 "' . $clientes[$i]["nombre"] . '",
-                "' . $clientes[$i]["documento"] . '",
-                "' . $clientes[$i]["telefono"] . '",
-                "' . $clientes[$i]["direccion"] . '",
-                "' . $clientes[$i]["compras"] . '",
-                "' . $clientes[$i]["compras"] . '",
                 "' . $clientes[$i]["fecha"] . '",
                 "' . $botones . '"
                 

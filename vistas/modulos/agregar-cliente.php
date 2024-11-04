@@ -1,11 +1,11 @@
 <div class="content-wrapper text-uppercase">
     <!-- Header -->
     <section class="content-header">
-        <h1>AGREGAR MESEROS</h1>
+        <h1>AGREGAR CLIENTES</h1>
         <ol class="breadcrumb">
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">AGREGAR MESEROS</li>
+            <li class="active">AGREGAR CLIENTES</li>
         </ol>
     </section>
 
@@ -16,36 +16,15 @@
                 <form role="form" method="post">
                     <div class="row">
                         <!-- ENTRADA PARA EL NOMBRE -->
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <h4><strong>NOMBRE</strong></h4>
                                 <input type="text" class="form-control input-lg" name="nuevoCliente" id="nuevoCliente" placeholder="Ingresar Nombre" required>
                             </div>
                         </div>
-                        <!-- ENTRADA PARA LA DIRECCIÓN -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h4><strong>DIRECCIÓN</strong></h4>
-                                <input type="text" class="form-control input-lg" name="nuevaDireccion" placeholder="Ingresar dirección" required>
-                            </div>
-                        </div>
+                    
                     </div>
-                    <div class="row">
-                        <!-- ENTRADA PARA EL TELÉFONO -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h4><strong>TELÉFONO</strong></h4>
-                                <input type="text" class="form-control input-lg" name="nuevoTelefono" placeholder="Ingresar teléfono" data-inputmask="'mask':'999-99-999'" data-mask required>
-                            </div>
-                        </div>
-                        <!-- ENTRADA PARA EL CARNET -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <h4><strong>CARNET</strong></h4>
-                                <input type="text" class="form-control input-lg" name="nuevoDocumentoId" placeholder="Ingresar N° De Carnet" required>
-                            </div>
-                        </div>
-                    </div>
+              
                     <!-- Botones -->
                     <div class="text-right">
                         <button type="submit" class="btn btn-success btn-sm">GUARDAR</button>&nbsp;

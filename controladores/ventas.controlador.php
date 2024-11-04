@@ -153,10 +153,16 @@ class ControladorVentas{
 						   "tipo_pago"=>$tipoPago,
 						   "cambio"=>$_POST["nuevoCambioEfectivo"],
 						   "forma_atencion"=>$formaAtencion,
-							"total_pagado"=>$_POST["nuevoValorEfectivo"]);
+							"total_pagado"=>$_POST["nuevoValorEfectivo"],
+							"cliente"=>$_POST["cliente"]
+						);
 						
+			echo print_r($datos);
+		
 			// $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
 			$respuesta = ModeloVentas::mdlRegistrarVenta($tabla, $datos);
+
+
 			
 			if($respuesta == "ok" && $_POST["sinImprimir"] == false){
 				
