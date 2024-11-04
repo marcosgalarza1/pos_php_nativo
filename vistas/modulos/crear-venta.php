@@ -162,7 +162,7 @@ if ($_SESSION["perfil"] == "Especial") {
                 <div class="form-group">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control text-uppercase" id="cliente" name="cliente" value="" placeholder="Ingrese el Cliente" autocomplete="off" required >
+                    <input type="text" class="form-control text-uppercase" id="cliente" name="cliente" value="" placeholder="Ingrese el Cliente" autocomplete="off"  >
                     <input type="hidden" id="id_cliente" name="id_cliente" value="0"/>
                   </div>
                 </div>

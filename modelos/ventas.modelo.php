@@ -25,21 +25,22 @@ class ModeloVentas
 	}
 
 
-	static public function mdlMostrarDetalleVentas($idVenta) {
+	static public function mdlMostrarDetalleVentas($idVenta)
+	{
 		if ($idVenta != null) {
 			// Preparar la consulta SQL correctamente
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM detalle_venta WHERE id_venta = :id_venta ORDER BY id ASC");
-	
+
 			// Enlazar el parámetro correctamente
 			$stmt->bindParam(":id_venta", $idVenta, PDO::PARAM_INT); // Cambiado a PDO::PARAM_INT si el ID es un entero
-	
+
 			// Ejecutar la consulta
 			$stmt->execute();
-	
+
 			// Devolver todos los resultados en lugar de solo uno
 			return $stmt->fetchAll(PDO::FETCH_ASSOC); // Cambiado a fetchAll para obtener todos los registros
 		}
-	
+
 		// No se necesita cerrar el stmt aquí si no se ejecuta
 		return null; // Devolver null si no hay ID de compra
 	}
@@ -59,7 +60,7 @@ class ModeloVentas
 		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
 		$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-		
+
 
 		if ($stmt->execute()) {
 
@@ -74,33 +75,30 @@ class ModeloVentas
 	}
 
 
-	static public function mdlRegistrarVenta($tabla, $datos) {
+	static public function mdlRegistrarVenta($tabla, $datos)
+	{
 		// Conexión a la base de datos
 		$conexion = Conexion::conectar();
-	
+
 		try {
 			// Iniciar la transacción
 			$conexion->beginTransaction();
 
-			if($datos["id_cliente"]==0){
-				$tabla = "clientes";
-				$nombreCliente = empty($datos["cliente"]) ? 'S/N' : $datos["cliente"];
-
-				// Prepara la consulta de inserción
-				$stmt = $conexion->prepare("INSERT INTO clientes(nombre) VALUES (:nombre)");
-				$stmt->bindParam(":nombre", $nombreCliente, PDO::PARAM_STR);
-			
-				// Ejecuta la consulta
-				if ($stmt->execute()) {
-					// Obtiene el último ID insertado
-					$datos["id_cliente"] = $conexion->lastInsertId();
-				} else {
-					// Manejo de errores en caso de que la inserción falle
-					$datos["id_cliente"] = null;
-					echo "Error al insertar el cliente";
+			if ($datos["id_cliente"] == 0) {
+				if (empty($datos["cliente"])) {
+					$datos["id_cliente"] = 1;
+				}else{
+					// Prepara la consulta de inserción
+					$stmt = $conexion->prepare("INSERT INTO clientes(nombre) VALUES (:nombre)");
+					$stmt->bindParam(":nombre", $datos["cliente"], PDO::PARAM_STR);
+					// Ejecuta la consulta
+					if ($stmt->execute()) {
+						// Obtiene el último ID insertado
+						$datos["id_cliente"] = $conexion->lastInsertId();
+					}
 				}
 			}
-	
+
 			// 1. Registrar la venta principal en la tabla "ventas"
 			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_mesero,id_cliente, id_vendedor, total,total_pagado,nota,tipo_pago,cambio, forma_atencion) VALUES (:codigo, :id_mesero,:id_cliente, :id_vendedor, :total,:total_pagado, :nota, :tipo_pago,:cambio,:forma_atencion)");
 
@@ -118,19 +116,19 @@ class ModeloVentas
 			if (!$stmt->execute()) {
 				throw new Exception("Error al registrar la venta");
 			}
-	
+
 			// Obtener el ID de la venta recién registrada
 			$idVenta = $conexion->lastInsertId();
-	
+
 			// 2. Preparar el statement para insertar los productos en "detalle_venta"
 			$stmtDetalle = $conexion->prepare("INSERT INTO detalle_venta(id_venta, id_producto, producto, cantidad, precio_venta, precio_compra, subtotal) 
 											   VALUES (:id_venta, :id_producto, :producto, :cantidad, :precio_venta, :precio_compra, :subtotal)");
-	
+
 			// Enlazamos los parámetros estáticos (que no cambian en el bucle)
 			$stmtDetalle->bindParam(":id_venta", $idVenta, PDO::PARAM_INT);
 
 			$productos = json_decode($datos["productos"], true);  // true para convertir a array asociativo
-			
+
 			// 3. Iterar sobre los productos para registrar el detalle de la venta
 			foreach ($productos as $producto) {
 				// Validar que las claves necesarias están definidas
@@ -144,18 +142,17 @@ class ModeloVentas
 				$stmtDetalle->bindValue(":precio_venta", $producto["precio"], PDO::PARAM_STR);
 				$stmtDetalle->bindValue(":precio_compra", $producto["precioCompra"], PDO::PARAM_STR);
 				$stmtDetalle->bindValue(":subtotal", $producto["total"], PDO::PARAM_STR);
-	
+
 				// Ejecutar el registro para cada producto
 				if (!$stmtDetalle->execute()) {
 					throw new Exception("Error al registrar el detalle de la venta: " . implode(", ", $stmtDetalle->errorInfo()));
 				}
 			}
-	
+
 			// Confirmar la transacción si todo sale bien
 			$conexion->commit();
-	
+
 			return "ok";
-	
 		} catch (Exception $e) {
 			// Revertir la transacción en caso de error
 			$conexion->rollBack();
@@ -168,7 +165,7 @@ class ModeloVentas
 		}
 	}
 
-	
+
 	/*=============================================
 	EDITAR VENTA
 	=============================================*/
@@ -182,10 +179,10 @@ class ModeloVentas
 		$stmt->bindParam(":id_mesero", $datos["id_mesero"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
 		$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
-		
-		
+
+
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-	
+
 
 		if ($stmt->execute()) {
 
@@ -280,18 +277,17 @@ class ModeloVentas
 	static public function mdlSumaTotalVentas($tabla)
 	{
 
-	$anio = date('Y'); // Obtener el año actual
+		$anio = date('Y'); // Obtener el año actual
 
-    $stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE YEAR(fecha) = :anio");
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE YEAR(fecha) = :anio");
 
-    $stmt->bindParam(":anio", $anio, PDO::PARAM_INT);
-    $stmt->execute();
+		$stmt->bindParam(":anio", $anio, PDO::PARAM_INT);
+		$stmt->execute();
 
-    return $stmt->fetch();
+		return $stmt->fetch();
 
-    $stmt->close();
-    $stmt = null;
-	
+		$stmt->close();
+		$stmt = null;
 	}
 	/*=============================================
 	SUMAR EL TOTAL DE VENTAS - MES
@@ -336,38 +332,38 @@ class ModeloVentas
 	=============================================*/
 
 	public static function mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal, $idMesero)
-{
-    $query = "SELECT ventas.codigo, ventas.fecha, usuarios.nombre as usuario, meseros.nombre as mesero, ventas.total
+	{
+		$query = "SELECT ventas.codigo, ventas.fecha, usuarios.nombre as usuario, meseros.nombre as mesero, ventas.total
               FROM $tabla 
               JOIN meseros ON ventas.id_mesero = meseros.id
               JOIN usuarios ON ventas.id_vendedor = usuarios.id
               WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal)";
 
-    // Añadir la condición del mesero solo si $idMesero no es 0
-    if ($idMesero != 0) {
-        $query .= " AND ventas.id_mesero = :idMesero";
-    }
+		// Añadir la condición del mesero solo si $idMesero no es 0
+		if ($idMesero != 0) {
+			$query .= " AND ventas.id_mesero = :idMesero";
+		}
 
-    $query .= " ORDER BY ventas.codigo, ventas.fecha DESC";
+		$query .= " ORDER BY ventas.codigo, ventas.fecha DESC";
 
-    // Preparar la consulta
-    $stmt = Conexion::conectar()->prepare($query);
+		// Preparar la consulta
+		$stmt = Conexion::conectar()->prepare($query);
 
-    // Enlazar parámetros
-    $stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
-    $stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+		// Enlazar parámetros
+		$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
 
-    // Si $idMesero no es 0, enlazar también el parámetro del mesero
-    if ($idMesero != 0) {
-        $stmt->bindParam(":idMesero", $idMesero, PDO::PARAM_INT);
-    }
+		// Si $idMesero no es 0, enlazar también el parámetro del mesero
+		if ($idMesero != 0) {
+			$stmt->bindParam(":idMesero", $idMesero, PDO::PARAM_INT);
+		}
 
-    // Ejecutar la consulta
-    $stmt->execute();
+		// Ejecutar la consulta
+		$stmt->execute();
 
-    // Retornar los resultados
-    return $stmt->fetchAll();
-}
+		// Retornar los resultados
+		return $stmt->fetchAll();
+	}
 
 	/*=============================================
 	RANGO DE VENTAS - TOP POR MESERO
@@ -420,21 +416,22 @@ class ModeloVentas
 			$stmt->execute();
 			// Obtener los resultados
 			$ventas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	
+
 			// Devolver los productos más vendidos
 			return $ventas;
 			// return $stmt->fetchAll();
 		}
 	}
 
-	static public function mdlRangoFechaVentasRealizadas($tabla, $fechaInicial, $fechaFinal) {
+	static public function mdlRangoFechaVentasRealizadas($tabla, $fechaInicial, $fechaFinal)
+	{
 		date_default_timezone_set('America/La_Paz');
-	
+
 		$query = "SELECT ventas.id, ventas.codigo, ventas.fecha, usuarios.nombre as usuario, meseros.nombre as mesero, ventas.total
 				  FROM $tabla 
 				  JOIN usuarios ON ventas.id_vendedor = usuarios.id
 				  JOIN meseros ON ventas.id_mesero = meseros.id";
-	
+
 
 
 		if ($fechaInicial == null && $fechaFinal == null) {
@@ -453,10 +450,8 @@ class ModeloVentas
 			$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
 			$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
 		}
-	
+
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}
-	
-
 }

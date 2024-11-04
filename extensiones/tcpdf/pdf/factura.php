@@ -3,6 +3,9 @@
 require_once "../../../controladores/ventas.controlador.php";
 require_once "../../../modelos/ventas.modelo.php";
 
+require_once "../../../controladores/clientes.controlador.php";
+require_once "../../../modelos/clientes.modelo.php";
+
 require_once "../../../controladores/meseros.controlador.php";
 require_once "../../../modelos/meseros.modelo.php";
 
@@ -34,6 +37,11 @@ class imprimirFactura
         $tipoPago = $respuestaVenta["tipo_pago"];
         $totalPagado = number_format($respuestaVenta["total_pagado"], 2);
         $nota = $respuestaVenta["nota"];
+        // Obtener información del cliente
+        $itemCliente = "id";
+        $valorCliente = $respuestaVenta["id_cliente"];
+        $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
+
         // Obtener información del mesero
         $itemMesero = "id";
         $valorMesero = $respuestaVenta["id_mesero"];
@@ -48,7 +56,7 @@ class imprimirFactura
         require_once('tcpdf_include.php');
 
         // Definir altura base (en mm) para encabezado y márgenes.
-        $alturaBase = 80;
+        $alturaBase = 90;
         // Definir altura por fila (puedes ajustarlo según el contenido).
         $alturaPorFila = 5;
 
@@ -83,24 +91,33 @@ class imprimirFactura
         <table >
             <thead>
             <tr>
-             <th width="20%"></th>
+             <th width="25%"></th>
              <th width="3%"></th>
              <th width="77%"></th>
             </tr>
             </thead>
           <tbody >
-         
             <tr >
-                <td width="30%"><strong>FECHA</strong></td>
+                <td width="25%"><strong>CLIENTE</strong></td>
                 <td width="3%"><strong>:</strong></td>
-                <td width="57%">' . $fecha . '</td>
+                <td width="72%">' . $respuestaCliente["nombre"] . '</td>
+            </tr>
+            <tr>
+                <td width="25%"><strong>MESERO/A</strong></td>
+                <td width="3%"><strong>:</strong></td>
+                <td width="72%">' . $respuestaMesero["nombre"] . '</td>
             </tr>
             <tr >
-                <td width="30%"><strong>F. ATENCION</strong></td>
+                <td width="25%"><strong>FECHA</strong></td>
                 <td width="3%"><strong>:</strong></td>
-                <td width="57%">' . $respuestaVenta["forma_atencion"] . '</td>
+                <td width="72%">' . $fecha . '</td>
             </tr>
-            <tr><td colspan="2"></td></tr>
+            <tr >
+                <td width="25%"><strong>ATENCION</strong></td>
+                <td width="3%"><strong>:</strong></td>
+                <td width="72%">' . $respuestaVenta["forma_atencion"] . '</td>
+            </tr>
+            <tr><td colspan="3"></td></tr>
           </tbody>
         </table>';
         $pdf->writeHTML($html, false, false, false, false, '');
@@ -166,6 +183,11 @@ class imprimirFactura
             </tr>
             </thead>
           <tbody >
+            <tr >
+                <td width="25%"><strong>CLIENTE</strong></td>
+                <td width="3%"><strong>:</strong></td>
+                <td width="72%">' . $respuestaCliente["nombre"] . '</td>
+            </tr>
             <tr>
                 <td width="25%"><strong>MESERO/A</strong></td>
                 <td width="3%"><strong>:</strong></td>
@@ -181,6 +203,12 @@ class imprimirFactura
                 <td width="3%"><strong>:</strong></td>
                 <td width="72%">' . $tipoPago . '</td>
             </tr>
+            <tr>
+                <td width="25%"><strong>ATENCION</strong></td>
+                <td width="3%"><strong>:</strong></td>
+                <td width="72%">' . $respuestaVenta["forma_atencion"] . '</td>
+            </tr>
+
             <tr><td colspan="2"></td></tr>
           </tbody>
         </table>';

@@ -112,29 +112,29 @@ class ControladorVentas{
 
 			switch ($_POST["tipoPago"]) {
 				case 1:
-					$tipoPago = "EFECTIVO";
+					$tipoPago = "Efectivo";
 					break;
 				case 2:
 					$tipoPago = "QR";
 					break;
 				case 3:
-					$tipoPago = "TRANSFERENCIA";
+					$tipoPago = "Transferencia";
 					break;
 				default:
-					$tipoPago = "NO ESPECIFICADO";
+					$tipoPago = "No Especificado";
 					break;
 			}
 			$formaAtencion = "";
 
 			switch ($_POST["formaAtencion"]) {
 				case 1:
-					$formaAtencion = "PARA LLEVAR";
+					$formaAtencion = "Para Llevar";
 					break;
 				case 2:
-					$formaAtencion = "EN MESA";
+					$formaAtencion = "En Mesa";
 					break;
 				default:
-					$formaAtencion = "NO ESPECIFICADO";
+					$formaAtencion = "No Especificado";
 					break;
 			}
 			/*=============================================
@@ -157,7 +157,6 @@ class ControladorVentas{
 							"cliente"=>$_POST["cliente"]
 						);
 						
-			echo print_r($datos);
 		
 			// $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
 			$respuesta = ModeloVentas::mdlRegistrarVenta($tabla, $datos);
