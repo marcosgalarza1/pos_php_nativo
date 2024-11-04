@@ -2,9 +2,9 @@
 if ($.fn.DataTable.isDataTable('.tablaVentasRealizadas')) {
     $('.tablaVentasRealizadas').DataTable().destroy();
 }
-
+var perfilOculto = $("#perfilOculto").val();
   $('.tablaVentasRealizadas').DataTable( {
-    "ajax": "ajax/datatable-ventas-realizadas.ajax.php",
+    "ajax": "ajax/datatable-ventas-realizadas.ajax.php?perfilOculto="+perfilOculto,
     "deferRender": true,
     "retrieve": true,
     "processing": true,

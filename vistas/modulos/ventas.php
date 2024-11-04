@@ -37,7 +37,7 @@ if($_SESSION["perfil"] == "Especial"){
   </section>
 
   <section class="content">
-
+  <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
     <div class="box">
 
       <div class="box-header with-border">
@@ -156,7 +156,7 @@ if($_SESSION["perfil"] == "Especial"){
         ?>
                
         </tbody>
-
+      
        </table>
 
        <?php

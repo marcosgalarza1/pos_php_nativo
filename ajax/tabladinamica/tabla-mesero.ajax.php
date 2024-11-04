@@ -28,9 +28,7 @@ class TablaMeseros
 				$botones =  ""; 
               
 			}else
-            
             {
-
 				 $botones =  "<div class='btn-group'><button class='btn btn-primary btnEditarMesero' idMesero='".$meseros[$i]["id"]."' data-toggle='modal' data-target='#modalEditarMesero'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarMesero' idMesero='".$meseros[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
             }
 			

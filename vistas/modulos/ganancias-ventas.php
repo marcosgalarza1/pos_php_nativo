@@ -157,7 +157,7 @@ $datos = ControladorReportes::ctrGananciasMesesAnios();
         const endyear = document.getElementById('endyear').value;
         const idUsuario = document.getElementById('id_usuario').value;
 
-        if (!startyear || !endyear || startyear >= endyear) {
+        if (!startyear || !endyear || (startyear > endyear)) {
             swal({
                 icon: 'warning',
                 title: 'Advertencia',

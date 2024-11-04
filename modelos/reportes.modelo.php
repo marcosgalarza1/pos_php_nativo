@@ -95,7 +95,7 @@ class ModeloReportes{
     static public function mdlObtenerGanancias($mes,$anio){
 
 		// Consulta SQL
-		$sql = "SELECT dv.id_venta,v.codigo,DATE(v.fecha) AS fecha,u.usuario as vendedor,c.nombre as mesero,v.total,SUM((p.precio_venta-p.precio_compra)*dv.cantidad) as ganancia
+		$sql = "SELECT dv.id_venta,v.codigo,DATE(v.fecha) AS fecha,u.usuario as vendedor,c.nombre as mesero,v.total,SUM((p.precio_venta-p.precio_compra)*dv.cantidad) as ganancias
 				FROM detalle_venta as dv
 				JOIN ventas AS v ON dv.id_venta = v.id
 				JOIN productos AS p ON dv.id_producto = p.id
