@@ -87,7 +87,7 @@ class ModeloVentas
 			if ($datos["id_cliente"] == 0) {
 				if (empty($datos["cliente"])) {
 					$datos["id_cliente"] = 1;
-				}else{
+				} else {
 					// Prepara la consulta de inserción
 					$stmt = $conexion->prepare("INSERT INTO clientes(nombre) VALUES (:nombre)");
 					$stmt->bindParam(":nombre", $datos["cliente"], PDO::PARAM_STR);
@@ -331,20 +331,37 @@ class ModeloVentas
 	RANGO DE VENTAS - POR MESERO
 	=============================================*/
 
-	public static function mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal, $idMesero)
+	static public  function mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal, $idMesero, $idCategoria, $idCliente)
 	{
-		$query = "SELECT ventas.codigo, ventas.fecha, usuarios.nombre as usuario, meseros.nombre as mesero, ventas.total
-              FROM $tabla 
-              JOIN meseros ON ventas.id_mesero = meseros.id
-              JOIN usuarios ON ventas.id_vendedor = usuarios.id
-              WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal)";
+		$query = "SELECT 
+						ventas.codigo, 
+						ventas.fecha, 
+						usuarios.nombre AS usuario, 
+						meseros.nombre AS mesero, 
+						clientes.nombre AS cliente, 
+						SUM(dv.subtotal) AS total
+					FROM $tabla
+					JOIN detalle_venta dv ON ventas.id = dv.id_venta
+					JOIN productos p ON dv.id_producto = p.id
+					JOIN categorias c ON p.id_categoria = c.id
+					JOIN meseros ON ventas.id_mesero = meseros.id
+					JOIN usuarios ON ventas.id_vendedor = usuarios.id
+					JOIN clientes ON ventas.id_cliente = clientes.id
+					WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal)
+					";
 
 		// Añadir la condición del mesero solo si $idMesero no es 0
 		if ($idMesero != 0) {
 			$query .= " AND ventas.id_mesero = :idMesero";
 		}
-
-		$query .= " ORDER BY ventas.codigo, ventas.fecha DESC";
+		if ($idCategoria != 0) {
+			$query .= " AND  c.id =:idCategoria";
+		}
+		if ($idCliente != 0) {
+			$query .= " AND  ventas.id_cliente =:idCliente";
+		}
+		
+		$query .= " GROUP BY ventas.codigo, ventas.fecha DESC, usuarios.nombre, meseros.nombre;";
 
 		// Preparar la consulta
 		$stmt = Conexion::conectar()->prepare($query);
@@ -356,6 +373,12 @@ class ModeloVentas
 		// Si $idMesero no es 0, enlazar también el parámetro del mesero
 		if ($idMesero != 0) {
 			$stmt->bindParam(":idMesero", $idMesero, PDO::PARAM_INT);
+		}
+		if ($idCategoria != 0) {
+			$stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
+		}
+		if ($idCliente != 0) {
+			$stmt->bindParam(":idCliente", $idCliente, PDO::PARAM_INT);
 		}
 
 		// Ejecutar la consulta

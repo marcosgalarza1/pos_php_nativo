@@ -560,6 +560,16 @@ document.getElementById("guardarVentaBtn").addEventListener("click", function() 
   var efectivo = Number($('#nuevoValorEfectivo').val());
   var cambio = Number(efectivo) - totalVenta;
 
+  if(!efectivo){
+    swal({
+    type: "error",
+    title: "El campo pagado es requerido",
+    showConfirmButton: true,
+    confirmButtonText: "Cerrar"
+    });
+    return;
+  }
+
   if(cambio>=0){
     document.getElementById("ventaForm").submit();
    

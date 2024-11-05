@@ -3,6 +3,11 @@
 require_once "../../../controladores/ventas.controlador.php";
 require_once "../../../modelos/ventas.modelo.php";
 
+require_once "../../../controladores/categorias.controlador.php";
+require_once "../../../modelos/categorias.modelo.php";
+
+require_once "../../../controladores/clientes.controlador.php";
+require_once "../../../modelos/clientes.modelo.php";
 
 require_once "../../../controladores/meseros.controlador.php";
 require_once "../../../modelos/meseros.modelo.php";
@@ -19,6 +24,8 @@ class reporteVenta
     public $fechaFin;
     public $idMesero;
     public $idUsuario;
+    public $idCategoria;
+    public $idCliente;
 
     public function generarPdfVentas()
     {
@@ -28,8 +35,10 @@ class reporteVenta
         $fechaFin = $this->fechaFin;
         $idMesero = $this->idMesero;
         $idUsuario = $this->idUsuario;
+        $idCategoria= $this->idCategoria;
+        $idCliente = $this->idCliente;
 
-        $respuestaVentas = ControladorVentas::ctrRangoFechasVentasPdf($fechaInicio, $fechaFin, $idMesero);
+        $respuestaVentas = ControladorVentas::ctrRangoFechasVentasPdf($fechaInicio, $fechaFin, $idMesero,$idCategoria,$idCliente);
 
         $itemUsuario = "id";
 
@@ -45,6 +54,17 @@ class reporteVenta
         } else {
             $respuestaMesero["nombre"] = "Todos";
         }
+        if ($idCategoria != 0) {
+            $respuestaCategoria = ControladorCategorias::ctrMostrarCategorias("id", $idCategoria);
+        } else {
+            $respuestaCategoria["categoria"] = "Todos";
+        }
+        if ($idCliente != 0) {
+            $respuestaCliente = ControladorClientes::ctrMostrarClientes("id", $idCliente);
+        } else {
+            $respuestaCliente["nombre"] = "Todos";
+        }
+
 
         //REQUERIMOS LA CLASE TCPDF
 
@@ -75,6 +95,17 @@ class reporteVenta
         $pdf->Cell(50, 5, $respuestaUsuario["nombre"], 0, 1, 'L');
 
         $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->Cell(23, 5, 'Categoria: ', 0, 0, 'L');
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->Cell(50, 5, $respuestaCategoria["categoria"], 0, 1, 'L');
+
+        $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->Cell(23, 5, 'Cliente: ', 0, 0, 'L');
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->Cell(50, 5, $respuestaCliente["nombre"], 0, 1, 'L');
+
+
+        $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Mesero: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaMesero["nombre"], 0, 1, 'L');
@@ -101,6 +132,7 @@ class reporteVenta
         $pdf->Cell(30, 5, 'Fecha', 1, 0, 'L');
         $pdf->Cell(50, 5, 'Cajero', 1, 0, 'L');
         $pdf->Cell(50, 5, 'Mesero', 1, 0, 'L');
+        $pdf->Cell(50, 5, 'Cliente', 1, 0, 'L');
         $pdf->Cell(30, 5, 'Monto', 1, 1, 'L');
         $pdf->SetFont('helvetica', '', 8);
 
@@ -114,6 +146,7 @@ class reporteVenta
             $pdf->Cell(30, 5, $item["fecha"], 1, 0, 'L');
             $pdf->Cell(50, 5, $item["usuario"], 1, 0, 'L');
             $pdf->Cell(50, 5, $item["mesero"], 1, 0, 'L');
+            $pdf->Cell(50, 5, $item["cliente"], 1, 0, 'L');
             $pdf->Cell(30, 5, $total, 1, 1, 'R');
             $contador++;
             $sumTotal += $total;
@@ -139,4 +172,6 @@ $factura->fechaInicio = $_GET["fechaInicio"];
 $factura->fechaFin = $_GET["fechaFin"];
 $factura->idMesero = $_GET["idMesero"];
 $factura->idUsuario = $_GET["idUsuario"];
+$factura->idCategoria = $_GET["idCategoria"];
+$factura->idCliente = $_GET["idCliente"];
 $factura->generarPdfVentas();

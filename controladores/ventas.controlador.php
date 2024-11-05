@@ -674,11 +674,11 @@ class ControladorVentas{
 	/*=============================================
 	rango de ventas:
 	=============================================*/
-	static public function ctrRangoFechasVentasPdf($fechaInicial, $fechaFinal,$id_proveedor){
+	static public function ctrRangoFechasVentasPdf($fechaInicial, $fechaFinal,$id_proveedor,$idCategoria,$idCliente){
 
 		$tabla = "ventas";
 	
-		$respuesta = ModeloVentas::mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal,$id_proveedor);
+		$respuesta = ModeloVentas::mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal,$id_proveedor,$idCategoria,$idCliente);
 	
 		return $respuesta;
 	}

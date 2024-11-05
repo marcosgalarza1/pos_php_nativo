@@ -20,7 +20,7 @@
           <div class="card-body">
             <input type="hidden" id="id_usuario" name="id_usuario" value="<?php echo $_SESSION["id"]; ?>">
             <div class="row">
-              <div class="col-12 col-sm-4">
+              <div class="col-12 col-sm-2">
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Fecha de inicio:</label>
                   <div class="input-group date">
@@ -29,7 +29,7 @@
                 </div>
               </div>
 
-              <div class="col-12 col-sm-4">
+              <div class="col-12 col-sm-2">
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Fecha de fin:</label>
                   <div class="input-group date">
@@ -38,7 +38,43 @@
                 </div>
               </div>
 
-              <div class="col-12 col-sm-4">
+              <div class="col-12 col-sm-2">
+                <div class="form-group">
+                  <label>Categoria</label>
+                  <select class="form-control" id="id_categoria" name="id_categoria" required>
+                    <option value="0">Todas</option>
+                    
+                    <?php
+                      $item = null;
+                      $valor = null;
+                      $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+
+                       foreach ($categorias as $key => $value) {
+                         echo '<option value="'.$value["id"].'">'.$value["categoria"].'</option>';
+                       }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <label>Cliente</label>
+                  <select class="form-control" id="id_cliente" name="id_cliente" required>
+                    <option value="0">Todas</option>
+                    
+                    <?php
+                      $item = null;
+                      $valor = null;
+                      $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
+
+                       foreach ($clientes as $key => $value) {
+                         echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                       }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
                 <div class="form-group">
                   <label><i class="text-danger">*</i>Mesero</label>
                   <select class="form-control" id="id_mesero" name="id_mesero" required>
@@ -95,6 +131,8 @@ function generatePDF() {
 
   const idMesero = document.getElementById('id_mesero').value;
   const idUsuario = document.getElementById('id_usuario').value;
+  const idCategoria = document.getElementById('id_categoria').value;
+  const idCliente = document.getElementById('id_cliente').value;
 
   // Validar campos
 
@@ -144,7 +182,9 @@ function generatePDF() {
         "extensiones/tcpdf/pdf/reporte-ventas.php?fechaInicio=" + encodeURIComponent(fechaInicio.value) +
         "&fechaFin=" + encodeURIComponent(fechaFin.value) +
         "&idMesero=" + encodeURIComponent(idMesero) +
-        "&idUsuario=" + encodeURIComponent(idUsuario),
+        "&idUsuario=" + encodeURIComponent(idUsuario) +
+        "&idCategoria=" + encodeURIComponent(idCategoria) +
+        "&idCliente=" + encodeURIComponent(idCliente),
         "_blank",
         windowFeatures
     );
