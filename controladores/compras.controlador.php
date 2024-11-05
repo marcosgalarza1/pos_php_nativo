@@ -200,11 +200,11 @@ class ControladorCompras{
 		return $respuesta;
 		
 	}
-	static public function ctrRangoFechasComprasPdf($fechaInicial, $fechaFinal,$id_proveedor){
+	static public function ctrRangoFechasComprasPdf($fechaInicial, $fechaFinal,$id_proveedor,$idCategoria){
 
 		$tabla = "compras";
 	
-		$respuesta = ModeloCompras::mdlRangoFechasComprasPdf($tabla, $fechaInicial, $fechaFinal,$id_proveedor);
+		$respuesta = ModeloCompras::mdlRangoFechasComprasPdf($tabla, $fechaInicial, $fechaFinal,$id_proveedor,$idCategoria);
 	
 		return $respuesta;
 	}

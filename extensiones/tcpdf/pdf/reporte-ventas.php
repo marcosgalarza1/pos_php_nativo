@@ -127,13 +127,13 @@ class reporteVenta
         $pdf->SetTextColor(255, 255, 255);
         $pdf->Cell(0, 5, 'Detalle de productos', 1, 1, 'C', 1);
         $pdf->SetTextColor(0, 0, 0);
-        $pdf->Cell(14, 5, 'No', 1, 0, 'L');
+        $pdf->Cell(10, 5, 'No', 1, 0, 'L');
         $pdf->Cell(22, 5, 'Codigo', 1, 0, 'L');
         $pdf->Cell(30, 5, 'Fecha', 1, 0, 'L');
-        $pdf->Cell(50, 5, 'Cajero', 1, 0, 'L');
-        $pdf->Cell(50, 5, 'Mesero', 1, 0, 'L');
-        $pdf->Cell(50, 5, 'Cliente', 1, 0, 'L');
-        $pdf->Cell(30, 5, 'Monto', 1, 1, 'L');
+        $pdf->Cell(35, 5, 'Cajero', 1, 0, 'L');
+        $pdf->Cell(35, 5, 'Mesero', 1, 0, 'L');
+        $pdf->Cell(40, 5, 'Cliente', 1, 0, 'L');
+        $pdf->Cell(24, 5, 'Monto', 1, 1, 'L');
         $pdf->SetFont('helvetica', '', 8);
 
         //Imprimir los detalles de los productos
@@ -141,21 +141,21 @@ class reporteVenta
         $sumTotal = 0;
         foreach ($respuestaVentas as $item) {
             $total =  $item["total"];
-            $pdf->Cell(14, 5,  $contador, 1, 0, 'L');
+            $pdf->Cell(10, 5,  $contador, 1, 0, 'L');
             $pdf->Cell(22, 5, $item["codigo"], 1, 0, 'L');
             $pdf->Cell(30, 5, $item["fecha"], 1, 0, 'L');
-            $pdf->Cell(50, 5, $item["usuario"], 1, 0, 'L');
-            $pdf->Cell(50, 5, $item["mesero"], 1, 0, 'L');
-            $pdf->Cell(50, 5, $item["cliente"], 1, 0, 'L');
-            $pdf->Cell(30, 5, $total, 1, 1, 'R');
+            $pdf->Cell(35, 5, $item["usuario"], 1, 0, 'L');
+            $pdf->Cell(35, 5, $item["mesero"], 1, 0, 'L');
+            $pdf->Cell(40, 5, $item["cliente"], 1, 0, 'L');
+            $pdf->Cell(24, 5, $total, 1, 1, 'R');
             $contador++;
             $sumTotal += $total;
         }
 
         // Total de la compra
         $pdf->SetFont('helvetica', 'B', 9);
-        $pdf->Cell(166, 5, 'Total ', 0, 0, 'R');
-        $pdf->Cell(30, 5, number_format($sumTotal, 2, '.', ',') . ' Bs.', 1, 1, 'R');
+        $pdf->Cell(169, 5, 'Total ', 0, 0, 'R');
+        $pdf->Cell(27, 5, number_format($sumTotal, 2, '.', ',') . ' Bs.', 1, 1, 'R');
 
 
         // Nro de compras

@@ -267,28 +267,52 @@ static public function mdlRegistrarCompra($tabla, $datos){
 	RANGO FECHAS
 	=============================================*/	
 
-	static public function mdlRangoFechasComprasPdf($tabla, $fechaInicial, $fechaFinal, $idProveedor){
+	static public function mdlRangoFechasComprasPdf($tabla, $fechaInicial, $fechaFinal, $idProveedor, $idCategoria) {
+		if ($fechaInicial <= $fechaFinal) {
+			$query = "SELECT 
+						compras.codigo, 
+						compras.fecha_alta, 
+						usuarios.nombre AS usuario,
+						proveedor.nombre AS proveedor,
+						SUM(dc.subtotal) AS total
+					  FROM $tabla 
+					  JOIN detalle_compra dc ON compras.id = dc.id_compra
+					  JOIN productos p ON dc.id_producto = p.id
+					  JOIN categorias c ON p.id_categoria = c.id
+					  JOIN usuarios ON compras.id_usuario = usuarios.id
+					  JOIN proveedor ON compras.id_proveedor = proveedor.id
+					  WHERE DATE(compras.fecha_alta) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal)";
+			
+			// Añadir condiciones según proveedor y categoría
+			if ($idProveedor != 0) {
+				$query .= " AND compras.id_proveedor = :idProveedor";
+			}
+			if ($idCategoria != 0) {
+				$query .= " AND c.id = :idCategoria";
+			}
+	
+			$query .= " GROUP BY compras.codigo, compras.fecha_alta, usuarios.nombre, proveedor.nombre
+						ORDER BY compras.fecha_alta ASC;";
+	
+			$stmt = Conexion::conectar()->prepare($query);
+	
+			// Asignar parámetros
+			$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+			$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+			if ($idProveedor != 0) {
+				$stmt->bindParam(":idProveedor", $idProveedor, PDO::PARAM_INT);
+			}
+			if ($idCategoria != 0) {
+				$stmt->bindParam(":idCategoria", $idCategoria, PDO::PARAM_INT);
+			}
 
-			if($fechaInicial <= $fechaFinal){
-
-				$query = "SELECT compras.codigo, compras.fecha_alta, usuarios.nombre as usuario, proveedor.nombre as proveedor, compras.total
-				FROM $tabla 
-				JOIN proveedor ON compras.id_proveedor = proveedor.id
-				JOIN usuarios ON compras.id_usuario = usuarios.id
-				WHERE DATE(fecha_alta) BETWEEN DATE('$fechaInicial') AND DATE('$fechaFinal') ";
-
-				// Añadir la condición del proveedor si $idProveedor no es 0
-				$query .= ($idProveedor == 0) ? "" : " AND compras.id_proveedor = $idProveedor";
-
-				$stmt = Conexion::conectar()->prepare($query);
-		
-				$stmt -> execute();
-
-			return $stmt -> fetchAll();
-
+			$stmt->execute();
+	
+			return $stmt->fetchAll();
 		}
-
+		return [];
 	}
+	
 
 	static public function mdlComprasRealizadas($tabla){
 

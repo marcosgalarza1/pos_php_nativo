@@ -3,6 +3,8 @@
 require_once "../../../controladores/compras.controlador.php";
 require_once "../../../modelos/compras.modelo.php";
 
+require_once "../../../controladores/categorias.controlador.php";
+require_once "../../../modelos/categorias.modelo.php";
 
 require_once "../../../controladores/proveedor.controlador.php";
 require_once "../../../modelos/proveedor.modelo.php";
@@ -21,6 +23,7 @@ class reporteCompra
     public $fechaFin;
     public $idProveedor;
     public $idUsuario;
+    public $idCategoria;
 
     public function generarPdfCompras()
     {
@@ -30,8 +33,9 @@ class reporteCompra
         $fechaFin = $this->fechaFin;
         $idProveedor = $this->idProveedor;
         $idUsuario = $this->idUsuario;
+        $idCategoria = $this->idCategoria;
 
-        $respuestaCompra = ControladorCompras::ctrRangoFechasComprasPdf($fechaInicio, $fechaFin, $idProveedor);
+        $respuestaCompra = ControladorCompras::ctrRangoFechasComprasPdf($fechaInicio, $fechaFin, $idProveedor,$idCategoria);
 
         $itemUsuario = "id";
 
@@ -47,7 +51,11 @@ class reporteCompra
         } else {
             $respuestaProveedor["nombre"] = "Todos";
         }
-
+        if ($idCategoria != 0) {
+            $respuestaCategoria = ControladorCategorias::ctrMostrarCategorias("id", $idCategoria);
+        } else {
+            $respuestaCategoria["categoria"] = "Todos";
+        }
         //REQUERIMOS LA CLASE TCPDF
 
         require_once('tcpdf_include.php');
@@ -75,6 +83,11 @@ class reporteCompra
         $pdf->Cell(23, 5, 'Cajero/a: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaUsuario["nombre"], 0, 1, 'L');
+        
+        $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->Cell(23, 5, 'Categoria: ', 0, 0, 'L');
+        $pdf->SetFont('helvetica', '', 9);
+        $pdf->Cell(50, 5, $respuestaCategoria["categoria"], 0, 1, 'L');
 
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Proveedor: ', 0, 0, 'L');
@@ -141,4 +154,5 @@ $factura->fechaInicio = $_GET["fechaInicio"];
 $factura->fechaFin = $_GET["fechaFin"];
 $factura->idProveedor = $_GET["idProveedor"];
 $factura->idUsuario = $_GET["idUsuario"];
+$factura->idCategoria = $_GET["idCategoria"];
 $factura->generarPdfCompras();

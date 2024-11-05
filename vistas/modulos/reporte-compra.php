@@ -19,7 +19,7 @@
           <div class="panel-body">
             <input type="hidden" id="id_usuario" name="id_usuario" value="<?php echo $_SESSION["id"]; ?>">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-12 col-md-3">
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Fecha de inicio:</label>
                   <div class="input-group">
@@ -28,7 +28,7 @@
                 </div>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-12 col-md-3">
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Fecha de fin:</label>
                   <div class="input-group">
@@ -37,7 +37,25 @@
                 </div>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <label>Categoria</label>
+                  <select class="form-control" id="id_categoria" name="id_categoria" required>
+                    <option value="0">Todas</option>
+                    
+                    <?php
+                      $item = null;
+                      $valor = null;
+                      $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+                       foreach ($categorias as $key => $value) {
+                         echo '<option value="'.$value["id"].'">'.$value["categoria"].'</option>';
+                       }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-3">
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Proveedor:</label>
                   <select class="form-control" id="id_proveedor" name="id_proveedor" required>
@@ -90,7 +108,7 @@ var popupWindow = null;
 function generatePDF() {
   const idProveedor = document.getElementById('id_proveedor').value;
   const idUsuario = document.getElementById('id_usuario').value;
-
+  const idCategoria = document.getElementById('id_categoria').value;
   // Validar campos
   if (!fechaInicio.value || !fechaFin.value) {
     swal({
@@ -133,7 +151,8 @@ function generatePDF() {
         "extensiones/tcpdf/pdf/reporte-compras.php?fechaInicio=" + encodeURIComponent(fechaInicio.value) +
         "&fechaFin=" + encodeURIComponent(fechaFin.value) +
         "&idProveedor=" + encodeURIComponent(idProveedor) +
-        "&idUsuario=" + encodeURIComponent(idUsuario),
+        "&idUsuario=" + encodeURIComponent(idUsuario) +
+        "&idCategoria=" + encodeURIComponent(idCategoria) ,
         "_blank",
         windowFeatures
     );
