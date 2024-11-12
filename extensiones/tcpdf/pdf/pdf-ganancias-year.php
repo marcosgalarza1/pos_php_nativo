@@ -6,7 +6,9 @@
 require_once "../../../controladores/reportes.controlador.php";
 require_once "../../../modelos/reportes.modelo.php";
 require_once "../../../fpdf/fpdf.php";
-
+require_once "../../../controladores/usuarios.controlador.php";
+require_once "../../../modelos/usuarios.modelo.php";
+require_once "../../../fpdf/fpdf.php";
 class PdfGananciasYear
 {
 
@@ -29,33 +31,66 @@ class PdfGananciasYear
         $pdf = new FPDF('P', 'mm', 'letter');
         $pdf->AddPage();
         $pdf->SetMargins(12, 12, 12);
-        $pdf->SetTitle("Reporte de Rango Fechas");
+        $pdf->SetTitle (utf8_decode("Reporte de Ganancias por Año"));
         $pdf->SetFont('Arial', 'B', 15);
         // $pdf->image(base_url().'/images/logotipo.png',185,10,18,16,'PNG');
-        $pdf->Cell(195, 5, utf8_decode("Reporte General"), 0, 1, 'C');
-        $pdf->Image('images/logo-negro-bloque.jpg', 185, 10, 18, 16, 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        $pdf->Ln(5);
+        $pdf->Cell(195, 5, utf8_decode("Reporte De Ganancias Por Año"), 0, 1, 'C');
+        $pdf->Image('images/logo-negro-bloque.jpg', 100, 25, 30, 20, 'jpg');
+
+
+        $pdf->Ln(10); // Espacio después de la imagen
+        $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
+        $pdf->SetY(30);  // Ajusta este valor según sea necesario altura
+        
         $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetX(20); // Ajusta este valor según sea necesario ancho
+        $pdf->Cell(40, 5, utf8_decode('Usuario:'), 0, 0, 'L');
+        $pdf->SetX(50); // Ajusta este valor según sea necesario ancho
+        $pdf->SetFont('Arial', '', 10);
+       // Obtenemos el usuario de la base de datos
+       $usuario = ControladorUsuarios::ctrMostrarUsuarios('id', $this->idUsuario);
+       $pdf->Cell(50, 5, utf8_decode($usuario["nombre"]), 0, 1, 'L'); // Nombre del usuario
+
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetX(20); // Ajusta este valor según sea necesario ancho
         $pdf->Cell(40, 5, utf8_decode('Restaurante:'), 0, 0, 'L');
+        $pdf->SetX(50); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('Arial', '', 10);
         $pdf->Cell(50, 5, utf8_decode($nombreTienda), 0, 1, 'L');
+
+
+        $pdf->SetY(35);  // Ajusta este valor según sea necesario altura
+        $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
+
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->Cell(40, 5, utf8_decode('Dirección:'), 0, 0, 'L');
+        $pdf->SetX(160); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('Arial', '', 10);
         $pdf->Cell(50, 5, $direccionTienda, 0, 1, 'L');
+
+
+
+        $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->Cell(40, 5, utf8_decode('Periodo:'), 0, 0, 'L');
-        $pdf->SetFont('Arial', '', 10);
+        $pdf->SetX(160); // Ajusta este valor según sea necesario ancho
+        $pdf->SetFont('Arial','', 10);
         $pdf->Cell(50, 5, $yearini . ' hasta ' . $yearfin, 0, 1, 'L');
+        $pdf->SetY(40);  // Ajusta este valor según sea necesario altur
         $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetX(20); // Ajusta este valor según sea necesario ancho
         $pdf->Cell(40, 5, utf8_decode('Fecha y hora:'), 0, 0, 'L');
+        $pdf->SetX(50); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('Arial', '', 10);
+        
         $pdf->Cell(50, 5, $DateAndTime, 0, 1, 'L');
-
-
+       
+       
+        
         //**************************************************************************//
 
         $datos = ModeloReportes::mdlObtenerGananciasYear($yearini, $yearfin);
+      
         $sum1 = 0;
         $sum2 = 0;
         $sum3 = 0;
@@ -64,15 +99,17 @@ class PdfGananciasYear
         $aumentar = 10;
         $years = '';
         $x = 13;
-        $y = 50;
+        $y = 60;
         $pdf->SetAutoPageBreak(false);
         $ganancia = 0;
         foreach ($datos as $dato) {
 
             if ($primeravez) {
-
+               
                 $pdf->SetFont('', 'B', 8);
+             
                 $fill = True;
+                
                 $pdf->SetXY($x, $y);
                 $posicion_MulticeldaDX = $pdf->GetX();
                 $posicion_MulticeldaDY = $pdf->GetY();
@@ -80,10 +117,12 @@ class PdfGananciasYear
                 $pdf->SetFillColor(224, 235, 255);
                 $pdf->SetTextColor(0, 0, 0);
                 $pdf->SetDrawColor(224, 235, 255);
-
+            
                 $pdf->SetXY($posicion_MulticeldaDX, $posicion_MulticeldaDY); //Aquí le indicas la posición de la esquina superior izquierda para el primer multicell que envuelve toda la tabla o recuadro
                 $pdf->MultiCell(92, 75, '', 1);
+                
                 $pdf->SetXY($posicion_MulticeldaDX, $posicion_MulticeldaDY); // Esto posiciona cada etiqueta en base a la posición de la esquina 
+               
                 $pdf->Cell(92, 5, utf8_decode('GESTIÓN ') . $dato['year'], 1, 1, 'C', $fill);
 
                 $pdf->SetXY($posicion_MulticeldaDX, $posicion_MulticeldaDY + 5);

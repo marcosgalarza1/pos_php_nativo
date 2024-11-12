@@ -22,6 +22,7 @@ class imprimirCompra {
         $itemCompra = "codigo";
         $valorCompra = $this->codigo;
         $respuestaCompra = ControladorCompras::ctrMostrarCompras($itemCompra, $valorCompra);
+        if($respuestaCompra!=null){
         $detalleCompra = ControladorCompras::ctrMostrarDetalleCompras($respuestaCompra['id']);
 
         // Convertir la fecha y hora a un objeto DateTime
@@ -121,12 +122,16 @@ class imprimirCompra {
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(30, 5, 'Número de compras:  ' . ($contador - 1), 0, 0, 'L');
 
-        // Salida del archivo PDF
         $pdf->Output('factura.pdf', 'I');
+    }else{
+   
+        echo'<script>
+                window.location = "../../../crear-venta";
+            </script>'; 
 
     }
 }
-
+}
 $factura = new imprimirCompra();
 $factura->codigo = $_GET["codigo"];
 $factura->traerImpresionCompra();

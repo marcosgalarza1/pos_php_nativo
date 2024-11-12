@@ -1,3 +1,12 @@
+
+<?php
+// Establecer la zona horaria de Bolivia
+date_default_timezone_set('America/La_Paz');
+
+// Obtener la fecha y hora actual en Bolivia
+$fechaActual = date('Y-m-d');
+?>
+
 <div class="content-wrapper text-uppercase">
 
     <section class="content-header">
@@ -44,7 +53,7 @@
                             </div>
                         </div>
                     </div><!--/body panel-->
-                    <img src="vistas/img/plantilla/cat.png" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
+                    <img src="vistas/img/plantilla/c.jpg" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
 
                 </div><!--/PANEL FIN-->
             </div><!--/box body-->

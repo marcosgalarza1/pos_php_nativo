@@ -42,12 +42,18 @@ if($_SESSION["perfil"] == "Vendedor"){
     <div class="box">
 
       <div class="box-header with-border">
-      <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">
+     <!--  <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">
     
 
           Agregar producto
 
-        </button>
+        </button> -->
+
+        <a href="agregar-producto" class="btn btn-primary">
+       Agregar Producto
+       </a>
+      &nbsp;
+
         <a class="btn btn-primary" target="_blank" href="reporte_producto.php">
             <i class="material-icons"></i>
             <span class="icon-name"> Imprimir </span>
@@ -165,7 +171,8 @@ MODAL AGREGAR PRODUCTO
                       <input type="text" class="form-control input-lg" id="nuevoCodigo" name="nuevoCodigo" 
                       placeholder="código" readonly required>
 
-                    </div>
+                </div>
+
              </div>
 
 
@@ -200,7 +207,7 @@ MODAL AGREGAR PRODUCTO
 
             </div>
 
-                <!-- ENTRADA PARA PRECIO COMPRA -->
+                <!--  ENTRADA PARA PRECIO COMPRAS -->
                 <div class="form-group row">
                 <div class="col-xs-6">
                 <div class="input-group">

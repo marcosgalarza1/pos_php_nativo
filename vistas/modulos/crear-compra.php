@@ -20,7 +20,7 @@ if($_SESSION["perfil"] == "Especial"){
   <section class="content-header">
  
   <h1 style="font-weight: bold; font-family: Arial, sans-serif;">
-    Crear compra
+     REGISTRAR INGRESOS/COMPRA
 </h1>
 
 

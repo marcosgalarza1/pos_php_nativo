@@ -44,11 +44,16 @@ if($_SESSION["perfil"] == "vendedor"){
 
       <div class="box-header with-border">
   
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProveedor">
+      <!--   <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProveedor">
           
           Agregar proveedor
 
-        </button>
+        </button> -->
+
+        <a href="agregar-proveedor" class="btn btn-primary">
+       Agregar Proveedor
+       </a>
+      &nbsp;
         <a class="btn btn-primary" target="_blank" href="reporte_proveedor.php">
                                        <i class="material-icons"></i>
                                       <span class="icon-name"> Imprimir </span>

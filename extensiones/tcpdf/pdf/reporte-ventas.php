@@ -14,7 +14,7 @@ require_once "../../../modelos/meseros.modelo.php";
 
 require_once "../../../controladores/usuarios.controlador.php";
 require_once "../../../modelos/usuarios.modelo.php";
-
+require_once('tcpdf_include.php');
 
 class reporteVenta
 {
@@ -26,6 +26,8 @@ class reporteVenta
     public $idUsuario;
     public $idCategoria;
     public $idCliente;
+    private $nombreTienda = "Cabañas El Gallito";
+    private $direccionTienda = "Rio Pirai";
 
     public function generarPdfVentas()
     {
@@ -80,17 +82,30 @@ class reporteVenta
 
         // Ajustar márgenes a cero
         $pdf->SetMargins(10, 10, 10);
-        $pdf->SetTitle('Ventas de productos');
+        $pdf->SetTitle('Reporte de venta');
         $pdf->AddPage();
 
         $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(0, 5, 'Venta de productos', 0, 1, 'C');
-        $pdf->Image('images/logo-negro-bloque.jpg', 185, 10, 18, 16, 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
+        $pdf->Cell(0, 5, 'REPORTE DE VENTA ENTRE FECHA', 0, 1, 'C');
+       /*  $pdf->Image('images/logo-negro-bloque.jpg', 150, 10, 60, 51, 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false); */
+       $pdf->Image('images/logo-negro-bloque.jpg', 90, 25, 30, 20, 'jpg');
         $pdf->Ln(10); // Espacio después de la imagen
 
+
+         // Nombre y dirección del restaurante
+         $pdf->SetFont('helvetica', 'B', 9);
+         $pdf->Cell(23, 5, 'Restaurante:', 0, 0, 'L');
+         $pdf->SetFont('helvetica', '', 9);
+         $pdf->Cell(50, 5, $this->nombreTienda, 0, 1, 'L');
+ 
+         $pdf->SetFont('helvetica', 'B', 9);
+         $pdf->Cell(23, 5, 'Dirección:', 0, 0, 'L');
+         $pdf->SetFont('helvetica', '', 9);
+         $pdf->Cell(50, 5, $this->direccionTienda, 0, 1, 'L');
+         
+         
         $pdf->SetFont('helvetica', 'B', 9);
-        $pdf->Cell(23, 5, 'Cajero/a: ', 0, 0, 'L');
+        $pdf->Cell(23, 5, 'Usuario: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaUsuario["nombre"], 0, 1, 'L');
 
@@ -98,39 +113,44 @@ class reporteVenta
         $pdf->Cell(23, 5, 'Categoria: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaCategoria["categoria"], 0, 1, 'L');
-
+        $pdf->SetY(25);  // Ajusta este valor según sea necesario altura
+        $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Cliente: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaCliente["nombre"], 0, 1, 'L');
 
-
+        $pdf->SetX(140);
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Mesero: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaMesero["nombre"], 0, 1, 'L');
-
-        $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->SetX(140);
         $pdf->Cell(23, 5, 'Periodo: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(100, 5, date("d-m-Y ", strtotime($fechaInicio)) . " al " . date("d-m-Y", strtotime($fechaFin)), 0, 1, 'L');
-
+        $pdf->SetX(140);
         $DateAndTime = date('d-m-Y h:i:s a', time());
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, utf8_decode('Fecha y hora:'), 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
+
+
+
+
+
         $pdf->Cell(50, 5, $DateAndTime, 0, 1, 'L');
 
         $pdf->Ln(5);
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->SetFillColor(0, 0, 0);
         $pdf->SetTextColor(255, 255, 255);
-        $pdf->Cell(0, 5, 'Detalle de productos', 1, 1, 'C', 1);
+        $pdf->Cell(0, 5, 'Detalle Del Reporte', 1, 1, 'C', 1);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Cell(10, 5, 'No', 1, 0, 'L');
-        $pdf->Cell(22, 5, 'Codigo', 1, 0, 'L');
+        $pdf->Cell(22, 5, 'Ticket', 1, 0, 'L');
         $pdf->Cell(30, 5, 'Fecha', 1, 0, 'L');
-        $pdf->Cell(35, 5, 'Cajero', 1, 0, 'L');
+        $pdf->Cell(35, 5, 'Usuario', 1, 0, 'L');
         $pdf->Cell(35, 5, 'Mesero', 1, 0, 'L');
         $pdf->Cell(40, 5, 'Cliente', 1, 0, 'L');
         $pdf->Cell(24, 5, 'Monto', 1, 1, 'L');

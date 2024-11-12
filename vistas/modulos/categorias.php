@@ -14,6 +14,8 @@ if ($_SESSION["perfil"] == "Vendedor") {
 
 ?>
 
+
+
 <div class="content-wrapper text-uppercase ">
 
 <section class="content-header">
@@ -128,9 +130,8 @@ MODAL EDITAR CATEGORÍA
 
               <div class="input-group">
 
-              <span class="input-group-addon">
-              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABWUlEQVR4nO2WvUoDQRSFv0a00AdIIwZBTGHjWkiasDGghU3QMliIoL02Yqu9lnkCfQXxBQL6EIo/hdiaJf4wMnIXhiWT2b9kRXLgsDtn594ze1guC2Nkx5pw5GgLY2MJ8Bycd9RfAI/Cc9EGYhboAcrBJ0v9CfDVZ7/Wjl3me0DH8mwC6ALLljrXgXcHGTeBT6DeJ+IDIAAWIjVTwFsM41dgMs+oGzFqQtbziLosCaiEDIC5LFF70shLSCXX1FGHTZJCRY019mNEvZKncVkWLUfUH8CqsTdt1C3xTPWRZGUQvn4RZGys/n3U3QJM37XxTQHG19p4EXgwxGfgSE4VarfAGfBtaJfAlbHWz06Bu8ibHQIvhnYvnr+YATaBLbnXKMmUWZeRqVEBdoCqMQarolWM8bohtSWj/7Z4TEfnqA/UGB5q4pH97zAh2rb+hRn7tihygj/k/n8cP6FvizvqF810AAAAAElFTkSuQmCC">
-                </span>
+              <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
 
                 <input type="text" class="form-control input-lg" name="editarCategoria" id="editarCategoria" required>
 

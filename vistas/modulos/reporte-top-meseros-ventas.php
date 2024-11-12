@@ -1,4 +1,11 @@
 
+<?php
+// Establecer la zona horaria de Bolivia
+date_default_timezone_set('America/La_Paz');
+
+// Obtener la fecha y hora actual en Bolivia
+$fechaActual = date('Y-m-d');
+?>
 
 <div class="content-wrapper text-uppercase">
 
@@ -66,6 +73,10 @@
     </section>
 
 </div>
+
+
+
+
 <script>
 
     // Asignar la fecha actual a una variable global en JavaScript

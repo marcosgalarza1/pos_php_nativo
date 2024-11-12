@@ -1,7 +1,17 @@
+<?php
+// Establecer la zona horaria de Bolivia
+date_default_timezone_set('America/La_Paz');
+
+// Obtener la fecha y hora actual en Bolivia
+$fechaActual = date('Y-m-d');
+?>
+
+
+
 <div class="content-wrapper text-uppercase">
 
   <section class="content-header">
-    <h1>REPORTE DE VENTAS POR MESEROS</h1>
+    <h1>REPORTE DE VENTAS ENTRE FECHA</h1>
     <ol class="breadcrumb">
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       <li class="active">Administrar ventas</li>
@@ -24,7 +34,7 @@
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Fecha de inicio:</label>
                   <div class="input-group date">
-                    <input type="date" id="fecha_inicio" name="fecha_inicio" value="<?php echo date('Y-m-01'); ?>"  class="form-control" required/>
+                    <input type="date" id="fecha_inicio" name="fecha_inicio" value="<?php  echo date('Y-m-01'); ?>"  class="form-control" required/>
                   </div>
                 </div>
               </div>
@@ -100,7 +110,7 @@
               </button>
             </div>
         
-            <img src="vistas/img/plantilla/mesero-1.jpg" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
+             <img src="vistas/img/plantilla/rep1.jpg" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
 
           </div><!--/body card-->
          

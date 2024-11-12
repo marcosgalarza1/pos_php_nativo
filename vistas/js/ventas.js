@@ -227,8 +227,9 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 		$("#nuevoImpuestoVenta").val(0);
 		$("#nuevoTotalVenta").val(0);
 		$("#totalVenta").val(0);
-
+	
 		$("#nuevoTotalVenta").attr("total",0);
+		$("#listaProductos").val(""); /* id para validar la eliminacio de los prodcutos de crear venta */
 
 	}else{
 
@@ -883,8 +884,9 @@ function cargarTablaVentas(fechaInicial, fechaFinal) {
   $(".daterangepicker.opensleft .ranges li").on("click", function () {
 	var textoHoy = $(this).attr("data-range-key");
   
+
+	
 	if (textoHoy == "Hoy") {
-  
 	  var d = new Date();
 	  var dia = ("0" + d.getDate()).slice(-2);
 	  var mes = ("0" + (d.getMonth() + 1)).slice(-2);

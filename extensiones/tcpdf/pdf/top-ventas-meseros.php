@@ -17,6 +17,8 @@ class reporteTopVentasMeseros
     public $fechaInicio;
     public $fechaFin;
     public $idUsuario;
+    private $nombreTienda = "Cabañas El Gallito";
+    private $direccionTienda = "Rio Pirai";
 
     public function generarPdfVentasTopMeseros()
     {
@@ -42,26 +44,41 @@ class reporteTopVentasMeseros
 
         // Ajustar márgenes a cero
         $pdf->SetMargins(10, 10, 10);
-        $pdf->SetTitle('Top Ventas por meseros');
+        $pdf->SetTitle(' Reporte De Mesero Con Mas Ventas');
         $pdf->AddPage();
 
         $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(0, 5, 'Top Ventas por Meseros', 0, 1, 'C');
-        $pdf->Image('images/logo-negro-bloque.jpg', 185, 10, 18, 16, 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $pdf->Cell(0, 5, 'Reporte De Mesero Con Mas Ventas', 0, 1, 'C');
+        $pdf->Image('images/logo-negro-bloque.jpg', 90, 25, 30, 20, 'jpg');
 
         $pdf->Ln(10); // Espacio después de la imagen
 
+        $pdf->SetY(30);  // Ajusta este valor según sea necesario altura
+            // Nombre y dirección del restaurante
+            $pdf->SetFont('helvetica', 'B', 9);
+            $pdf->Cell(23, 5, 'Restaurante:', 0, 0, 'L');
+            $pdf->SetFont('helvetica', '', 9);
+            $pdf->Cell(50, 5, $this->nombreTienda, 0, 1, 'L');
+    
+            $pdf->SetFont('helvetica', 'B', 9);
+            $pdf->Cell(23, 5, 'Dirección:', 0, 0, 'L');
+            $pdf->SetFont('helvetica', '', 9);
+            $pdf->Cell(50, 5, $this->direccionTienda, 0, 1, 'L');
+
         $pdf->SetFont('helvetica', 'B', 9);
-        $pdf->Cell(23, 5, 'Cajero/a: ', 0, 0, 'L');
+        $pdf->Cell(23, 5, 'Usuario: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaUsuario["nombre"], 0, 1, 'L');
-
+        $pdf->SetY(35);  // Ajusta este valor según sea necesario altura
+        $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Periodo: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(100, 5, date("d-m-Y ", strtotime($fechaInicio)) . " al " . date("d-m-Y", strtotime($fechaFin)), 0, 1, 'L');
 
         $DateAndTime = date('d-m-Y h:i:s a', time());
+        
+        $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, utf8_decode('Fecha y hora:'), 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);

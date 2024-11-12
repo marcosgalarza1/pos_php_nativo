@@ -20,6 +20,8 @@ class reporteProductoFaltante
 
 
     public $idUsuario;
+    private $nombreTienda = "Cabañas El Gallito";
+    private $direccionTienda = "Rio Pirai";
 
     public function generarPdfProductoFaltante()
     {
@@ -43,27 +45,51 @@ class reporteProductoFaltante
         $pdf->SetMargins(12, 12, 12);
         $pdf->SetTitle("Reporte de Producto Faltantes");
         $pdf->SetFont('Arial', 'B', 15);
-        $pdf->image('images/logo-negro-bloque.jpg', 185, 10, 18, 16, 'jpg');
-
-
-        $pdf->Cell(195, 5, utf8_decode("Reporte de Producto Faltantes"), 0, 1, 'C');
-
-
-        $pdf->Ln(5);
+        $pdf->Cell(0, 5, utf8_decode('Reporte De Producto Faltantes'), 0, 1, 'C');
+        
+        // Logo
+        $pdf->Image('images/logo-negro-bloque.jpg', 90, 25, 30, 20, 'jpg');
+        
+        // Espacio después de la imagen
+        $pdf->Ln(10);
+        
+        // Ajuste de la posición vertical inicial
+        $pdf->SetY(30);  
+        
+        // Nombre y dirección del restaurante
+        $pdf->SetY(35);  // Ajusta este valor según sea necesario altura
         $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(40, 5, utf8_decode('Cajero/a:'), 0, 0, 'L');
+        $pdf->Cell(40, 5, utf8_decode('Restaurante:'), 0, 0, 'L');
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->Cell(50, 5, utf8_decode($this->nombreTienda), 0, 1, 'L');
+        
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->Cell(40, 5, utf8_decode('Dirección:'), 0, 0, 'L');
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->Cell(50, 5, utf8_decode($this->direccionTienda), 0, 1, 'L');
+        
+        // Ajuste de la posición en X para alineación a la derecha
+        $pdf->SetY(35);  // Ajusta este valor según sea necesario altura
+        $pdf->SetX(120); // Ajusta este valor según sea necesario ancho
+        
+        // Usuario
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->Cell(40, 5, utf8_decode('Usuario:'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 10);
         $pdf->Cell(50, 5, utf8_decode($respuestaUsuario["nombre"]), 0, 1, 'L');
-
+        
+        // Fecha y hora
+        $pdf->SetX(120); // Alineación para mantener la coherencia en el diseño
         $pdf->SetFont('Arial', 'B', 10);
         $pdf->Cell(40, 5, utf8_decode('Fecha y hora:'), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 10);
-        $pdf->Cell(50, 5, $DateAndTime, 0, 1, 'L');
+        $pdf->Cell(50, 5, utf8_decode($DateAndTime), 0, 1, 'L');
+        
         $pdf->Ln(5);
 
         $pdf->SetFont('Arial', 'B', 11);
         $pdf->Cell(12, 5, utf8_decode('Nº'), 1, 0, 'L');
-        $pdf->Cell(28, 5, utf8_decode('codigo'), 1, 0, 'L');
+        $pdf->Cell(28, 5, utf8_decode('Codigo'), 1, 0, 'L');
         $pdf->Cell(72, 5, utf8_decode('nombre'), 1, 0, 'L');
 
         $pdf->Cell(26, 5, utf8_decode('Precio venta'), 1, 0, 'L');

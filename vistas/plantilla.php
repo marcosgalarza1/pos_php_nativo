@@ -66,7 +66,8 @@
   <!-- jQuery 3 -->
   <link rel="stylesheet" href="vistas/bower_components/jquery-ui/themes/base/jquery-ui.min.css">
   <script src="vistas/bower_components/jquery/dist/jquery.min.js"></script> 
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!--   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> -->
+<script src="vistas/plugins/jQueryUI/jquery-ui.min.js"></script> 
 
   <!-- Bootstrap 3.3.7 -->
   <script src="vistas/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -229,9 +230,12 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "usuarios" ||
          $_GET["ruta"] == "agregar-usuario" ||
          $_GET["ruta"] == "categorias" ||
+         $_GET["ruta"] == "agregar-usuario" ||
          $_GET["ruta"] == "agregar-categoria" ||
+         $_GET["ruta"] == "agregar-producto" ||
          $_GET["ruta"] == "agregar-cliente" ||
          $_GET["ruta"] == "agregar-mesero" ||
+         $_GET["ruta"] == "agregar-proveedor" ||
          $_GET["ruta"] == "editar-categoria" ||
          $_GET["ruta"] == "productos" ||
          $_GET["ruta"] == "clientes" ||

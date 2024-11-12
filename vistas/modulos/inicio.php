@@ -54,7 +54,7 @@
         if($_SESSION["perfil"] == "Especial" || $_SESSION["perfil"] == "Vendedor"){
           echo '<div class="box box-success">
                   <div class="box-header">
-                    <h1>Bienvenid@ ' .$_SESSION["nombre"]. ' Al sistema POS </h1>
+                    <h1> ' .$_SESSION["nombre"]. '    </h1>
                     <img src="vistas/img/plantilla/inicio.jpg" class="responsive-image">
                   </div>
                 </div>';

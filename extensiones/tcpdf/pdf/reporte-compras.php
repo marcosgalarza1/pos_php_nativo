@@ -24,6 +24,8 @@ class reporteCompra
     public $idProveedor;
     public $idUsuario;
     public $idCategoria;
+    private $nombreTienda = "Cabañas El Gallito";
+    private $direccionTienda = "Rio Pirai";
 
     public function generarPdfCompras()
     {
@@ -70,36 +72,51 @@ class reporteCompra
 
         // Ajustar márgenes a cero
         $pdf->SetMargins(10, 10, 10);
-        $pdf->SetTitle('Compra de productos');
+        $pdf->SetTitle('Reporte De Compra de productos');
         $pdf->AddPage();
 
-        $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(0, 5, 'Compra de productos', 0, 1, 'C');
-        $pdf->Image('images/logo-negro-bloque.jpg', 185, 10, 18, 16, 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
+        $pdf->SetFont('helvetica', 'B', 12);
+        $pdf->Cell(0, 5, 'REPORTES DE COMPRAS ENTRE FECHA', 0, 1, 'C');
+        $pdf->Image('images/logo-negro-bloque.jpg', 90, 25, 30, 20, 'jpg');
         $pdf->Ln(10); // Espacio después de la imagen
 
-        $pdf->SetFont('helvetica', 'B', 9);
-        $pdf->Cell(23, 5, 'Cajero/a: ', 0, 0, 'L');
-        $pdf->SetFont('helvetica', '', 9);
-        $pdf->Cell(50, 5, $respuestaUsuario["nombre"], 0, 1, 'L');
+
+
+                // Nombre y dirección del restaurante
+                $pdf->SetFont('helvetica', 'B', 9);
+                $pdf->Cell(23, 5, 'Restaurante:', 0, 0, 'L');
+                $pdf->SetFont('helvetica', '', 9);
+                $pdf->Cell(50, 5, $this->nombreTienda, 0, 1, 'L');
         
+                $pdf->SetFont('helvetica', 'B', 9);
+                $pdf->Cell(23, 5, 'Dirección:', 0, 0, 'L');
+                $pdf->SetFont('helvetica', '', 9);
+                $pdf->Cell(50, 5, $this->direccionTienda, 0, 1, 'L');
+            
+                $pdf->SetFont('helvetica', 'B', 9);
+                $pdf->Cell(23, 5, 'Usuario: ', 0, 0, 'L');
+                $pdf->SetFont('helvetica', '', 9);
+                $pdf->Cell(50, 5, $respuestaUsuario["nombre"], 0, 1, 'L');
+                $pdf->SetY(30);  // Ajusta este valor según sea necesario altura
+                $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
+               
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Categoria: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaCategoria["categoria"], 0, 1, 'L');
-
+        $pdf->SetX(140);
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Proveedor: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaProveedor["nombre"], 0, 1, 'L');
-
+        $pdf->SetX(140);
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Periodo: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(100, 5, date("d-m-Y ", strtotime($fechaInicio)) . " al " . date("d-m-Y", strtotime($fechaFin)), 0, 1, 'L');
 
         $DateAndTime = date('d-m-Y h:i:s a', time());
+        $pdf->SetY(40);  // Ajusta este valor según sea necesario altura
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, utf8_decode('Fecha y hora:'), 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
@@ -112,7 +129,7 @@ class reporteCompra
         $pdf->Cell(0, 5, 'Detalle de productos', 1, 1, 'C', 1);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Cell(14, 5, 'No', 1, 0, 'L');
-        $pdf->Cell(22, 5, 'Codigo', 1, 0, 'L');
+        $pdf->Cell(22, 5, 'Ticket', 1, 0, 'L');
         $pdf->Cell(30, 5, 'Fecha', 1, 0, 'L');
         $pdf->Cell(50, 5, 'Usuario', 1, 0, 'L');
         $pdf->Cell(50, 5, 'Proveedor', 1, 0, 'L');

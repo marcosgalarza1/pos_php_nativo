@@ -1,10 +1,16 @@
 <?php
 
+
 require_once "../../../controladores/ventas.controlador.php";
 require_once "../../../modelos/ventas.modelo.php";
 
 require_once "../../../controladores/usuarios.controlador.php";
 require_once "../../../modelos/usuarios.modelo.php";
+
+
+
+
+
 
 
 class reporteTopProductosMasVendidos
@@ -14,6 +20,8 @@ class reporteTopProductosMasVendidos
     public $fechaInicio;
     public $fechaFin;
     public $idUsuario;
+    private $nombreTienda = "Cabañas El Gallito";
+    private $direccionTienda = "Rio Pirai";
 
     public function generarPdfVentasTopProducto()
     {
@@ -39,26 +47,43 @@ class reporteTopProductosMasVendidos
 
         // Ajustar márgenes a cero
         $pdf->SetMargins(10, 10, 10);
-        $pdf->SetTitle('Top Producto Mas Vendidos');
+        $pdf->SetTitle('Reporte De Producto Mas Vendidos');
         $pdf->AddPage();
 
-        $pdf->SetFont('helvetica', 'B', 11);
-        $pdf->Cell(0, 5, 'Top Producto Mas Vendidos', 0, 1, 'C');
-        $pdf->Image('images/logo-negro-bloque.jpg', 185, 10, 18, 16, 'jpg', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $pdf->SetFont('helvetica', 'B', 12);
+        $pdf->Cell(0, 5, 'Reporte De Producto Mas Vendidos', 0, 1, 'C');
+        $pdf->Image('images/logo-negro-bloque.jpg', 90, 25, 30, 20, 'jpg');
 
         $pdf->Ln(10); // Espacio después de la imagen
+        $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
+        $pdf->SetY(30);  // Ajusta este valor según sea necesario altura
 
+            // Nombre y dirección del restaurante
+            $pdf->SetFont('helvetica', 'B', 9);
+            $pdf->Cell(23, 5, 'Restaurante:', 0, 0, 'L');
+            $pdf->SetFont('helvetica', '', 9);
+            $pdf->Cell(50, 5, $this->nombreTienda, 0, 1, 'L');
+
+            $pdf->SetFont('helvetica', 'B', 9);
+            $pdf->Cell(23, 5, 'Dirección:', 0, 0, 'L');
+            $pdf->SetFont('helvetica', '', 9);
+            $pdf->Cell(50, 5, $this->direccionTienda, 0, 1, 'L');
+
+            $pdf->SetY(35);  // Ajusta este valor según sea necesario altura
+            $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('helvetica', 'B', 9);
-        $pdf->Cell(23, 5, 'Cajero/a: ', 0, 0, 'L');
+        $pdf->Cell(23, 5, 'Usuario: ', 0, 0, 'L');
+
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(50, 5, $respuestaUsuario["nombre"], 0, 1, 'L');
-
+        $pdf->SetX(140); // Ajusta este valor según sea necesario ancho
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, 'Periodo: ', 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);
         $pdf->Cell(100, 5, date("d-m-Y ", strtotime($fechaInicio)) . " al " . date("d-m-Y", strtotime($fechaFin)), 0, 1, 'L');
 
         $DateAndTime = date('d-m-Y h:i:s a', time());
+        $pdf->SetY(40);  // Ajusta este valor según sea necesario altura
         $pdf->SetFont('helvetica', 'B', 9);
         $pdf->Cell(23, 5, utf8_decode('Fecha y hora:'), 0, 0, 'L');
         $pdf->SetFont('helvetica', '', 9);

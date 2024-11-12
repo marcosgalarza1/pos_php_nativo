@@ -29,20 +29,22 @@ class ControladorVentas{
 
 	static public function ctrCrearVenta(){
 
+
+		
+
 		if(isset($_POST["nuevaVenta"])){
 
 			/*=============================================
-			ACTUALIZAR LAS COMPRAS DEL MESERO Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
+			ACTUALIZAR LAS COMPRAS DEL CLIENTE Y REDUCIR EL STOCK Y AUMENTAR LAS VENTAS DE LOS PRODUCTOS
 			=============================================*/
+			$productos = json_decode($_POST["listaProductos"], true);
+			if (empty($productos)) {
 
-			if($_POST["listaProductos"] == ""){
+			echo '<script>
 
-
-					echo'<script>
-
-				swal({ bv 
+				swal({ 
 					  type: "error",
-					  title: "La venta no se ha ejecuta si no hay productos",
+					  title: "La venta no se ha ejecuta si no hay productos Agregados",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
@@ -53,7 +55,7 @@ class ControladorVentas{
 								}
 							})
 
-				</script>'; 
+				</script>';
 
 				return;
 			}
@@ -589,13 +591,17 @@ class ControladorVentas{
 			foreach ($ventas as $row => $item){
 
 				$mesero = ControladorMeseros::ctrMostrarMeseros("id", $item["id_mesero"]);
-				$vendedor = ControladorUsuarios::ctrMostrarUsuarios("id", $item["id_vendedor"]);
+				$nombreMesero = $mesero ? $mesero["nombre"] : "Sin asignar";
 
-			 echo utf8_decode("<tr>
-			 			<td style='border:1px solid #eee;'>".$item["codigo"]."</td> 
-			 			<td style='border:1px solid #eee;'>".$mesero["nombre"]."</td>
-			 			<td style='border:1px solid #eee;'>".$vendedor["nombre"]."</td>
-			 			<td style='border:1px solid #eee;'>");
+				$vendedor = ControladorUsuarios::ctrMostrarUsuarios("id", $item["id_vendedor"]);
+				$nombreVendedor = $vendedor ? $vendedor["nombre"] : "Sin asignar";
+
+				echo utf8_decode("<tr>
+					<td style='border:1px solid #eee;'>".$item["codigo"]."</td> 
+					<td style='border:1px solid #eee;'>".$nombreMesero."</td>
+					<td style='border:1px solid #eee;'>".$nombreVendedor."</td>
+					<td style='border:1px solid #eee;'>");
+
 
 			
 				$productos = ModeloVentas::mdlMostrarDetalleVentas($item["id"]);
@@ -616,7 +622,7 @@ class ControladorVentas{
 		 		echo utf8_decode("</td>
 				
 					
-					<td style='border:1px solid #eee;'>$ ".number_format($item["total"],2)."</td>
+					<td style='border:1px solid #eee;'>Bs ".number_format($item["total"],2)."</td>
 				
 					<td style='border:1px solid #eee;'>".substr($item["fecha"],0,10)."</td>		
 		 			</tr>");

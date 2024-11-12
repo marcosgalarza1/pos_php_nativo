@@ -40,10 +40,15 @@ if($_SESSION["perfil"] == "Especial"){
       <!--   <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarMesero">
           Agregar Meseros
         </button> -->
-        <a href="agregar-mesero" class="btn btn-primary">
-       Agregar Meseros
-       </a>
-      &nbsp;
+                <?php
+       if($_SESSION["perfil"] ==  'Administrador') {
+            echo '<a href="agregar-mesero" class="btn btn-primary">
+                Agregar Meseros
+            </a>';
+        }
+        ?>
+
+
 
         <a class="btn btn-primary" target="_blank" href="reporte_mesero.php">
             <i class="material-icons"></i>

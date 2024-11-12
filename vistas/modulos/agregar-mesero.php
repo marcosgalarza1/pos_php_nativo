@@ -4,7 +4,6 @@
         <h1>AGREGAR MESEROS</h1>
         <ol class="breadcrumb">
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-
             <li class="active">AGREGAR MESEROS</li>
         </ol>
     </section>
@@ -50,8 +49,10 @@
                     <div class="text-right">
                         <button type="submit" class="btn btn-success btn-sm">GUARDAR</button>&nbsp;
                         <a href="meseros"  class="btn btn- btn-sm" style="background:#6c757d; color:white">REGRESAR</a>
+                     
                     </div>
-
+                    <img src="vistas/img/plantilla/mese2.jpg" class="responsive-image" style="display: block; margin: -1px auto 0 auto; max-width: 100%; height: auto; object-fit: contain;">
+                    
                     <!-- Controlador para crear el mesero -->
                     <?php
                         $crearMesero = new ControladorMeseros();

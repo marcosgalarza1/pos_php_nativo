@@ -21,7 +21,7 @@ if($_SESSION["perfil"] == "Especial"){
   <section class="content-header">
   <h1 style="font-family: Arial, sans-serif; font-weight: bold;">
       
-      Administrar compras
+      Administrar ingresos/compras
     
     </h1>
 

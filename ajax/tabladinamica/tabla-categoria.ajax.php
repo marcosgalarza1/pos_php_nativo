@@ -7,7 +7,7 @@ require_once "../../modelos/categorias.modelo.php";
 class TablaCategorias
 {
     /*=============================================
-	MOSTRAR LA TABLA DE Categoria
+	MOSTRAR LA TABLA DE CATEGORIA
 	=============================================*/
     public function mostrarTablaCategoria()
     {
@@ -31,9 +31,10 @@ class TablaCategorias
 
 			}else{
 
-				 $botones =  "<div class='btn-group'><button class='btn btn-primary btnEditarCategoria' idCategoria='".$categorias[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCategoria'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCategoria' idCategoria='".$categorias[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
-                 
+                $botones =  "<div class='btn-group'><button class='btn btn-primary btnEditarCategoria' idCategoria='".$categorias[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCategoria'><i class='fa fa-pencil'></i></button><button class='btn btn-danger btnEliminarCategoria' idCategoria='".$categorias[$i]["id"]."'><i class='fa fa-times'></i></button></div>"; 
 
+				/*  $botones =  "<div class='btn-group'><a href='editar-categoria?id=" . $categorias[$i]['id'] . "' class='btn btn-primary btnEditarCategoria' idCategoria='".$categorias[$i]["id"]."' ><i class='fa fa-pencil'></i></a><button class='btn btn-danger btnEliminarCategoria' idCategoria='".$categorias[$i]["id"]."'><i class='fa fa-times'></i></button></div>";  */
+                
 			}
 
 

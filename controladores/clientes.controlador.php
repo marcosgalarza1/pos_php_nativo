@@ -25,7 +25,7 @@ class ControladorClientes{
 
 					swal({
 						  type: "success",
-						  title: "El Mesero ha sido guardado correctamente",
+						  title: "El Cliente ha sido guardado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
@@ -108,7 +108,7 @@ class ControladorClientes{
 
 					swal({
 						  type: "success",
-						  title: "El Mesero ha sido cambiado correctamente",
+						  title: "El Cliente ha sido cambiado correctamente",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){
@@ -169,7 +169,7 @@ class ControladorClientes{
 
 				swal({
 					  type: "success",
-					  title: "El Mesero ha sido borrado correctamente",
+					  title: "El Cliente ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){

@@ -29,7 +29,7 @@ class imprimirFactura
 
         $respuestaVenta = ControladorVentas::ctrMostrarVentas($itemVenta, $valorVenta);
         if($respuestaVenta!=null){
-        $fecha = date('d/m/Y H:i', strtotime($respuestaVenta["fecha"]));
+        $fecha = date('d-m-Y h:i:s a', strtotime($respuestaVenta["fecha"]));
         $productos = ControladorVentas::ctrMostrarDetalleVentas($respuestaVenta['id']);
 
         $total = number_format($respuestaVenta["total"], 2);
@@ -81,10 +81,11 @@ class imprimirFactura
         $html = '<table border="0" cellpadding="1" style="font-size: 9px; padding:0px;text-align:center; ">
             <tbody>
             <tr>
-                <td>
-                    <strong>COMANDA</strong><br>
-                    <span style="font-size: 12px;font-weight: bold;">' . $valorVenta . '</span>
-                </td>
+               <td>
+    <strong>&lt;&lt; COMANDA &gt;&gt;</strong><br>
+    <span style="font-size: 13px; font-weight: bold;">' . $valorVenta . '</span>
+</td>
+
             </tr>
             <tbody>
         </table>
@@ -108,7 +109,7 @@ class imprimirFactura
                 <td width="72%">' . $respuestaMesero["nombre"] . '</td>
             </tr>
             <tr >
-                <td width="25%"><strong>FECHA</strong></td>
+                <td width="25%"><strong>FECHA </strong></td>
                 <td width="3%"><strong>:</strong></td>
                 <td width="72%">' . $fecha . '</td>
             </tr>
@@ -169,7 +170,7 @@ class imprimirFactura
                 <td>
                     <strong>SISTEMA POS</strong><br>
                     <strong>Ticket de Venta: </strong>' . $valorVenta . '<br>
-                    <strong>Fecha: </strong>' . $fecha . '
+                    <strong>Fecha y Hora: </strong>' . $fecha . '
                 </td>
             </tr>
             <tbody>

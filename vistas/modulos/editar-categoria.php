@@ -1,10 +1,10 @@
 <div class="content-wrapper text-uppercase">
     <!-- Header -->
     <section class="content-header">
-        <h1>AGREGAR CATEGORÍA</h1> </strong>
+        <h1>EDITAR CATEGORIA</h1> </strong>
         <ol class="breadcrumb">
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            <li class="active">AGREGAR CATEGORÍA</li>
+            <li class="active">EDITAR CATEGORÍA</li>
         </ol>
     </section>
 
@@ -16,7 +16,20 @@
                     <!-- Entrada para el nombre -->
                     <div class="form-group">
                     <h4 for="nuevaCategoria"><strong>Nombre</strong></h4>
-                        <input type="text" class="form-control input-lg" name="nuevaCategoria" id="nuevaCategoria" placeholder="" required>
+                    <input type="text" class="form-control input-lg" name="editarCategoria" id="editarCategoria" required>
+
+                <input type="hidden" name="idCategoria" id="idCategoria" required>
+                <h1>
+                        <?php
+                        if (isset($_GET['id'])) {
+                            echo $_GET['id'];
+                        } else {
+                            echo 'ID no proporcionado';
+                        }
+                        ?>
+                    </h1>
+
+
                     </div>
 
                     <!-- Botones -->
@@ -28,8 +41,8 @@
                    
                     <!-- Controlador para crear la categoría -->
                     <?php
-                    $crearCategoria = new ControladorCategorias();
-                    $crearCategoria->ctrCrearCategoria();
+                 $editarCategoria = new ControladorCategorias();
+                 $editarCategoria->ctrEditarCategoria();
                     ?>
                 </form>
             </div><!-- /.box-body -->

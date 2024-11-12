@@ -23,7 +23,7 @@
 
 				<a href="usuarios">
 
-					<i class="fa fa-users"></i>
+					<i class="fa fa-user"></i>
 					<span>Usuarios</span>
 
 				</a>
@@ -64,7 +64,7 @@
 
 				<a href="clientes">
 			
-				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAC9UlEQVR4nN2SX0hTURzHpYdekwIDY2gaYlIPCunm/nXOdJv7U0qZosyykIpCTSIxpa0sYul271zmMrDl7jTTTWXpMmFSPuST66F/GpRCQb0UlaSm2y/uncs1HdPlUwe+3HN+9/D5/M7hREX99wNjnIsxfoIQmsEYA0JoZCPhahoaHITQBMa48J/gCCEBxti7mmApXoSQLGKBXIofBgJL87PAXCeB9xY586VreXI8GrFAJsE/AqHgVP4Vui6T4JmIBRgjbzA0OCKMvBHBwZ68TSFFv8IJFFI8Dw9Stq5bMNeZVDVt5jIQN8Fl4ocGrqfNmTDXsetcRCfwOIR94U7g6Rf0RnQCRjKoZIcTwCN5Or2X08CJYev5aeuXOJUDf2BfXvriXw8qHP59GXqeKZMQeNg6bjstW7tgOH8L9AknV3TeL5yg/zFwQrBbYBQt3B5vBdwshkyC/zNDx6tOUadsXpukJUoDd6MBOhIArAkAbdFA15a75zovOGvA+qoTLrvqQTvaAFxSCByCLwkLN3R0p7r7a+8xXbfH+uJUwvO+i2Yd1buX08gTiU0KOD9QDdef3mAkNUO1kFq/b3b70bj4kOAma08yYbG7SMoOBsr+aXFh3kOSJGi1WlhcmPfSNYKygcgg+57TqgC2ngccPR/qR66BqFkMO08mQawq3rUqnKB6BARl+0bD/XG/mRyrrKwEOu7Xk2N07ewdNRwyF4DQiBkBnSPtRbCnNhV2lMRNsUpYiSvgDe22GJKyfw6Ek5QdTN0Od3l5OVRUVDDzRst94BMIiGdNUDNUB/uNWXDVmgenTBhYJxLfxR5LZK3evcWmCYaTSykoVs0WFqtmCYvNe9xUBaVdZcyd03k83gTepRf2tiv7TMi7Jyz28VACje7mtFpnnKLnxS2nIeuWFLJbckDjugIfhlXLT3hAiUMKSMr2NZSApGwzvvjWl8wtIDYo4WDbYfjoOOAXDIWERzTUUZsydLyyIkP6C09PmgWGc7dtrGAN4zeoM5VWsonOBQAAAABJRU5ErkJggg==" alt="budget">
+					<i class="fa fa-users"></i>
 
 				<span>Clientes</span>
 				</a>
@@ -90,6 +90,19 @@
 
 				echo '<li>
 
+				<a href="ventas">
+		        <i class="fa fa-money" aria-hidden="true"></i>
+			<span>Ventas Realizadas</span>
+				</a>
+				
+
+			</li>';
+			}
+
+			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
+
+				echo '<li>
+
 				<a href="crear-venta">
 		        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAACVElEQVR4nKWU3UtTcRzGD3TXVXQXXVR/QUQ33kXt1N53nOecba2t2ZKEDNqhF4TooqBASIzIDBZEXbTh1I2aEIjRtpzaTciSMc3QltLL3nUWOffE79RZW7O55gMPz3m+h/Ph9+XAj6LqEK3QNzUbbXMMf/KrZNLJnGpEzaZW1/DzESwvr5RMOplT9YrvxzYhjJ3kWcdbH9y55ywEQmFIJl3HW52bgi6EcFAIY7cQgEcIIiGE0CSX63fpWEsvaz7lotXcD5Kkkzm1mRxBPHQEsCoEgd/uK38vU7GLda8pActgIvAQw+yglVybTM2fOaLkz5P8ZdZ2WNWyh/qXAFx9HK04HdwxfP/0+Uumz/no29++dbs3r+EsuWNq/f4qmN5k6w6NTRSfxCpOB88skEym4PZ4q0zmgz5/Ucdb71cB+ROnJ95OR7ER8NX4JGg1V2Uyj0xHwZrtk1VALW9JZHO5/wZmMlloOUuiAqbRaLbrOOsKALzPAqPxP17IAal0Bu4BX+XKAz6k0xnyCTSsZZUwSkCZgj3Qfu5iEjUU/7i0YRK1nRVSFT+GVvLmru67WdSQZ+gp1tYKcPV7xSRd0o2uniytYg0loIIx3hz0+ddrAaci0ygWi3gzFRGTdEkuj3ddqTddKwHt7Y6e2My7Wjy8eBlCoVDAyGhATNIljY2/Bnfc/kyEHdXy+4Z8/kszs3No1IFQGIzBtiCXG/dSOs463yF05i9fuY6tuEPozBMWxRhsS8lUuua69YgwCEsEfogvVlyejZgwRKDeaBsuv9q34hZjq/8nOt6Ev57j+40AAAAASUVORK5CYII=">
 				<span>CAJA</span>
@@ -99,28 +112,17 @@
 			}
 
 
-			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
-
-				echo '<li>
-
-				<a href="ventas">
-		        <i class="fa fa-money" aria-hidden="true"></i>
-			<span>Ventas Realizadas</span>
-				</a>
-				
-
-			</li>';
-			}
+			
 			
 
 
-			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
+			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Especial") {
 
 				echo '<li class="treeview">
 
 				<a href="#">
 
-		  <i class="fa fa-cart-plus"></i>
+		     <i class="fa fa-cart-plus"></i>
 					
 					<span>Compras</span>
 					
@@ -139,7 +141,7 @@
 						<a href="compras">
 							
 							<i class="fa fa-circle-o"></i>
-							<span>Administrar compras</span>
+							<span>Administrar compra</span>
 
 						</a>
 
@@ -203,7 +205,7 @@
 					<li>
 						<a href="reporte-venta">
 							 <i class="fa fa-calendar"></i> <!-- Cambiado a calendar -->
-							<span>Rpt. Rango Vtas</span>
+							<span>R.De. Venta Por Fecha</span>
 						</a>
 					</li>
 					<li>
@@ -225,19 +227,9 @@
 						</a>
 					</li>
 
-					<li>
-						<a href="reportes">
-							<i class="fa fa-circle-o"></i>
-							<span>Reporte de ventas</span>
-						</a>
-					</li>
+					
 
-					<li>
-						<a href="reporte-compra">
-							<i class="fa fa-circle-o"></i>
-								<span>Reporte de compras</span>
-						</a>
-					</li>
+				
 
 				
 
@@ -267,7 +259,37 @@
 					</li>';
 				}
 
+				
+				if ($_SESSION["perfil"] == "Administrador") {
 
+					echo '<li>
+
+					<a href="reporte-compra">
+							 <i class="fa fa-circle-o"></i>
+							<span>Reporte de compras</span>
+						</a>
+
+					</li>';
+				}
+
+
+				if ($_SESSION["perfil"] == "Administrador") {
+
+					echo '<li>
+
+				<a href="reportes">
+							<i class="fa fa-circle-o"></i>
+						
+							<span>Reporte de ventas</span>
+						</a>
+
+					</li>';
+				}
+
+
+			
+
+			
 
 				echo '</ul>
 

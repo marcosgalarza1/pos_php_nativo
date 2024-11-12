@@ -23,9 +23,11 @@
                     <div class="text-right">
                     <button type="submit" class="btn btn-success btn-sm" >GUARDAR</button>&nbsp;
                         <a href="categorias" class="btn btn- btn-sm" style="background:#6c757d; color:white">REGRESAR</a>
+                        <img src="vistas/img/plantilla/cas.jpg" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
                       <p></p>
-                    </div>
                    
+                    </div>
+                 
                     <!-- Controlador para crear la categoría -->
                     <?php
                     $crearCategoria = new ControladorCategorias();
