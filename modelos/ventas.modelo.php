@@ -415,7 +415,6 @@ class ModeloVentas
 	=============================================*/
 	static public function mdlRangoFechasTopProductoVendidos($tabla, $fechaInicial, $fechaFinal)
 	{
-
 		if ($fechaInicial <= $fechaFinal) {
 
 			// Consulta SQL para obtener las ventas en el rango de fechas

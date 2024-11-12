@@ -238,6 +238,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "agregar-proveedor" ||
          $_GET["ruta"] == "editar-categoria" ||
          $_GET["ruta"] == "productos" ||
+         $_GET["ruta"] == "productos-eliminados" ||
          $_GET["ruta"] == "clientes" ||
          $_GET["ruta"] == "meseros" ||
          $_GET["ruta"] == "ventas" ||

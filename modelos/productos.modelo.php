@@ -8,13 +8,14 @@ class ModeloProductos{
 	MOSTRAR PRODUCTOS
 	=============================================*/
 
-	static public function mdlMostrarProductos($tabla, $item, $valor, $orden){
+	static public function mdlMostrarProductos($tabla, $item, $valor, $orden, $estado=1){
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND estado=:estado  ORDER BY id DESC");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":estado", $estado, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -22,8 +23,8 @@ class ModeloProductos{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY $orden DESC");
-
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE estado=:estado ORDER BY $orden DESC");
+			$stmt -> bindParam(":estado", $estado, PDO::PARAM_STR);
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -103,7 +104,32 @@ class ModeloProductos{
 
 	static public function mdlEliminarProducto($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado=0 WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+	/*=============================================
+	RESTAURAR PRODUCTO
+	=============================================*/
+
+	static public function mdlRestaurarProducto($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado=1 WHERE id = :id");
 
 		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 
@@ -179,10 +205,10 @@ class ModeloProductos{
 
 		$query = "SELECT productos.*, c.categoria AS categoria
 		FROM $tabla 
-		JOIN categorias AS c ON productos.id_categoria=c.id";
+		JOIN categorias AS c ON productos.id_categoria=c.id WHERE productos.estado=1";
 
 		// Añadir la condición del proveedor si $idProveedor no es 0
-		$query .= ($idCategoria == 0) ? "" : " WHERE  c.id = $idCategoria";
+		$query .= ($idCategoria == 0) ? "" : " AND  c.id = $idCategoria";
 
 		$stmt = Conexion::conectar()->prepare($query);
 
@@ -197,7 +223,7 @@ class ModeloProductos{
 	static public function mdlProductoFaltantePdf($tabla)
 	{
 
-		$query = "SELECT * FROM $tabla WHERE productos.stock<=0";
+		$query = "SELECT * FROM $tabla WHERE productos.stock<=0 AND estado=1";
 
 
 		$stmt = Conexion::conectar()->prepare($query);

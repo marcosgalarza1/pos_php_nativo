@@ -6,11 +6,11 @@ class ControladorProductos{
 	AQUI SE MOSTRARRA EL PRODUCTOOOOOOOOO
 	=============================================*/
 
-	static public function ctrMostrarProductos($item, $valor,$orden){
+	static public function ctrMostrarProductos($item, $valor,$orden, $estado=1){
 
 		$tabla = "productos";
 
-		$respuesta = ModeloProductos::mdlMostrarProductos($tabla, $item, $valor,$orden);
+		$respuesta = ModeloProductos::mdlMostrarProductos($tabla, $item, $valor,$orden,$estado);
 
 		return $respuesta;
 
@@ -321,12 +321,12 @@ class ControladorProductos{
 			$tabla ="productos";
 			$datos = $_GET["idProducto"];
 
-			if($_GET["imagen"] != "" && $_GET["imagen"] != "vistas/img/productos/default/anonymous.png"){
+			// if($_GET["imagen"] != "" && $_GET["imagen"] != "vistas/img/productos/default/anonymous.png"){
 
-				unlink($_GET["imagen"]);
-				rmdir('vistas/img/productos/'.$_GET["codigo"]);
+			// 	unlink($_GET["imagen"]);
+			// 	rmdir('vistas/img/productos/'.$_GET["codigo"]);
 
-			}
+			// }
 
 			$respuesta = ModeloProductos::mdlEliminarProducto($tabla, $datos);
 
@@ -355,6 +355,43 @@ class ControladorProductos{
 
 	}
 
+	/*=============================================
+	RESTAURAR PRODUCTO
+	=============================================*/
+	static public function ctrRestaurarProducto(){
+
+		if(isset($_GET["idProductoRestaurar"])){
+
+			$tabla ="productos";
+			$datos = $_GET["idProductoRestaurar"];
+
+
+			$respuesta = ModeloProductos::mdlRestaurarProducto($tabla, $datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El producto ha sido Restaurando correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+					  	if (result.value) {
+
+								window.location = "productos";
+
+								}
+					  })
+
+				</script>';
+
+			}		
+		}
+
+
+	}
 
 	/*=============================================
 	MOSTRAR SUMA VENTAS

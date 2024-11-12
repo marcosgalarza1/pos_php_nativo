@@ -13,7 +13,7 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <form role="form" method="post">
+                <form role="form" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <!-- ENTRADA PARA EL NOMBRE -->
                         <div class="col-md-6">
