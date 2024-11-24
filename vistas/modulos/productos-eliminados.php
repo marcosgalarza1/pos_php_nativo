@@ -43,10 +43,11 @@ if ($_SESSION["perfil"] == "Vendedor") {
       <div class="box-header with-border">
    
 
-        <a class="btn btn-primary" href="productos">
-          <i class="material-icons"></i>
-          <span class="icon-name"> Volver </span>
-        </a>
+      <a class="btn btn-primary" href="productos">
+  <i class="fa fa-arrow-left"></i>
+  <span>Volver</span>
+</a>
+
 
       </div>
 

@@ -37,22 +37,24 @@ class ModeloMeseros{
 	MOSTRAR MESEROS
 	=============================================*/
 
-	static public function mdlMostrarMeseros($tabla, $item, $valor){
+	//segundo paso  
+	static public function mdlMostrarMeseros($tabla, $item, $valor,$estado){
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC ");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item  AND estado=:estado ORDER BY id DESC ");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":estado",$estado,  PDO::PARAM_STR);
 
 			$stmt -> execute();
 
 			return $stmt -> fetch();
 
 		}else{
-
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC ");
-
+	//segundo paso 
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE estado=:estado ORDER BY id DESC ");
+			$stmt -> bindParam(":estado",$estado,  PDO::PARAM_STR);
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -64,6 +66,44 @@ class ModeloMeseros{
 		$stmt = null;
 
 	}
+
+	/*=============================================
+	MOSTRAR MESEROS
+	=============================================*/
+
+	//segundo paso  
+	static public function mdlMostrarMeserosActivoInactivo($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item   ORDER BY id DESC ");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+	//segundo paso 
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC ");
+		
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
+
+
 
 
 	/*=============================================
@@ -101,9 +141,42 @@ class ModeloMeseros{
 	ELIMINAR MESERO
 	=============================================*/
 
+	//cuarto paso
+
 	static public function mdlEliminarMesero($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE  $tabla SET estado=0 WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
+
+
+	/*=============================================
+	RESTAURAR MESERO
+	=============================================*/
+
+	//quinto paso
+
+	static public function mdlRestaurarMesero($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE  $tabla SET estado=1 WHERE id = :id");
 
 		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 

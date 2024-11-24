@@ -49,22 +49,21 @@ if ($_SESSION["perfil"] == "Vendedor") {
         </button> -->
 
         <a href="agregar-producto" class="btn btn-primary">
+        <i class="fa fa-plus"></i>
           Agregar Producto
         </a>
         &nbsp;
 
         <a class="btn btn-primary" target="_blank" href="reporte_producto.php">
-          <i class="material-icons"></i>
+        <i class="fa fa-print"></i>
           <span class="icon-name"> Imprimir </span>
         </a>
         &nbsp;
 
-        <a class="btn btn-danger"  href="productos-eliminados">
-          <i class="material-icons"></i>
-          <span class="icon-name"> Eliminados </span>
-        </a>
-
-      </div>
+        <a class="btn btn-danger" href="productos-eliminados">
+    <i class="fa fa-trash"></i>
+    <span> Eliminados </span>
+</a>
 
       <div class="box-body">
 

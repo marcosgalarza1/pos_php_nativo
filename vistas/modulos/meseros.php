@@ -43,6 +43,7 @@ if($_SESSION["perfil"] == "Especial"){
                 <?php
        if($_SESSION["perfil"] ==  'Administrador') {
             echo '<a href="agregar-mesero" class="btn btn-primary">
+                <i class="fa fa-plus"></i>
                 Agregar Meseros
             </a>';
         }
@@ -50,10 +51,21 @@ if($_SESSION["perfil"] == "Especial"){
 
 
 
+&nbsp;
+
         <a class="btn btn-primary" target="_blank" href="reporte_mesero.php">
+        <i class="fa fa-print"></i>
             <i class="material-icons"></i>
+            
             <span class="icon-name"> Imprimir </span>
               </a>
+
+
+              &nbsp;
+              <a class="btn btn-danger" href="meseros-eliminados">
+            <i class="fa fa-trash"></i>
+            <span> Eliminados </span>
+        </a>
 
       </div>
 
@@ -266,4 +278,9 @@ MODAL EDITAR Mesero
 <?php
   $eliminarMesero = new ControladorMeseros();
   $eliminarMesero -> ctrEliminarMesero();
+
+
+  //sexto paso
+  $RestaurarMesero = new ControladorMeseros();
+  $RestaurarMesero -> ctrRestaurarMesero();
 ?>

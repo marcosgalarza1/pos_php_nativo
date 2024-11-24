@@ -75,15 +75,35 @@ class ControladorMeseros{
 
 	}
 
+
+	//primer paso 
 	/*=============================================
 	MOSTRAR MESEROS
 	=============================================*/
 
-	static public function ctrMostrarMeseros($item, $valor){
+	static public function ctrMostrarMeseros($item, $valor,$estado=1){
 
 		$tabla = "meseros";
 
-		$respuesta = ModeloMeseros::mdlMostrarMeseros($tabla, $item, $valor);
+		$respuesta = ModeloMeseros::mdlMostrarMeseros($tabla, $item, $valor,$estado);
+
+		return $respuesta;
+
+	}
+
+
+
+
+		//primer paso 
+	/*=============================================
+	MOSTRAR MESEROS
+	=============================================*/
+
+	static public function ctrMostrarMeserosActivoInactivo($item, $valor){
+
+		$tabla = "meseros";
+
+		$respuesta = ModeloMeseros::mdlMostrarMeserosActivoInactivo($tabla, $item, $valor);
 
 		return $respuesta;
 
@@ -184,6 +204,53 @@ class ControladorMeseros{
 				swal({
 					  type: "success",
 					  title: "El Mesero ha sido borrado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "meseros";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	}
+
+
+
+
+
+
+
+   //tercer paso
+
+
+   /*=============================================
+	RESTAURAR MESERO
+	=============================================*/
+
+	static public function ctrRestaurarMesero(){
+
+		if(isset($_GET["idMeseroRestaurar"])){
+
+			$tabla ="meseros";
+			$datos = $_GET["idMeseroRestaurar"];
+
+			$respuesta = ModeloMeseros::mdlRestaurarMesero($tabla, $datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El Mesero ha sido Restaurado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){

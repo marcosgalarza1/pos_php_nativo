@@ -25,6 +25,7 @@ class ControladorUsuarios{
 				$valor = $_POST["ingUsuario"];
 
 				$respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
+
 				
 				if ($respuesta && is_array($respuesta)) {
 
@@ -295,14 +296,34 @@ class ControladorUsuarios{
 	MOSTRAR USUARIO
 	=============================================*/
 
-	static public function ctrMostrarUsuarios($item, $valor){
+	static public function ctrMostrarUsuarios($item, $valor,$activo=1,){
 
 		$tabla = "usuarios";
+	
+		$respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor, $activo);
 
-		$respuesta = ModeloUsuarios::MdlMostrarUsuarios($tabla, $item, $valor);
+	
 
 		return $respuesta;
 	}
+
+
+	/*=============================================
+	MOSTRAR USUARIO
+	=============================================*/
+
+	static public function ctrMostrarUsuariosActivoInactivo($item, $valor){
+
+		$tabla = "usuarios";
+	
+		$respuesta = ModeloUsuarios::mdlMostrarUsuariosActivosInactivos($tabla, $item, $valor);
+
+	
+
+		return $respuesta;
+	}
+
+
 
 	/*=============================================
 	EDITAR USUARIO
@@ -496,12 +517,12 @@ class ControladorUsuarios{
 			$tabla ="usuarios";
 			$datos = $_GET["idUsuario"];
 
-			if($_GET["fotoUsuario"] != ""){
+		/* 	if($_GET["fotoUsuario"] != ""){
 
 				unlink($_GET["fotoUsuario"]);
 				rmdir('vistas/img/usuarios/'.$_GET["usuario"]);
 
-			}
+			} */
 
 			$respuesta = ModeloUsuarios::mdlBorrarUsuario($tabla, $datos);
 
@@ -531,7 +552,49 @@ class ControladorUsuarios{
 	}
 
 
+
+
+/*=============================================
+	RESTAURAR USUARIO
+	=============================================*/
+
+	static public function ctrRestaurarUsuario(){
+
+		if(isset($_GET["idUsuarioRestaurar"])){
+
+			$tabla ="usuarios";
+			$datos = $_GET["idUsuarioRestaurar"];
+
+	
+			$respuesta = ModeloUsuarios::mdlRestaurarUsuario($tabla, $datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El usuario ha sido Restaurado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "usuarios";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	}
+
 }
+
 	
 
 

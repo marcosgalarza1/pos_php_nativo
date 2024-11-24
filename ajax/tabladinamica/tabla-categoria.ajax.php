@@ -19,6 +19,7 @@ class TablaCategorias
 
         $datosJson = '{
             "data": [';
+            if (count($categorias) > 0) {
 
             for ($i = 0; $i < count($categorias); $i++) {
       
@@ -49,7 +50,7 @@ class TablaCategorias
     
     
                 $datosJson = substr($datosJson, 0, -1);
-    
+            }
                 $datosJson .= ']
             }';
                 echo $datosJson;

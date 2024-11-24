@@ -85,7 +85,7 @@ $pdf->SetFont("Arial", "", 9);
 $anchoColumna = array(60, 40); // Ancho de cada columna
 
 // Ejecutar la consulta y agregar los datos al PDF
-$sql = "SELECT nombre, fecha FROM clientes";
+$sql = "SELECT nombre, fecha FROM clientes WHERE estado=1 ";
 if ($resultado = $mysqli->query($sql)) {
     while ($fila = $resultado->fetch_assoc()) {
         if ($pdf->GetY() > 250) { // Verifica si la posición Y está cerca del final de la página

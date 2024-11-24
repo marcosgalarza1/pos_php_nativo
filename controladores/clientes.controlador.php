@@ -71,11 +71,26 @@ class ControladorClientes{
 	MOSTRAR CLIENTES
 	=============================================*/
 
-	static public function ctrMostrarClientes($item, $valor){
+	static public function ctrMostrarClientes($item, $valor,$estado=1){
 
 		$tabla = "clientes";
 
-		$respuesta = ModeloClientes::mdlMostrarClientes($tabla, $item, $valor);
+		$respuesta = ModeloClientes::mdlMostrarClientes($tabla, $item, $valor,$estado);
+
+		return $respuesta;
+
+	}
+
+
+   /*=============================================
+	MOSTRAR CLIENTES
+	=============================================*/
+
+	static public function ctrMostrarClientesActivoInactivos($item, $valor){
+
+		$tabla = "clientes";
+
+		$respuesta = ModeloClientes::mdlMostrarClientesActivoInactivo($tabla, $item, $valor);
 
 		return $respuesta;
 
@@ -170,6 +185,44 @@ class ControladorClientes{
 				swal({
 					  type: "success",
 					  title: "El Cliente ha sido borrado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "clientes";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	}
+
+	/*=============================================
+	RESTAURAR CLIENTE
+	=============================================*/
+
+	static public function ctrRestaurarCliente(){
+
+		if(isset($_GET["idClienteRestaurar"])){
+
+			$tabla ="clientes";
+			$datos = $_GET["idClienteRestaurar"];
+
+			$respuesta = ModeloClientes::mdlRestaurarCliente($tabla, $datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El Cliente ha sido Restaurado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){

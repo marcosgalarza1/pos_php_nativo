@@ -2,7 +2,15 @@
 
 <div class="login-box">
   <div class="login-logo">
-    <img src="vistas/img/plantilla/logo-blanco-bloque.png" class="img-responsive" style="padding:10px 50px 0px 50px">
+
+  
+  <!-- este login sera para cabañas el gallito camba -->
+    
+<!--   <img src="vistas/img/plantilla/logo-blanco-bloque2.png" class="img-responsive" style="padding:30px 100px 0px 100px"> -->
+
+
+  <!-- este login sera para pollos rossyy -->
+     <img src="vistas/img/plantilla/logo-blanco-bloque.png" class="img-responsive" style="padding:10px 50px 0px 50px"> 
   </div>
   
   <p class="login-box-msg">¡ BIENVENIDO  INGRESA TU CUENTA !</p>

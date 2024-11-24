@@ -22,9 +22,9 @@ class TablaProductosVentas{
 		}
 
 		
-		 date_default_timezone_set('America/La_Paz');
-       /*  $ventas=ControladorVentas::ctrRangoFechasVentas($fechaInicial,$fechaFinal); */
-	   $ventas = ControladorVentas::ctrRangoFechasVentasRealizadas($fechaInicial,$fechaFinal);
+		date_default_timezone_set('America/La_Paz');
+
+	   	$ventas = ControladorVentas::ctrRangoFechasVentasRealizadas($fechaInicial,$fechaFinal);
 	
 		
   		if(count($ventas) == 0){

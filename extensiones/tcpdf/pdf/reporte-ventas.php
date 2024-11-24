@@ -44,7 +44,7 @@ class reporteVenta
 
         $itemUsuario = "id";
 
-        $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $idUsuario);
+        $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuariosActivoInactivo($itemUsuario, $idUsuario);
 
         //TRAEMOS LA INFORMACIÓN DEL VENDEDOR
 
@@ -52,17 +52,17 @@ class reporteVenta
         // $valorVendedor = $respuestaVentas["id_proveedor"];
 
         if ($idMesero != 0) {
-            $respuestaMesero = ControladorMeseros::ctrMostrarMeseros($itemMesero, $idMesero);
+            $respuestaMesero = ControladorMeseros::ctrMostrarMeserosActivoInactivo($itemMesero, $idMesero);
         } else {
             $respuestaMesero["nombre"] = "Todos";
         }
         if ($idCategoria != 0) {
-            $respuestaCategoria = ControladorCategorias::ctrMostrarCategorias("id", $idCategoria);
+            $respuestaCategoria = ControladorCategorias::ctrMostrarCategoriasActivasInactivas("id", $idCategoria);
         } else {
             $respuestaCategoria["categoria"] = "Todos";
         }
         if ($idCliente != 0) {
-            $respuestaCliente = ControladorClientes::ctrMostrarClientes("id", $idCliente);
+            $respuestaCliente = ControladorClientes::ctrMostrarClientesActivoInactivos("id", $idCliente);
         } else {
             $respuestaCliente["nombre"] = "Todos";
         }

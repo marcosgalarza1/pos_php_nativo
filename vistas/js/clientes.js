@@ -90,3 +90,33 @@ $("#nuevoCliente").change(function () {
   })
 })
 
+/*=============================================
+RESTAURAR CLIENTE
+=============================================*/
+$(".tablasclienteEliminados").on("click", ".btnRestaurarCliente", function(){
+
+	var idCliente = $(this).attr("idCliente");
+	
+	swal({
+        title: '¿Está seguro de Restaurar al Cliente?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, Restaurar al Cliente!'
+      }).then(function(result){
+        if (result.value) {
+          
+            window.location = "index.php?ruta=clientes&idClienteRestaurar="+idCliente;
+           
+        }
+
+  })
+
+})
+
+
+
+

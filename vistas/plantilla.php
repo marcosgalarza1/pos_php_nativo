@@ -239,9 +239,15 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "editar-categoria" ||
          $_GET["ruta"] == "productos" ||
          $_GET["ruta"] == "productos-eliminados" ||
+         $_GET["ruta"] == "usuarios-eliminados" ||
+         $_GET["ruta"] == "categorias-eliminados" ||
+         $_GET["ruta"] == "clientes-eliminados" ||
+         $_GET["ruta"] == "meseros-eliminados" ||
+         $_GET["ruta"] == "proveedor-eliminados" ||
          $_GET["ruta"] == "clientes" ||
          $_GET["ruta"] == "meseros" ||
          $_GET["ruta"] == "ventas" ||
+         $_GET["ruta"] == "ventas-eliminadas" ||
          $_GET["ruta"] == "crear-venta" ||
          $_GET["ruta"] == "editar-venta" ||
          $_GET["ruta"] == "compras" ||

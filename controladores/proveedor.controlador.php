@@ -76,11 +76,11 @@ class ControladorProveedors{
 	MOSTRAR PROVEEDOR
 	=============================================*/
 
-	static public function ctrMostrarProveedors($item, $valor){
+	static public function ctrMostrarProveedors($item, $valor,$estado=1){
 
 		$tabla = "proveedor";
 
-		$respuesta = ModeloProveedors::mdlMostrarProveedors($tabla, $item, $valor);
+		$respuesta = ModeloProveedors::mdlMostrarProveedors($tabla, $item, $valor,$estado);
 
 		return $respuesta;
 
@@ -195,6 +195,56 @@ class ControladorProveedors{
 		}
 
 	}
+
+
+
+	/*=============================================
+	ELIMINAR PROVEEDOR
+	=============================================*/
+
+	static public function ctrRestaurarProveedor(){
+
+		if(isset($_GET["idProveedorRestaurar"])){
+
+			$tabla ="proveedor";
+			$datos = $_GET["idProveedorRestaurar"];
+
+			$respuesta = ModeloProveedors::mdlRestaurarProveedor($tabla, $datos);
+
+			if($respuesta == "ok"){
+
+				echo'<script>
+
+				swal({
+					  type: "success",
+					  title: "El proveedor ha sido Restaurado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result){
+								if (result.value) {
+
+								window.location = "proveedor";
+
+								}
+							})
+
+				</script>';
+
+			}		
+
+		}
+
+	}
+
+
+
+
+
+
+
+
+
 
 }
 

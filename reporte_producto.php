@@ -74,7 +74,7 @@ $tablaAncho = 180; // Ancho total de la tabla en mm
 $anchoColumna = array(20, 70, 15, 25, 20, 35); // Ancho de cada columna
 
 // Ejecutar la consulta y agregar los datos al PDF
-$sql = "SELECT id, codigo, descripcion, imagen, stock, precio_venta, ventas, fecha FROM productos";
+$sql = "SELECT id, codigo, descripcion, imagen, stock, precio_venta, ventas, fecha FROM productos  WHERE estado=1";
 if ($resultado = $mysqli->query($sql)) {
     while ($fila = $resultado->fetch_assoc()) {
         // Verificar si el espacio en la página es suficiente para la fila

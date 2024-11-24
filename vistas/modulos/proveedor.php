@@ -51,13 +51,22 @@ if($_SESSION["perfil"] == "vendedor"){
         </button> -->
 
         <a href="agregar-proveedor" class="btn btn-primary">
+        <i class="fa fa-plus"></i>
        Agregar Proveedor
        </a>
       &nbsp;
         <a class="btn btn-primary" target="_blank" href="reporte_proveedor.php">
                                        <i class="material-icons"></i>
+                                       <i class="fa fa-print"></i>
                                       <span class="icon-name"> Imprimir </span>
                                     </a>
+
+       &nbsp;
+
+      <a class="btn btn-danger" href="proveedor-eliminados">
+      <i class="fa fa-trash"></i>
+      <span> Eliminados </span>
+      </a>
 
       </div>
 
@@ -358,7 +367,8 @@ MODAL EDITAR PROVEEDOR
 
   $eliminarProveedor = new ControladorProveedors();
   $eliminarProveedor -> ctrEliminarProveedor();
-
+  $RestaurarProveedor = new ControladorProveedors();
+  $RestaurarProveedor -> ctrRestaurarProveedor();
 ?>
 
 

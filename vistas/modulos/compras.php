@@ -44,6 +44,7 @@ if($_SESSION["perfil"] == "Especial"){
         <a href="crear-compra">
 
           <button class="btn btn-primary">
+          <i class="fa fa-plus"></i>
             Agregar compra
           </button>
           </a>

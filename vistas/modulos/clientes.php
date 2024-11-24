@@ -40,15 +40,24 @@ if($_SESSION["perfil"] == "Especial"){
       <!--   <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">
           Agregar Meseros
         </button> -->
-    <!--     <a href="agregar-cliente" class="btn btn-primary">
+       <a href="agregar-cliente" class="btn btn-primary">
        Agregar Cliente
        </a>
-      &nbsp; -->
+      &nbsp; 
 
         <a class="btn btn-primary" target="_blank" href="reporte_cliente.php">
             <i class="material-icons"></i>
+            <i class="fa fa-print"></i>
             <span class="icon-name"> Imprimir </span>
               </a>
+
+
+          &nbsp;
+      <a class="btn btn-danger" href="clientes-eliminados">
+       <i class="fa fa-trash"></i>
+       <span> Eliminados </span>
+        </a>
+
 
       </div>
 
@@ -59,7 +68,7 @@ if($_SESSION["perfil"] == "Especial"){
               <th style="width:10px">#</th>
               <th>Nombre</th>
               <th>Fecha</th>
-              <th width="1%">Acciones</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
@@ -167,4 +176,8 @@ MODAL EDITAR Cliente
 <?php
   $eliminarCliente = new ControladorClientes();
   $eliminarCliente -> ctrEliminarCliente();
+
+  $RestaurarCliente = new ControladorClientes();
+  $RestaurarCliente -> ctrRestaurarCliente();
+  
 ?>

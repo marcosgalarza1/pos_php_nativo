@@ -91,3 +91,37 @@ $("#nuevaCategoria").change(function () {
 
 	})
 })
+
+
+
+
+/*=============================================
+RESTAURAR CATEGORIA
+=============================================*/
+$(".tablascategoriaEliminados").on("click", ".btnRestaurarCategoria", function () {
+
+	var idCategoria = $(this).attr("idCategoria");
+
+	swal({
+		title: '¿Está seguro de Restaurar la categoría?',
+		text: "¡Si no lo está puede cancelar la acción!",
+		type: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Cancelar',
+		confirmButtonText: 'Si, Restaurar categoría!'
+	}).then(function (result) {
+
+		if (result.value) {
+			window.location = "index.php?ruta=categorias&idCategoriaRestaurar=" + idCategoria;
+			
+
+
+			w
+
+		}
+
+	})
+
+})

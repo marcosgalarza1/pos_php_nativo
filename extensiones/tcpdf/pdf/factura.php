@@ -40,17 +40,21 @@ class imprimirFactura
         // Obtener información del cliente
         $itemCliente = "id";
         $valorCliente = $respuestaVenta["id_cliente"];
-        $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
+        $respuestaCliente = ControladorClientes::ctrMostrarClientesActivoInactivos($itemCliente, $valorCliente);
 
         // Obtener información del mesero
+        
         $itemMesero = "id";
         $valorMesero = $respuestaVenta["id_mesero"];
-        $respuestaMesero = ControladorMeseros::ctrMostrarMeseros($itemMesero, $valorMesero);
+
+        $respuestaMesero = ControladorMeseros::ctrMostrarMeserosActivoInactivo($itemMesero, $valorMesero);
 
         // Obtener información del vendedor
         $itemVendedor = "id";
         $valorVendedor = $respuestaVenta["id_vendedor"];
-        $respuestaVendedor = ControladorUsuarios::ctrMostrarUsuarios($itemVendedor, $valorVendedor);
+        $respuestaVendedor = ControladorUsuarios::ctrMostrarUsuariosActivoInactivo($itemVendedor, $valorVendedor);
+
+
 
         // Configuración del PDF para impresora térmica
         require_once('tcpdf_include.php');
@@ -82,9 +86,9 @@ class imprimirFactura
             <tbody>
             <tr>
                <td>
-    <strong>&lt;&lt; COMANDA &gt;&gt;</strong><br>
-    <span style="font-size: 13px; font-weight: bold;">' . $valorVenta . '</span>
-</td>
+                <strong>&lt;&lt; COMANDA &gt;&gt;</strong><br>
+                <span style="font-size: 13px; font-weight: bold;">' . $valorVenta . '</span>
+            </td>
 
             </tr>
             <tbody>

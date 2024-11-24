@@ -36,22 +36,22 @@ class ModeloProveedors{
 	MOSTRAR PROVEEDOR
 	=============================================*/
 
-	static public function mdlMostrarProveedors($tabla, $item, $valor){
+	static public function mdlMostrarProveedors($tabla, $item, $valor,$estado){
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC ");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND estado=:estado ORDER BY id DESC ");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
-
+			$stmt -> bindParam(":estado",$estado, PDO::PARAM_STR);
 			$stmt -> execute();
 
 			return $stmt -> fetch();
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC ");
-
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  WHERE estado=:estado ORDER BY id DESC ");
+			$stmt -> bindParam(":estado",$estado, PDO::PARAM_STR);
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -99,7 +99,7 @@ class ModeloProveedors{
 
 	static public function mdlEliminarProveedor($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE  $tabla SET estado=0 WHERE id = :id");
 
 		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 
@@ -118,6 +118,34 @@ class ModeloProveedors{
 		$stmt = null;
 
 	}
+
+		/*=============================================
+	RESTAURAR PROVEEDOR
+	=============================================*/
+
+	static public function mdlRestaurarProveedor($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE  $tabla SET estado=1 WHERE id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
 
 	/*=============================================
 	ACTUALIZAR PROVEEDOR

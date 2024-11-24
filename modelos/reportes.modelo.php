@@ -11,10 +11,10 @@ class ModeloReportes{
     static public function mdlObtenerMesAnioGanancias($year_actual){
 
         // Preparar la consulta de meses
-        $meses = Conexion::conectar()->prepare("SELECT DISTINCT MONTH(fecha) AS mes FROM ventas ORDER BY fecha ASC");
+        $meses = Conexion::conectar()->prepare("SELECT DISTINCT MONTH(fecha) AS mes FROM ventas WHERE ventas.estado=1 ORDER BY fecha ASC ");
     
         // Preparar la consulta de años
-        $years = Conexion::conectar()->prepare("SELECT DISTINCT YEAR(fecha) AS years FROM ventas WHERE YEAR(fecha) >= '2000' AND YEAR(fecha) <= :year_actual ORDER BY fecha ASC");
+        $years = Conexion::conectar()->prepare("SELECT DISTINCT YEAR(fecha) AS years FROM ventas WHERE YEAR(fecha) >= '2000' AND YEAR(fecha) <= :year_actual AND ventas.estado=1 ORDER BY fecha ASC");
     
         // Bindear el parámetro del año actual
         $years->bindParam(':year_actual', $year_actual, PDO::PARAM_INT);
@@ -38,11 +38,11 @@ class ModeloReportes{
 	RANGO FECHAS
 	=============================================*/	
 
-	static public function mdlRangoFechasVentas($tabla, $fechaInicial, $fechaFinal){
+	static public function mdlRangoFechasVentas($tabla, $fechaInicial, $fechaFinal, $estado = 1){
 
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $tabla.estado=$estado ORDER BY id ASC");
 
 			$stmt -> execute();
 
@@ -51,7 +51,7 @@ class ModeloReportes{
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%'");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%' AND $tabla.estado=$estado");
 
 			/* $stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR); */
 
@@ -70,14 +70,9 @@ class ModeloReportes{
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
-
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
-
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND $tabla.estado=$estado");
 			}else{
-
-
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
-
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND $tabla.estado=$estado");
 			}
 		
 			$stmt -> execute();
@@ -97,7 +92,7 @@ class ModeloReportes{
 		// Consulta SQL
 		$sql = "SELECT dv.id_venta,v.codigo,DATE(v.fecha) AS fecha,u.usuario as vendedor,c.nombre as mesero,v.total,SUM((p.precio_venta-p.precio_compra)*dv.cantidad) as ganancias
 				FROM detalle_venta as dv
-				JOIN ventas AS v ON dv.id_venta = v.id
+				JOIN ventas AS v ON (dv.id_venta = v.id AND v.estado=1)
 				JOIN productos AS p ON dv.id_producto = p.id
 				JOIN meseros AS c ON v.id_mesero = c.id
 				JOIN usuarios AS u ON v.id_vendedor = u.id
@@ -130,7 +125,7 @@ class ModeloReportes{
 
 	static public function mdlSumaTotalVentas($tabla){	
 
-		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla");
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE $tabla.estado=1");
 
 		$stmt -> execute();
 
@@ -148,7 +143,7 @@ class ModeloReportes{
 	static public function mdlVentasTotalMes($tabla){	
 		$yearactual= date('Y');
 		$mesActual= date('m');
-		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE MONTH(fecha)='$mesActual' AND YEAR(fecha) = '$yearactual'");
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE MONTH(fecha)='$mesActual' AND YEAR(fecha) = '$yearactual' $tabla.estado=1");
 
 		$stmt -> execute();
 
@@ -166,7 +161,7 @@ class ModeloReportes{
 
 	static public function mdlVentasTotalDia($tabla){	
 		$hoy= date('Y-m-d');
-		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE DATE(fecha)='$hoy'");
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE DATE(fecha)='$hoy' AND $tabla.estado=1");
 
 		$stmt -> execute();
 
@@ -185,7 +180,7 @@ class ModeloReportes{
     static public function mdlObtenerGananciasYear($yearIni,$yearFin){
 
 		// Consulta SQL
-		$sql = "SELECT YEAR(v.fecha) AS 'year',MONTH(v.fecha) AS mes,COUNT(v.id) AS cantventas,SUM(total) as ventas,COUNT(DISTINCT v.id_mesero) AS meseros FROM `ventas` as v JOIN meseros AS c ON v.id_mesero = c.id WHERE YEAR(v.fecha) BETWEEN :yearIni AND :yearFin GROUP BY YEAR(v.fecha),MONTH(v.fecha) ORDER BY (v.fecha) ASC;";
+		$sql = "SELECT YEAR(v.fecha) AS 'year',MONTH(v.fecha) AS mes,COUNT(v.id) AS cantventas,SUM(total) as ventas,COUNT(DISTINCT v.id_mesero) AS meseros FROM `ventas` as v JOIN meseros AS c ON v.id_mesero = c.id WHERE YEAR(v.fecha) BETWEEN :yearIni AND :yearFin AND v.estado=1 GROUP BY YEAR(v.fecha),MONTH(v.fecha) ORDER BY (v.fecha) ASC;";
 
         $ganancias = Conexion::conectar()->prepare($sql);
         $ganancias->bindParam(':yearIni', $yearIni, PDO::PARAM_INT);

@@ -44,6 +44,8 @@ class AjaxProductos{
 
       $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor,$orden);
 
+     
+
       echo json_encode($respuesta);
 
 

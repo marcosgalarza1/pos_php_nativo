@@ -41,7 +41,7 @@ class TablaProductosEliminados{
 		  	$item = "id";
 		  	$valor = $productos[$i]["id_categoria"];
 
-		  	$categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+		  	$categorias = ControladorCategorias::ctrMostrarCategoriasActivasInactivas($item, $valor);
 
 		  	/*=============================================
  	 		STOCK

@@ -52,13 +52,23 @@ if ($_SESSION["perfil"] == "Vendedor") {
       </button> -->
 
       <a href="agregar-categoria" class="btn btn-primary">
+      <i class="fa fa-plus"></i>
       Agregar categoría
       </a>
       &nbsp;
       <a class="btn btn-primary" target="_blank" href="reporte_categoria.php">
             <i class="material-icons"></i>
+            <i class="fa fa-print"></i>
             <span class="icon-name"> Imprimir </span>
               </a>
+
+
+              &nbsp;
+              <a class="btn btn-danger" href="categorias-eliminados">
+    <i class="fa fa-trash"></i>
+    <span> Eliminados </span>
+</a>
+
 
       </div>
 
@@ -175,6 +185,9 @@ MODAL EDITAR CATEGORÍA
 <?php
 
 $borrarCategoria = new ControladorCategorias();
-$borrarCategoria->ctrBorrarCategoria();
+$borrarCategoria->ctrBorrarCategoria(); 
+
+$restaurarCategoria = new ControladorCategorias();
+$restaurarCategoria->ctrRestaurarCategoria();
 
 ?>

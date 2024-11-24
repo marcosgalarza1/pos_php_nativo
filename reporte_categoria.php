@@ -72,7 +72,7 @@ $tablaAncho = 185; // Ancho total de la tabla en mm (210 mm - 2 * 10 mm de márg
 $anchoColumna = array(40, 100, 50); // Ancho de cada columna
 
 // Ejecutar la consulta y agregar los datos al PDF
-$sql = "SELECT id, categoria, fecha FROM categorias";
+$sql = "SELECT id, categoria, fecha FROM categorias  WHERE estado=1 ";
 if ($resultado = $mysqli->query($sql)) {
     while ($fila = $resultado->fetch_assoc()) {
 

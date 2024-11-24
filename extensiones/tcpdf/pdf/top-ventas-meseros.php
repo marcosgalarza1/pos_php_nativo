@@ -30,7 +30,7 @@ class reporteTopVentasMeseros
 
         $respuestaVentas = ControladorVentas::ctrRangoFechasVentasTopMeserosPdf($fechaInicio, $fechaFin);
         $itemUsuario = "id";
-        $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $idUsuario);
+        $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuariosActivoInactivo($itemUsuario, $idUsuario);
 
         require_once('tcpdf_include.php');
 

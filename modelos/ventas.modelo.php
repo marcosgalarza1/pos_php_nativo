@@ -203,7 +203,8 @@ class ModeloVentas
 	static public function mdlEliminarVenta($tabla, $datos)
 	{
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+		// $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado=0 WHERE id = :id");
 
 		$stmt->bindParam(":id", $datos, PDO::PARAM_INT);
 
@@ -225,19 +226,19 @@ class ModeloVentas
 	RANGO FECHAS
 	=============================================*/
 
-	static public function mdlRangoFechasVentas($tabla, $fechaInicial, $fechaFinal)
+	static public function mdlRangoFechasVentas($tabla, $fechaInicial, $fechaFinal, $estado = 1)
 	{
 
 		if ($fechaInicial == null) {
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  WHERE $tabla.estado=$estado ORDER BY id DESC");
 
 			$stmt->execute();
 
 			return $stmt->fetchAll();
 		} else if ($fechaInicial == $fechaFinal) {
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%'");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha like '%$fechaFinal%' AND $tabla.estado=$estado");
 
 			/* $stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR); */
 
@@ -256,11 +257,11 @@ class ModeloVentas
 
 			if ($fechaFinalMasUno == $fechaActualMasUno) {
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' AND $tabla.estado=$estado");
 			} else {
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' ORDER BY id DESC");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND $tabla.estado=$estado ORDER BY id DESC");
 			}
 
 			$stmt->execute();
@@ -279,7 +280,7 @@ class ModeloVentas
 
 		$anio = date('Y'); // Obtener el año actual
 
-		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE YEAR(fecha) = :anio");
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE YEAR(fecha) = :anio AND $tabla.estado=1");
 
 		$stmt->bindParam(":anio", $anio, PDO::PARAM_INT);
 		$stmt->execute();
@@ -297,7 +298,7 @@ class ModeloVentas
 	{
 		$yearactual = date('Y');
 		$mesActual = date('m');
-		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE MONTH(fecha)='$mesActual' AND YEAR(fecha) = '$yearactual'");
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE MONTH(fecha)='$mesActual' AND YEAR(fecha) = '$yearactual' AND $tabla.estado=1");
 
 		$stmt->execute();
 
@@ -316,7 +317,7 @@ class ModeloVentas
 	{
 		date_default_timezone_set('America/La_Paz');
 		$hoy = date('Y-m-d');
-		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE DATE(fecha)='$hoy'");
+		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE DATE(fecha)='$hoy' AND $tabla.estado=1");
 
 		$stmt->execute();
 
@@ -347,7 +348,7 @@ class ModeloVentas
 					JOIN meseros ON ventas.id_mesero = meseros.id
 					JOIN usuarios ON ventas.id_vendedor = usuarios.id
 					JOIN clientes ON ventas.id_cliente = clientes.id
-					WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal)
+					WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal) AND ventas.estado=1
 					";
 
 		// Añadir la condición del mesero solo si $idMesero no es 0
@@ -400,6 +401,7 @@ class ModeloVentas
 					FROM $tabla 
 					JOIN meseros ON ventas.id_mesero = meseros.id
 					WHERE DATE(ventas.fecha) BETWEEN DATE('$fechaInicial') AND DATE('$fechaFinal') 
+					AND ventas.estado=1
 					GROUP BY meseros.nombre ORDER BY SUM(ventas.total) DESC;";
 
 			$stmt = Conexion::conectar()->prepare($query);
@@ -427,6 +429,7 @@ class ModeloVentas
 						JOIN detalle_venta AS dv ON ventas.id = dv.id_venta
 						JOIN productos AS p ON p.id = dv.id_producto
 						WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicio) AND DATE(:fechaFin)
+						AND ventas.estado=1
 						GROUP BY dv.id_producto, p.descripcion
 						ORDER BY SUM(dv.cantidad) DESC;";
 
@@ -445,7 +448,7 @@ class ModeloVentas
 		}
 	}
 
-	static public function mdlRangoFechaVentasRealizadas($tabla, $fechaInicial, $fechaFinal)
+	static public function mdlRangoFechaVentasRealizadas($tabla, $fechaInicial, $fechaFinal, $estado=1)
 	{
 		date_default_timezone_set('America/La_Paz');
 
@@ -457,22 +460,24 @@ class ModeloVentas
 
 
 		if ($fechaInicial == null && $fechaFinal == null) {
-			$stmt = Conexion::conectar()->prepare($query . " ORDER BY ventas.fecha DESC");
+			$stmt = Conexion::conectar()->prepare($query . " WHERE ventas.estado =:estado ORDER BY ventas.fecha DESC");
+			$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
 			$stmt->execute();
 			return $stmt->fetchAll();
 		}
 
 		if ($fechaInicial == null) {
-			$stmt = Conexion::conectar()->prepare($query . " ORDER BY ventas.fecha DESC");
+			$stmt = Conexion::conectar()->prepare($query . " WHERE ventas.estado =:estado ORDER BY ventas.fecha DESC");
 		} else if ($fechaInicial == $fechaFinal) {
-			$stmt = Conexion::conectar()->prepare($query . " WHERE DATE(ventas.fecha) = :fecha ORDER BY ventas.fecha DESC");
+			$stmt = Conexion::conectar()->prepare($query . " WHERE DATE(ventas.fecha) = :fecha AND ventas.estado =:estado ORDER BY ventas.fecha DESC");
 			$stmt->bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 		} else {
-			$stmt = Conexion::conectar()->prepare($query . " WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal) ORDER BY ventas.fecha DESC");
+			$stmt = Conexion::conectar()->prepare($query . " WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal) AND ventas.estado =:estado ORDER BY ventas.fecha DESC");
 			$stmt->bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
 			$stmt->bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
 		}
-
+		$stmt->bindParam(":estado", $estado, PDO::PARAM_STR);
+		
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}

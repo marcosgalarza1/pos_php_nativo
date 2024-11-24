@@ -17,6 +17,7 @@ class TablaUsuarios
 
         $datosJson = '{
 		"data": [';
+		if (count($usuario) > 0) {
         for ($i = 0; $i < count($usuario); $i++) {
             /*=============================================
 				TRAEMOS LA IMAGEN
@@ -71,7 +72,7 @@ class TablaUsuarios
         }
 
         $datosJson = substr($datosJson, 0, -1);
-
+	}
         $datosJson .= ']
 	}';
         echo $datosJson;

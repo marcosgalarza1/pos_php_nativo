@@ -29,13 +29,14 @@ class ModeloClientes{
 	MOSTRAR CLIENTES
 	=============================================*/
 
-	static public function mdlMostrarClientes($tabla, $item, $valor){
+	static public function mdlMostrarClientes($tabla, $item, $valor,$estado){
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC ");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item  AND estado=:estado ORDER BY id DESC ");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":estado",$estado, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -43,10 +44,9 @@ class ModeloClientes{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY id DESC ");
-
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE estado=:estado ORDER BY id DESC ");
+			$stmt -> bindParam(":estado",$estado, PDO::PARAM_STR);
 			$stmt -> execute();
-
 			return $stmt -> fetchAll();
 
 		}
@@ -56,6 +56,41 @@ class ModeloClientes{
 		$stmt = null;
 
 	}
+
+
+	/*=============================================
+	MOSTRAR CLIENTES
+	=============================================*/
+
+	static public function mdlMostrarClientesActivoInactivo($tabla, $item, $valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item   ORDER BY id DESC ");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  ORDER BY id DESC ");
+		
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
 
 
 	/*=============================================
@@ -91,7 +126,7 @@ class ModeloClientes{
 
 	static public function mdlEliminarCliente($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado=0 WHERE  id = :id");
 
 		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 
@@ -110,6 +145,37 @@ class ModeloClientes{
 		$stmt = null;
 
 	}
+
+
+
+
+
+	/*=============================================
+	RESRAURAR CLIENTE
+	=============================================*/
+
+	static public function mdlRestaurarCliente($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado=1 WHERE  id = :id");
+
+		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			return "error";	
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 
 	/*=============================================
 	ACTUALIZAR CLIENTE
@@ -140,7 +206,7 @@ class ModeloClientes{
 
 	public static function mdlBuscarClientes($tabla, $valor) {
 		// Preparar la consulta
-		$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE nombre LIKE :valor ");
+		$stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM $tabla WHERE nombre LIKE :valor AND estado=1 ");
 		// Agregar comodines para la búsqueda
 		$searchValue = "%" . $valor . "%";
 		$stmt->bindParam(':valor', $searchValue, PDO::PARAM_STR);

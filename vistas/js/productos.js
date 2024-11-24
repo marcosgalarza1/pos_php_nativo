@@ -52,6 +52,7 @@ $('.tablaProductos').DataTable( {
 } );
 
 
+
 /*=============================================
 DATATABLE DE PRODUCTOS ELIMINADOS
 =============================================*/

@@ -93,3 +93,32 @@ $("#nuevoMesero").change(function () {
 
   })
 })
+
+
+//primer paso
+
+/*=============================================
+RESTAURAR MESERO
+=============================================*/
+$(".tablasmeseroEliminados").on("click", ".btnRestaurarMesero", function(){
+
+	var idMesero = $(this).attr("idMesero");
+	
+	swal({
+        title: '¿Está seguro de Restaurar al Mesero?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, Restaurar al Mesero!'
+      }).then(function(result){
+        if (result.value) {
+          
+            window.location = "index.php?ruta=meseros&idMeseroRestaurar="+idMesero;
+        }
+
+  })
+
+})

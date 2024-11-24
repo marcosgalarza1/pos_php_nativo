@@ -55,3 +55,36 @@ $(".tablasProveedor").on("click", ".btnEliminarProveedor", function(){
   })
 
 })
+
+
+
+
+
+
+
+
+/*=============================================
+RESTAURAR PROVEEDOR
+=============================================*/
+$(".tablasProveedorEliminados").on("click", ".btnRestaurarProveedor", function(){
+
+	var idProveedor = $(this).attr("idProveedor");
+	
+	swal({
+        title: '¿Está seguro de Restaurar el proveedor?',
+        text: "¡Si no lo está puede cancelar la acción!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si, Restaurar proveedor!'
+      }).then(function(result){
+        if (result.value) {
+          
+            window.location = "index.php?ruta=proveedor&idProveedorRestaurar="+idProveedor;
+        }
+
+  })
+
+})

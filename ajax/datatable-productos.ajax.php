@@ -23,7 +23,7 @@ class TablaProductos{
 		
   		$datosJson = '{
 		  "data": [';
-
+		  if (count($productos) > 0) {
 		  for($i = 0; $i < count($productos); $i++){
 
 		  	/*=============================================
@@ -39,7 +39,7 @@ class TablaProductos{
 		  	$item = "id";
 		  	$valor = $productos[$i]["id_categoria"];
 
-		  	$categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+		  	$categorias = ControladorCategorias::ctrMostrarCategoriasActivasInactivas($item, $valor);
 
 		  	/*=============================================
  	 		STOCK
@@ -88,7 +88,7 @@ class TablaProductos{
 		  }
 
 		  $datosJson = substr($datosJson, 0, -1);
-
+		  }
 		 $datosJson .=   '] 
 
 		 }';

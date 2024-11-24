@@ -15,10 +15,10 @@ class TablaProveedor
         $valor = null;
 
         $proveedor = ControladorProveedors::ctrMostrarProveedors($item, $valor);
-
+      
         $datosJson = '{
             "data": [';
-
+            if (count($proveedor) > 0) {
             for ($i = 0; $i < count($proveedor); $i++) {
       
             /*=============================================
@@ -56,7 +56,7 @@ class TablaProveedor
     
     
                 $datosJson = substr($datosJson, 0, -1);
-    
+            }
                 $datosJson .= ']
             }';
                 echo $datosJson;

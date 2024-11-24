@@ -69,16 +69,27 @@ class ControladorCategorias{
 	MOSTRAR CATEGORIAS
 	=============================================*/
 
-	static public function ctrMostrarCategorias($item, $valor){
+	static public function ctrMostrarCategorias($item, $valor,$estado=1){
 
 		$tabla = "categorias";
+	
 
-		$respuesta = ModeloCategorias::mdlMostrarCategorias($tabla, $item, $valor);
+		$respuesta = ModeloCategorias::mdlMostrarCategorias($tabla, $item, $valor,$estado);
 
 		return $respuesta;
 	
 	}
 
+	static public function ctrMostrarCategoriasActivasInactivas($item, $valor){
+
+		$tabla = "categorias";
+
+		$respuesta = ModeloCategorias::mdlMostrarCategoriasActivasInactivas($tabla, $item, $valor);
+
+		return $respuesta;
+	
+	}
+	
 	/*=============================================
 	EDITAR CATEGORIA
 	=============================================*/
@@ -200,4 +211,56 @@ class ControladorCategorias{
 		}
 		
 	}
-}
+
+
+
+
+
+
+
+/*=============================================
+	RESTAURAR CATEGORIA
+	=============================================*/
+
+	static public function ctrRestaurarCategoria(){
+
+		if(isset($_GET["idCategoriaRestaurar"])){
+
+	/* 	$respuesta = ModeloProductos::mdlMostrarProductos("productos", "id_categoria", $_GET["idCategoriaRestaurar"], "ASC"); */
+			
+		/* 	if (!$respuesta) { */
+				$tabla ="Categorias";$_GET["idCategoriaRestaurar"];
+				$datos = $_GET["idCategoriaRestaurar"];
+
+				$respuesta = ModeloCategorias::mdlRestaurarCategoria($tabla, $datos);
+
+				if($respuesta == "ok"){
+
+					echo'<script>
+
+						swal({
+							  type: "success",
+							  title: "La categoría ha sido restaurada correctamente",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+
+										window.location = "categorias";
+
+										}
+									})
+
+						</script>';
+				}
+			}
+			/* } */
+
+		}
+		
+	}
+
+
+
+
+

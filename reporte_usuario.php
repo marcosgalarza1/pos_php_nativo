@@ -73,7 +73,7 @@ $tablaAncho = 180; // Ancho total de la tabla en mm (210 mm - 2 * 10 mm de márg
 $anchoColumna = array(60, 30, 35, 60); // Ancho de cada columna
 
 // Ejecutar la consulta y agregar los datos al PDF
-$sql = "SELECT nombre, usuario, perfil, ultimo_login FROM usuarios";
+$sql = "SELECT nombre, usuario, perfil, ultimo_login FROM usuarios WHERE activo=1" ;
 if ($resultado = $mysqli->query($sql)) {
     while ($fila = $resultado->fetch_assoc()) {
 

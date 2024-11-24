@@ -17,7 +17,7 @@ class TablaMeseros
 
         $datosJson = '{
             "data": [';
-
+            if (count($meseros) > 0) {
             for ($i = 0; $i < count($meseros); $i++) {
       
             /*=============================================
@@ -50,7 +50,7 @@ class TablaMeseros
     
     
                 $datosJson = substr($datosJson, 0, -1);
-    
+            }
                 $datosJson .= ']
             }';
                 echo $datosJson;
