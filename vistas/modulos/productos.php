@@ -49,51 +49,51 @@ if ($_SESSION["perfil"] == "Vendedor") {
         </button> -->
 
         <a href="agregar-producto" class="btn btn-primary">
-        <i class="fa fa-plus"></i>
+          <i class="fa fa-plus"></i>
           Agregar Producto
         </a>
         &nbsp;
 
         <a class="btn btn-primary" target="_blank" href="reporte_producto.php">
-        <i class="fa fa-print"></i>
+          <i class="fa fa-print"></i>
           <span class="icon-name"> Imprimir </span>
         </a>
         &nbsp;
 
         <a class="btn btn-danger" href="productos-eliminados">
-    <i class="fa fa-trash"></i>
-    <span> Eliminados </span>
-</a>
+          <i class="fa fa-trash"></i>
+          <span> Eliminados </span>
+        </a>
 
-      <div class="box-body">
+        <div class="box-body">
 
-        <table class="table table-bordered table-striped dt-responsive tablaProductos text-uppercase " width="100%">
+          <table class="table table-bordered table-striped dt-responsive tablaProductos text-uppercase " width="100%">
 
-          <thead>
+            <thead>
 
-            <tr>
+              <tr>
 
-              <th style="width:10px">#</th>
-              <th style="width:10px">Imagen</th>
-              <th>Código</th>
-              <th>Descripcion</th>
-              <th>Categoria</th>
-              <th>Cantidad</th>
-              <th>Precio</th>
-              <th>Agregado</th>
-              <th>Acciones</th>
+                <th style="width:10px">#</th>
+                <th style="width:10px">Imagen</th>
+                <th>Código</th>
+                <th>Descripcion</th>
+                <th>Categoria</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Agregado</th>
+                <th>Acciones</th>
 
-            </tr>
+              </tr>
 
-          </thead>
+            </thead>
 
 
 
-        </table>
-        <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
+          </table>
+          <input type="hidden" value="<?php echo $_SESSION['perfil']; ?>" id="perfilOculto">
+        </div>
+
       </div>
-
-    </div>
 
   </section>
 
@@ -399,7 +399,7 @@ MODAL EDITAR PRODUCTO
 
                 <span class="input-group-addon"><i class="fa fa-check"></i></span>
 
-                <input readonly="number" class="form-control input-lg" id="editarStock" name="editarStock" min="0" required>
+                <input class="form-control input-lg" id="editarStock" name="editarStock" min="0" required>
 
               </div>
 
@@ -427,35 +427,41 @@ MODAL EDITAR PRODUCTO
                   <input type="number" class="form-control input-lg" id="editarPrecioVenta" name="editarPrecioVenta" min="0" step="any" placeholder="Precio Venta" required>
 
                 </div>
-                <br>
+
+              </div>
+
+            </div>
+
+            <div class=" form-group row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span>
+                  <select class="form-control input-lg" id="editarInventariable" name="editarInventariable" required>
+                    <option value="" disabled>Es inventariable:</option>
+                    <option value="0">NO</option>
+                    <option value="1" selected>SI</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
                 <!-- CHECKBOX PARA PORCENTAJE -->
-
                 <div class="col-xs-6">
-
                   <div class="form-group">
-
                     <label>
-
                       <input type="checkbox" class="minimal porcentaje">
                       Utilizar procentaje
                     </label>
-
                   </div>
                 </div>
+
                 <!-- ENTRADA PARA PORCENTAJE -->
-
                 <div class="col-xs-6" style="padding:0">
-
                   <div class="input-group">
-
                     <input type="number" class="form-control input-lg nuevoPorcentaje" min="0" value="40" required>
-
                     <span class="input-group-addon"><i class="fa fa-percent"></i></span>
-
                   </div>
-
                 </div>
-
               </div>
 
             </div>
@@ -517,3 +523,18 @@ $restaurarProducto = new ControladorProductos();
 $restaurarProducto->ctrRestaurarProducto();
 
 ?>
+
+<script>
+    // Obtener los elementos del DOM
+    const inventariableSelect = document.getElementById('editarInventariable');
+    const stockInput = document.getElementById('editarStock');
+
+    // Escuchar el evento 'change' del select
+    inventariableSelect.addEventListener('change', function () {
+        if (this.value === "0") { // Si selecciona "NO"
+            stockInput.removeAttribute('readonly'); // Activar el campo
+        } else { // Si selecciona "SI"
+            stockInput.setAttribute('readonly', true); // Deshabilitar el campo
+        }
+    });
+</script>

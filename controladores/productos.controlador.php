@@ -3,7 +3,7 @@
 class ControladorProductos{
 
 	/*=============================================
-	AQUI SE MOSTRARRA EL PRODUCTOOOOOOOOO
+	AQUI SE MOSTRARRA EL PRODUCTO
 	=============================================*/
 
 	static public function ctrMostrarProductos($item, $valor,$orden, $estado=1){
@@ -16,6 +16,16 @@ class ControladorProductos{
 
 	}
 
+
+	static public function ctrMostrarProductosActivosInventariable($item, $valor,$orden){
+
+		$tabla = "productos";
+
+		$respuesta = ModeloProductos::mdlMostrarProductosActivosInventariable($tabla, $item, $valor,$orden);
+
+		return $respuesta;
+
+	}
 
 	/*=============================================
 	CREAR PRODUCTO
@@ -107,6 +117,7 @@ class ControladorProductos{
 							   "codigo" => $_POST["nuevoCodigo"],
 							   "descripcion" => $_POST["nuevaDescripcion"],
 							   "stock" => $_POST["nuevoStock"],
+							   "inventariable" => $_POST["inventariable"],
 							   "precio_venta" => $_POST["nuevoPrecioVenta"],
 							   "precio_compra" => $_POST["nuevoPrecioCompra"],
 							   "imagen" => $ruta);
@@ -260,6 +271,7 @@ class ControladorProductos{
 							   "codigo" => $_POST["editarCodigo"],
 							   "descripcion" => $_POST["editarDescripcion"],
 							   "stock" => $_POST["editarStock"],
+							   "inventariable" => $_POST["editarInventariable"],
 							   "precio_venta" => $_POST["editarPrecioVenta"],
 							   "precio_compra" => $_POST["editarPrecioCompra"],
 							   "imagen" => $ruta);

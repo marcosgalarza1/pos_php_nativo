@@ -23,12 +23,12 @@
                                     <select class="form-control input-lg select2" id="nuevaCategoria" name="nuevaCategoria" required>
                                         <option value="">Categoria</option>
                                         <?php
-                                            $item = null;
-                                            $valor = null;
-                                            $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
-                                            foreach ($categorias as $key => $value) {
-                                                echo '<option value="'.$value["id"].'">'.$value["categoria"].'</option>';
-                                            }
+                                        $item = null;
+                                        $valor = null;
+                                        $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+                                        foreach ($categorias as $key => $value) {
+                                            echo '<option value="' . $value["id"] . '">' . $value["categoria"] . '</option>';
+                                        }
                                         ?>
                                     </select>
                                 </div>
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <h4><strong>DESCRIPCIÓN</strong></h4>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
                                     <input type="text" class="form-control input-lg" name="nuevaDescripcion" placeholder="descripción" required>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                 <h4><strong>STOCK</strong></h4>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-cogs"></i></span>
-                                    <input value="0" readonly type="number" class="form-control input-lg" name="nuevoStock" min="0" placeholder="cantidad" required>
+                                    <input id="nuevoStock" value="0" readonly type="number" class="form-control input-lg" name="nuevoStock" min="0" placeholder="Cantidad" required>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                             <div class="form-group">
                                 <h4><strong>PRECIO VENTA</strong></h4>
                                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
                                     <input type="number" class="form-control input-lg" id="nuevoPrecioVenta" name="nuevoPrecioVenta" min="0" step="any" placeholder="Precio Venta" required>
                                 </div>
                             </div>
@@ -112,8 +112,21 @@
                             </label>
                         </div>
 
-                        <!-- Entrada para subir imagen -->
+                        <!-- Entrada para Inventariable -->
                         <div class="col-md-6">
+                            <h4><strong>ES INVENTARIABLE</strong></h4>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-th"></i></span>
+                                <select class="form-control input-lg" id="inventariable" name="inventariable" required>
+                                    <option value="0">NO</option>
+                                    <option value="1" selected>SI</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                         <!-- Entrada para subir imagen -->
+                         <div class="col-md-6">
                             <div class="form-group">
                                 <div class="panel">SUBIR FOTO</div>
                                 <input type="file" class="nuevaImagen" name="nuevaImagen">
@@ -124,7 +137,6 @@
                     </div>
 
 
-                    
 
                     <!-- Botones -->
                     <div class="row" style="text-align: right; padding-right: 20px;">
@@ -134,8 +146,8 @@
 
                     <!-- Controlador para crear el producto -->
                     <?php
-                        $crearProducto = new ControladorProductos();
-                        $crearProducto->ctrCrearProducto();
+                    $crearProducto = new ControladorProductos();
+                    $crearProducto->ctrCrearProducto();
                     ?>
                 </form>
             </div><!-- /.box-body -->
@@ -161,3 +173,19 @@
         margin-right: 5px;
     }
 </style>
+
+<script>
+    // Obtener los elementos del DOM
+    const inventariableSelect = document.getElementById('inventariable');
+    const stockInput = document.getElementById('nuevoStock');
+
+    // Escuchar el evento 'change' del select
+    inventariableSelect.addEventListener('change', function () {
+        if (this.value === "0") { // Si selecciona "NO"
+            stockInput.removeAttribute('readonly'); // Activar el campo
+        } else { // Si selecciona "SI"
+            stockInput.setAttribute('readonly', true); // Deshabilitar el campo
+            stockInput.value = "0"; // Restablecer el valor a 0
+        }
+    });
+</script>

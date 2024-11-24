@@ -17,7 +17,7 @@ class TablaProductosCompras{
 		$orden = "id";
 
 
-  		$productos = ControladorProductos::ctrMostrarProductos($item, $valor,$orden);	
+  		$productos = ControladorProductos::ctrMostrarProductosActivosInventariable($item, $valor,$orden);	
 		
   		if(count($productos) == 0){
 
