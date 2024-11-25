@@ -186,7 +186,7 @@ class PdfGananciasYear
                 $pdf->SetXY($posicion_MulticeldaDX, $posicion_MulticeldaDY + $aumentar);
                 $pdf->Cell(23, 5, utf8_decode($mes), 0, 1, 'C');
                 $pdf->SetXY($posicion_MulticeldaDX + 23, $posicion_MulticeldaDY + $aumentar);
-                $pdf->Cell(23, 5, $dato['ventas'], 0, 1, 'C', 0);
+                $pdf->Cell(23, 5, number_format($dato['ventas'], 2, '.', ','), 0, 1, 'C', 0);
                 $pdf->SetXY($posicion_MulticeldaDX + 46, $posicion_MulticeldaDY + $aumentar);
                 // $ganancia= $this->ganancia_year_month($dato['year'],$dato['mes']);
 
@@ -328,7 +328,7 @@ class PdfGananciasYear
                     $pdf->SetXY($posicion_MulticeldaDX, $posicion_MulticeldaDY + $aumentar);
                     $pdf->Cell(23, 5, utf8_decode($mes), 0, 1, 'C');
                     $pdf->SetXY($posicion_MulticeldaDX + 23, $posicion_MulticeldaDY + $aumentar);
-                    $pdf->Cell(23, 5, $dato['ventas'], 0, 1, 'C', 0);
+                    $pdf->Cell(23, 5, number_format($dato['ventas'], 2, '.', ','), 0, 1, 'C', 0);
                     $pdf->SetXY($posicion_MulticeldaDX + 46, $posicion_MulticeldaDY + $aumentar);
                     // $ganancia= $this->ganancia_year_month($dato['year'],$dato['mes']);
 
@@ -417,7 +417,7 @@ class PdfGananciasYear
                     $pdf->SetXY($posicion_MulticeldaDX, $posicion_MulticeldaDY + $aumentar);
                     $pdf->Cell(23, 5, utf8_decode($mes), 0, 1, 'C');
                     $pdf->SetXY($posicion_MulticeldaDX + 23, $posicion_MulticeldaDY + $aumentar);
-                    $pdf->Cell(23, 5, $dato['ventas'], 0, 1, 'C', 0);
+                    $pdf->Cell(23, 5, number_format($dato['ventas'], 2, '.', ','), 0, 1, 'C', 0);
                     $pdf->SetXY($posicion_MulticeldaDX + 46, $posicion_MulticeldaDY + $aumentar);
                     // $ganancia= $this->ganancia_year_month($dato['year'],$dato['mes']);
                     $ganancias = ModeloReportes::mdlObtenerGanancias($dato['mes'], $dato['year']);
