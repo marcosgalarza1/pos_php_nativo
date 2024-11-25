@@ -96,7 +96,7 @@ class PdfGanancias extends FPDF
             $pdf->Cell(30, 5, utf8_decode($ganancia['vendedor']), 1, 0, 'L');
             $pdf->Cell(50, 5, utf8_decode($ganancia['mesero']), 1, 0, 'L');
             $pdf->Cell(24, 5, $ganancia['total'], 1, 0, 'L');
-            $pdf->Cell(24, 5, $ganancia['ganancias'], 1, 1, 'R');
+            $pdf->Cell(24, 5, number_format($ganancia['ganancias'], 2, '.', ','), 1, 1, 'R');
             $sum += $ganancia['total'];
             $sum_ganancias += $ganancia['ganancias'];
             $contador++;
