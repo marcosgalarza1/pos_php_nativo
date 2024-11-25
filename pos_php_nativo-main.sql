@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2024 a las 07:07:02
+-- Tiempo de generación: 25-11-2024 a las 02:23:06
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -468,6 +468,7 @@ CREATE TABLE `productos` (
   `precio_compra` int(11) NOT NULL,
   `ventas` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `inventariable` tinyint(4) NOT NULL,
   `estado` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -475,62 +476,62 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`id`, `id_categoria`, `codigo`, `descripcion`, `imagen`, `stock`, `precio_venta`, `precio_compra`, `ventas`, `fecha`, `estado`) VALUES
-(1, 1, '101', 'sopa de mani', 'vistas/img/productos/101/845.png', 102, 10, 7, 18, '2024-11-24 05:19:23', 1),
-(2, 1, '102', 'locro de gallina', 'vistas/img/productos/102/485.png', 105, 15, 10, 15, '2024-11-07 11:21:35', 1),
-(3, 1, '103', 'majadito de charque', 'vistas/img/productos/103/784.png', 106, 15, 10, 14, '2024-11-07 11:21:35', 1),
-(4, 1, '104', 'majadito de pato', 'vistas/img/productos/104/370.png', 19, 15, 10, 2, '2024-11-05 03:59:40', 1),
-(5, 1, '105', 'lomo montado', 'vistas/img/productos/105/639.png', 16, 20, 15, 4, '2024-10-27 14:30:16', 1),
-(6, 1, '106', 'keperi', 'vistas/img/productos/106/341.png', 16, 20, 15, 4, '2024-10-27 14:30:16', 1),
-(7, 1, '107', 'picante sencillo', 'vistas/img/productos/107/494.png', 17, 20, 15, 3, '2024-10-27 14:30:16', 1),
-(8, 1, '108', 'milaneza de pollo', 'vistas/img/productos/108/260.png', 18, 20, 15, 2, '2024-10-27 14:30:16', 1),
-(9, 1, '109', 'milaneza de carne', 'vistas/img/productos/109/919.png', 17, 20, 15, 3, '2024-11-05 01:38:27', 1),
-(10, 1, '110', 'chicharron de pollo', 'vistas/img/productos/110/564.jpg', 19, 20, 15, 1, '2024-11-20 22:18:18', 1),
-(11, 1, '111', 'picante mixto', 'vistas/img/productos/111/878.png', 16, 25, 20, 4, '2024-10-27 14:30:16', 1),
-(12, 1, '112', 'picante de lengua', 'vistas/img/productos/112/243.png', 18, 25, 20, 2, '2024-11-07 00:55:01', 1),
-(13, 1, '113', 'chorrellana', 'vistas/img/productos/113/676.png', 20, 25, 20, 0, '2024-09-23 04:40:58', 1),
-(14, 1, '114', 'pique macho entero', 'vistas/img/productos/114/339.png', 18, 70, 50, 2, '2024-11-17 23:02:51', 1),
-(15, 1, '115', 'pique macho medio', 'vistas/img/productos/115/508.png', 19, 45, 30, 1, '2024-09-24 19:44:11', 1),
-(16, 1, '116', 'charque entero', 'vistas/img/productos/116/793.png', 20, 80, 60, 0, '2024-09-23 04:41:38', 1),
-(17, 1, '117', 'charque medio', 'vistas/img/productos/117/857.png', 20, 45, 30, 0, '2024-09-23 04:42:02', 1),
-(18, 1, '118', 'chicharrón de chancho entero', 'vistas/img/productos/118/617.png', 19, 70, 50, 1, '2024-09-25 02:02:23', 1),
-(19, 1, '119', 'chicharron de chancho medio', 'vistas/img/productos/119/234.png', 19, 45, 30, 1, '2024-09-25 02:02:23', 1),
-(20, 1, '120', 'milanesa picada de pollo', 'vistas/img/productos/120/678.png', 17, 50, 40, 3, '2024-11-07 00:55:56', 1),
-(21, 1, '121', 'milanesa picada de carne', 'vistas/img/productos/121/837.png', 19, 50, 40, 1, '2024-11-04 04:38:16', 1),
-(22, 1, '122', 'cola de lagarto', 'vistas/img/productos/122/741.png', 20, 50, 30, 0, '2024-11-17 23:02:48', 1),
-(23, 1, '123', 'chicharrón de surubí', 'vistas/img/productos/123/582.png', 19, 60, 40, 1, '2024-10-30 08:57:55', 1),
-(24, 1, '124', 'chancho a la cruz', 'vistas/img/productos/124/469.png', 19, 60, 50, 1, '2024-10-30 08:57:55', 1),
-(25, 1, '125', 'cordero', 'vistas/img/productos/125/913.png', 18, 80, 70, 2, '2024-10-30 08:57:55', 1),
-(26, 1, '126', 'pato entero', 'vistas/img/productos/126/898.png', 17, 160, 130, 3, '2024-10-30 08:57:55', 1),
-(27, 1, '127', 'pato medio', 'vistas/img/productos/127/431.png', 115, 80, 50, 5, '2024-11-07 00:12:06', 1),
-(28, 1, '128', 'pacumuto', 'vistas/img/productos/128/234.png', 17, 80, 50, 3, '2024-10-30 08:57:55', 1),
-(29, 1, '129', 'costilla de cordero', 'vistas/img/productos/129/255.png', 17, 80, 50, 3, '2024-10-30 08:57:55', 1),
-(30, 1, '130', 'planchita', 'vistas/img/productos/130/499.png', 16, 100, 80, 4, '2024-11-24 05:24:26', 1),
-(31, 4, '401', 'jarra de chicha entera', 'vistas/img/productos/401/240.png', 17, 15, 10, 3, '2024-10-30 08:57:55', 1),
-(32, 4, '402', 'jarra de chicha media', 'vistas/img/productos/402/880.png', 20, 8, 4, 0, '2024-09-23 15:53:45', 1),
-(33, 4, '403', 'jarra de maracuyá entera', 'vistas/img/productos/403/800.png', 19, 15, 10, 1, '2024-10-30 08:57:55', 1),
-(34, 4, '404', 'jarra de maracuya media', 'vistas/img/productos/404/275.png', 15, 8, 4, 5, '2024-10-30 08:57:55', 1),
-(35, 4, '405', 'jarra de limonada entera', 'vistas/img/productos/405/460.png', 15, 15, 10, 5, '2024-10-30 08:57:55', 1),
-(36, 4, '406', 'jarra de limonada media', 'vistas/img/productos/406/864.png', 17, 8, 4, 3, '2024-10-30 08:57:55', 1),
-(37, 4, '407', 'jarra de mocochinchi entera', 'vistas/img/productos/407/988.jpg', 15, 15, 10, 5, '2024-11-17 23:02:51', 1),
-(38, 4, '408', 'jarra de mocochinchi media', 'vistas/img/productos/408/742.jpg', 18, 8, 4, 3, '2024-11-12 02:50:19', 1),
-(39, 2, '201', 'agua  vital chica 600ml', 'vistas/img/productos/201/314.jpg', 19, 8, 6, 1, '2024-10-28 01:02:35', 1),
-(40, 2, '202', 'coca cola popular', 'vistas/img/productos/202/572.jpg', 17, 10, 8, 3, '2024-11-07 03:31:35', 1),
-(41, 2, '203', 'coca cola 2l', 'vistas/img/productos/203/922.jpg', 14, 18, 12, 6, '2024-11-17 23:02:48', 1),
-(42, 2, '204', 'cabaña 2l', 'vistas/img/productos/204/211.jpg', 14, 18, 13, 8, '2024-10-28 01:02:35', 1),
-(43, 2, '205', 'cerveza paceña', 'vistas/img/productos/205/918.jpg', 154, 22, 15, 16, '2024-11-07 04:11:12', 1),
-(44, 2, '206', 'cerveza huari', 'vistas/img/productos/206/447.jpg', 158, 25, 20, 12, '2024-11-07 00:32:26', 1),
-(45, 2, '207', 'cerveza cordillera', 'vistas/img/productos/207/655.jpg', 95, 15, 10, 25, '2024-11-20 20:29:25', 1),
-(46, 2, '208', 'vinos tinto ', 'vistas/img/productos/208/641.jpg', 11, 45, 30, 22, '2024-11-06 13:55:33', 1),
-(47, 2, '209', 'agua  vital sin gas  2l', 'vistas/img/productos/209/935.jpg', 100, 18, 15, 12, '2024-11-12 02:29:51', 1),
-(48, 4, '210', 'vaso de mocochinchi', 'vistas/img/productos/210/489.jpg', 30, 5, 2, 30, '2024-11-12 02:49:18', 1),
-(49, 4, '211', 'vaso de limonada', 'vistas/img/productos/211/142.png', 99, 5, 2, 11, '2024-11-17 23:03:30', 1),
-(50, 4, '212', 'vaso de maracuya', 'vistas/img/productos/212/630.png', 98, 5, 2, 33, '2024-11-23 01:50:05', 1),
-(51, 4, '213', 'vaso de chicha', 'vistas/img/productos/213/237.png', 500, 5, 2, 34, '2024-11-19 04:04:19', 0),
-(53, 1, '131', 'pollo ala broaster economicos', 'vistas/img/productos/131/798.jpg', 98, 13, 8, 55, '2024-11-19 01:58:29', 0),
-(64, 18, '1801', 'po', 'vistas/img/productos/default/anonymous.png', 1, 12, 10, -1, '2024-11-17 23:02:39', 0),
-(65, 21, '2101', 'pan dulce', 'vistas/img/productos/default/anonymous.png', 0, 25, 20, 0, '2024-11-23 05:02:14', 1),
-(66, 1, '131', 'hamburge triple', 'vistas/img/productos/default/anonymous.png', 0, 25, 18, 0, '2024-11-23 02:08:29', 1);
+INSERT INTO `productos` (`id`, `id_categoria`, `codigo`, `descripcion`, `imagen`, `stock`, `precio_venta`, `precio_compra`, `ventas`, `fecha`, `inventariable`, `estado`) VALUES
+(1, 1, '101', 'sopa de mani', 'vistas/img/productos/101/845.png', 102, 10, 7, 18, '2024-11-24 21:36:20', 0, 1),
+(2, 1, '102', 'locro de gallina', 'vistas/img/productos/102/485.png', 105, 15, 10, 15, '2024-11-24 21:36:20', 0, 1),
+(3, 1, '103', 'majadito de charque', 'vistas/img/productos/103/784.png', 106, 15, 10, 14, '2024-11-24 21:36:20', 0, 1),
+(4, 1, '104', 'majadito de pato', 'vistas/img/productos/104/370.png', 19, 15, 10, 2, '2024-11-24 21:36:20', 0, 1),
+(5, 1, '105', 'lomo montado', 'vistas/img/productos/105/639.png', 16, 20, 15, 4, '2024-11-24 21:36:20', 0, 1),
+(6, 1, '106', 'keperi', 'vistas/img/productos/106/341.png', 16, 20, 15, 4, '2024-11-24 21:36:20', 0, 1),
+(7, 1, '107', 'picante sencillo', 'vistas/img/productos/107/494.png', 17, 20, 15, 3, '2024-11-24 21:36:20', 0, 1),
+(8, 1, '108', 'milaneza de pollo', 'vistas/img/productos/108/260.png', 18, 20, 15, 2, '2024-11-24 21:36:20', 0, 1),
+(9, 1, '109', 'milaneza de carne', 'vistas/img/productos/109/919.png', 17, 20, 15, 3, '2024-11-24 21:36:20', 0, 1),
+(10, 1, '110', 'chicharron de pollo', 'vistas/img/productos/110/564.jpg', 19, 20, 15, 1, '2024-11-24 21:36:20', 0, 1),
+(11, 1, '111', 'picante mixto', 'vistas/img/productos/111/878.png', 16, 25, 20, 4, '2024-11-24 21:36:20', 0, 1),
+(12, 1, '112', 'picante de lengua', 'vistas/img/productos/112/243.png', 18, 25, 20, 2, '2024-11-24 21:36:20', 0, 1),
+(13, 1, '113', 'chorrellana', 'vistas/img/productos/113/676.png', 20, 25, 20, 0, '2024-11-24 21:36:20', 0, 1),
+(14, 1, '114', 'pique macho entero', 'vistas/img/productos/114/339.png', 18, 70, 50, 2, '2024-11-24 21:36:20', 0, 1),
+(15, 1, '115', 'pique macho medio', 'vistas/img/productos/115/508.png', 19, 45, 30, 1, '2024-11-24 21:36:20', 0, 1),
+(16, 1, '116', 'charque entero', 'vistas/img/productos/116/793.png', 20, 80, 60, 0, '2024-11-24 21:36:20', 0, 1),
+(17, 1, '117', 'charque medio', 'vistas/img/productos/117/857.png', 20, 45, 30, 0, '2024-11-24 21:36:20', 0, 1),
+(18, 1, '118', 'chicharrón de chancho entero', 'vistas/img/productos/118/617.png', 19, 70, 50, 1, '2024-11-24 21:36:20', 0, 1),
+(19, 1, '119', 'chicharron de chancho medio', 'vistas/img/productos/119/234.png', 19, 45, 30, 1, '2024-11-24 21:36:20', 0, 1),
+(20, 1, '120', 'milanesa picada de pollo', 'vistas/img/productos/120/678.png', 17, 50, 40, 3, '2024-11-24 21:36:20', 0, 1),
+(21, 1, '121', 'milanesa picada de carne', 'vistas/img/productos/121/837.png', 19, 50, 40, 1, '2024-11-24 21:36:20', 0, 1),
+(22, 1, '122', 'cola de lagarto', 'vistas/img/productos/122/741.png', 20, 50, 30, 0, '2024-11-24 21:36:20', 0, 1),
+(23, 1, '123', 'chicharrón de surubí', 'vistas/img/productos/123/582.png', 19, 60, 40, 1, '2024-11-24 21:36:20', 0, 1),
+(24, 1, '124', 'chancho a la cruz', 'vistas/img/productos/124/469.png', 19, 60, 50, 1, '2024-11-24 21:36:20', 0, 1),
+(25, 1, '125', 'cordero', 'vistas/img/productos/125/913.png', 18, 80, 70, 2, '2024-11-24 21:36:20', 0, 1),
+(26, 1, '126', 'pato entero', 'vistas/img/productos/126/898.png', 17, 160, 130, 3, '2024-11-24 21:36:20', 0, 1),
+(27, 1, '127', 'pato medio', 'vistas/img/productos/127/431.png', 115, 80, 50, 5, '2024-11-24 21:36:20', 0, 1),
+(28, 1, '128', 'pacumuto', 'vistas/img/productos/128/234.png', 17, 80, 50, 3, '2024-11-24 21:36:20', 0, 1),
+(29, 1, '129', 'costilla de cordero', 'vistas/img/productos/129/255.png', 17, 80, 50, 3, '2024-11-24 21:36:20', 0, 1),
+(30, 1, '130', 'planchita', 'vistas/img/productos/130/499.png', 16, 100, 80, 4, '2024-11-24 21:36:20', 0, 1),
+(31, 4, '401', 'jarra de chicha entera', 'vistas/img/productos/401/240.png', 17, 15, 10, 3, '2024-11-24 21:40:38', 0, 1),
+(32, 4, '402', 'jarra de chicha media', 'vistas/img/productos/402/880.png', 20, 8, 4, 0, '2024-11-24 21:40:38', 0, 1),
+(33, 4, '403', 'jarra de maracuyá entera', 'vistas/img/productos/403/800.png', 19, 15, 10, 1, '2024-11-24 21:40:38', 0, 1),
+(34, 4, '404', 'jarra de maracuya media', 'vistas/img/productos/404/275.png', 15, 8, 4, 5, '2024-11-24 21:40:38', 0, 1),
+(35, 4, '405', 'jarra de limonada entera', 'vistas/img/productos/405/460.png', 15, 15, 10, 5, '2024-11-24 21:40:38', 0, 1),
+(36, 4, '406', 'jarra de limonada media', 'vistas/img/productos/406/864.png', 17, 8, 4, 3, '2024-11-24 21:40:38', 0, 1),
+(37, 4, '407', 'jarra de mocochinchi entera', 'vistas/img/productos/407/988.jpg', 15, 15, 10, 5, '2024-11-24 21:40:38', 0, 1),
+(38, 4, '408', 'jarra de mocochinchi media', 'vistas/img/productos/408/742.jpg', 18, 8, 4, 3, '2024-11-24 21:40:38', 0, 1),
+(39, 2, '201', 'agua  vital chica 600ml', 'vistas/img/productos/201/314.jpg', 19, 8, 6, 1, '2024-11-24 21:40:07', 1, 1),
+(40, 2, '202', 'coca cola popular', 'vistas/img/productos/202/572.jpg', 17, 10, 8, 3, '2024-11-24 21:40:07', 1, 1),
+(41, 2, '203', 'coca cola 2l', 'vistas/img/productos/203/922.jpg', 14, 18, 12, 6, '2024-11-24 21:40:07', 1, 1),
+(42, 2, '204', 'cabaña 2l', 'vistas/img/productos/204/211.jpg', 14, 18, 13, 8, '2024-11-24 21:40:07', 1, 1),
+(43, 2, '205', 'cerveza paceña', 'vistas/img/productos/205/918.jpg', 154, 22, 15, 16, '2024-11-24 21:40:07', 1, 1),
+(44, 2, '206', 'cerveza huari', 'vistas/img/productos/206/447.jpg', 158, 25, 20, 12, '2024-11-24 21:40:07', 1, 1),
+(45, 2, '207', 'cerveza cordillera', 'vistas/img/productos/207/655.jpg', 95, 15, 10, 25, '2024-11-24 21:40:07', 1, 1),
+(46, 2, '208', 'vinos tinto ', 'vistas/img/productos/208/641.jpg', 11, 45, 30, 22, '2024-11-24 21:40:07', 1, 1),
+(47, 2, '209', 'agua  vital sin gas  2l', 'vistas/img/productos/209/935.jpg', 100, 18, 15, 12, '2024-11-24 21:40:07', 1, 1),
+(48, 4, '210', 'vaso de mocochinchi', 'vistas/img/productos/210/489.jpg', 30, 5, 2, 30, '2024-11-24 21:40:38', 0, 1),
+(49, 4, '211', 'vaso de limonada', 'vistas/img/productos/211/142.png', 99, 5, 2, 11, '2024-11-24 21:40:38', 0, 1),
+(50, 4, '212', 'vaso de maracuya', 'vistas/img/productos/212/630.png', 98, 5, 2, 33, '2024-11-24 21:40:38', 0, 1),
+(51, 4, '213', 'vaso de chicha', 'vistas/img/productos/213/237.png', 500, 5, 2, 34, '2024-11-24 21:40:38', 0, 0),
+(53, 1, '131', 'pollo ala broaster economicos', 'vistas/img/productos/131/798.jpg', 98, 13, 8, 55, '2024-11-24 21:36:20', 0, 0),
+(64, 18, '1801', 'po', 'vistas/img/productos/default/anonymous.png', 1, 12, 10, -1, '2024-11-24 20:41:32', 1, 0),
+(66, 1, '131', 'hamburge triple', 'vistas/img/productos/default/anonymous.png', 0, 25, 18, 0, '2024-11-24 21:36:20', 0, 1),
+(67, 1, '132', 'MILANESA DE CARNE 2', 'vistas/img/productos/default/anonymous.png', 50, 17.68, 12, 0, '2024-11-24 21:18:27', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -584,7 +585,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `activo`) VALUES
-(1, 'Maria mendoza', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/266.jpg', 1, '2024-11-24 00:21:26', '2024-11-24 04:21:26', 1),
+(1, 'Maria mendoza', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/266.jpg', 1, '2024-11-24 16:16:44', '2024-11-24 20:16:44', 1),
 (2, 'yobana mendoza', 'yoba28', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Vendedor', 'vistas/img/usuarios/yoba28/681.jpg', 1, '2024-11-07 07:11:07', '2024-11-07 11:11:07', 1),
 (3, 'zajir mendoza', 'zajir12', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Especial', 'vistas/img/usuarios/zajir12/199.jpg', 1, '2024-11-06 23:19:05', '2024-11-13 02:50:28', 1),
 (15, 'enrique', 'enrique', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Administrador', '', 1, '0000-00-00 00:00:00', '2024-11-13 02:56:53', 1),
@@ -868,7 +869,7 @@ ALTER TABLE `meseros`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
