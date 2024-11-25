@@ -147,12 +147,10 @@ class ControladorCompras{
 				$valor = $value["id_producto"];
 				$orden = "id";
 
-				$traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor, $orden);
-
+				$traerProducto = ModeloProductos::mdlMostrarProductosActivosInactivos($tablaProductos, $item, $valor, $orden);
 		
 				$item1b = "stock";
 				$valor1b = $traerProducto["stock"] - $value["cantidad"];
-
 				$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
 
 			}
@@ -174,9 +172,7 @@ class ControladorCompras{
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
 								if (result.value) {
-
-								window.location = "compras";
-
+									window.location = "compras";
 								}
 							})
 
@@ -208,11 +204,11 @@ class ControladorCompras{
 	
 		return $respuesta;
 	}
-	static public function ctrComprasRealizadas(){
+	static public function ctrComprasRealizadas($estado=1){
 
 		$tabla = "compras";
 	
-		$respuesta = ModeloCompras::mdlComprasRealizadas($tabla);
+		$respuesta = ModeloCompras::mdlComprasRealizadas($tabla,$estado);
 	
 		return $respuesta;
 	}

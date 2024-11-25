@@ -19,7 +19,7 @@ if ($_SESSION["perfil"] == "Especial") {
   <section class="content-header">
     <h1 style="font-family: Arial, sans-serif; font-weight: bold;">
 
-      Administrar ingresos/compras
+      Administrar ingresos/compras eliminados
 
     </h1>
 
@@ -27,7 +27,7 @@ if ($_SESSION["perfil"] == "Especial") {
 
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio </a></li>
 
-      <li class="active">Administrar compras</li>
+      <li class="active">Administrar compras eliminadas</li>
 
     </ol>
 
@@ -39,23 +39,16 @@ if ($_SESSION["perfil"] == "Especial") {
 
       <div class="box-header with-border">
 
-        <a href="crear-compra">
-          <button class="btn btn-primary">
-            <i class="fa fa-plus"></i>
-            Agregar compra
-          </button>
-        </a>
-        
-        <a class="btn btn-danger" href="compras-eliminadas">
-          <i class="fa fa-trash"></i>
-          <span> Eliminados </span>
+        <a href="compras" class="btn btn-primary">
+          <i class="fa fa-arrow-left"></i>
+          Volver
         </a>
 
       </div>
 
       <div class="box-body">
 
-        <table class="table table-bordered table-striped dt-responsive tablas text-uppercase tablaComprasRealizadas" width="100%">
+        <table class="table table-bordered table-striped dt-responsive tablas text-uppercase tablaComprasEliminadas" width="100%">
 
           <thead>
             <tr>

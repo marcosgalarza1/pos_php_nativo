@@ -167,7 +167,7 @@ static public function mdlRegistrarCompra($tabla, $datos){
 
 	static public function mdlEliminarCompra($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado=0 WHERE id = :id");
 
 		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 
@@ -267,7 +267,7 @@ static public function mdlRegistrarCompra($tabla, $datos){
 	RANGO FECHAS
 	=============================================*/	
 
-	static public function mdlRangoFechasComprasPdf($tabla, $fechaInicial, $fechaFinal, $idProveedor, $idCategoria) {
+	static public function mdlRangoFechasComprasPdf($tabla, $fechaInicial, $fechaFinal, $idProveedor, $idCategoria=0) {
 		if ($fechaInicial <= $fechaFinal) {
 			$query = "SELECT 
 						compras.codigo, 
@@ -281,7 +281,7 @@ static public function mdlRegistrarCompra($tabla, $datos){
 					  JOIN categorias c ON p.id_categoria = c.id
 					  JOIN usuarios ON compras.id_usuario = usuarios.id
 					  JOIN proveedor ON compras.id_proveedor = proveedor.id
-					  WHERE DATE(compras.fecha_alta) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal)";
+					  WHERE DATE(compras.fecha_alta) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal) AND compras.estado=1";
 			
 			// Añadir condiciones según proveedor y categoría
 			if ($idProveedor != 0) {
@@ -314,16 +314,18 @@ static public function mdlRegistrarCompra($tabla, $datos){
 	}
 	
 
-	static public function mdlComprasRealizadas($tabla){
+	static public function mdlComprasRealizadas($tabla, $estado=1){
 
 		$query = "SELECT compras.id ,compras.codigo, compras.fecha_alta, usuarios.nombre as usuario, proveedor.nombre as proveedor, compras.total
 		FROM $tabla 
 		JOIN proveedor ON compras.id_proveedor = proveedor.id
 		JOIN usuarios ON compras.id_usuario = usuarios.id
+		WHERE compras.estado=:estado
 		ORDER BY fecha_alta  DESC 
 		";
-
+	
 		$stmt = Conexion::conectar()->prepare($query);
+		$stmt->bindParam(":estado", $estado, PDO::PARAM_INT);
 
 		$stmt -> execute();
 

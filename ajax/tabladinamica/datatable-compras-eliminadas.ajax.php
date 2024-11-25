@@ -1,19 +1,17 @@
 <?php
 
-require_once "../controladores/compras.controlador.php";
-require_once "../modelos/compras.modelo.php";
+require_once "../../controladores/compras.controlador.php";
+require_once "../../modelos/compras.modelo.php";
 
-class TablaProductosVentas2{
+class TablaProductosVentasEliminadas{
 
  	/*=============================================
  	 MOSTRAR LA TABLA DE PRODUCTOS
   	=============================================*/ 
 
-	public function mostrarTablaProductosVentas2(){
+	public function mostrarTablaProductosEliminadas(){
 
-	
-
-  		$compras = ControladorCompras::ctrComprasRealizadas(estado:1);	
+  		$compras = ControladorCompras::ctrComprasRealizadas(estado:0);	
 		
   		if(count($compras) == 0){
   			// En caso de que no haya compras, retornamos un JSON vacío
@@ -33,10 +31,6 @@ class TablaProductosVentas2{
 			  =============================================*/
 			  $botones.= "<button class='btn btn-info btnImprimirCompra' codigoCompra='".$compras[$i]["codigo"]."'><i class='fa fa-print'></i></button>"; 
 
-			//   if(isset($_GET["perfilOculto"])  && $_GET["perfilOculto"] == "Administrador"){
-				  $botones.=  "<button class='btn btn-danger btnEliminarCompra' idCompra='".$compras[$i]["id"]."'><i class='fa fa-times'></i></button>"; 
-			//   }
-			
 			 $botones.="</div>";
 
 		  	// Formateamos cada registro de compra como un array
@@ -59,7 +53,7 @@ class TablaProductosVentas2{
 /*=============================================
 ACTIVAR TABLA DE PRODUCTOS
 =============================================*/ 
-$activarProductosVentas = new TablaProductosVentas2();
-$activarProductosVentas->mostrarTablaProductosVentas2();
+$activarProductosVentas = new TablaProductosVentasEliminadas();
+$activarProductosVentas->mostrarTablaProductosEliminadas();
 
 ?>

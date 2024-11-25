@@ -39,12 +39,12 @@ class imprimirCompra {
         // TRAEMOS LA INFORMACIÓN DEL MESERO
         $itemUsuario = "id";
         $valorUsuario = $respuestaCompra["id_usuario"];
-        $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuarios($itemUsuario, $valorUsuario);
+        $respuestaUsuario = ControladorUsuarios::ctrMostrarUsuariosActivoInactivo($itemUsuario, $valorUsuario);
 
         // TRAEMOS LA INFORMACIÓN DEL PROVEEDOR
         $itemVendedor = "id";
         $valorVendedor = $respuestaCompra["id_proveedor"];
-        $respuestaProveedor = ControladorProveedors::ctrMostrarProveedors($itemVendedor, $valorVendedor);
+        $respuestaProveedor = ControladorProveedors::ctrMostrarProveedorsActivosInactivos($itemVendedor, $valorVendedor);
 
         // REQUERIMOS LA CLASE TCPDF
         require_once('tcpdf_include.php');

@@ -162,10 +162,8 @@ class ControladorCategorias{
 
 		if(isset($_GET["idCategoria"])){
 
-		$respuesta = ModeloProductos::mdlMostrarProductos("productos", "id_categoria", $_GET["idCategoria"], "ASC");
-			
-			if (!$respuesta) {
-				$tabla ="Categorias";$_GET["idCategoria"];
+
+				$tabla ="Categorias";
 				$datos = $_GET["idCategoria"];
 
 				$respuesta = ModeloCategorias::mdlBorrarCategoria($tabla, $datos);
@@ -181,32 +179,13 @@ class ControladorCategorias{
 							  confirmButtonText: "Cerrar"
 							  }).then(function(result){
 										if (result.value) {
-
 										window.location = "categorias";
-
 										}
 									})
 
 						</script>';
 				}
-			}else{
-					echo'<script>
-
-						swal({
-							  type: "error",
-							  title: "La categoría no se puede eliminar porque tiene productos",
-							  showConfirmButton: true,
-							  confirmButtonText: "Cerrar"
-							  }).then(function(result){
-										if (result.value) {
-
-										window.location = "categorias";
-
-										}
-									})
-
-						</script>';
-			}
+		
 
 		}
 		

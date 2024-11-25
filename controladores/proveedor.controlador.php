@@ -85,6 +85,13 @@ class ControladorProveedors{
 		return $respuesta;
 
 	}
+	static public function ctrMostrarProveedorsActivosInactivos($item, $valor,$estado=1){
+
+		$tabla = "proveedor";
+		$respuesta = ModeloProveedors::mdlMostrarProveedorsActivosInactivos($tabla, $item, $valor,$estado);
+		return $respuesta;
+
+	}
 
 	/*=============================================
 	EDITAR PROVEEDOR
