@@ -332,7 +332,7 @@ class ModeloVentas
 	RANGO DE VENTAS - POR MESERO
 	=============================================*/
 
-	static public  function mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal, $idMesero, $idCategoria, $idCliente)
+	static public  function mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal, $idMesero, $idCategoria, $idCliente, $soloEliminados)
 	{
 		$query = "SELECT 
 						ventas.codigo, 
@@ -348,7 +348,7 @@ class ModeloVentas
 					JOIN meseros ON ventas.id_mesero = meseros.id
 					JOIN usuarios ON ventas.id_vendedor = usuarios.id
 					JOIN clientes ON ventas.id_cliente = clientes.id
-					WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal) AND ventas.estado=1
+					WHERE DATE(ventas.fecha) BETWEEN DATE(:fechaInicial) AND DATE(:fechaFinal) 
 					";
 
 		// Añadir la condición del mesero solo si $idMesero no es 0
@@ -360,6 +360,12 @@ class ModeloVentas
 		}
 		if ($idCliente != 0) {
 			$query .= " AND  ventas.id_cliente =:idCliente";
+		}
+		// echo $soloEliminados;
+		if ($soloEliminados=='true'){
+			$query .= " AND ventas.estado =0 ";
+		}else{
+			$query .= " AND ventas.estado =1 ";
 		}
 		
 		$query .= " GROUP BY ventas.codigo, ventas.fecha DESC, usuarios.nombre, meseros.nombre;";

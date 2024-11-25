@@ -22,10 +22,10 @@ $fechaActual = date('Y-m-d');
 
     <div class="box">
 
- 
+
 
       <div class="box-body">
-       
+
         <div class="card card-secondary card-outline">
           <div class="card-body">
             <input type="hidden" id="id_usuario" name="id_usuario" value="<?php echo $_SESSION["id"]; ?>">
@@ -34,7 +34,7 @@ $fechaActual = date('Y-m-d');
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Fecha de inicio:</label>
                   <div class="input-group date">
-                    <input type="date" id="fecha_inicio" name="fecha_inicio" value="<?php  echo date('Y-m-01'); ?>"  class="form-control" required/>
+                    <input type="date" id="fecha_inicio" name="fecha_inicio" value="<?php echo date('Y-m-01'); ?>" class="form-control" required />
                   </div>
                 </div>
               </div>
@@ -43,7 +43,7 @@ $fechaActual = date('Y-m-d');
                 <div class="form-group">
                   <label><i class="text-danger">*</i> Fecha de fin:</label>
                   <div class="input-group date">
-                    <input type="date" id="fecha_fin" name="fecha_fin"  value="<?php echo date('Y-m-d'); ?>" class="form-control" required/>
+                    <input type="date" id="fecha_fin" name="fecha_fin" value="<?php echo date('Y-m-d'); ?>" class="form-control" required />
                   </div>
                 </div>
               </div>
@@ -53,15 +53,15 @@ $fechaActual = date('Y-m-d');
                   <label>Categoria</label>
                   <select class="form-control" id="id_categoria" name="id_categoria" required>
                     <option value="0">Todas</option>
-                    
-                    <?php
-                      $item = null;
-                      $valor = null;
-                      $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
 
-                       foreach ($categorias as $key => $value) {
-                         echo '<option value="'.$value["id"].'">'.$value["categoria"].'</option>';
-                       }
+                    <?php
+                    $item = null;
+                    $valor = null;
+                    $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
+
+                    foreach ($categorias as $key => $value) {
+                      echo '<option value="' . $value["id"] . '">' . $value["categoria"] . '</option>';
+                    }
                     ?>
                   </select>
                 </div>
@@ -71,15 +71,15 @@ $fechaActual = date('Y-m-d');
                   <label>Cliente</label>
                   <select class="form-control" id="id_cliente" name="id_cliente" required>
                     <option value="0">Todas</option>
-                    
-                    <?php
-                      $item = null;
-                      $valor = null;
-                      $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
 
-                       foreach ($clientes as $key => $value) {
-                         echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                       }
+                    <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
+
+                    foreach ($clientes as $key => $value) {
+                      echo '<option value="' . $value["id"] . '">' . $value["nombre"] . '</option>';
+                    }
                     ?>
                   </select>
                 </div>
@@ -89,88 +89,98 @@ $fechaActual = date('Y-m-d');
                   <label><i class="text-danger">*</i>Mesero</label>
                   <select class="form-control" id="id_mesero" name="id_mesero" required>
                     <option value="0">Todas</option>
-                    
-                    <?php
-                      $item = null;
-                      $valor = null;
-                      $meseros = ControladorMeseros::ctrMostrarMeseros($item, $valor);
 
-                       foreach ($meseros as $key => $value) {
-                         echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
-                       }
+                    <?php
+                    $item = null;
+                    $valor = null;
+                    $meseros = ControladorMeseros::ctrMostrarMeseros($item, $valor);
+
+                    foreach ($meseros as $key => $value) {
+                      echo '<option value="' . $value["id"] . '">' . $value["nombre"] . '</option>';
+                    }
                     ?>
                   </select>
                 </div>
               </div>
             </div>
-         
-            <div class="text-right">
-              <button type="button" class="btn btn-sm btn-warning" onclick="generatePDF()"> 
+            <div class="row">
+              <div class="col-md-3 col-sm-6  col-xs-4">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <input type="checkbox" aria-label="..." id="registros_eliminados" name="registros_eliminados">
+                  </span>
+                  <input type="text" class="form-control" aria-label="Registros Eliminados" value="Registros Eliminados" readonly>
+                </div><!-- /input-group -->
+              </div>
+              <div class="col-md-9 col-sm-6 col-xs-8">
+              <div class="text-right">
+              <button type="button" class="btn btn-sm btn-warning" onclick="generatePDF()">
                 <i class="fa fa-print"></i> Generate PDF
               </button>
             </div>
-        
-             <img src="vistas/img/plantilla/rep1.jpg" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
+              </div>
+            </div>
+       
+
+            <img src="vistas/img/plantilla/rep1.jpg" class="responsive-image" style="display: block; margin: 0 auto; max-width: 100%; height: auto; object-fit: contain;">
 
           </div><!--/body card-->
-         
+
         </div><!--/CARD FIN-->
-      
+
       </div>
- 
+
     </div>
-    
+
   </section>
 
 </div>
 <script>
+  // Asignar la fecha actual a una variable global en JavaScript
+  const fechaActual = "<?php echo $fechaActual; ?>";
+  const fechaInicio = document.getElementById('fecha_inicio');
+  const fechaFin = document.getElementById('fecha_fin');
+  fechaInicio.setAttribute('max', fechaActual);
+  fechaFin.setAttribute('max', fechaActual);
 
+  // Variable global para mantener la referencia de la ventana emergente
+  var popupWindow = null;
 
+  function generatePDF() {
 
-// Asignar la fecha actual a una variable global en JavaScript
-const fechaActual = "<?php echo $fechaActual; ?>";
-const fechaInicio = document.getElementById('fecha_inicio');
-const fechaFin = document.getElementById('fecha_fin');
-fechaInicio.setAttribute('max', fechaActual);
-fechaFin.setAttribute('max', fechaActual);
+    const idMesero = document.getElementById('id_mesero').value;
+    const idUsuario = document.getElementById('id_usuario').value;
+    const idCategoria = document.getElementById('id_categoria').value;
+    const idCliente = document.getElementById('id_cliente').value;
+    const registroEliminados = document.getElementById('registros_eliminados').checked;
+ 
+    // Validar campos
 
-// Variable global para mantener la referencia de la ventana emergente
-var popupWindow = null;
-
-function generatePDF() {
-
-  const idMesero = document.getElementById('id_mesero').value;
-  const idUsuario = document.getElementById('id_usuario').value;
-  const idCategoria = document.getElementById('id_categoria').value;
-  const idCliente = document.getElementById('id_cliente').value;
-
-  // Validar campos
-
-  if (!fechaInicio.value || !fechaFin.value) {
+    if (!fechaInicio.value || !fechaFin.value) {
       swal({
-          icon: 'warning',
-          title: 'Advertencia',
-          text: 'Por favor, seleccione las fechas requeridas.',
+        icon: 'warning',
+        title: 'Advertencia',
+        text: 'Por favor, seleccione las fechas requeridas.',
       });
       return;
-  }
-  if (fechaFin.value > fechaActual) {
+    }
+    if (fechaFin.value > fechaActual) {
       swal({
-          icon: 'warning',
-          title: 'Advertencia',
-          text: 'Por favor, la fecha fin seleccionada no puede ser mayor a la fecha actual: ' + fechaActual,
+        icon: 'warning',
+        title: 'Advertencia',
+        text: 'Por favor, la fecha fin seleccionada no puede ser mayor a la fecha actual: ' + fechaActual,
       });
       return;
-  }
+    }
 
-  if (fechaInicio.value > fechaFin.value) { 
+    if (fechaInicio.value > fechaFin.value) {
       swal({
-          icon: 'warning',
-          title: 'Advertencia',
-          text: 'Por favor, seleccione una fecha de inicio menor a la fecha fin.',
+        icon: 'warning',
+        title: 'Advertencia',
+        text: 'Por favor, seleccione una fecha de inicio menor a la fecha fin.',
       });
       return;
-  } 
+    }
 
 
     // Tamaño de la ventana emergente
@@ -184,21 +194,20 @@ function generatePDF() {
 
     // Cierra la ventana emergente existente si está abierta
     if (popupWindow && !popupWindow.closed) {
-        popupWindow.close();
+      popupWindow.close();
     }
 
     // Abre la URL en una nueva ventana (popup)
     popupWindow = window.open(
-        "extensiones/tcpdf/pdf/reporte-ventas.php?fechaInicio=" + encodeURIComponent(fechaInicio.value) +
-        "&fechaFin=" + encodeURIComponent(fechaFin.value) +
-        "&idMesero=" + encodeURIComponent(idMesero) +
-        "&idUsuario=" + encodeURIComponent(idUsuario) +
-        "&idCategoria=" + encodeURIComponent(idCategoria) +
-        "&idCliente=" + encodeURIComponent(idCliente),
-        "_blank",
-        windowFeatures
+      "extensiones/tcpdf/pdf/reporte-ventas.php?fechaInicio=" + encodeURIComponent(fechaInicio.value) +
+      "&fechaFin=" + encodeURIComponent(fechaFin.value) +
+      "&idMesero=" + encodeURIComponent(idMesero) +
+      "&idUsuario=" + encodeURIComponent(idUsuario) +
+      "&idCategoria=" + encodeURIComponent(idCategoria) +
+      "&idCliente=" + encodeURIComponent(idCliente)+
+      "&registroEliminados=" + encodeURIComponent(registroEliminados),
+      "_blank",
+      windowFeatures
     );
-}
-
-
+  }
 </script>

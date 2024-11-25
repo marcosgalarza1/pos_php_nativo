@@ -168,8 +168,9 @@ class ControladorVentas{
 
 			
 			if($respuesta == "ok"){
-				
-				if( $_POST["sinImprimir"] == false){
+
+				$imprimir = isset($_POST["sinImprimir"]) ? $_POST["sinImprimir"] : false;
+				if ($imprimir == false) {
 					$codigoVenta = $_POST["nuevaVenta"];
 					echo "<script type='text/javascript'>
 							 window.open('extensiones/tcpdf/pdf/factura.php?codigo={$codigoVenta}', '_blank');
@@ -512,11 +513,11 @@ class ControladorVentas{
 	/*=============================================
 	rango de ventas:
 	=============================================*/
-	static public function ctrRangoFechasVentasPdf($fechaInicial, $fechaFinal,$id_proveedor,$idCategoria,$idCliente){
+	static public function ctrRangoFechasVentasPdf($fechaInicial, $fechaFinal,$id_proveedor,$idCategoria,$idCliente, $registroEliminados){
 
 		$tabla = "ventas";
 	
-		$respuesta = ModeloVentas::mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal,$id_proveedor,$idCategoria,$idCliente);
+		$respuesta = ModeloVentas::mdlRangoFechasVentasPdf($tabla, $fechaInicial, $fechaFinal,$id_proveedor,$idCategoria,$idCliente, $registroEliminados);
 	
 		return $respuesta;
 	}

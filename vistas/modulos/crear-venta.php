@@ -533,7 +533,7 @@ $(document).ready(function() {
                 }
             });
         },
-        minLength: 3,
+        minLength: 2,
         select: function(event, ui) {
             event.preventDefault();
             $("#id_cliente").val(ui.item.id); // Asigna el ID del cliente

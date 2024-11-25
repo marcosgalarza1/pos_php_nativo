@@ -18,14 +18,13 @@ require_once('tcpdf_include.php');
 
 class reporteVenta
 {
-
-
     public $fechaInicio;
     public $fechaFin;
     public $idMesero;
     public $idUsuario;
     public $idCategoria;
     public $idCliente;
+    public $registroEliminados;
     private $nombreTienda = "Cabañas El Gallito";
     private $direccionTienda = "Rio Pirai";
 
@@ -39,8 +38,9 @@ class reporteVenta
         $idUsuario = $this->idUsuario;
         $idCategoria= $this->idCategoria;
         $idCliente = $this->idCliente;
-
-        $respuestaVentas = ControladorVentas::ctrRangoFechasVentasPdf($fechaInicio, $fechaFin, $idMesero,$idCategoria,$idCliente);
+        $registroEliminados = $this->registroEliminados;
+        
+        $respuestaVentas = ControladorVentas::ctrRangoFechasVentasPdf($fechaInicio, $fechaFin, $idMesero,$idCategoria,$idCliente,$registroEliminados);
 
         $itemUsuario = "id";
 
@@ -194,4 +194,5 @@ $factura->idMesero = $_GET["idMesero"];
 $factura->idUsuario = $_GET["idUsuario"];
 $factura->idCategoria = $_GET["idCategoria"];
 $factura->idCliente = $_GET["idCliente"];
+$factura->registroEliminados = $_GET["registroEliminados"];
 $factura->generarPdfVentas();
