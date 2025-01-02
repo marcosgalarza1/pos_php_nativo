@@ -167,7 +167,7 @@ class ControladorCompras{
 
 				swal({
 					  type: "success",
-					  title: "La compra ha sido borrada correctamente",
+					  title: "La compra ha sido anulada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){

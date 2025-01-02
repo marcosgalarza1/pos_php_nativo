@@ -71,7 +71,7 @@ class TablaProductosEliminados{
 
 			}else{
 
-				 $botones =  "<div class='btn-group'><button class='btn btn-danger btnRestaurarProducto' idProducto='".$productos[$i]["id"]."' codigo='".$productos[$i]["codigo"]."' imagen='".$productos[$i]["imagen"]."'><i class='fa fa-times'></i> Restaurar</button></div>"; 
+				 $botones =  "<div class='btn-group'><button class='btn btn-success btnRestaurarProducto' idProducto='".$productos[$i]["id"]."' codigo='".$productos[$i]["codigo"]."' imagen='".$productos[$i]["imagen"]."'><i class='fa fa-undo'></i> Restaurar</button></div>"; 
 
 			}
 

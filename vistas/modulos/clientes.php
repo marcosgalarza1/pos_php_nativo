@@ -40,9 +40,9 @@ if($_SESSION["perfil"] == "Especial"){
       <!--   <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">
           Agregar Meseros
         </button> -->
-       <a href="agregar-cliente" class="btn btn-primary">
+    <!--    <a href="agregar-cliente" class="btn btn-primary">
        Agregar Cliente
-       </a>
+       </a> -->
       &nbsp; 
 
         <a class="btn btn-primary" target="_blank" href="reporte_cliente.php">

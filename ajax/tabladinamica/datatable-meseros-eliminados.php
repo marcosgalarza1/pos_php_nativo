@@ -45,7 +45,7 @@ class TablaMeserosEliminados
                 "' . $meseros[$i]["telefono"] . '",
                 "' . $meseros[$i]["direccion"] . '",
                 "' . $meseros[$i]["compras"] . '",
-                "' . $meseros[$i]["compras"] . '",
+           
                 "' . $meseros[$i]["fecha"] . '",
                 "' . $botones . '"
                 

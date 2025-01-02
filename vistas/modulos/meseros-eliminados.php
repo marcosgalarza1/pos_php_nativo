@@ -59,7 +59,7 @@ if($_SESSION["perfil"] == "Especial"){
               <th>Telefono</th>
               <th>Dirección</th>
               <th>Total compras</th>
-              <th>Última compra</th>
+        
               <th>Ingreso al sistema</th>
               <th>Acción</th>
             </tr>

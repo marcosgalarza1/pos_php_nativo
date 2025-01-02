@@ -225,11 +225,12 @@ if ($_SESSION["perfil"] == "Especial") {
                             </div>
 
                           </td>
-
+                    
                         </tr>
 
                       </tbody>
-
+                   
+                    </div>
                     </table>
 
                   </div>
@@ -238,7 +239,7 @@ if ($_SESSION["perfil"] == "Especial") {
                 <hr>
 
 
-
+          
 
 
                 <!--=====================================
@@ -248,7 +249,11 @@ if ($_SESSION["perfil"] == "Especial") {
 
                 <div class="row">
 
+
+                
                   <div class="col-md-6">
+
+          
                     <div class="form-group">
                       <label for="tipo_pago">TIPO DE PAGO:</label>
                       <select class="form-control input-sm" id="tipoPago" name="tipoPago">

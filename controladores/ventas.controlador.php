@@ -328,7 +328,7 @@ class ControladorVentas{
 
 				swal({
 					  type: "success",
-					  title: "La venta ha sido borrada correctamente",
+					  title: "La venta ha sido anulada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
