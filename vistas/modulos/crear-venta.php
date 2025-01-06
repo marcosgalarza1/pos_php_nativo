@@ -12,13 +12,12 @@ if ($_SESSION["perfil"] == "Especial") {
 }
 
 ?>
-
-<style>
+ <style>
     .dropdown-menu {
       padding: 15px; /* Para darle un buen espaciado */
       min-width: 300px; /* Ancho mínimo del formulario */
     }
-</style>
+  </style>
 <div class="content-wrapper text-uppercase ">
 
   <section class="content-header">
@@ -193,14 +192,11 @@ if ($_SESSION["perfil"] == "Especial") {
                             <option value="5">✔️Solo Papas</option>
                             <option value="6">➕ Más fideos</option>
                         </select>
-                      </div>
+                    </div>
                   </div>
                 </div>
                
-   <!-- Botón que activa el dropdown -->
-   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Añadir Nota <span class="caret"></span>
-      </button>
+
                 <!--=====================================
                 ENTRADA PARA AGREGAR PRODUCTO
                 ======================================-->
@@ -275,6 +271,42 @@ if ($_SESSION["perfil"] == "Especial") {
 
 
           
+
+
+                <div class="dropdown">
+                  <!-- Botón que activa el dropdown -->
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i><span class="caret"></span>
+                  </button>
+                  <!-- Dropdown con el formulario -->
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                      <form id="noteForm" onsubmit="return false;">
+                        <div class="form-group">
+                          <label for="noteTitle">Título</label>
+                          <input type="text" class="form-control" id="noteTitle" placeholder="Título de la nota">
+                        </div>
+                        <div class="form-group">
+                          <label for="noteType">Tipo</label>
+                            <select class="select2 text-uppercase form-control input-sm" name="states[]" multiple="multiple">
+                                <option value="1">✔️Solo Arroz</option>
+                                <option value="2">✔️Solo Fideo</option>
+                                <option value="3">❌No Fideo</option>
+                                <option value="4">❌No Papas</option>
+                                <option value="5">✔️Solo Papas</option>
+                                <option value="6">➕ Más fideos</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="noteDescription">Descripción</label>
+                          <textarea class="form-control" id="noteDescription" rows="3" placeholder="Escribe tu nota..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block">Guardar Nota</button>
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+
 
 
                 <!--=====================================
@@ -549,37 +581,13 @@ MODAL AGREGAR MESERO
   </div>
 
 </div>
-<div class="dropdown">
-      <!-- Dropdown con el formulario -->
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li>
-          <form id="noteForm" onsubmit="return false;">
-            <div class="form-group">
-              <label for="noteTitle">Título</label>
-              <input type="text" class="form-control" id="noteTitle" placeholder="Título de la nota">
-            </div>
-            <div class="form-group">
-              <label for="noteType">Tipo</label>
-              <select class="form-control" id="noteType">
-                <option value="personal">Personal</option>
-                <option value="trabajo">Trabajo</option>
-                <option value="otro">Otro</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="noteDescription">Descripción</label>
-              <textarea class="form-control" id="noteDescription" rows="3" placeholder="Escribe tu nota..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-success btn-block">Guardar Nota</button>
-          </form>
-        </li>
-      </ul>
-    </div>
+
 <script>
    // Prevenir que el dropdown se cierre al interactuar con el formulario
    $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
     });
+    
 $(document).ready(function() {
     $("#cliente").autocomplete({
         source: function(request, response) {
