@@ -277,7 +277,8 @@ class ModeloVentas
 
 	static public function mdlSumaTotalVentas($tabla)
 	{
-
+	
+		date_default_timezone_set('America/La_Paz');
 		$anio = date('Y'); // Obtener el año actual
 
 		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE YEAR(fecha) = :anio AND $tabla.estado=1");
@@ -296,6 +297,7 @@ class ModeloVentas
 
 	static public function mdlVentasTotalMes($tabla)
 	{
+		date_default_timezone_set('America/La_Paz');
 		$yearactual = date('Y');
 		$mesActual = date('m');
 		$stmt = Conexion::conectar()->prepare("SELECT SUM(total) as total FROM $tabla WHERE MONTH(fecha)='$mesActual' AND YEAR(fecha) = '$yearactual' AND $tabla.estado=1");

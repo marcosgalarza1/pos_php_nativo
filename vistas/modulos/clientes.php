@@ -1,7 +1,7 @@
 
 <?php
 
-if($_SESSION["perfil"] == "Especial"){
+if($_SESSION["perfil"] == ""){
 
   echo '<script>
 
@@ -45,6 +45,7 @@ if($_SESSION["perfil"] == "Especial"){
        </a> -->
       &nbsp; 
 
+      
         <a class="btn btn-primary" target="_blank" href="reporte_cliente.php">
             <i class="material-icons"></i>
             <i class="fa fa-print"></i>

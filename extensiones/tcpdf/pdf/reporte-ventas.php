@@ -16,7 +16,7 @@ require_once "../../../controladores/usuarios.controlador.php";
 require_once "../../../modelos/usuarios.modelo.php";
 require_once('tcpdf_include.php');
 
-class reporteVenta
+class reporteVenta 
 {
     public $fechaInicio;
     public $fechaFin;
@@ -25,8 +25,8 @@ class reporteVenta
     public $idCategoria;
     public $idCliente;
     public $registroEliminados;
-    private $nombreTienda = "Cabañas El Gallito";
-    private $direccionTienda = "Rio Pirai";
+    private $nombreTienda = "Pollos Rosy";
+    private $direccionTienda = "Refineria";
 
     public function generarPdfVentas()
     {
@@ -137,7 +137,7 @@ class reporteVenta
 
 
 
-
+//---------------------------------------------------------
 
         $pdf->Cell(50, 5, $DateAndTime, 0, 1, 'L');
 
@@ -148,12 +148,12 @@ class reporteVenta
         $pdf->Cell(0, 5, 'Detalle Del Reporte', 1, 1, 'C', 1);
         $pdf->SetTextColor(0, 0, 0);
         $pdf->Cell(10, 5, 'No', 1, 0, 'L');
-        $pdf->Cell(22, 5, 'Ticket', 1, 0, 'L');
+        $pdf->Cell(16, 5, 'Ticket', 1, 0, 'L');
         $pdf->Cell(30, 5, 'Fecha', 1, 0, 'L');
         $pdf->Cell(35, 5, 'Usuario', 1, 0, 'L');
-        $pdf->Cell(35, 5, 'Mesero', 1, 0, 'L');
+        $pdf->Cell(40, 5, 'Mesero', 1, 0, 'L');
         $pdf->Cell(40, 5, 'Cliente', 1, 0, 'L');
-        $pdf->Cell(24, 5, 'Monto', 1, 1, 'L');
+        $pdf->Cell(25, 5, 'Monto', 1, 1, 'L');
         $pdf->SetFont('helvetica', '', 8);
 
         //Imprimir los detalles de los productos
@@ -162,12 +162,12 @@ class reporteVenta
         foreach ($respuestaVentas as $item) {
             $total =  $item["total"];
             $pdf->Cell(10, 5,  $contador, 1, 0, 'L');
-            $pdf->Cell(22, 5, $item["codigo"], 1, 0, 'L');
+            $pdf->Cell(16, 5, $item["codigo"], 1, 0, 'L');
             $pdf->Cell(30, 5, $item["fecha"], 1, 0, 'L');
             $pdf->Cell(35, 5, $item["usuario"], 1, 0, 'L');
-            $pdf->Cell(35, 5, $item["mesero"], 1, 0, 'L');
+            $pdf->Cell(40, 5, $item["mesero"], 1, 0, 'L');
             $pdf->Cell(40, 5, $item["cliente"], 1, 0, 'L');
-            $pdf->Cell(24, 5, $total, 1, 1, 'R');
+            $pdf->Cell(25, 5, $total, 1, 1, 'R');
             $contador++;
             $sumTotal += $total;
         }

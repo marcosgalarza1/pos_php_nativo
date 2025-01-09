@@ -24,9 +24,9 @@ class TablaClientes
             /*=============================================
 			TRAEMOS LAS ACCIONES
 			=============================================*/
-			if(isset($_GET["perfilOculto"]) && $_GET["perfilOculto"] == "Vendedor"){
+			if(isset($_GET["perfilOculto"])   && $_GET["perfilOculto"] == "Especial" ){
 
-				$botones =  ""; 
+				$botones  =  "<div class='btn-group'><button class='btn btn-primary btnEditarCliente' idCliente='".$clientes[$i]["id"]."' data-toggle='modal' data-target='#modalEditarCliente'><i class='fa fa-pencil'></i></button>"; 
               
 			}else
             

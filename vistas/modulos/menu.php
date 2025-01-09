@@ -58,7 +58,7 @@
 			</li>';
 			}
 
-			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
+			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Especial") {
 
 				echo '<li>
 
@@ -73,7 +73,7 @@
 			</li>';
 			}
 
-			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
+			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "") {
 
 				echo '<li>
 
@@ -86,20 +86,16 @@
 			</li>';
 			}
 
-			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
-
+			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Especial" || $_SESSION["perfil"] == "Vendedor") {
 				echo '<li>
-
-				<a href="ventas">
-		        <i class="fa fa-money" aria-hidden="true"></i>
-			<span>Ventas Realizadas</span>
-				</a>
-				
-
-			</li>';
+					<a href="ventas">
+						<i class="fa fa-money" aria-hidden="true"></i>
+						<span>Ventas Realizadas</span>
+					</a>
+				</li>';
 			}
 
-			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
+			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor" || $_SESSION["perfil"] == "Especial") {
 
 				echo '<li>
 
@@ -182,7 +178,32 @@
 			</li>';
 			}
 
-			if ($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor") {
+			if ($_SESSION["perfil"] == "" || $_SESSION["perfil"] == "Vendedor") {
+
+				echo '<li>
+					<a href="reporte-venta">
+						<i class="fa fa-calendar"></i>
+						<span>Reporte de Ventas por Fecha</span>
+					</a>
+				</li>';
+			
+				echo '<li>
+					<a href="ver-productos-faltantes">
+						<i class="fa fa-exclamation-circle"></i>
+						<span>Reporte de Productos Faltantes</span>
+					</a>
+				</li>';
+			
+				echo '<li>
+					<a href="reportes">
+						<i class="fa fa-file-text" aria-hidden="true"></i>
+						<span>Reporte de ventas</span>
+					</a>
+				</li>';
+			}
+			
+
+			if ($_SESSION["perfil"] == "Administrador"   || $_SESSION["perfil"] == "Especial"  ) {
 				
 
 				echo '<li class="treeview">
@@ -229,9 +250,6 @@
 
 					
 
-				
-
-				
 
 					<li>
 
@@ -244,6 +262,7 @@
 
 					</li>';
 
+					
 
 				
 
@@ -273,7 +292,7 @@
 				}
 
 
-				if ($_SESSION["perfil"] == "Administrador") {
+				if ($_SESSION["perfil"] == "Administrador"  || $_SESSION["perfil"] == "Especial") {
 
 					echo '<li>
 

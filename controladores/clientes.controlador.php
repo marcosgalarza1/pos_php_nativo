@@ -10,7 +10,7 @@ class ControladorClientes{
 
 		if(isset($_POST["nuevoCliente"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoCliente"])){
+			if (preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ \/]+$/', $_POST["nuevoCliente"])) {
 			   
 
 			   	$tabla = "clientes";
@@ -105,7 +105,7 @@ class ControladorClientes{
 
 		if(isset($_POST["editarCliente"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarCliente"])){ 
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ \/]+$/', $_POST["editarCliente"])){ 
 	
 
 			   	$tabla = "clientes";

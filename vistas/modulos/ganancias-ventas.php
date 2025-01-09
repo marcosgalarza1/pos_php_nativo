@@ -2,6 +2,13 @@
 $item = null;
 $valor = null;
 $datos = ControladorReportes::ctrGananciasMesesAnios();
+
+// Array de nombres de meses en español
+$mesesEspanol = [
+    1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril', 5 => 'Mayo', 
+    6 => 'Junio', 7 => 'Julio', 8 => 'Agosto', 9 => 'Septiembre', 
+    10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+];
 ?>
 
 <div class="content-wrapper text-uppercase">
@@ -31,10 +38,10 @@ $datos = ControladorReportes::ctrGananciasMesesAnios();
                                         <label><i class="text-danger">*</i> Mes:</label>
                                         <select class="form-control" id="month" name="month" required>
                                             <option value="" disabled selected>Seleccionar mes</option>
-                                            <?php foreach ($datos['meses'] as $mes) {
-                                                $mess = date("F", mktime(0, 0, 0, $mes['mes'], 10)); // Obtener el nombre del mes
-                                            ?>
-                                                <option value="<?php echo $mes['mes']; ?>"><?php echo $mess; ?></option>
+                                            <?php foreach ($datos['meses'] as $mes) { ?>
+                                                <option value="<?php echo $mes['mes']; ?>">
+                                                    <?php echo $mesesEspanol[$mes['mes']]; ?>
+                                                </option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -105,10 +112,9 @@ $datos = ControladorReportes::ctrGananciasMesesAnios();
                                     </div>
                                 </div>
                             </div>
-                           
                         </form>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

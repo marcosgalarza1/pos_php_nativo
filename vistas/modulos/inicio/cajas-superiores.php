@@ -5,7 +5,8 @@ $valor = null;
 $orden = "id";
 
 
-$ventas = ControladorVentas::ctrSumaTotalVentas();
+
+
 
 $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
 $totalCategorias = count($categorias);

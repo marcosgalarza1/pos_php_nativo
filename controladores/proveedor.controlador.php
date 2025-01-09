@@ -10,8 +10,8 @@ class ControladorProveedors{
 
 		if(isset($_POST["nuevoProveedor"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoProveedor"]) ||
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ. ]+$/', $_POST["nuevaEmpresa"]) ||
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ \/]+$/', $_POST["nuevoProveedor"]) ||
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ \/]+$/', $_POST["nuevaEmpresa"]) ||
 			   preg_match('/^[()\-0-9 ]+$/', $_POST["nuevoTelefono"]) ||
 			   preg_match('/^[#/\.-a-zA-Z0-9 ]+$/', $_POST["nuevaDireccion"])){
 
@@ -101,8 +101,8 @@ class ControladorProveedors{
 
 		if(isset($_POST["editarProveedor"])){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarProveedor"]) &&
-			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarEmpresa"]) &&
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ \/]+$/', $_POST["editarProveedor"]) &&
+			   preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ \/]+$/', $_POST["editarEmpresa"]) &&
 			   preg_match('/^[()\-0-9 ]+$/', $_POST["editarTelefono"]) && 
 			   preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["editarDireccion"])){
 
