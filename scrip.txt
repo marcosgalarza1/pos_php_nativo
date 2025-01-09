@@ -27,3 +27,46 @@ CREATE TABLE detalle_compra (
     CONSTRAINT fk_detalle_compra_compra FOREIGN KEY (id_compra) REFERENCES compras(id) ON DELETE CASCADE
 );
 
+
+
+CREATE TABLE `arqueo_caja` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, -- Identificador único de la tabla
+  `fecha_apertura` DATETIME DEFAULT NULL,       -- Fecha y hora en que se abre la caja
+  `fecha_cierre` DATETIME DEFAULT NULL,         -- Fecha y hora en que se cierra la caja
+  `Bs200` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Cantidad en billetes de 200
+  `Bs100` DECIMAL(11,2) NOT NULL DEFAULT 0.00,       -- Cantidad en billetes de 100
+  `Bs50` DECIMAL(11,2) NOT NULL DEFAULT 0.00,  -- Cantidad en billetes de 50
+  `Bs20` DECIMAL(11,2) NOT NULL DEFAULT 0.00,     -- Cantidad en billetes de 20
+  `Bs10` DECIMAL(11,2) NOT NULL DEFAULT 0.00,       -- Cantidad en billetes de 10
+  `Bs5` DECIMAL(11,2) NOT NULL DEFAULT 0.00,      -- Cantidad en billetes de 5
+  `Bs2` DECIMAL(11,2) NOT NULL DEFAULT 0.00,        -- Cantidad en billetes de 2
+  `Bs1` DECIMAL(11,2) NOT NULL DEFAULT 0.00,        -- Cantidad en billetes de 1
+  `Bs050` DECIMAL(11,2) NOT NULL DEFAULT 0.00,  -- Cantidad en monedas de 0.50
+  `Bs020` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Cantidad en monedas de 0.20
+  --`cien_dolar` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Cantidad en billetes de 100 dólares
+  `registro_venta` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Total de ventas registradas
+  `apertura` DECIMAL(11,2) NOT NULL DEFAULT 0.00,       -- Monto inicial al abrir la caja
+  `total` DECIMAL(11,2) NOT NULL DEFAULT 0.00,          -- Total calculado en caja
+  `gastos` DECIMAL(11,2) NOT NULL DEFAULT 0.00,         -- Gastos realizados
+  `registro_compra` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Total de compras registradas
+  `saldo_sistema` DECIMAL(11,2) NOT NULL DEFAULT 0.00,  -- Saldo esperado según el sistema
+  `saldo_efectivo` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Saldo real en efectivo
+  `diferencia` DECIMAL(11,2) NOT NULL DEFAULT 0.00,     -- Diferencia entre sistema y efectivo
+  `estado` VARCHAR(20) DEFAULT NULL,                   -- Estado de la caja (ejemplo: "abierta", "cerrada")
+  `nroTicket`  INT  NOT NULL,                          -- Nro de ticket. Se reinicia cada vez que se cierra la caja
+  `id_usuario` INT  NOT NULL,               -- Usuario responsable de la caja
+  `tipo_cambio` DECIMAL(11,2) DEFAULT NULL,            -- Tipo de cambio usado, si aplica
+  PRIMARY KEY (`id`),                                  -- Definir clave primaria
+  KEY `arqueo_caja_id_usuario_foreign` (`id_usuario`), -- Índice para `id_usuario`
+  CONSTRAINT `arqueo_caja_id_usuario_foreign`          -- Relación con la tabla `usuarios`
+    FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `cajas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `numero_caja` varchar(10) NOT NULL,
+  `nombre` varchar(35) NOT NULL,
+  `nro_ticket` int(10) UNSIGNED ZEROFILL NOT NULL,
+  `estado` tinyint(4) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
