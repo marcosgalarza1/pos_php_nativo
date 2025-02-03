@@ -28,7 +28,6 @@ CREATE TABLE detalle_compra (
 );
 
 
-
 CREATE TABLE `arqueo_caja` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT, -- Identificador único de la tabla
   `fecha_apertura` DATETIME DEFAULT NULL,       -- Fecha y hora en que se abre la caja

@@ -229,6 +229,7 @@ CUERPO DOCUMENTO
       if($_GET["ruta"] == "inicio" ||
          $_GET["ruta"] == "usuarios" ||
          $_GET["ruta"] == "agregar-usuario" ||
+         $_GET["ruta"] == "arqueo-de-caja" ||
          $_GET["ruta"] == "categorias" ||
          $_GET["ruta"] == "agregar-usuario" ||
          $_GET["ruta"] == "agregar-categoria" ||
