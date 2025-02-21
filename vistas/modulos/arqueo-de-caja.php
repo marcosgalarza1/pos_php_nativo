@@ -32,17 +32,36 @@
         top: 2px;
         background-color: white;
     }
-
-    .custom-radio-cierre input[type="radio"]:checked + label:before {
-        background-color: red;
-        box-shadow: inset 0 0 0 4px white;
+    .custom-radio label[for="radio_apertura"]:before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        border: 2px solid #007bff;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: 2px;
+        background-color: white;
     }
-
+    .custom-radio label[for="radio_cierre"]:before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        border: 2px solid red;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top: 2px;
+        background-color: white;
+    }
     .custom-radio input[type="radio"]:checked + label:before {
-        background-color: green;
+        background-color: #007bff;
         box-shadow: inset 0 0 0 4px white;
     }
-
+    .custom-radio input[id="radio_cierre"]:checked + label:before {
+        background-color:red;
+        box-shadow: inset 0 0 0 4px white;
+    }
 </style>
 <div class="content-wrapper text-uppercase">
     <!-- Header -->
@@ -80,52 +99,52 @@
                                             <tbody>
                                                 <tr>
                                                     <td>200 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_200" data-valor="200"></td>
                                                     <td class="text-right"><p id="Total_200bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>100 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
-                                                    <td class="text-right"><p id="Total_100bs" >0.00</p></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_100" data-valor="100"></td>
+                                                    <td class="text-right"><p id="Total_100bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>50 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_50" data-valor="50"></td>
                                                     <td class="text-right"><p id="Total_50bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>20 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_20" data-valor="20"></td>
                                                     <td class="text-right"><p id="Total_20bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>10 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_10" data-valor="10"></td>
                                                     <td class="text-right"><p id="Total_10bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>5 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_5" data-valor="5"></td>
                                                     <td class="text-right"><p id="Total_5bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>2 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_2" data-valor="2"></td>
                                                     <td class="text-right"><p id="Total_2bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>1 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
-                                                    <td class="text-right"><p id="Total_1bs" >0.00</p></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_1" data-valor="1"></td>
+                                                    <td class="text-right"><p id="Total_1bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>0.50 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_050" data-valor="0.50"></td>
                                                     <td class="text-right"><p id="Total_050bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>0.20 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_020" data-valor="0.20"></td>
                                                     <td class="text-right"><p id="Total_020bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
@@ -134,7 +153,7 @@
                                                 <tfoot style="font-weight: bold; font-size: 16px;">
                                                     <tr style="border-top: 2px solid #333;">
                                                         <td colspan="2">Total Efectivo en Caja </td>
-                                                        <td class="text-right">0.00</td>
+                                                        <td class="text-right"><p id="total_general">0.00</p></td>
                                                     </tr>
                                                 </tfoot>
                                             </tbody>
@@ -173,15 +192,13 @@
                                     <div class="form-group">
                                         <h4><strong>Tipo de Movimiento</strong></h4>
                                         <div class="custom-radio">
-                                            <input type="radio"  id="radio_apertura" name="opcion" value="op1" readonly>
-                                            <label for="radio_apertura" > <span class="label label-success">Apertura</span></label>
-                                            
+                                            <input type="radio" id="radio_apertura" name="opcion" value="op1" readonly>
+                                            <label for="radio_apertura" > <span class="label label-primary">Apertura</span></label>
                                         </div>
-                                        <div class="custom-radio-cierre">
+                                        <div class="custom-radio">
                                             <input type="radio" id="radio_cierre" name="opcion" value="op2" readonly>
-                                            <label for="radio_cierre"> Cierre</label>
+                                            <label for="radio_cierre"> <span class="label label-danger">Cierre</span> </label>
                                         </div>
-                                 
                                     </div>
                                 </div>
                             </div>
@@ -204,53 +221,53 @@
                                     <tbody>
                                         <tr>
                                             <td>200 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_200bs">0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_200_2" data-valor="200"></td>
+                                            <td class="text-right"><p id="Total_200bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>100 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_100bs" >0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_100_2" data-valor="100"></td>
+                                            <td class="text-right"><p id="Total_100bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>50 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_50bs">0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_50_2" data-valor="50"></td>
+                                            <td class="text-right"><p id="Total_50bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>20 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_20bs">0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_20_2" data-valor="20"></td>
+                                            <td class="text-right"><p id="Total_20bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>10 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_10bs">0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_10_2" data-valor="10"></td>
+                                            <td class="text-right"><p id="Total_10bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>5 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_5bs">0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_5_2" data-valor="5"></td>
+                                            <td class="text-right"><p id="Total_5bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>2 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_2bs">0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_2_2" data-valor="2"></td>
+                                            <td class="text-right"><p id="Total_2bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>1 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_1bs" >0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_1_2" data-valor="1"></td>
+                                            <td class="text-right"><p id="Total_1bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>0.50 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_050bs">0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_050_2" data-valor="0.50"></td>
+                                            <td class="text-right"><p id="Total_050bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td>0.20 Bs</td>
-                                            <td><input type="text" class="form-control input-sm"></td>
-                                            <td class="text-right"><p id="Total_020bs">0.00</p></td>
+                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_020_2" data-valor="0.20"></td>
+                                            <td class="text-right"><p id="Total_020bs_2">0.00</p></td>
                                         </tr>
                                         <tr>
                                             <td colspan="3" style="height: 5px;"></td>
@@ -258,7 +275,7 @@
                                         <tfoot style="font-weight: bold; font-size: 16px;">
                                             <tr style="border-top: 2px solid #333;">
                                                 <td colspan="2">Total Efectivo en Caja </td>
-                                                <td class="text-right">0.00</td>
+                                                <td class="text-right"><p id="total_general_2">0.00</p></td>
                                             </tr>
                                         </tfoot>
                                     </tbody>
@@ -325,4 +342,49 @@
         // Actualiza cada segundo
         setInterval(actualizarFechaHora, 1000);
         actualizarFechaHora(); // Ejecutar al cargar la página
-  </script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('.cantidad-input');
+        
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                calcularSubtotal(this);
+                calcularTotal();
+            });
+        });
+
+        function calcularSubtotal(input) {
+            const valor = parseFloat(input.dataset.valor);
+            const cantidad = parseFloat(input.value) || 0;
+            const subtotal = valor * cantidad;
+            
+            // Obtener el ID del elemento total correspondiente
+            const idBase = input.id.replace('cantidad_', '');
+            const totalElement = document.getElementById(`Total_${idBase}bs`);
+            
+            if (totalElement) {
+                totalElement.textContent = subtotal.toFixed(2);
+            }
+        }
+
+        function calcularTotal() {
+            let total = 0;
+            inputs.forEach(input => {
+                const valor = parseFloat(input.dataset.valor);
+                const cantidad = parseFloat(input.value) || 0;
+                total += valor * cantidad;
+            });
+            
+            document.getElementById('total_general').textContent = total.toFixed(2);
+        }
+
+        // Validar que solo se ingresen números
+        inputs.forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (!/[\d.]/.test(e.key)) {
+                    e.preventDefault();
+                }
+            });
+        });
+    });
+</script>
