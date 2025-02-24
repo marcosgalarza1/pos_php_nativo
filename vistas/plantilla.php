@@ -1,9 +1,9 @@
- <?php
+<?php
 
- session_start();
-  // Obtener la fecha actual en PHP en formato YYYY-MM-DD
-  $fechaActual = date("Y-m-d");
- ?>
+session_start();
+// Obtener la fecha actual en PHP en formato YYYY-MM-DD
+$fechaActual = date("Y-m-d");
+?>
 
 <!DOCTYPE html>
 <html>

@@ -99,52 +99,52 @@
                                             <tbody>
                                                 <tr>
                                                     <td>200 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_200" data-valor="200"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_200" name="cantidad_200" data-valor="200"></td>
                                                     <td class="text-right"><p id="Total_200bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>100 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_100" data-valor="100"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_100" name="cantidad_100" data-valor="100"></td>
                                                     <td class="text-right"><p id="Total_100bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>50 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_50" data-valor="50"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_50" name="cantidad_50" data-valor="50"></td>
                                                     <td class="text-right"><p id="Total_50bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>20 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_20" data-valor="20"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_20" name="cantidad_20" data-valor="20"></td>
                                                     <td class="text-right"><p id="Total_20bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>10 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_10" data-valor="10"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_10" name="cantidad_10" data-valor="10"></td>
                                                     <td class="text-right"><p id="Total_10bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>5 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_5" data-valor="5"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_5" name="cantidad_5" data-valor="5"></td>
                                                     <td class="text-right"><p id="Total_5bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>2 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_2" data-valor="2"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_2" name="cantidad_2" data-valor="2"></td>
                                                     <td class="text-right"><p id="Total_2bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>1 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_1" data-valor="1"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_1" name="cantidad_1" data-valor="1"></td>
                                                     <td class="text-right"><p id="Total_1bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>0.50 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_050" data-valor="0.50"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_050" name="cantidad_050" data-valor="0.50"></td>
                                                     <td class="text-right"><p id="Total_050bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td>0.20 Bs</td>
-                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_020" data-valor="0.20"></td>
+                                                    <td><input type="text" class="form-control input-sm cantidad-input" id="cantidad_020" name="cantidad_020" data-valor="0.20"></td>
                                                     <td class="text-right"><p id="Total_020bs">0.00</p></td>
                                                 </tr>
                                                 <tr>
@@ -172,23 +172,7 @@
                                         <input type="text" class="form-control text-uppercase " id="usuario" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
                                         <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
                                     </div>
-                                    <div class="form-group">
-                                        <h4><strong>Seleccione la Caja</strong></h4>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-cogs"></i></span>
-                                            <select class="form-control input-lg select2" id="nuevaCategoria" name="nuevaCategoria" required>
-                                                <option value="">Seleccione la Caja</option>
-                                                <?php
-                                                $item = null;
-                                                $valor = null;
-                                                $cajas = ControladorCajas::ctrMostrarCajas($item, $valor);
-                                                foreach ($cajas as $key => $value) {
-                                                    echo '<option value="' . $value["id"] . '">' . $value["nombre"] . '</option>';
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
+                           
                                     <div class="form-group">
                                         <h4><strong>Tipo de Movimiento</strong></h4>
                                         <div class="custom-radio">
@@ -200,6 +184,29 @@
                                             <label for="radio_cierre"> <span class="label label-danger">Cierre</span> </label>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <h4><strong>Seleccione la Caja</strong></h4>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-cogs"></i></span>
+                                            <select class="form-control input-lg select2" id="nuevaCategoria" name="nuevaCategoria" required>
+                                                <option value="">Seleccione la Caja</option>
+                                                <?php
+                                                $item = null;
+                                                $valor = null;
+                                                $cajas = ControladorCajas::ctrMostrarCajas($item, $valor);
+                                                foreach ($cajas as $key => $value) {
+                                                    echo '<option value="' . $value["id"] . '">' . $value["nombre"]. ' - nro ticket: ' . $value["nro_ticket"] . '</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <h4><strong>Nro de Ticket Inicial</strong></h4>
+                                        <input type="text" class="form-control text-uppercase " id="nro_ticket" name="nro_ticket" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
+                                    </div>
+
                                 </div>
                             </div>
                          
@@ -213,68 +220,55 @@
                                 <table class="table-bordered table-striped dt-responsive  text-uppercase no-footer dtr-inline">
                                     <thead>
                                         <tr>
-                                            <th width="30%">Efectivo</th>
-                                            <th>Cantidad</th>
-                                            <th class="text-right">SubTotal</th>
+                                            <th colspan="2" ="20%"class="text-right">INGRESOS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>200 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_200_2" data-valor="200"></td>
-                                            <td class="text-right"><p id="Total_200bs_2">0.00</p></td>
+                                            <td>Monto inicial al abrir la caja</td>
+                                            <td class="text-right"><p id="apertura">0.00</p></td>
                                         </tr>
                                         <tr>
-                                            <td>100 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_100_2" data-valor="100"></td>
-                                            <td class="text-right"><p id="Total_100bs_2">0.00</p></td>
+                                            <td>Total de ventas registradas</td>
+                                            <td class="text-right"><p id="registro_venta">0.00</p></td>
+                                        </tr>
+                                     
+                                        <tr>
+                                            <td>Total calculado en caja</td>
+                                            <td class="text-right"><p id="total_caja">0.00</p></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" style="height: 5px; font-weight: bold;">EGRESOS</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Gastos realizados</td>
+                                            <td class="text-right"><p id="total_gastos">0.00</p></td>
                                         </tr>
                                         <tr>
-                                            <td>50 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_50_2" data-valor="50"></td>
-                                            <td class="text-right"><p id="Total_50bs_2">0.00</p></td>
+                                            <td>Total de compras registradas</td>
+                                            <td class="text-right"><p id="Total_compras">0.00</p></td>
                                         </tr>
                                         <tr>
-                                            <td>20 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_20_2" data-valor="20"></td>
-                                            <td class="text-right"><p id="Total_20bs_2">0.00</p></td>
+                                            <td>Saldo esperado según el sistema</td>
+                                            <td class="text-right"><p id="saldo_sistema">0.00</p></td>
                                         </tr>
                                         <tr>
-                                            <td>10 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_10_2" data-valor="10"></td>
-                                            <td class="text-right"><p id="Total_10bs_2">0.00</p></td>
+                                            <td>Saldo real en efectivo</td>
+                                            <td class="text-right"><p id="saldo_efectivo">0.00</p></td>
                                         </tr>
                                         <tr>
-                                            <td>5 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_5_2" data-valor="5"></td>
-                                            <td class="text-right"><p id="Total_5bs_2">0.00</p></td>
+                                            <td>Diferencia entre sistema y efectivo</td>
+                                            <td class="text-right"><p id="diferencia">0.00</p></td>
                                         </tr>
+                                       
                                         <tr>
-                                            <td>2 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_2_2" data-valor="2"></td>
-                                            <td class="text-right"><p id="Total_2bs_2">0.00</p></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_1_2" data-valor="1"></td>
-                                            <td class="text-right"><p id="Total_1bs_2">0.00</p></td>
-                                        </tr>
-                                        <tr>
-                                            <td>0.50 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_050_2" data-valor="0.50"></td>
-                                            <td class="text-right"><p id="Total_050bs_2">0.00</p></td>
-                                        </tr>
-                                        <tr>
-                                            <td>0.20 Bs</td>
-                                            <td><input type="text" class="form-control input-sm cantidad-input-2" id="cantidad_020_2" data-valor="0.20"></td>
-                                            <td class="text-right"><p id="Total_020bs_2">0.00</p></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" style="height: 5px;"></td>
+                                            <td colspan="2" style="height: 5px;"> </td>
                                         </tr>
                                         <tfoot style="font-weight: bold; font-size: 16px;">
                                             <tr style="border-top: 2px solid #333;">
-                                                <td colspan="2">Total Efectivo en Caja </td>
+                                                <td colspan="2">Total Efectivo en Caja 2 </td>
                                                 <td class="text-right"><p id="total_general_2">0.00</p></td>
                                             </tr>
                                         </tfoot>
@@ -296,9 +290,12 @@
 
                     <!-- Controlador para crear el producto -->
                     <?php
-                    $crearProducto = new ControladorProductos();
-                    $crearProducto->ctrCrearProducto();
+                    $registrarArqueo = new ControladorArqueo();
+                    $registrarArqueo->ctrRegistrarArqueo();
                     ?>
+
+                    <!-- Agregar un campo oculto para el total general -->
+                    <input type="hidden" name="total_general" id="total_general_hidden">
                 </form>
             </div><!-- /.box-body -->
         </div><!-- /.box -->
@@ -376,6 +373,7 @@
             });
             
             document.getElementById('total_general').textContent = total.toFixed(2);
+            document.getElementById('total_general_hidden').value = total.toFixed(2);
         }
 
         // Validar que solo se ingresen números

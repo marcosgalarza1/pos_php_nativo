@@ -53,7 +53,7 @@ CREATE TABLE `arqueo_caja` (
   `diferencia` DECIMAL(11,2) NOT NULL DEFAULT 0.00,     -- Diferencia entre sistema y efectivo
   `estado` VARCHAR(20) DEFAULT NULL,                   -- Estado de la caja (ejemplo: "abierta", "cerrada")
   `nroTicket`  INT  NOT NULL,                          -- Nro de ticket. Se reinicia cada vez que se cierra la caja
-  `id_usuario` INT  NOT NULL,               -- Usuario responsable de la caja
+  `id_usuario` INT  NOT NULL,                       -- Usuario responsable de la caja
   `tipo_cambio` DECIMAL(11,2) DEFAULT NULL,            -- Tipo de cambio usado, si aplica
   PRIMARY KEY (`id`),                                  -- Definir clave primaria
   KEY `arqueo_caja_id_usuario_foreign` (`id_usuario`), -- Índice para `id_usuario`
