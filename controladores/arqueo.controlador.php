@@ -34,7 +34,23 @@ class ControladorArqueo {
                 return;
             }
             $estado = ($_POST["opcion"] == "abierta") ? "abierta" : "cerrada";
-            if($estado == "cerrada"){
+            if($estado == "abierta"){
+                $datos = array(
+                    "id_arqueo" => $_POST["idArqueo"],
+                    "fecha_cierre" => $_POST["fecha_apertura_cierre"],
+                    "monto_ventas" => $_POST["monto_ventas"],
+                    "total_ingresos" => $_POST["total_ingresos"],
+                    "gastos_operativos" => $_POST["gastos_operativos"],
+                    "monto_compras" => $_POST["monto_compras"],
+                    "total_egresos" => $_POST["total_egresos"],
+                    "resultado_neto" => $_POST["resultado_neto"],
+                    "idCaja" => $_POST["idCaja"],
+                    "efectivo_en_caja" => $_POST["total_efectivo_en_caja"],
+                    "diferencia" => $_POST["diferencia"]
+                );
+
+                $respuesta = ModeloArqueo::mdlRegistrarCierreCaja($datos);
+            } else {
                 $datos = array(
                     "fecha_apertura" => $_POST["fecha_apertura_cierre"],
                     "Bs200" => $_POST["cantidad_200"],
@@ -53,17 +69,14 @@ class ControladorArqueo {
                     "idCaja" => $_POST["idCaja"],
                     "nro_ticket" =>  $_POST["nro_ticket"]
                 );
-            }else{
-              
+                $respuesta = ModeloArqueo::mdlRegistraAperturaCaja($datos);
             }
          
-
-            $respuesta = ModeloArqueo::mdlRegistrarArqueo($datos);
 
             if($respuesta == "ok"){
                 echo '<script> swal({
 						  type: "success",
-						  title: "¡El arqueo ha sido guardado correctamente!",
+						  title: "¡' . ($estado == "abierta" ? "Apertura" : "Cierre") . ' de caja realizado correctamente!",
 						  showConfirmButton: true,
 						  confirmButtonText: "Cerrar"
 						  }).then(function(result){

@@ -120,9 +120,7 @@ $fechaActual = date("Y-m-d");
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
 
-  <!-- Toastr -->
-  <script src="vistas/plugins/toastr/js/jquery-3.6.0.min.js"></script>
-  <script src="vistas/plugins/toastr/js/toastr.min.js"></script>
+ 
 
 <style>
 .skin-blue .main-header .navbar {

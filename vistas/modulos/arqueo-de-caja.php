@@ -95,6 +95,11 @@
     }
 
 </style>
+
+ <!-- Toastr -->
+ <script src="vistas/plugins/toastr/js/jquery-3.6.0.min.js"></script>
+  <script src="vistas/plugins/toastr/js/toastr.min.js"></script>
+  
 <div class="content-wrapper text-uppercase">
     <!-- Header -->
     <section class="content-header">
@@ -111,6 +116,7 @@
             <div class="box-body">
                 <form role="form" method="post" enctype="multipart/form-data">
                     <div class="row">
+                        <input type="hidden" name="idArqueo" id="idArqueo">
                         <!-- Entrada para seleccionar la categoría -->
                         <div class="col-md-8">
                             <div class="row">
@@ -305,6 +311,16 @@
                                         </tfoot>
                                     </tbody>
                                 </table>
+
+                                <!-- Añade estos campos ocultos justo antes del cierre del formulario -->
+                                <input type="hidden" name="total_ingresos" id="hidden_total_ingresos">
+                                <input type="hidden" name="monto_apertura" id="hidden_monto_apertura">
+                                <input type="hidden" name="monto_ventas" id="hidden_monto_ventas">
+                                <input type="hidden" name="total_egresos" id="hidden_total_egresos">
+                                <input type="hidden" name="gastos_operativos" id="hidden_gastos_operativos">
+                                <input type="hidden" name="monto_compras" id="hidden_monto_compras">
+                                <input type="hidden" name="resultado_neto" id="hidden_resultado_neto">
+                                <input type="hidden" name="diferencia" id="hidden_diferencia">
                             </div>
                         </div>
 
@@ -405,9 +421,18 @@
                 const cantidad = parseFloat(input.value) || 0;
                 total += valor * cantidad;
             });
-        
+       
             document.getElementById('total_efectivo_en_caja_tabla').textContent = total.toFixed(2);
             document.getElementById('total_efectivo_en_caja').value = total.toFixed(2);
+            if(document.getElementById('radio_apertura').checked){
+                document.getElementById('resultado_neto').textContent = total.toFixed(2);
+                document.getElementById('hidden_resultado_neto').value = total.toFixed(2);
+                let diferencia = document.getElementById('resultado_neto').textContent - total;
+                document.getElementById('efectivo_en_caja').textContent = total.toFixed(2);
+                document.getElementById('diferencia').textContent = diferencia.toFixed(2);
+                document.getElementById('hidden_diferencia').value = diferencia.toFixed(2);
+            }
+        
         }
 
         // Validar que solo se ingresen números
@@ -436,15 +461,22 @@
                 if(data) {
                     // La caja está abierta
                    // document.querySelector('.tabla-efectivo').style.display = 'none';
+                    document.getElementById('idArqueo').value = data.id;
                     document.getElementById('radio_apertura').checked = true;
                     document.getElementById('radio_cierre').checked = false;
+                    document.getElementById('idCaja').disabled = true;
+                    document.getElementById('nro_ticket').disabled = true;
                     document.getElementById('aperturar_cierre_caja').textContent = 'Cerrar Caja';
                     document.getElementById('aperturar_cierre_caja').classList.replace('btn-primary', 'btn-danger');
+                 
                     // Mostrar datos de la monto_apertura btn-success
                     mostrarDatosApertura(data);
                 } else {
                     // La caja está cerrada
                     //document.querySelector('.tabla-efectivo').style.display = 'block';
+                    document.getElementById('idCaja').disabled = false;
+                    document.getElementById('nro_ticket').disabled = false;
+                    document.getElementById('idArqueo').value = '0';
                     document.getElementById('radio_apertura').checked = false;
                     document.getElementById('radio_cierre').checked = true;
                     document.getElementById('nro_ticket').value = '0';
@@ -469,7 +501,7 @@
         // Mostrar los datos de la monto_apertura en los campos correspondientes
         document.getElementById('nro_ticket').value = datos.nroTicket;
         document.getElementById('monto_apertura').textContent = datos.monto_apertura || '0.00';
-     
+        document.getElementById('idCaja').selectedIndex = datos.id_caja;
         // Actualizar los campos de la tabla de la derecha
         document.getElementById('monto_ventas').textContent = datos.monto_ventas || '0.00';
         document.getElementById('total_ingresos').textContent = datos.total_ingresos || '0.00';
@@ -479,6 +511,16 @@
         document.getElementById('resultado_neto').textContent = datos.resultado_neto || '0.00';
         document.getElementById('efectivo_en_caja').textContent = datos.efectivo_en_caja || '0.00';
         document.getElementById('diferencia').textContent = datos.diferencia || '0.00';
+
+        // Transferir valores de las celdas de la tabla a los campos ocultos
+        document.getElementById('hidden_total_ingresos').value = datos.total_ingresos;
+        document.getElementById('hidden_monto_apertura').value =datos.monto_apertura;
+        document.getElementById('hidden_monto_ventas').value = datos.monto_ventas;
+        document.getElementById('hidden_total_egresos').value =datos.total_egresos;
+        document.getElementById('hidden_gastos_operativos').value =datos.gastos_operativos;
+        document.getElementById('hidden_monto_compras').value = datos.monto_compras;
+        document.getElementById('hidden_resultado_neto').value = datos.resultado_neto;
+        document.getElementById('hidden_diferencia').value = datos.diferencia;
     }
 
    /*====================================================

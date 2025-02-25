@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-01-2025 a las 03:11:25
+-- Tiempo de generación: 25-02-2025 a las 22:46:27
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,74 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pos_php_nativo-main`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `arqueo_caja`
+--
+
+CREATE TABLE `arqueo_caja` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `fecha_apertura` datetime DEFAULT NULL,
+  `fecha_cierre` datetime DEFAULT NULL,
+  `Bs200` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs100` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs50` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs20` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs10` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs5` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs2` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs1` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs050` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `Bs020` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `monto_ventas` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `monto_apertura` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `total_ingresos` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `gastos_operativos` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `monto_compras` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `total_egresos` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `resultado_neto` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `efectivo_en_caja` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `diferencia` decimal(11,2) NOT NULL DEFAULT 0.00,
+  `estado` varchar(20) DEFAULT NULL,
+  `nroTicket` int(11) NOT NULL,
+  `tipo_cambio` decimal(11,2) DEFAULT NULL,
+  `id_caja` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `arqueo_caja`
+--
+
+INSERT INTO `arqueo_caja` (`id`, `fecha_apertura`, `fecha_cierre`, `Bs200`, `Bs100`, `Bs50`, `Bs20`, `Bs10`, `Bs5`, `Bs2`, `Bs1`, `Bs050`, `Bs020`, `monto_ventas`, `monto_apertura`, `total_ingresos`, `gastos_operativos`, `monto_compras`, `total_egresos`, `resultado_neto`, `efectivo_en_caja`, `diferencia`, `estado`, `nroTicket`, `tipo_cambio`, `id_caja`, `id_usuario`) VALUES
+(1, '2025-02-24 16:08:24', NULL, 1.00, 0.00, 0.00, 2.00, 0.00, 2.00, 0.00, 0.00, 0.00, 0.00, 0.00, 250.00, 250.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'abierta', 1, NULL, 1, 1),
+(2, '2025-02-25 12:16:14', NULL, 0.00, 2.00, 0.00, 3.00, 0.00, 0.00, 3.00, 3.00, 0.00, 0.00, 0.00, 269.00, 269.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'cerrada', 2, NULL, 2, 1),
+(3, '2025-02-25 15:43:30', NULL, 0.00, 0.00, 0.00, 0.00, 2.00, 0.00, 2.00, 0.00, 0.00, 0.00, 0.00, 24.00, 24.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'abierta', 4, NULL, 1, 1),
+(4, '2025-02-25 15:43:30', NULL, 0.00, 0.00, 0.00, 0.00, 2.00, 0.00, 2.00, 0.00, 0.00, 0.00, 0.00, 24.00, 24.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 'abierta', 4, NULL, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cajas`
+--
+
+CREATE TABLE `cajas` (
+  `id` int(11) NOT NULL,
+  `numero_caja` varchar(10) NOT NULL,
+  `nombre` varchar(35) NOT NULL,
+  `nro_ticket` int(10) UNSIGNED ZEROFILL NOT NULL,
+  `estado` tinyint(4) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `cajas`
+--
+
+INSERT INTO `cajas` (`id`, `numero_caja`, `nombre`, `nro_ticket`, `estado`) VALUES
+(1, '1', 'caja administrativa', 0000000001, 1),
+(2, '2', 'caja de ventas', 0000000004, 1);
 
 -- --------------------------------------------------------
 
@@ -330,7 +398,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `activo`) VALUES
-(1, 'rosmery quizpe', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/202.png', 1, '2025-01-07 22:11:07', '2025-01-08 02:11:07', 1),
+(1, 'rosmery quizpe', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 'Administrador', 'vistas/img/usuarios/admin/202.png', 1, '2025-02-25 08:59:29', '2025-02-25 12:59:29', 1),
 (2, 'luis hidalgo', 'luis10', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Vendedor', '', 1, '2025-01-07 22:10:53', '2025-01-08 02:10:53', 1),
 (3, 'edwin yamil', 'edwin', '$2a$07$asxx54ahjppf45sd87a5auGZEtGHuyZwm.Ur.FJvWLCql3nmsMbXy', 'Especial', '', 1, '2025-01-07 12:22:36', '2025-01-07 16:22:36', 1);
 
@@ -370,6 +438,20 @@ INSERT INTO `ventas` (`id`, `codigo`, `id_mesero`, `id_cliente`, `id_vendedor`, 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `arqueo_caja`
+--
+ALTER TABLE `arqueo_caja`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `arqueo_caja_id_usuario_foreign` (`id_usuario`),
+  ADD KEY `fk_arqueo_caja` (`id_caja`);
+
+--
+-- Indices de la tabla `cajas`
+--
+ALTER TABLE `cajas`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `categorias`
@@ -446,6 +528,18 @@ ALTER TABLE `ventas`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `arqueo_caja`
+--
+ALTER TABLE `arqueo_caja`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `cajas`
+--
+ALTER TABLE `cajas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
@@ -508,6 +602,13 @@ ALTER TABLE `ventas`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `arqueo_caja`
+--
+ALTER TABLE `arqueo_caja`
+  ADD CONSTRAINT `arqueo_caja_id_usuario_foreign` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `fk_arqueo_caja` FOREIGN KEY (`id_caja`) REFERENCES `cajas` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `compras`
