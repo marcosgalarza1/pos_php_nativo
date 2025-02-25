@@ -4,53 +4,9 @@ class ControladorArqueo {
 
     static public function ctrRegistrarArqueo() {
         if(isset($_POST["total_efectivo_en_caja"])) {
-            
-            // Validaciones
-            if(empty($_POST["idVendedor"])) {
-                echo "<script>
-                    toastr.error('El usuario es obligatorio', 'Error');
-                </script>";
-                return;
-            }
-
-            if(empty($_POST["idCaja"])) {
-                echo "<script>
-                    toastr.error('Debe seleccionar una caja', 'Error');
-                </script>";
-                return;
-            }
-
-            if(empty($_POST["nro_ticket"]) || $_POST["nro_ticket"] == "0") {
-                echo "<script>
-                    toastr.error('El número de ticket es obligatorio', 'Error');
-                </script>";
-                return;
-            }
-
-            if(empty($_POST["total_efectivo_en_caja"]) || $_POST["total_efectivo_en_caja"] == "0.00") {
-                echo "<script>
-                    toastr.error('Debe ingresar el efectivo en caja', 'Error');
-                </script>";
-                return;
-            }
             $estado = ($_POST["opcion"] == "abierta") ? "abierta" : "cerrada";
-            if($estado == "abierta"){
-                $datos = array(
-                    "id_arqueo" => $_POST["idArqueo"],
-                    "fecha_cierre" => $_POST["fecha_apertura_cierre"],
-                    "monto_ventas" => $_POST["monto_ventas"],
-                    "total_ingresos" => $_POST["total_ingresos"],
-                    "gastos_operativos" => $_POST["gastos_operativos"],
-                    "monto_compras" => $_POST["monto_compras"],
-                    "total_egresos" => $_POST["total_egresos"],
-                    "resultado_neto" => $_POST["resultado_neto"],
-                    "idCaja" => $_POST["idCaja"],
-                    "efectivo_en_caja" => $_POST["total_efectivo_en_caja"],
-                    "diferencia" => $_POST["diferencia"]
-                );
-
-                $respuesta = ModeloArqueo::mdlRegistrarCierreCaja($datos);
-            } else {
+            
+            if($estado == "abierta") {
                 $datos = array(
                     "fecha_apertura" => $_POST["fecha_apertura_cierre"],
                     "Bs200" => $_POST["cantidad_200"],
@@ -70,22 +26,25 @@ class ControladorArqueo {
                     "nro_ticket" =>  $_POST["nro_ticket"]
                 );
                 $respuesta = ModeloArqueo::mdlRegistraAperturaCaja($datos);
+            } else {
+                $datos = array(
+                    "id_arqueo" => $_POST["idArqueo"],
+                    "fecha_cierre" => $_POST["fecha_apertura_cierre"],
+                    "monto_ventas" => $_POST["monto_ventas"],
+                    "total_ingresos" => $_POST["total_ingresos"],
+                    "gastos_operativos" => $_POST["gastos_operativos"],
+                    "monto_compras" => $_POST["monto_compras"],
+                    "total_egresos" => $_POST["total_egresos"],
+                    "resultado_neto" => $_POST["resultado_neto"],
+                    "idCaja" => $_POST["idCaja"],
+                    "efectivo_en_caja" => $_POST["total_efectivo_en_caja"],
+                    "diferencia" => $_POST["diferencia"]
+                );
+                $respuesta = ModeloArqueo::mdlRegistrarCierreCaja($datos);
             }
-         
 
-            if($respuesta == "ok"){
-                echo '<script> swal({
-						  type: "success",
-						  title: "¡' . ($estado == "abierta" ? "Apertura" : "Cierre") . ' de caja realizado correctamente!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-								if (result.value) {
-								window.location = "arqueo-de-caja";
-								}
-							})
-					</script>';
-            }
+            echo json_encode(["status" => $respuesta]);
+            return;
         }
     }
 

@@ -33,4 +33,8 @@ if(isset($_GET["accion"])) {
     else if($_GET["accion"] == "obtenerNroTicket") {
         $arqueo->ajaxObtenerNroTicket();
     }
+    else if($_GET["accion"] == "registrarArqueo") {
+        $respuesta = ControladorArqueo::ctrRegistrarArqueo();
+        echo $respuesta;
+    }
 } 

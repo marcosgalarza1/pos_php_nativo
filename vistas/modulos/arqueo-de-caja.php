@@ -114,7 +114,7 @@
     <section class="content">
         <div class="box">
             <div class="box-body">
-                <form role="form" method="post" enctype="multipart/form-data">
+                <form role="form" method="post" id="form-arqueo" enctype="multipart/form-data">
                     <div class="row">
                         <input type="hidden" name="idArqueo" id="idArqueo">
                         <!-- Entrada para seleccionar la categoría -->
@@ -425,8 +425,6 @@
             document.getElementById('total_efectivo_en_caja_tabla').textContent = total.toFixed(2);
             document.getElementById('total_efectivo_en_caja').value = total.toFixed(2);
             if(document.getElementById('radio_apertura').checked){
-                document.getElementById('resultado_neto').textContent = total.toFixed(2);
-                document.getElementById('hidden_resultado_neto').value = total.toFixed(2);
                 let diferencia = document.getElementById('resultado_neto').textContent - total;
                 document.getElementById('efectivo_en_caja').textContent = total.toFixed(2);
                 document.getElementById('diferencia').textContent = diferencia.toFixed(2);
@@ -565,5 +563,61 @@
                 });
             });
     }
+
+    document.getElementById('form-arqueo').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevenir el envío normal del formulario
+        
+        // Validaciones
+        if(!document.getElementById('idVendedor').value) {
+            toastr.error('El usuario es obligatorio', 'Error');
+            return false;
+        }
+
+        if(!document.getElementById('idCaja').value) {
+            toastr.error('Debe seleccionar una caja', 'Error');
+            return false;
+        }
+
+        if(!document.getElementById('nro_ticket').value || document.getElementById('nro_ticket').value === "0") {
+            toastr.error('El número de ticket es obligatorio', 'Error');
+            return false;
+        }
+
+        const totalEfectivo = document.getElementById('total_efectivo_en_caja').value;
+        if(!totalEfectivo || totalEfectivo === "0.00") {
+            toastr.error('Debe ingresar el efectivo en caja', 'Error');
+            return false;
+        }
+
+        // Si pasa todas las validaciones, enviar el formulario
+        const formData = new FormData(this);
+        
+        fetch('ajax/arqueo.ajax.php?accion=registrarArqueo', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === "ok") {
+                const estado = document.getElementById('radio_apertura').checked ? "Apertura" : "Cierre";
+                swal({
+                    type: "success",
+                    title: `¡${estado} de caja realizado correctamente!`,
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+                }).then(function(result){
+                    if (result.value) {
+                        window.location = "arqueo-de-caja";
+                    }
+                });
+            } else {
+                toastr.error('Error al registrar el arqueo', 'Error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            toastr.error('Error al procesar la solicitud', 'Error');
+        });
+    });
 
 </script>
