@@ -55,4 +55,12 @@ class ModeloCajas{
 		$stmt = null;
 	}
 
+	static public function mdlObtenerNroTicket($idCaja) {
+		$stmt = Conexion::conectar()->prepare("SELECT nro_ticket FROM cajas WHERE id = :id");
+		$stmt->bindParam(":id", $idCaja, PDO::PARAM_INT);
+		$stmt->execute();
+		
+		$resultado = $stmt->fetch();
+		return ($resultado) ? $resultado["nro_ticket"] : 0;
+	}
 }

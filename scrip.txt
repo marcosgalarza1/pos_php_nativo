@@ -43,14 +43,15 @@ CREATE TABLE `arqueo_caja` (
   `Bs050` DECIMAL(11,2) NOT NULL DEFAULT 0.00,  -- Cantidad en monedas de 0.50
   `Bs020` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Cantidad en monedas de 0.20
   --`cien_dolar` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Cantidad en billetes de 100 dólares
-  `registro_venta` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Total de ventas registradas
-  `apertura` DECIMAL(11,2) NOT NULL DEFAULT 0.00,       -- Monto inicial al abrir la caja
-  `total` DECIMAL(11,2) NOT NULL DEFAULT 0.00,          -- Total calculado en caja
-  `gastos` DECIMAL(11,2) NOT NULL DEFAULT 0.00,         -- Gastos realizados
-  `registro_compra` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Total de compras registradas
-  `saldo_sistema` DECIMAL(11,2) NOT NULL DEFAULT 0.00,  -- Saldo esperado según el sistema
-  `saldo_efectivo` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Saldo real en efectivo
-  `diferencia` DECIMAL(11,2) NOT NULL DEFAULT 0.00,     -- Diferencia entre sistema y efectivo
+  `monto_ventas` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Total de ventas registradas
+  `monto_apertura` DECIMAL(11,2) NOT NULL DEFAULT 0.00,       -- Monto inicial al abrir la caja
+  `total_ingresos` DECIMAL(11,2) NOT NULL DEFAULT 0.00,          -- Total de ingresos en caja
+  `gastos_operativos` DECIMAL(11,2) NOT NULL DEFAULT 0.00,         -- Gastos realizados
+  `monto_compras` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Total de compras registradas
+  `total_egresos` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Total de egresos
+  `resultado_neto` DECIMAL(11,2) NOT NULL DEFAULT 0.00,  -- Saldo esperado según el sistema
+  `efectivo_en_caja` DECIMAL(11,2) NOT NULL DEFAULT 0.00, -- Saldo real en efectivo
+  `diferencia` DECIMAL(11,2) NOT NULL DEFAULT 0.00,     -- Diferencia entre resultado_neto y efectivo_en_caja
   `estado` VARCHAR(20) DEFAULT NULL,                   -- Estado de la caja (ejemplo: "abierta", "cerrada")
   `nroTicket`  INT  NOT NULL,                          -- Nro de ticket. Se reinicia cada vez que se cierra la caja
   `id_usuario` INT  NOT NULL,                       -- Usuario responsable de la caja

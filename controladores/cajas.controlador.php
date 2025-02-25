@@ -26,6 +26,11 @@ class ControladorCajas{
 		return $respuesta;
 	
 	}
+
+
+	static public function ctrObtenerNroTicket($idCaja) {
+		return ModeloCajas::mdlObtenerNroTicket($idCaja);
+	}
 }
 
 

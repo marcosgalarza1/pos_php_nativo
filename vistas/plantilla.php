@@ -58,6 +58,9 @@ $fechaActual = date("Y-m-d");
 <!-- Select2 -->
 <link rel="stylesheet" href="vistas/bower_components/select2/dist/css/select2.min.css">
 
+<!-- Toastr -->
+<link rel="stylesheet" href="vistas/plugins/toastr/css/toastr.min.css">
+
   <!--=====================================
   plugin DE java scrip
   ======================================-->
@@ -117,8 +120,9 @@ $fechaActual = date("Y-m-d");
   <!-- ChartJS http://www.chartjs.org/-->
   <script src="vistas/bower_components/Chart.js/Chart.js"></script>
 
-
- 
+  <!-- Toastr -->
+  <script src="vistas/plugins/toastr/js/jquery-3.6.0.min.js"></script>
+  <script src="vistas/plugins/toastr/js/toastr.min.js"></script>
 
 <style>
 .skin-blue .main-header .navbar {
