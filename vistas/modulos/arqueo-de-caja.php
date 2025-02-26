@@ -130,19 +130,20 @@
                                     <div class="form-group">
                                         <h4><strong>Usuario</strong></h4>
                                         <input type="text" class="form-control text-uppercase " id="usuario" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
-                                        <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
+                                        <input type="hidden" id="idVendedor" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
                                     </div>
                            
                                     <div class="form-group">
                                         <h4><strong>Estado</strong></h4>
                                         <div class="custom-radio">
-                                            <input type="radio" id="radio_apertura" checked name="opcion" value="abierta" disabled readonly>
+                                            <input type="radio" id="radio_apertura" value="abierta" checked disabled readonly >
                                             <label for="radio_apertura" > <span class="label label-primary">Abierto</span></label>
                                         </div>
                                         <div class="custom-radio">
-                                            <input type="radio" id="radio_cierre"  name="opcion" value="cerrada"disabled readonly>
+                                            <input type="radio" id="radio_cierre" value="cerrada" disabled readonly>
                                             <label for="radio_cierre"> <span class="label label-danger">Cerrado</span> </label>
                                         </div>
+                                        <input type="hidden" id="estado_caja" name="opcion" value="abierta">
                                     </div>
                                     <div class="form-group">
                                         <h4><strong>Seleccione la Caja</strong></h4>
@@ -312,25 +313,15 @@
                                     </tbody>
                                 </table>
 
-                                <!-- Añade estos campos ocultos justo antes del cierre del formulario -->
-                                <input type="hidden" name="total_ingresos" id="hidden_total_ingresos">
-                                <input type="hidden" name="monto_apertura" id="hidden_monto_apertura">
-                                <input type="hidden" name="monto_ventas" id="hidden_monto_ventas">
-                                <input type="hidden" name="total_egresos" id="hidden_total_egresos">
-                                <input type="hidden" name="gastos_operativos" id="hidden_gastos_operativos">
-                                <input type="hidden" name="monto_compras" id="hidden_monto_compras">
-                                <input type="hidden" name="resultado_neto" id="hidden_resultado_neto">
-                                <input type="hidden" name="diferencia" id="hidden_diferencia">
                             </div>
                         </div>
 
 
                     </div>
 
-
                     <!-- Botones -->
                     <div class="row" style="text-align: right; padding-right: 20px;">
-                        <button type="submit" id="aperturar_cierre_caja" class="btn btn-primary btn-sm" style="margin-right: 3px;">Aperturar Caja</button>
+                        <button type="button" onclick="guardarAperturaCierreCaja()" id="aperturar_cierre_caja" class="btn btn-primary btn-sm" style="margin-right: 3px;">Aperturar Caja</button>
                     </div>
 
                     <!-- Controlador para crear el arqueo de caja-->
@@ -340,6 +331,8 @@
                     ?>
                
                 </form>
+
+
             </div><!-- /.box-body -->
         </div><!-- /.box -->
     </section>
@@ -366,7 +359,7 @@
 </style>
 
 <script>
-      
+ 
    /*====================================================
     ACTUALIZAR FECHA Y HORA
     ====================================================*/
@@ -386,6 +379,26 @@
     // Actualiza cada segundo
     setInterval(actualizarFechaHora, 1000);
     actualizarFechaHora(); // Ejecutar al cargar la página
+
+    /*====================================================
+    VARIABLES GLOBALES
+    ====================================================*/
+    var idUsuario = <?php echo $_SESSION["id"]; ?>;
+    let idArqueo = document.getElementById('idArqueo').value;
+    var fechaAperturaCierre;
+    var idCaja;
+    var nroTicket;
+    var totalIngresos;
+    var montoApertura;
+    var montoVentas;
+    var totalEgresos;
+    var gastosOperativos;
+    var montoCompras;
+    var resultadoNeto;
+    var efectivoEnCaja;
+    var diferencia;
+    var estado = document.getElementById('estado_caja').value;
+    var totalEfectivoEnCaja = 0;
 
     /*====================================================
     CALCULAR SUBTOTAL Y TOTAL
@@ -415,22 +428,37 @@
         }
 
         function calcularTotal() {
-            let total = 0;
+            totalEfectivoEnCaja = 0;
             inputs.forEach(input => {
                 const valor = parseFloat(input.dataset.valor);
                 const cantidad = parseFloat(input.value) || 0;
-                total += valor * cantidad;
+                totalEfectivoEnCaja += valor * cantidad;
             });
        
-            document.getElementById('total_efectivo_en_caja_tabla').textContent = total.toFixed(2);
-            document.getElementById('total_efectivo_en_caja').value = total.toFixed(2);
-            if(document.getElementById('radio_apertura').checked){
-                let diferencia = document.getElementById('resultado_neto').textContent - total;
-                document.getElementById('efectivo_en_caja').textContent = total.toFixed(2);
-                document.getElementById('diferencia').textContent = diferencia.toFixed(2);
-                document.getElementById('hidden_diferencia').value = diferencia.toFixed(2);
+            document.getElementById('total_efectivo_en_caja_tabla').textContent = totalEfectivoEnCaja.toFixed(2);
+            document.getElementById('total_efectivo_en_caja').value = totalEfectivoEnCaja.toFixed(2);
+     
+            if(document.getElementById('estado_caja').value == 'cerrada') { 
+                document.getElementById('monto_apertura').textContent = totalEfectivoEnCaja.toFixed(2);
             }
-        
+
+            //calcular el total de ingresos
+            montoApertura = parseFloat(document.getElementById('monto_apertura').textContent);
+            montoVentas = parseFloat(document.getElementById('monto_ventas').textContent);
+            totalIngresos = montoApertura + montoVentas;
+            gastosOperativos = parseFloat(document.getElementById('gastos_operativos').textContent);
+            montoCompras = parseFloat(document.getElementById('monto_compras').textContent);
+            totalEgresos = gastosOperativos + montoCompras;
+
+            resultadoNeto = totalIngresos - totalEgresos;
+            diferencia = resultadoNeto - totalEfectivoEnCaja;
+           
+            document.getElementById('total_ingresos').innerHTML = totalIngresos.toFixed(2);
+            document.getElementById('total_egresos').textContent = totalEgresos.toFixed(2);
+            document.getElementById('resultado_neto').innerHTML = resultadoNeto.toFixed(2); 
+            document.getElementById('efectivo_en_caja').innerHTML = totalEfectivoEnCaja.toFixed(2);
+            document.getElementById('diferencia').innerHTML = diferencia.toFixed(2);
+
         }
 
         // Validar que solo se ingresen números
@@ -456,19 +484,21 @@
         fetch(`ajax/arqueo.ajax.php?accion=verificarCaja&idUsuario=${idUsuario}`)
             .then(response => response.json())
             .then(data => {
-                if(data) {
-                    // La caja está abierta
+                if(data) { // La caja está abierta
+                    // Mostrar datos de la monto_apertura btn-success
+                    mostrarDatosApertura(data);
+                   
                    // document.querySelector('.tabla-efectivo').style.display = 'none';
+                    idArqueo = data.id;
                     document.getElementById('idArqueo').value = data.id;
                     document.getElementById('radio_apertura').checked = true;
                     document.getElementById('radio_cierre').checked = false;
-                    document.getElementById('idCaja').disabled = true;
-                    document.getElementById('nro_ticket').disabled = true;
+                    document.getElementById('estado_caja').value = 'abierta';
+                    estado = 'abierta';
                     document.getElementById('aperturar_cierre_caja').textContent = 'Cerrar Caja';
                     document.getElementById('aperturar_cierre_caja').classList.replace('btn-primary', 'btn-danger');
-                 
-                    // Mostrar datos de la monto_apertura btn-success
-                    mostrarDatosApertura(data);
+                    document.getElementById('idCaja').disabled = true;
+                    document.getElementById('nro_ticket').disabled = true;
                 } else {
                     // La caja está cerrada
                     //document.querySelector('.tabla-efectivo').style.display = 'block';
@@ -477,15 +507,16 @@
                     document.getElementById('idArqueo').value = '0';
                     document.getElementById('radio_apertura').checked = false;
                     document.getElementById('radio_cierre').checked = true;
+                    document.getElementById('estado_caja').value = 'cerrada';
+                    estado = 'cerrada';
                     document.getElementById('nro_ticket').value = '0';
                     document.getElementById('aperturar_cierre_caja').textContent = 'Aperturar Caja';
                     document.getElementById('aperturar_cierre_caja').classList.replace('btn-danger', 'btn-primary');
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    icon: 'error',
+                swal({
+                    type: 'error',
                     title: 'Error al verificar el estado de la caja',
                     text: 'Por favor, intente nuevamente'
                 });
@@ -499,7 +530,7 @@
         // Mostrar los datos de la monto_apertura en los campos correspondientes
         document.getElementById('nro_ticket').value = datos.nroTicket;
         document.getElementById('monto_apertura').textContent = datos.monto_apertura || '0.00';
-        document.getElementById('idCaja').selectedIndex = datos.id_caja;
+        document.getElementById('idCaja').value = datos.id_caja;
         // Actualizar los campos de la tabla de la derecha
         document.getElementById('monto_ventas').textContent = datos.monto_ventas || '0.00';
         document.getElementById('total_ingresos').textContent = datos.total_ingresos || '0.00';
@@ -509,16 +540,7 @@
         document.getElementById('resultado_neto').textContent = datos.resultado_neto || '0.00';
         document.getElementById('efectivo_en_caja').textContent = datos.efectivo_en_caja || '0.00';
         document.getElementById('diferencia').textContent = datos.diferencia || '0.00';
-
-        // Transferir valores de las celdas de la tabla a los campos ocultos
-        document.getElementById('hidden_total_ingresos').value = datos.total_ingresos;
-        document.getElementById('hidden_monto_apertura').value =datos.monto_apertura;
-        document.getElementById('hidden_monto_ventas').value = datos.monto_ventas;
-        document.getElementById('hidden_total_egresos').value =datos.total_egresos;
-        document.getElementById('hidden_gastos_operativos').value =datos.gastos_operativos;
-        document.getElementById('hidden_monto_compras').value = datos.monto_compras;
-        document.getElementById('hidden_resultado_neto').value = datos.resultado_neto;
-        document.getElementById('hidden_diferencia').value = datos.diferencia;
+    
     }
 
    /*====================================================
@@ -564,9 +586,10 @@
             });
     }
 
-    document.getElementById('form-arqueo').addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevenir el envío normal del formulario
-        
+   /*====================================================
+    GUARDAR APERTURA Y CIERRE DE CAJA
+    ====================================================*/
+    function validarAperturaCierreCaja() {
         // Validaciones
         if(!document.getElementById('idVendedor').value) {
             toastr.error('El usuario es obligatorio', 'Error');
@@ -588,36 +611,112 @@
             toastr.error('Debe ingresar el efectivo en caja', 'Error');
             return false;
         }
+        return true;
+    }
 
-        // Si pasa todas las validaciones, enviar el formulario
-        const formData = new FormData(this);
+       function guardarAperturaCierreCaja() {
+        fechaAperturaCierre = document.getElementById('fecha_apertura_cierre').value;
+        idCaja = document.getElementById('idCaja').value;
+        nroTicket = document.getElementById('nro_ticket').value;
+        var data;
+        var title
         
-        fetch('ajax/arqueo.ajax.php?accion=registrarArqueo', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.status === "ok") {
-                const estado = document.getElementById('radio_apertura').checked ? "Apertura" : "Cierre";
-                swal({
-                    type: "success",
-                    title: `¡${estado} de caja realizado correctamente!`,
-                    showConfirmButton: true,
-                    confirmButtonText: "Cerrar"
-                }).then(function(result){
-                    if (result.value) {
-                        window.location = "arqueo-de-caja";
-                    }
-                });
+        if(validarAperturaCierreCaja()) {
+            let data, title, text;
+            
+            if(estado == 'cerrada') {
+                title = '¿Aperturar Caja?';
+                text = '¿Está seguro de aperturar la caja?';
+                data = {
+                    accion: 'AperturarCaja',
+                    fechaApertura: fechaAperturaCierre,
+                    montoApertura: montoApertura,
+                    nroTicket: nroTicket,
+                    totalIngresos: totalIngresos,
+                    resultadoNeto: resultadoNeto,
+                    estado: 'abierta',
+                    idCaja: idCaja,
+                    idUsuario: idUsuario
+                };
             } else {
-                toastr.error('Error al registrar el arqueo', 'Error');
+                title = '¿Cerrar Caja?';
+                text = '¿Está seguro de cerrar la caja?';
+                data = {
+                    accion: 'CerrarCaja',
+                    idArqueo: idArqueo,
+                    idUsuario: idUsuario,
+                    idCaja: idCaja,
+                    fechaCierre: fechaAperturaCierre,
+                    nroTicket: nroTicket,
+                    estado: 'cerrada',
+                    cantidad_200: document.getElementById('cantidad_200').value || "0",
+                    cantidad_100: document.getElementById('cantidad_100').value || "0",
+                    cantidad_50: document.getElementById('cantidad_50').value || "0",
+                    cantidad_20: document.getElementById('cantidad_20').value || "0",
+                    cantidad_10: document.getElementById('cantidad_10').value || "0",
+                    cantidad_5: document.getElementById('cantidad_5').value || "0",
+                    cantidad_2: document.getElementById('cantidad_2').value || "0",
+                    cantidad_1: document.getElementById('cantidad_1').value || "0",
+                    cantidad_050: document.getElementById('cantidad_050').value || "0",
+                    cantidad_020: document.getElementById('cantidad_020').value || "0",
+                    totalIngresos: totalIngresos,
+                    montoVentas: montoVentas,
+                    totalEgresos: totalEgresos,
+                    gastosOperativos: gastosOperativos,
+                    montoCompras: montoCompras,
+                    resultadoNeto: resultadoNeto,
+                    totalEfectivoEnCaja: totalEfectivoEnCaja,
+                    diferencia: diferencia
+                }
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            toastr.error('Error al procesar la solicitud', 'Error');
-        });
-    });
+            swal({
+                title: title,
+                text: text,
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, confirmar',
+                //cancelButtonText: 'Cancelar'
+            }).then((result ) => {
+               
+                if (result.value) {
+                    $.ajax({
+                        url: 'ajax/arqueo.ajax.php',
+                        type: 'POST',
+                        data: data ,
+                        success: function(response) {
+                            try {
+                                const respuesta = JSON.parse(response);
+                                if(respuesta.status === "ok") {
+                                    swal({
+                                        type: 'success',
+                                        title: 'Operación exitosa',
+                                        text: estado == 'cerrada' ? 'Caja aperturada correctamente' : 'Caja cerrada correctamente',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(function(result){
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    swall('Error', 'Ocurrió un error en la operación', 'error');
+                                }
+                            } catch(e) {
+                                console.error('Error parsing response:', response);
+                                swal('Error', 'Error al procesar la respuesta del servidor', 'error');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            swal({
+                                title: 'Error',
+                                text: 'Ocurrió un error al completar el pedido',
+                                type: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    }
 
 </script>

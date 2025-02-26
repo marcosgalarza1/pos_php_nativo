@@ -33,8 +33,16 @@ if(isset($_GET["accion"])) {
     else if($_GET["accion"] == "obtenerNroTicket") {
         $arqueo->ajaxObtenerNroTicket();
     }
-    else if($_GET["accion"] == "registrarArqueo") {
+} 
+// Instanciar y ejecutar
+if(isset($_POST["accion"])) {
+    $arqueo = new AjaxArqueo();
+    if($_POST["accion"] == "AperturarCaja") {
         $respuesta = ControladorArqueo::ctrRegistrarArqueo();
         echo $respuesta;
     }
-} 
+    else if($_POST["accion"] == "CerrarCaja") {
+        $respuesta = ControladorArqueo::ctrRegistrarArqueo();
+        echo $respuesta;
+    }
+}
