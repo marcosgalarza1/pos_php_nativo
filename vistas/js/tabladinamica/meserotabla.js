@@ -5,6 +5,7 @@ CARGAR LA TABLA DINÁMICA DE MESEROS
   
   var perfilOculto = $("#perfilOculto").val();
   
+  if ($.fn.DataTable) { 
   $('.tablasmesero').DataTable( {
       "ajax": "ajax/tabladinamica/tabla-mesero.ajax.php?perfilOculto="+perfilOculto,
       "deferRender": true,
@@ -40,13 +41,13 @@ CARGAR LA TABLA DINÁMICA DE MESEROS
   
   
   } );
-  
+};
 
   /*=============================================
 CARGAR LA TABLA DINÁMICA DE MESEROS ELIMINADOS
 =============================================*/
 
-  
+if ($.fn.DataTable) { 
 $('.tablasmeseroEliminados').DataTable( {
     "ajax": "ajax/tabladinamica/datatable-meseros-eliminados.php?perfilOculto="+perfilOculto,
     "deferRender": true,
@@ -82,3 +83,4 @@ $('.tablasmeseroEliminados').DataTable( {
 
 
 } );
+};

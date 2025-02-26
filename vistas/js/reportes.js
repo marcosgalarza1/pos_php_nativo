@@ -16,6 +16,8 @@ if(localStorage.getItem("capturarRango2") != null){
 /*=============================================
 RANGO DE FECHAS
 =============================================*/
+ // 10. Inicialización del daterangepicker (si está disponible)
+if ($.fn.daterangepicker) {
 $('#daterange-btn2').daterangepicker(
     {
       ranges   : {
@@ -45,7 +47,7 @@ $('#daterange-btn2').daterangepicker(
     }
   
   )
-
+};
 
   /*=============================================
 CANCELAR RANGO DE FECHAS

@@ -14,7 +14,8 @@ CARGAR LA TABLA DINÁMICA DE PRODUCTOS
 // })
 
 var perfilOculto = $("#perfilOculto").val();
-
+   // 8. Comprobación y configuración de DataTables
+if ($.fn.DataTable) { // Verifica si DataTable está cargado
 $('.tablaProductos').DataTable({
 	"ajax": "ajax/datatable-productos.ajax.php?perfilOculto=" + perfilOculto,
 	"deferRender": true,
@@ -50,13 +51,12 @@ $('.tablaProductos').DataTable({
 
 
 });
-
-
+};
 
 /*=============================================
 DATATABLE DE PRODUCTOS ELIMINADOS
 =============================================*/
-
+if ($.fn.DataTable) { 
 $('.tablaProductosEliminados').DataTable({
 	"ajax": "ajax/tabladinamica/datatable-productos-eliminados.ajax.php?perfilOculto=" + perfilOculto,
 	"deferRender": true,
@@ -90,7 +90,7 @@ $('.tablaProductosEliminados').DataTable({
 	}
 
 });
-
+} 
 
 /*=============================================
 CAPTURANDO LA CATEGORIA PARA ASIGNAR CÓDIGO

@@ -4,6 +4,7 @@ if ($.fn.DataTable.isDataTable('.tablaComprasRealizadas') || $.fn.DataTable.isDa
 	$('.tablaComprasEliminadas').DataTable().destroy();
 }
 
+
   $('.tablaComprasRealizadas').DataTable( {
     "ajax": "ajax/datatable-compras-realizadas.ajax.php",
     "deferRender": true,

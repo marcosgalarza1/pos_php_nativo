@@ -1,55 +1,139 @@
 <?php
 
+/**
+ * Controlador para gestionar el arqueo de caja
+ * @author Claude AI
+ */
 class ControladorArqueo {
 
+    /**
+     * Registra una apertura o cierre de caja
+     * @return string|array Respuesta de la operación
+     */
     static public function ctrRegistrarArqueo() {
-        if(isset($_POST["accion"])) {
+        if(!isset($_POST["accion"])) {
+            return json_encode(["status" => "error", "mensaje" => "Acción no especificada"]);
+        }
+
+        try {
             if($_POST["accion"] == "AperturarCaja") {
-                $datos = array(
-                    "fecha_apertura" => $_POST["fechaApertura"],
-                    "monto_apertura" => $_POST["montoApertura"],
-                    "nro_ticket" =>  $_POST["nroTicket"],
-                    "total_ingresos" => $_POST["totalIngresos"],
-                    "resultado_neto" => $_POST["resultadoNeto"],
-                    "estado" => $_POST["estado"],
-                    "id_caja" => $_POST["idCaja"],
-                    "id_usuario" => $_POST["idUsuario"],
-                );
-                $respuesta = ModeloArqueo::mdlRegistraAperturaCaja($datos);
-                echo json_encode(["status" => $respuesta]);
+                return self::registrarAperturaCaja();
+            } else if($_POST["accion"] == "CerrarCaja") {
+                return self::registrarCierreCaja();
             } else {
-                $datos = array(
-                    "id_arqueo" => $_POST["idArqueo"],
-                    "fecha_cierre" => $_POST["fechaCierre"],
-                    "Bs200" => $_POST["cantidad_200"],
-                    "Bs100" => $_POST["cantidad_100"],
-                    "Bs50" => $_POST["cantidad_50"],
-                    "Bs20" => $_POST["cantidad_20"],
-                    "Bs10" => $_POST["cantidad_10"],
-                    "Bs5" => $_POST["cantidad_5"],
-                    "Bs2" => $_POST["cantidad_2"],
-                    "Bs1" => $_POST["cantidad_1"],
-                    "Bs050" => $_POST["cantidad_050"],
-                    "Bs020" => $_POST["cantidad_020"],
-                    "total_ingresos" => $_POST["totalIngresos"],
-                    "monto_ventas" => $_POST["montoVentas"],
-                    "total_egresos" => $_POST["totalEgresos"],
-                    "gastos_operativos" => $_POST["gastosOperativos"],
-                    "monto_compras" => $_POST["montoCompras"],
-                    "resultado_neto" => $_POST["resultadoNeto"],
-                    "estado" => $_POST["estado"],
-                    "efectivo_en_caja" => $_POST["totalEfectivoEnCaja"],
-                    "diferencia" => $_POST["diferencia"],
-                    "id_caja" => $_POST["idCaja"]
-                );
-                $respuesta = ModeloArqueo::mdlRegistrarCierreCaja($datos);
-                echo json_encode(["status" => $respuesta]);
+                return json_encode(["status" => "error", "mensaje" => "Acción no válida"]);
             }
-            return;
+        } catch(Exception $e) {
+            return json_encode([
+                "status" => "error", 
+                "mensaje" => "Error al procesar la operación: " . $e->getMessage()
+            ]);
         }
     }
 
+    /**
+     * Registra la apertura de una caja
+     * @return string JSON con el resultado de la operación
+     */
+    private static function registrarAperturaCaja() {
+        // Validar datos requeridos
+        $camposRequeridos = ["fechaApertura", "montoApertura", "nroTicket", "estado", "idCaja", "idUsuario"];
+        foreach($camposRequeridos as $campo) {
+            if(!isset($_POST[$campo]) || empty($_POST[$campo])) {
+                return json_encode([
+                    "status" => "error",
+                    "mensaje" => "El campo {$campo} es requerido"
+                ]);
+            }
+        }
+
+        $datos = array(
+            "fecha_apertura" => self::sanitizarInput($_POST["fechaApertura"]),
+            "monto_apertura" => floatval($_POST["montoApertura"]),
+            "nro_ticket" => intval($_POST["nroTicket"]),
+            "total_ingresos" => floatval($_POST["totalIngresos"]),
+            "resultado_neto" => floatval($_POST["resultadoNeto"]),
+            "estado" => self::sanitizarInput($_POST["estado"]),
+            "id_caja" => intval($_POST["idCaja"]),
+            "id_usuario" => intval($_POST["idUsuario"])
+        );
+
+        $respuesta = ModeloArqueo::mdlRegistraAperturaCaja($datos);
+        return json_encode(["status" => $respuesta]);
+    }
+
+    /**
+     * Registra el cierre de una caja
+     * @return string JSON con el resultado de la operación
+     */
+    private static function registrarCierreCaja() {
+        // Validar datos requeridos
+        $camposRequeridos = ["idArqueo", "fechaCierre", "estado"];
+        foreach($camposRequeridos as $campo) {
+            if(!isset($_POST[$campo]) || empty($_POST[$campo])) {
+                return json_encode([
+                    "status" => "error",
+                    "mensaje" => "El campo {$campo} es requerido"
+                ]);
+            }
+        }
+        
+        $datos = array(
+            "id_arqueo" => intval($_POST["idArqueo"]),
+            "fecha_cierre" => self::sanitizarInput($_POST["fechaCierre"]),
+            "Bs200" => self::sanitizarMonto($_POST["cantidad_200"]),
+            "Bs100" => self::sanitizarMonto($_POST["cantidad_100"]),
+            "Bs50" => self::sanitizarMonto($_POST["cantidad_50"]),
+            "Bs20" => self::sanitizarMonto($_POST["cantidad_20"]),
+            "Bs10" => self::sanitizarMonto($_POST["cantidad_10"]),
+            "Bs5" => self::sanitizarMonto($_POST["cantidad_5"]),
+            "Bs2" => self::sanitizarMonto($_POST["cantidad_2"]),
+            "Bs1" => self::sanitizarMonto($_POST["cantidad_1"]),
+            "Bs050" => self::sanitizarMonto($_POST["cantidad_050"]),
+            "Bs020" => self::sanitizarMonto($_POST["cantidad_020"]),
+            "total_ingresos" => floatval($_POST["totalIngresos"]),
+            "monto_ventas" => floatval($_POST["montoVentas"]),
+            "total_egresos" => floatval($_POST["totalEgresos"]),
+            "gastos_operativos" => floatval($_POST["gastosOperativos"]),
+            "monto_compras" => floatval($_POST["montoCompras"]),
+            "resultado_neto" => floatval($_POST["resultadoNeto"]),
+            "efectivo_en_caja" => floatval($_POST["totalEfectivoEnCaja"]),
+            "diferencia" => floatval($_POST["diferencia"]),
+            "estado" => self::sanitizarInput($_POST["estado"]),
+            "id_caja" => intval($_POST["idCaja"])
+        );
+
+        $respuesta = ModeloArqueo::mdlRegistrarCierreCaja($datos);
+        return json_encode(["status" => $respuesta]);
+    }
+
+    /**
+     * Verifica si existe una caja abierta para un usuario
+     * @param int $id_usuario ID del usuario a verificar
+     * @return array|bool Datos de la caja abierta o false si no existe
+     */
     static public function ctrVerificarCajaAbierta($id_usuario) {
+        if(!is_numeric($id_usuario)) {
+            return false;
+        }
         return ModeloArqueo::mdlVerificarCajaAbierta($id_usuario);
+    }
+
+    /**
+     * Sanitiza un valor de entrada para prevenir XSS
+     * @param string $input Valor a sanitizar
+     * @return string Valor sanitizado
+     */
+    private static function sanitizarInput($input) {
+        return htmlspecialchars(strip_tags(trim($input)));
+    }
+
+    /**
+     * Sanitiza y valida un monto
+     * @param mixed $monto Monto a sanitizar
+     * @return float Monto sanitizado
+     */
+    private static function sanitizarMonto($monto) {
+        return floatval($monto ?? 0);
     }
 } 

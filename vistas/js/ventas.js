@@ -14,7 +14,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
 // })
 
 
-
+if ($.fn.DataTable) { 
 $('.tablaVentas').DataTable( {
     "ajax": "ajax/datatable-ventas.ajax.php",
     "deferRender": true,
@@ -48,7 +48,7 @@ $('.tablaVentas').DataTable( {
 	}
 
 } );
-
+};
 /*=============================================
 AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
 =============================================*/

@@ -15,6 +15,7 @@ CARGAR LA TABLA DINÁMICA DE CATEGORIA
   
   var perfilOculto = $("#perfilOculto").val();
   
+  if ($.fn.DataTable) { 
   $('.tablascategoria').DataTable( {
       "ajax": "ajax/tabladinamica/tabla-categoria.ajax.php?perfilOculto="+perfilOculto,
       "deferRender": true,
@@ -50,6 +51,7 @@ CARGAR LA TABLA DINÁMICA DE CATEGORIA
   
   
   } );
+  };
 
 
 
@@ -61,6 +63,7 @@ CARGAR LA TABLA DINÁMICA DE Las categroias ELIMINADOS
   
 var perfilOculto = $("#perfilOculto").val();
   
+if ($.fn.DataTable) { 
 $('.tablascategoriaEliminados').DataTable( {
     "ajax": "ajax/tabladinamica/datatable-categorias-eliminados.php?perfilOculto="+perfilOculto,
     "deferRender": true,
@@ -93,6 +96,5 @@ $('.tablascategoriaEliminados').DataTable( {
 
     }
 
-
-
 } );
+};

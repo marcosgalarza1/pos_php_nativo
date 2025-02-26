@@ -4,6 +4,7 @@ if ($.fn.DataTable.isDataTable('.tablaVentasRealizadas')) {
 }
 var perfilOculto = $("#perfilOculto").val();
 
+if ($.fn.DataTable) { 
 $('.tablaVentasRealizadas').DataTable( {
     "ajax": "ajax/datatable-ventas-realizadas.ajax.php?perfilOculto="+perfilOculto,
     "deferRender": true,
@@ -37,12 +38,13 @@ $('.tablaVentasRealizadas').DataTable( {
 	}
 
 } );
+};
 
 
 if ($.fn.DataTable.isDataTable('.tablaVentasEliminadas')) {
     $('.tablaVentasEliminadas').DataTable().destroy();
 }
-
+if ($.fn.DataTable) { 
  $('.tablaVentasEliminadas').DataTable( {
     "ajax": "ajax/tabladinamica/datatable-ventas-realizadas-eliminadas.ajax.php?perfilOculto="+perfilOculto,
     "deferRender": true,
@@ -76,3 +78,4 @@ if ($.fn.DataTable.isDataTable('.tablaVentasEliminadas')) {
 	}
 
 } );
+};

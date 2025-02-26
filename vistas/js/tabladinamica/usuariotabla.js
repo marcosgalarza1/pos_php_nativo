@@ -14,7 +14,7 @@ $.ajax({
   
   
   var perfilOculto = $("#perfilOculto").val();
-  
+  if ($.fn.DataTable) { 
   $('.tablasusuarios').DataTable( {
       "ajax": "ajax/tabladinamica/tabla-usuario.ajax.php?perfilOculto="+perfilOculto,
       "deferRender": true,
@@ -50,7 +50,7 @@ $.ajax({
   
   
   } );
-  
+  };
 
 
   /*=============================================
@@ -58,7 +58,7 @@ CARGAR LA TABLA DINÁMICA DE LOS USUARIOS ELIMINADOS
 =============================================*/
 
  
-  
+  if ($.fn.DataTable) { 
   $('.tablasusuariosEliminados').DataTable( {
       "ajax": "ajax/tabladinamica/datatable-usuarios-eliminados.ajax.php?perfilOculto="+perfilOculto,
       "deferRender": true,
@@ -94,4 +94,5 @@ CARGAR LA TABLA DINÁMICA DE LOS USUARIOS ELIMINADOS
   
   
   } );
+  };
   

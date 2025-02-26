@@ -14,7 +14,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
 // })
 
 
-
+if ($.fn.DataTable) { 
 $('.tablaCompras').DataTable( {
     "ajax": "ajax/datatable-compras.ajax.php",
     "deferRender": true,
@@ -48,7 +48,7 @@ $('.tablaCompras').DataTable( {
 	}
 
 } );
-
+};
 /*=============================================
 AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
 =============================================*/
@@ -520,9 +520,9 @@ $("#nuevoImpuestoVenta").change(function(){
 /*=============================================
 FORMATO AL PRECIO FINAL
 =============================================*/
-
+if ($.fn.number) { 
 $("#nuevoTotalCompra").number(true, 2);
-
+};
 
 
 /*=============================================

@@ -58,8 +58,7 @@ $fechaActual = date("Y-m-d");
 <!-- Select2 -->
 <link rel="stylesheet" href="vistas/bower_components/select2/dist/css/select2.min.css">
 
-<!-- Toastr -->
-<link rel="stylesheet" href="vistas/plugins/toastr/css/toastr.min.css">
+
 
   <!--=====================================
   plugin DE java scrip

@@ -15,6 +15,7 @@ CARGAR LA TABLA DINÁMICA DE CLIENTES
   
   var perfilOculto = $("#perfilOculto").val();
   
+  if ($.fn.DataTable) { 
   $('.tablascliente').DataTable( {
       "ajax": "ajax/tabladinamica/tabla-cliente.ajax.php?perfilOculto="+perfilOculto,
       "deferRender": true,
@@ -50,6 +51,7 @@ CARGAR LA TABLA DINÁMICA DE CLIENTES
   
   
   } );
+};
 
 
 
@@ -65,6 +67,7 @@ CARGAR LA TABLA DINÁMICA DE CLIENTES ELIMINADOS
     
   
   
+  if ($.fn.DataTable) { 
   $('.tablasclienteEliminados').DataTable( {
       "ajax": "ajax/tabladinamica/datatable-clientes-eliminados.ajax.php?perfilOculto="+perfilOculto,
 
@@ -102,3 +105,4 @@ CARGAR LA TABLA DINÁMICA DE CLIENTES ELIMINADOS
   
   
   } );
+};

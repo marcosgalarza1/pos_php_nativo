@@ -15,6 +15,7 @@ $.ajax({
   
   var perfilOculto = $("#perfilOculto").val();
   
+  if ($.fn.DataTable) { 
   $('.tablasProveedor').DataTable( {
       "ajax": "ajax/tabladinamica/tabla-proveedor.ajax.php?perfilOculto="+perfilOculto,
       "deferRender": true,
@@ -50,6 +51,7 @@ $.ajax({
   
   
   } );
+};
 
 
 
@@ -58,7 +60,7 @@ CARGAR LA TABLA DINÁMICA DE PROVEEDORES ELIMINADOS
 ================================================*/
 
 
-  
+  if ($.fn.DataTable) { 
 $('.tablasProveedorEliminados').DataTable( {
     "ajax": "ajax/tabladinamica/datatable-proveedor-eliminados.ajax.php?perfilOculto="+perfilOculto,
     "deferRender": true,
@@ -94,3 +96,4 @@ $('.tablasProveedorEliminados').DataTable( {
 
 
 } );
+};
