@@ -164,7 +164,7 @@
 
                                     <div class="form-group">
                                         <h4><strong>Nro de Ticket Inicial</strong></h4>
-                                        <input type="text" class="form-control text-uppercase " id="nro_ticket" name="nro_ticket" value="<?php echo $_SESSION["nombre"]; ?>" >
+                                        <input type="text" class="form-control text-uppercase " id="nro_ticket" name="nro_ticket" value="" >
                                     </div>
 
                                 </div>
@@ -183,7 +183,7 @@
 
                     <!-- Botones -->
                     <div class="row" style="text-align: right; padding-right: 20px;">
-                        <button type="button" onclick="guardarAperturaCierreCaja()" id="aperturar_cierre_caja" class="btn btn-primary btn-sm" style="margin-right: 3px;">Aperturar Caja</button>
+                        <button type="button" onclick="arqueoCaja.guardarAperturaCierreCaja()" id="aperturar_cierre_caja" class="btn btn-primary btn-sm" style="margin-right: 3px;">Aperturar Caja</button>
                     </div>
 
                     <!-- Controlador para crear el arqueo de caja-->

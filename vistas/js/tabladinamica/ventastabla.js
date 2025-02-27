@@ -41,9 +41,9 @@ $('.tablaVentasRealizadas').DataTable( {
 };
 
 
-if ($.fn.DataTable.isDataTable('.tablaVentasEliminadas')) {
+/*if ($.fn.DataTable.isDataTable('.tablaVentasEliminadas')) {
     $('.tablaVentasEliminadas').DataTable().destroy();
-}
+}*/
 if ($.fn.DataTable) { 
  $('.tablaVentasEliminadas').DataTable( {
     "ajax": "ajax/tabladinamica/datatable-ventas-realizadas-eliminadas.ajax.php?perfilOculto="+perfilOculto,

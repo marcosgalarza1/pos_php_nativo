@@ -170,16 +170,16 @@ class ModeloArqueo {
         
 
             $stmt->bindParam(":fecha_cierre", $datos["fecha_cierre"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs200", $datos["Bs200"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs100", $datos["Bs100"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs50", $datos["Bs50"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs20", $datos["Bs20"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs10", $datos["Bs10"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs5", $datos["Bs5"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs2", $datos["Bs2"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs1", $datos["Bs1"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs050", $datos["Bs050"], PDO::PARAM_STR);
-            $stmt->bindParam(":Bs020", $datos["Bs020"], PDO::PARAM_STR);
+            $stmt->bindParam(":Bs200", $datos["Bs200"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs100", $datos["Bs100"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs50", $datos["Bs50"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs20", $datos["Bs20"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs10", $datos["Bs10"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs5", $datos["Bs5"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs2", $datos["Bs2"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs1", $datos["Bs1"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs050", $datos["Bs050"], PDO::PARAM_INT);
+            $stmt->bindParam(":Bs020", $datos["Bs020"], PDO::PARAM_INT);
             $stmt->bindParam(":total_ingresos", $datos["total_ingresos"], PDO::PARAM_STR);
             $stmt->bindParam(":monto_ventas", $datos["monto_ventas"], PDO::PARAM_STR);
             $stmt->bindParam(":total_egresos", $datos["total_egresos"], PDO::PARAM_STR);

@@ -81,16 +81,16 @@ class ControladorArqueo {
         $datos = array(
             "id_arqueo" => intval($_POST["idArqueo"]),
             "fecha_cierre" => self::sanitizarInput($_POST["fechaCierre"]),
-            "Bs200" => self::sanitizarMonto($_POST["cantidad_200"]),
-            "Bs100" => self::sanitizarMonto($_POST["cantidad_100"]),
-            "Bs50" => self::sanitizarMonto($_POST["cantidad_50"]),
-            "Bs20" => self::sanitizarMonto($_POST["cantidad_20"]),
-            "Bs10" => self::sanitizarMonto($_POST["cantidad_10"]),
-            "Bs5" => self::sanitizarMonto($_POST["cantidad_5"]),
-            "Bs2" => self::sanitizarMonto($_POST["cantidad_2"]),
-            "Bs1" => self::sanitizarMonto($_POST["cantidad_1"]),
-            "Bs050" => self::sanitizarMonto($_POST["cantidad_050"]),
-            "Bs020" => self::sanitizarMonto($_POST["cantidad_020"]),
+            "Bs200" => self::sanitizarCantidad($_POST["cantidad_200"]),
+            "Bs100" => self::sanitizarCantidad($_POST["cantidad_100"]),
+            "Bs50" => self::sanitizarCantidad($_POST["cantidad_50"]),
+            "Bs20" => self::sanitizarCantidad($_POST["cantidad_20"]),
+            "Bs10" => self::sanitizarCantidad($_POST["cantidad_10"]),
+            "Bs5" => self::sanitizarCantidad($_POST["cantidad_5"]),
+            "Bs2" => self::sanitizarCantidad($_POST["cantidad_2"]),
+            "Bs1" => self::sanitizarCantidad($_POST["cantidad_1"]),
+            "Bs050" => self::sanitizarCantidad($_POST["cantidad_05"]),
+            "Bs020" => self::sanitizarCantidad($_POST["cantidad_02"]),
             "total_ingresos" => floatval($_POST["totalIngresos"]),
             "monto_ventas" => floatval($_POST["montoVentas"]),
             "total_egresos" => floatval($_POST["totalEgresos"]),
@@ -131,9 +131,9 @@ class ControladorArqueo {
     /**
      * Sanitiza y valida un monto
      * @param mixed $monto Monto a sanitizar
-     * @return float Monto sanitizado
+     * @return int Monto sanitizado
      */
-    private static function sanitizarMonto($monto) {
-        return floatval($monto ?? 0);
+    private static function sanitizarCantidad($monto) {
+        return intval($monto ?? 0);
     }
 } 

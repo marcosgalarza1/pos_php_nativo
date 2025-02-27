@@ -39,6 +39,8 @@ if ($.fn.DataTable.isDataTable('.tablaComprasRealizadas') || $.fn.DataTable.isDa
 
 } );
 
+
+
   $('.tablaComprasEliminadas').DataTable( {
     "ajax": "ajax/tabladinamica/datatable-compras-eliminadas.ajax.php",
     "deferRender": true,

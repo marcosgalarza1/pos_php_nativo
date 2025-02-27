@@ -1,356 +1,377 @@
- /*====================================================
-    ACTUALIZAR FECHA Y HORA
-    ====================================================*/
-    function actualizarFechaHora() {
-        const ahora = new Date();
-        const año = ahora.getFullYear();
-        const mes = String(ahora.getMonth() + 1).padStart(2, '0'); // Mes en formato 01-12
-        const dia = String(ahora.getDate()).padStart(2, '0'); // Día en formato 01-31
-        const horas = String(ahora.getHours()).padStart(2, '0'); // Horas en formato 00-23
-        const minutos = String(ahora.getMinutes()).padStart(2, '0'); // Minutos en formato 00-59
-        const segundos = String(ahora.getSeconds()).padStart(2, '0'); // Segundos en formato 00-59
+// Constantes
+const ESTADO = {
+    ABIERTA: 'abierta',
+    CERRADA: 'cerrada'
+};
 
-        const fechaHoraActual = `${año}-${mes}-${dia}T${horas}:${minutos}:${segundos}`;
+const CONFIG = {
+    INTERVALO_ACTUALIZACION: 1000,
+    DECIMALES: 2
+};
+
+class ArqueoCaja {
+    constructor() {
+        this.idArqueo = document.getElementById('idArqueo').value;
+        this.estado = document.getElementById('estado_caja').value;
+        this.totalEfectivoEnCaja = 0;
+        this.totales = {
+            montoApertura: 0,
+            montoVentas: 0,
+            gastosOperativos: 0,
+            montoCompras: 0,
+            totalIngresos: 0,
+            totalEgresos: 0,
+            resultadoNeto: 0,
+            diferencia: 0
+        };
+     
+        this.inicializarEventos();
+    }
+
+    inicializarEventos() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.inicializarInputsCantidad();
+            this.verificarEstadoCaja();
+            this.inicializarSelectorCaja();
+        });
+        setInterval(() => this.actualizarFechaHora(), CONFIG.INTERVALO_ACTUALIZACION);
+        this.actualizarFechaHora();
+    }
+
+    actualizarFechaHora() {
+        const ahora = new Date();
+        const formatoFecha = {
+            año: ahora.getFullYear(),
+            mes: String(ahora.getMonth() + 1).padStart(2, '0'),
+            dia: String(ahora.getDate()).padStart(2, '0'),
+            horas: String(ahora.getHours()).padStart(2, '0'),
+            minutos: String(ahora.getMinutes()).padStart(2, '0'),
+            segundos: String(ahora.getSeconds()).padStart(2, '0')
+        };
+
+        const fechaHoraActual = `${formatoFecha.año}-${formatoFecha.mes}-${formatoFecha.dia}T${formatoFecha.horas}:${formatoFecha.minutos}:${formatoFecha.segundos}`;
         document.getElementById("fecha_apertura_cierre").value = fechaHoraActual;
     }
 
-    // Actualiza cada segundo
-    setInterval(actualizarFechaHora, 1000);
-    actualizarFechaHora(); // Ejecutar al cargar la página
-
-    /*====================================================
-    VARIABLES GLOBALES
-    ====================================================*/
-    let idArqueo = document.getElementById('idArqueo').value;
-    var fechaAperturaCierre;
-    var idCaja;
-    var nroTicket;
-    var totalIngresos;
-    var montoApertura;
-    var montoVentas;
-    var totalEgresos;
-    var gastosOperativos;
-    var montoCompras;
-    var resultadoNeto;
-    var efectivoEnCaja;
-    var diferencia;
-    var estado = document.getElementById('estado_caja').value;
-    var totalEfectivoEnCaja = 0;
-
-    /*====================================================
-    CALCULAR SUBTOTAL Y TOTAL
-    ====================================================*/
-    document.addEventListener('DOMContentLoaded', function() {
+    inicializarInputsCantidad() {
         const inputs = document.querySelectorAll('.cantidad-input');
         
         inputs.forEach(input => {
-            input.addEventListener('input', function() {
-                calcularSubtotal(this);
-                calcularTotal();
+            input.addEventListener('input', () => {
+                this.calcularSubtotal(input);
+                this.calcularTotal();
             });
+
+            input.addEventListener('keypress', this.validarSoloNumeros);
         });
+    }
 
-        function calcularSubtotal(input) {
-            const valor = parseFloat(input.dataset.valor);
-            const cantidad = parseFloat(input.value) || 0;
-            const subtotal = valor * cantidad;
-            
-            // Obtener el ID del elemento total correspondiente
-            const idBase = input.id.replace('cantidad_', '');
-            const totalElement = document.getElementById(`Total_${idBase}bs`);
-            
-            if (totalElement) {
-                totalElement.textContent = subtotal.toFixed(2);
-            }
+    validarSoloNumeros(e) {
+        if (!/[\d.]/.test(e.key)) {
+            e.preventDefault();
         }
+    }
 
-        function calcularTotal() {
-            totalEfectivoEnCaja = 0;
-            inputs.forEach(input => {
+    calcularSubtotal(input) {
+        const valor = parseFloat(input.dataset.valor);
+        const cantidad = parseFloat(input.value) || 0;
+        const subtotal = valor * cantidad;
+        
+        const idBase = input.id.replace('cantidad_', '');
+        const totalElement = document.getElementById(`Total_${idBase}bs`);
+        
+        if (totalElement) {
+            totalElement.textContent = subtotal.toFixed(CONFIG.DECIMALES);
+        }
+    }
+
+    calcularTotal() {
+        this.totales.totalEfectivoEnCaja = Array.from(document.querySelectorAll('.cantidad-input'))
+            .reduce((total, input) => {
                 const valor = parseFloat(input.dataset.valor);
                 const cantidad = parseFloat(input.value) || 0;
-                totalEfectivoEnCaja += valor * cantidad;
-            });
+                return total + (valor * cantidad);
+            }, 0);
+
+        this.actualizarTotalesEnPantalla();
+    }
+
+    actualizarTotalesEnPantalla() {
        
-            document.getElementById('total_efectivo_en_caja_tabla').textContent = totalEfectivoEnCaja.toFixed(2);
-            document.getElementById('total_efectivo_en_caja').value = totalEfectivoEnCaja.toFixed(2);
-     
-            if(document.getElementById('estado_caja').value == 'cerrada') { 
-                document.getElementById('monto_apertura').textContent = totalEfectivoEnCaja.toFixed(2);
-            }
-
-            //calcular el total de ingresos
-            montoApertura = parseFloat(document.getElementById('monto_apertura').textContent);
-            montoVentas = parseFloat(document.getElementById('monto_ventas').textContent);
-            totalIngresos = montoApertura + montoVentas;
-            gastosOperativos = parseFloat(document.getElementById('gastos_operativos').textContent);
-            montoCompras = parseFloat(document.getElementById('monto_compras').textContent);
-            totalEgresos = gastosOperativos + montoCompras;
-
-            resultadoNeto = totalIngresos - totalEgresos;
-            diferencia = resultadoNeto - totalEfectivoEnCaja;
-           
-            document.getElementById('total_ingresos').innerHTML = totalIngresos.toFixed(2);
-            document.getElementById('total_egresos').textContent = totalEgresos.toFixed(2);
-            document.getElementById('resultado_neto').innerHTML = resultadoNeto.toFixed(2); 
-            document.getElementById('efectivo_en_caja').innerHTML = totalEfectivoEnCaja.toFixed(2);
-            document.getElementById('diferencia').innerHTML = diferencia.toFixed(2);
-
+        if (this.estado === ESTADO.CERRADA) {
+            document.getElementById('monto_apertura').textContent = this.totales.totalEfectivoEnCaja.toFixed(CONFIG.DECIMALES);
         }
-
-        // Validar que solo se ingresen números
-        inputs.forEach(input => {
-            input.addEventListener('keypress', function(e) {
-                if (!/[\d.]/.test(e.key)) {
-                    e.preventDefault();
-                }
-            });
+        
+        this.totales.montoApertura = parseFloat(document.getElementById('monto_apertura').textContent),
+        this.totales.montoVentas = parseFloat(document.getElementById('monto_ventas').textContent),
+        this.totales.gastosOperativos = parseFloat(document.getElementById('gastos_operativos').textContent),
+        this.totales.montoCompras = parseFloat(document.getElementById('monto_compras').textContent)
+        this.totales.totalIngresos = this.totales.montoApertura + this.totales.montoVentas;
+        this.totales.totalEgresos = this.totales.gastosOperativos + this.totales.montoCompras;
+        this.totales.resultadoNeto = this.totales.totalIngresos - this.totales.totalEgresos;
+        this.totales.diferencia = this.totales.resultadoNeto - this.totales.totalEfectivoEnCaja;
+      
+        this.actualizarElementos({
+            'total_efectivo_en_caja_tabla': this.totales.totalEfectivoEnCaja,
+            'total_efectivo_en_caja': this.totales.totalEfectivoEnCaja,
+            'total_ingresos': this.totales.totalIngresos,
+            'total_egresos': this.totales.totalEgresos,
+            'resultado_neto': this.totales.resultadoNeto,
+            'efectivo_en_caja': this.totales.totalEfectivoEnCaja,
+            'diferencia': this.totales.diferencia
         });
-    });
+    }
 
-    /*====================================================
-    VERIFICAR ESTADO DE LA CAJA ABIERTA O CERRADA
-    ====================================================*/
-
-    document.addEventListener('DOMContentLoaded', function() {
-        verificarEstadoCaja();
-    });
-
-    function verificarEstadoCaja() {
-        fetch(`ajax/arqueo.ajax.php?accion=verificarCaja&idUsuario=${idUsuario}`)
-            .then(response => response.json())
-            .then(data => {
-                if(data) { // La caja está abierta
-                    // Mostrar datos de la monto_apertura btn-success
-                    mostrarDatosApertura(data);
-                   
-                   // document.querySelector('.tabla-efectivo').style.display = 'none';
-                    idArqueo = data.id;
-                    document.getElementById('idArqueo').value = data.id;
-                    document.getElementById('radio_apertura').checked = true;
-                    document.getElementById('radio_cierre').checked = false;
-                    document.getElementById('estado_caja').value = 'abierta';
-                    estado = 'abierta';
-                    document.getElementById('aperturar_cierre_caja').textContent = 'Cerrar Caja';
-                    document.getElementById('aperturar_cierre_caja').classList.replace('btn-primary', 'btn-danger');
-                    document.getElementById('idCaja').disabled = true;
-                    document.getElementById('nro_ticket').disabled = true;
+    actualizarElementos(elementos) {
+        Object.entries(elementos).forEach(([id, valor]) => {
+            const elemento = document.getElementById(id);
+            if (elemento) {
+                if (elemento.tagName === 'INPUT') {
+                    elemento.value = valor.toFixed(CONFIG.DECIMALES);
                 } else {
-                    // La caja está cerrada
-                    //document.querySelector('.tabla-efectivo').style.display = 'block';
-                    document.getElementById('idCaja').disabled = false;
-                    document.getElementById('nro_ticket').disabled = false;
-                    document.getElementById('idArqueo').value = '0';
-                    document.getElementById('radio_apertura').checked = false;
-                    document.getElementById('radio_cierre').checked = true;
-                    document.getElementById('estado_caja').value = 'cerrada';
-                    estado = 'cerrada';
-                    document.getElementById('nro_ticket').value = '0';
-                    document.getElementById('aperturar_cierre_caja').textContent = 'Aperturar Caja';
-                    document.getElementById('aperturar_cierre_caja').classList.replace('btn-danger', 'btn-primary');
+                    elemento.textContent = valor.toFixed(CONFIG.DECIMALES);
                 }
-            })
-            .catch(error => {
-                swal({
-                    type: 'error',
-                    title: 'Error al verificar el estado de la caja',
-                    text: 'Por favor, intente nuevamente'
-                });
-            });
+            }
+        });
     }
 
-   /*====================================================
-    MOSTRAR DATOS DE APERTURA DE CAJA
-    ====================================================*/
-    function mostrarDatosApertura(datos) {
-        // Mostrar los datos de la monto_apertura en los campos correspondientes
-        document.getElementById('nro_ticket').value = datos.nroTicket;
-        document.getElementById('monto_apertura').textContent = datos.monto_apertura || '0.00';
-        document.getElementById('idCaja').value = datos.id_caja;
-        // Actualizar los campos de la tabla de la derecha
-        document.getElementById('monto_ventas').textContent = datos.monto_ventas || '0.00';
-        document.getElementById('total_ingresos').textContent = datos.total_ingresos || '0.00';
-        document.getElementById('gastos_operativos').textContent = datos.gastos_operativos || '0.00';
-        document.getElementById('monto_compras').textContent = datos.monto_compras || '0.00';
-        document.getElementById('total_egresos').textContent = datos.total_egresos || '0.00';
-        document.getElementById('resultado_neto').textContent = datos.resultado_neto || '0.00';
-        document.getElementById('efectivo_en_caja').textContent = datos.efectivo_en_caja || '0.00';
-        document.getElementById('diferencia').textContent = datos.diferencia || '0.00';
-    
+    async verificarEstadoCaja() {
+        try {
+            const response = await fetch(`ajax/arqueo.ajax.php?accion=verificarCaja&idUsuario=${idUsuario}`);
+            const data = await response.json();
+            
+            this.actualizarInterfazSegunEstado(data);
+        } catch (error) {
+            this.mostrarError('Error al verificar el estado de la caja');
+        }
     }
 
-   /*====================================================
-    OBTENER NRO DE TICKET
-    ====================================================*/
-    document.addEventListener('DOMContentLoaded', function() {
-        // Agregar el evento para el select de caja
+    actualizarInterfazSegunEstado(data) {
+        const elementos = {
+            idArqueo: document.getElementById('idArqueo'),
+            radioApertura: document.getElementById('radio_apertura'),
+            radioCierre: document.getElementById('radio_cierre'),
+            estadoCaja: document.getElementById('estado_caja'),
+            botonCaja: document.getElementById('aperturar_cierre_caja'),
+            idCaja: document.getElementById('idCaja'),
+            nroTicket: document.getElementById('nro_ticket')
+        };
+
+        if (data) {
+            this.configurarCajaAbierta(elementos, data);
+        } else {
+            this.configurarCajaCerrada(elementos);
+        }
+    }
+
+    configurarCajaAbierta(elementos, data) {
+        this.idArqueo = data.id;
+        elementos.idArqueo.value = data.id;
+        elementos.radioApertura.checked = true;
+        elementos.radioCierre.checked = false;
+        elementos.estadoCaja.value = ESTADO.ABIERTA;
+        elementos.botonCaja.textContent = 'Cerrar Caja';
+        elementos.botonCaja.classList.replace('btn-primary', 'btn-danger');
+        elementos.idCaja.disabled = true;
+        elementos.nroTicket.disabled = true;
+       
+        this.mostrarDatosApertura(data);
+    }
+
+    configurarCajaCerrada(elementos) {
+        this.estado = ESTADO.CERRADA;
+        elementos.idArqueo.value = '0';
+        elementos.radioApertura.checked = false;
+        elementos.radioCierre.checked = true;
+        elementos.estadoCaja.value = ESTADO.CERRADA;
+        elementos.nroTicket.value = '0';
+        elementos.botonCaja.textContent = 'Aperturar Caja';
+        elementos.botonCaja.classList.replace('btn-danger', 'btn-primary');
+        elementos.idCaja.disabled = false;
+        elementos.nroTicket.disabled = false;
+    }
+
+    mostrarDatosApertura(datos) {
+        const campos = {
+            'nro_ticket': datos.nroTicket,
+            'monto_apertura': datos.monto_apertura || '0.00',
+            'idCaja': datos.id_caja,
+            'monto_ventas': datos.monto_ventas || '0.00',
+            'total_ingresos': datos.total_ingresos || '0.00',
+            'gastos_operativos': datos.gastos_operativos || '0.00',
+            'monto_compras': datos.monto_compras || '0.00',
+            'total_egresos': datos.total_egresos || '0.00',
+            'resultado_neto': datos.resultado_neto || '0.00',
+            'efectivo_en_caja': datos.efectivo_en_caja || '0.00',
+            'diferencia': datos.diferencia || '0.00'
+        };
+        Object.entries(campos).forEach(([id, valor]) => {
+            const elemento = document.getElementById(id);
+            if (elemento) {
+                if (elemento.tagName === 'INPUT' || elemento.tagName === 'SELECT') {
+                    elemento.value = valor;
+                } else {
+                    elemento.textContent = valor;
+                }
+            }
+        });
+    }
+
+    inicializarSelectorCaja() {
         const selectCaja = document.getElementById('idCaja');
-        if(selectCaja) {
-            selectCaja.addEventListener('change', function() {
-                console.log(this.value);
-                const idCaja = this.value;
-                console.log(idCaja);
-                if(idCaja) {
-                    obtenerNroTicket(idCaja);
+        if (selectCaja) {
+            selectCaja.addEventListener('change', () => {
+                const idCaja = selectCaja.value;
+                if (idCaja) {
+                    this.obtenerNroTicket(idCaja);
                 } else {
                     document.getElementById('nro_ticket').value = '0';
                 }
             });
         }
-    });
-
-    function obtenerNroTicket(idCaja) {
-        fetch(`ajax/arqueo.ajax.php?accion=obtenerNroTicket&idCaja=${idCaja}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                if(data && data.nroTicket) {
-                    document.getElementById('nro_ticket').value = parseInt(data.nroTicket);
-                } else {
-                    document.getElementById('nro_ticket').value = '0';
-                    console.error('No se pudo obtener el número de ticket');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('nro_ticket').value = '0';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'No se pudo obtener el número de ticket'
-                });
-            });
     }
 
-   /*====================================================
-    GUARDAR APERTURA Y CIERRE DE CAJA
-    ====================================================*/
-    function validarAperturaCierreCaja() {
-        // Validaciones
-        if(!document.getElementById('idVendedor').value) {
-            toastr.error('El usuario es obligatorio', 'Error');
-            return false;
+    async obtenerNroTicket(idCaja) {
+        try {
+            const response = await fetch(`ajax/arqueo.ajax.php?accion=obtenerNroTicket&idCaja=${idCaja}`);
+            const data = await response.json();
+            
+            document.getElementById('nro_ticket').value = data?.nroTicket ? parseInt(data.nroTicket) : '0';
+        } catch (error) {
+            this.mostrarError('No se pudo obtener el número de ticket');
+            document.getElementById('nro_ticket').value = '0';
         }
+    }
 
-        if(!document.getElementById('idCaja').value) {
-            toastr.error('Debe seleccionar una caja', 'Error');
-            return false;
-        }
+    validarAperturaCierreCaja() {
+        const validaciones = [
+            { condicion: !document.getElementById('idVendedor').value, mensaje: 'El usuario es obligatorio' },
+            { condicion: !document.getElementById('idCaja').value, mensaje: 'Debe seleccionar una caja' },
+            { condicion: !document.getElementById('nro_ticket').value || document.getElementById('nro_ticket').value === "0", mensaje: 'El número de ticket es obligatorio' },
+            { condicion: !document.getElementById('total_efectivo_en_caja').value || document.getElementById('total_efectivo_en_caja').value === "0.00", mensaje: 'Debe ingresar el efectivo en caja' }
+        ];
 
-        if(!document.getElementById('nro_ticket').value || document.getElementById('nro_ticket').value === "0") {
-            toastr.error('El número de ticket es obligatorio', 'Error');
-            return false;
-        }
-
-        const totalEfectivo = document.getElementById('total_efectivo_en_caja').value;
-        if(!totalEfectivo || totalEfectivo === "0.00") {
-            toastr.error('Debe ingresar el efectivo en caja', 'Error');
+        const error = validaciones.find(v => v.condicion);
+        if (error) {
+            toastr.error(error.mensaje, 'Error');
             return false;
         }
         return true;
     }
 
-       function guardarAperturaCierreCaja() {
-        fechaAperturaCierre = document.getElementById('fecha_apertura_cierre').value;
-        idCaja = document.getElementById('idCaja').value;
-        nroTicket = document.getElementById('nro_ticket').value;
-        var data;
-        var title
-        
-        if(validarAperturaCierreCaja()) {
-            let data, title, text;
-            
-            if(estado == 'cerrada') {
-                title = '¿Aperturar Caja?';
-                text = '¿Está seguro de aperturar la caja?';
-                data = {
-                    accion: 'AperturarCaja',
-                    fechaApertura: fechaAperturaCierre,
-                    montoApertura: montoApertura,
-                    nroTicket: nroTicket,
-                    totalIngresos: totalIngresos,
-                    resultadoNeto: resultadoNeto,
-                    estado: 'abierta',
-                    idCaja: idCaja,
-                    idUsuario: idUsuario
-                };
-            } else {
-                title = '¿Cerrar Caja?';
-                text = '¿Está seguro de cerrar la caja?';
-                data = {
-                    accion: 'CerrarCaja',
-                    idArqueo: idArqueo,
-                    idUsuario: idUsuario,
-                    idCaja: idCaja,
-                    fechaCierre: fechaAperturaCierre,
-                    nroTicket: nroTicket,
-                    estado: 'cerrada',
-                    cantidad_200: document.getElementById('cantidad_200').value || "0",
-                    cantidad_100: document.getElementById('cantidad_100').value || "0",
-                    cantidad_50: document.getElementById('cantidad_50').value || "0",
-                    cantidad_20: document.getElementById('cantidad_20').value || "0",
-                    cantidad_10: document.getElementById('cantidad_10').value || "0",
-                    cantidad_5: document.getElementById('cantidad_5').value || "0",
-                    cantidad_2: document.getElementById('cantidad_2').value || "0",
-                    cantidad_1: document.getElementById('cantidad_1').value || "0",
-                    cantidad_050: document.getElementById('cantidad_05').value || "0",
-                    cantidad_020: document.getElementById('cantidad_02').value || "0",
-                    totalIngresos: totalIngresos,
-                    montoVentas: montoVentas,
-                    totalEgresos: totalEgresos,
-                    gastosOperativos: gastosOperativos,
-                    montoCompras: montoCompras,
-                    resultadoNeto: resultadoNeto,
-                    totalEfectivoEnCaja: totalEfectivoEnCaja,
-                    diferencia: diferencia
-                }
-            }
-            swal({
-                title: title,
-                text: text,
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, confirmar',
-                //cancelButtonText: 'Cancelar'
-            }).then((result ) => {
-               
-                if (result.value) {
-                    $.ajax({
-                        url: 'ajax/arqueo.ajax.php',
-                        type: 'POST',
-                        data: data ,
-                        success: function(response) {
-                            try {
-                                const respuesta = JSON.parse(response);
-                                if(respuesta.status === "ok") {
-                                    swal({
-                                        type: 'success',
-                                        title: 'Operación exitosa',
-                                        text: estado == 'cerrada' ? 'Caja aperturada correctamente' : 'Caja cerrada correctamente',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    }).then(function(result){
-                                        window.location.reload();
-                                    });
-                                } else {
-                                    swall('Error', 'Ocurrió un error en la operación', 'error');
-                                }
-                            } catch(e) {
-                                console.error('Error parsing response:', response);
-                                swal('Error', 'Error al procesar la respuesta del servidor', 'error');
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            swal({
-                                title: 'Error',
-                                text: 'Ocurrió un error al completar el pedido',
-                                type: 'error'
-                            });
-                        }
-                    });
-                }
-            });
+    async guardarAperturaCierreCaja() {
+        if (!this.validarAperturaCierreCaja()) return;
+
+        const fechaAperturaCierre = document.getElementById('fecha_apertura_cierre').value;
+        const idCaja = document.getElementById('idCaja').value;
+        const nroTicket = document.getElementById('nro_ticket').value;
+
+        const data = this.estado === ESTADO.CERRADA ? 
+            this.prepararDatosApertura(fechaAperturaCierre, nroTicket, idCaja) :
+            this.prepararDatosCierre(fechaAperturaCierre, nroTicket, idCaja);
+        const confirmacion = await this.confirmarOperacion(this.estado);
+        if (confirmacion.value) {
+            await this.enviarDatos(data);
         }
     }
+
+    prepararDatosApertura(fechaAperturaCierre, nroTicket, idCaja) {
+        return {
+            accion: 'AperturarCaja',
+            fechaApertura: fechaAperturaCierre,
+            montoApertura: this.totales.montoApertura,
+            nroTicket,
+            totalIngresos: this.totales.totalIngresos,
+            resultadoNeto: this.totales.resultadoNeto,
+            estado: ESTADO.ABIERTA,
+            idCaja,
+            idUsuario
+        };
+    }
+
+    prepararDatosCierre(fechaAperturaCierre, nroTicket, idCaja) {
+        return {
+            accion: 'CerrarCaja',
+            idArqueo: this.idArqueo,
+            idUsuario,
+            idCaja,
+            fechaCierre: fechaAperturaCierre,
+            nroTicket,
+            estado: ESTADO.CERRADA,
+            ...this.obtenerCantidadesEfectivo(),
+            totalIngresos: this.totales.totalIngresos,
+            montoVentas: this.totales.montoVentas,
+            totalEgresos: this.totales.totalEgresos,
+            gastosOperativos: this.totales.gastosOperativos,
+            montoCompras: this.totales.montoCompras,
+            resultadoNeto: this.totales.resultadoNeto,
+            totalEfectivoEnCaja: this.totales.totalEfectivoEnCaja,
+            diferencia: this.totales.diferencia
+        };
+    }
+
+    obtenerCantidadesEfectivo() {
+        const denominaciones = ['200', '100', '50', '20', '10', '5', '2', '1', '05', '02'];
+        return denominaciones.reduce((acc, denom) => {
+            acc[`cantidad_${denom}`] = document.getElementById(`cantidad_${denom}`).value || "0";
+            return acc;
+        }, {});
+    }
+
+    async confirmarOperacion(estado) {
+        const config = estado === ESTADO.CERRADA ? 
+            { title: '¿Aperturar Caja?', text: '¿Está seguro de aperturar la caja?' } :
+            { title: '¿Cerrar Caja?', text: '¿Está seguro de cerrar la caja?' };
+
+        return swal({
+            ...config,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, confirmar'
+        });
+    }
+
+    async enviarDatos(data) {
+        try {
+            const response = await $.ajax({
+                url: 'ajax/arqueo.ajax.php',
+                type: 'POST',
+                data
+            });
+
+            const respuesta = JSON.parse(response);
+            if (respuesta.status === "ok") {
+                await this.mostrarExito(this.estado);
+                window.location.reload();
+            } else {
+                throw new Error('Ocurrió un error en la operación');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            this.mostrarError('Error al procesar la operación');
+        }
+    }
+
+    mostrarExito(estado) {
+        return swal({
+            type: 'success',
+            title: 'Operación exitosa',
+            text: estado === ESTADO.CERRADA ? 'Caja aperturada correctamente' : 'Caja cerrada correctamente',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+
+    mostrarError(mensaje) {
+        swal({
+            type: 'error',
+            title: 'Error',
+            text: mensaje
+        });
+    }
+}
+
+// Inicializar la aplicación
+const arqueoCaja = new ArqueoCaja();
