@@ -64,16 +64,68 @@
         background-color:red;
         box-shadow: inset 0 0 0 4px white;
     }
-    .row-dark{
-        border: 1px solid #333 !important;
-        font-weight: bold;
-        padding-right: 6px;
-    }
-    .row-dark th,td{
-       padding-left: 6px;
-       padding-right: 6px;
-    }
+/* Estilos generales de tabla */
+.dt-responsive {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #333;
+}
+/* Estilos de filas y celdas */
+.row-dark {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
 
+.row-dark th,
+.row-dark td {
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.cell-padded {
+    padding-left: 6px;
+}
+
+.cell-value {
+    padding-right: 6px;
+}
+
+/* Alineación de texto */
+.text-right {
+    text-align: right;
+    padding-right: 6px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Ancho de columnas */
+.total-column {
+    width: 20%;
+}
+
+/* Estilos para la tabla de resumen (tfoot/div) */
+.summary-table {
+    float: right;
+    width: 100%;
+    margin-top: 15px; /* Reemplaza <br> con margen */
+}
+
+.bold-value {
+    font-weight: bold;
+}
+
+.border-bottom {
+    border-bottom: 2px solid #333; /* Borde más grueso */
+}
+/* Estilos para el texto "VS" */
+.vs-text {
+    color: red;
+    font-size: 14px;
+}
     /* Agregar estos estilos para los inputs en la tabla */
     .tabla-efectivo input.form-control.input-sm {
         height: auto;
