@@ -67,7 +67,7 @@ class ArqueoCaja {
     }
 
     validarSoloNumeros(e) {
-        if (!/[\d.]/.test(e.key)) {
+        if (!/\d/.test(e.key)) {
             e.preventDefault();
         }
     }
@@ -109,7 +109,7 @@ class ArqueoCaja {
         this.totales.totalIngresos = this.totales.montoApertura + this.totales.montoVentas;
         this.totales.totalEgresos = this.totales.gastosOperativos + this.totales.montoCompras;
         this.totales.resultadoNeto = this.totales.totalIngresos - this.totales.totalEgresos;
-        this.totales.diferencia = this.totales.resultadoNeto - this.totales.totalEfectivoEnCaja;
+        this.totales.diferencia = this.totales.totalEfectivoEnCaja - this.totales.resultadoNeto;
       
         this.actualizarElementos({
             'total_efectivo_en_caja_tabla': this.totales.totalEfectivoEnCaja,
@@ -117,6 +117,7 @@ class ArqueoCaja {
             'total_ingresos': this.totales.totalIngresos,
             'total_egresos': this.totales.totalEgresos,
             'resultado_neto': this.totales.resultadoNeto,
+            'total_ganancia_perdida': this.totales.resultadoNeto,
             'efectivo_en_caja': this.totales.totalEfectivoEnCaja,
             'diferencia': this.totales.diferencia
         });
@@ -202,6 +203,7 @@ class ArqueoCaja {
             'monto_compras': datos.monto_compras || '0.00',
             'total_egresos': datos.total_egresos || '0.00',
             'resultado_neto': datos.resultado_neto || '0.00',
+            'total_ganancia_perdida': datos.resultado_neto || '0.00',
             'efectivo_en_caja': datos.efectivo_en_caja || '0.00',
             'diferencia': datos.diferencia || '0.00'
         };

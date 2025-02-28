@@ -64,17 +64,14 @@
         background-color:red;
         box-shadow: inset 0 0 0 4px white;
     }
-    .cell-right{
+    .row-dark{
         border: 1px solid #333 !important;
-        border-left: none !important;
         font-weight: bold;
         padding-right: 6px;
     }
-    .cell-left{
-        border: 1px solid #333 !important;
-        border-right: none !important;
-        font-weight: bold;
-        padding-left: 5px;
+    .row-dark th,td{
+       padding-left: 6px;
+       padding-right: 6px;
     }
 
     /* Agregar estos estilos para los inputs en la tabla */

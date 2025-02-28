@@ -42,11 +42,15 @@
                     echo "<tr>
                         <td>{$etiqueta}</td>
                         <td>
-                            <input type='text' 
+                            <input type='number' 
                                    class='form-control input-sm cantidad-input' 
                                    id='cantidad_{$id}' 
                                    name='cantidad_{$id}' 
-                                   data-valor='{$valor}'>
+                                   data-valor='{$valor}'
+                                   pattern='\\d*'
+                                   min='0'
+                                   inputmode='numeric'
+                                   step='1'>
                         </td>
                         <td class='text-right'>
                             <span id='Total_{$id}bs'>0.00</span>
