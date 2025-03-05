@@ -20,7 +20,7 @@ if ($_SESSION["perfil"] == "") {
 
     /* Estilos para el catálogo de productos */
     .catalogo-productos {
-      padding: 20px;
+      padding: 0px;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -30,9 +30,11 @@ if ($_SESSION["perfil"] == "") {
     .catalogo-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      padding: 10px 0;
+     
+      margin-bottom: 0px;
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-top: 15px;
       border-bottom: 2px solid #f4f4f4;
     }
 
@@ -66,6 +68,7 @@ if ($_SESSION["perfil"] == "") {
     .producto-card:hover {
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       transform: translateY(-2px);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .producto-imagen {
@@ -124,7 +127,7 @@ if ($_SESSION["perfil"] == "") {
     .catalogo-filtros {
       display: flex;
       gap: 15px;
-      margin-bottom: 20px;
+      margin-bottom: 0px;
     }
 
     .catalogo-busqueda {
@@ -155,6 +158,85 @@ if ($_SESSION["perfil"] == "") {
         font-size: 12px;
       }
     }
+
+    /* Estilos para los filtros de categorías */
+    .filtros-categorias {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 0px;
+      flex-wrap: wrap;
+    }
+
+    .btn-categoria {
+      padding: 4px 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #f8f9fa;
+      color: #333;
+      transition: all 0.3s ease;
+      text-transform: capitalize;
+    }
+
+    .btn-categoria:hover,
+    .btn-categoria.active {
+      background: #007bff;
+      color: white;
+      border-color: #0056b3;
+    }
+
+    /* Estilos para la paginación */
+    .catalogo-paginacion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 20px;
+      border-top: 1px solid #dee2e6;
+    }
+
+    .paginacion-info {
+      color: #6c757d;
+    }
+
+    .paginacion-controles {
+      display: flex;
+      gap: 5px;
+    }
+
+    .paginacion-controles button {
+      padding: 6px 12px;
+      border: 1px solid #dee2e6;
+      background: white;
+      color: #007bff;
+      border-radius: 4px;
+    }
+
+    .paginacion-controles button:hover:not(:disabled) {
+      background: #007bff;
+      color: white;
+      border-color: #0056b3;
+    }
+
+    .paginacion-controles button:disabled {
+      color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    .paginacion-paginas {
+      display: flex;
+      gap: 5px;
+    }
+
+    .registros-por-pagina {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .registros-por-pagina select {
+      padding: 6px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+    }
   </style>
 <div class="content-wrapper text-uppercase ">
 
@@ -183,7 +265,65 @@ if ($_SESSION["perfil"] == "") {
 
     <div class="row">
 
+  
       <!--=====================================
+      LA TABLA DE PRODUCTOS
+      ======================================-->
+
+      <div class="col-lg-7 hidden-md hidden-sm hidden-xs  ">
+
+        <div class="box box-success">
+
+          <div class=" with-border">
+            <div class="catalogo-header">
+            <div class="filtros-categorias" id="filtrosCategorias">
+              <!-- Los botones de categoría se agregarán dinámicamente -->
+            </div>
+              <div class="catalogo-filtros">
+                <div class="catalogo-busqueda">
+                  <input type="text" id="buscarProducto" class="form-control" placeholder="Buscar productos...">
+                </div>
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="">
+            <div class="catalogo-productos">
+              <div class="catalogo-grid" id="catalogoProductos">
+                <!-- Los productos se cargarán dinámicamente aquí -->
+              </div>
+              <div class="catalogo-paginacion">
+                <div class="registros-por-pagina">
+                  <span>Mostrar</span>
+                  <select id="registrosPorPagina">
+                    <option value="12">12</option>
+                    <option value="24">24</option>
+                    <option value="48">48</option>
+                  </select>
+                  <span>registros</span>
+                </div>
+                <div class="paginacion-info" id="paginacionInfo">
+                  <!-- La información de paginación se mostrará aquí -->
+                </div>
+                <div class="paginacion-controles">
+                  <button id="btnAnterior" disabled>Anterior</button>
+                  <div class="paginacion-paginas" id="paginacionPaginas">
+                    <!-- Los números de página se agregarán dinámicamente -->
+                  </div>
+                  <button id="btnSiguiente">Siguiente</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+          <!--=====================================
       EL FORMULARIO
       ======================================-->
 
@@ -540,38 +680,6 @@ if ($_SESSION["perfil"] == "") {
 
       </div>
 
-      <!--=====================================
-      LA TABLA DE PRODUCTOS
-      ======================================-->
-
-      <div class="col-lg-7 hidden-md hidden-sm hidden-xs  ">
-
-        <div class="box box-warning">
-
-          <div class="box-header with-border">
-            <div class="catalogo-header">
-              <h3>Catálogo de Productos</h3>
-              <div class="catalogo-filtros">
-                <div class="catalogo-busqueda">
-                  <input type="text" id="buscarProducto" class="form-control" placeholder="Buscar productos...">
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="box-body">
-            <div class="catalogo-productos">
-              <div class="catalogo-grid" id="catalogoProductos">
-                <!-- Los productos se cargarán dinámicamente aquí -->
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-
-      </div>
-
     </div>
 
   </section>
@@ -720,6 +828,7 @@ MODAL AGREGAR MESERO
   const idUsuario = <?php echo $_SESSION["id"]; ?>;
 </script>
 <script src="vistas/js/validar-caja.js"></script>
+
 <script>
    // Prevenir que el dropdown se cierre al interactuar con el formulario
    $(document).on('click', '.dropdown-menu', function (e) {
@@ -733,47 +842,45 @@ $(document).ready(function() {
                 url: 'ajax/clientes.ajax.php',
                 dataType: 'json',
                 data: {
-                    term: request.term // Envío el término buscado
+                    term: request.term
                 },
                 success: function(data) {
-                    // Verifica si no hay coincidencias
                     if (data.length === 0) {
-                        $("#id_cliente").val(0); // Establece el valor en 0 si no hay coincidencias
+                        $("#id_cliente").val(0);
                     }
-                    response(data); // Envía los datos de vuelta a autocomplete
+                    response(data);
                 }
             });
         },
         minLength: 2,
         select: function(event, ui) {
             event.preventDefault();
-            $("#id_cliente").val(ui.item.id); // Asigna el ID del cliente
-            $("#cliente").val(ui.item.value); // Asigna el nombre del cliente
+            $("#id_cliente").val(ui.item.id);
+            $("#cliente").val(ui.item.value);
         },
         change: function(event, ui) {
-            // Si el campo es cambiado manualmente y no se encuentra el valor, establece id_cliente a 0
             if (!ui.item) {
                 $("#id_cliente").val(0);
             }
         }
     });
 
-    // Manejo del evento keydown para detectar la tecla DEL
     $("#cliente").keydown(function(event) {
-        if (event.key === "Delete") { // Verifica si la tecla presionada es "DEL"
-            $("#id_cliente").val(0); // Establece id_cliente a 0
+        if (event.key === "Delete") {
+            $("#id_cliente").val(0);
         }
     });
 
     $('.select2-selection-multiple').select2({
       theme: "classic"
     });
+    
     $("select[name='states[]']").on("change", function () {
-    const selectedTexts = $(this).find("option:selected").map(function () {
-      return $(this).text(); // Obtiene el texto de las opciones seleccionadas
-    }).get();
-    console.log(selectedTexts); // Imprime los textos seleccionados en la consola
-  });
+      const selectedTexts = $(this).find("option:selected").map(function () {
+        return $(this).text();
+      }).get();
+      console.log(selectedTexts);
+    });
 });
 
 document.getElementById("guardarVentaBtn").addEventListener("click", function() {
@@ -783,125 +890,24 @@ document.getElementById("guardarVentaBtn").addEventListener("click", function() 
 
   if(!efectivo){
     swal({
-    type: "error",
-    title: "El campo pagado es requerido",
-    showConfirmButton: true,
-    confirmButtonText: "Cerrar"
+      type: "error",
+      title: "El campo pagado es requerido",
+      showConfirmButton: true,
+      confirmButtonText: "Cerrar"
     });
     return;
   }
 
   if(cambio>=0){
     document.getElementById("ventaForm").submit();
-   
   }else{
     swal({
-    type: "error",
-    title: "Lo que Canceló debe ser igual o mayor al total",
-    showConfirmButton: true,
-    confirmButtonText: "Cerrar"
+      type: "error",
+      title: "Lo que Canceló debe ser igual o mayor al total",
+      showConfirmButton: true,
+      confirmButtonText: "Cerrar"
     });
   }
-   
-});
-
-/*=============================================
-CARGAR EL CATÁLOGO DE PRODUCTOS
-=============================================*/
-function cargarCatalogoProductos() {
-  $.ajax({
-    url: "ajax/datatable-ventas.ajax.php",
-    success: function(respuesta) {
-      const productos = JSON.parse(respuesta);
-      const catalogoContainer = document.getElementById('catalogoProductos');
-      catalogoContainer.innerHTML = '';
-
-      productos.data.forEach(producto => {
-        const productoCard = document.createElement('div');
-        productoCard.className = 'producto-card';
-        
-        // Extraer los datos del array
-        const id = producto[0];
-        const imagenHTML = producto[1];
-        const codigo = producto[2];
-        const descripcion = producto[3];
-        const stockHTML = producto[4];
-        const precio_venta = producto[6];
-        
-        // Extraer la URL de la imagen del HTML
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = imagenHTML;
-        const imagenSrc = tempDiv.querySelector('img').src;
-        
-        // Extraer el valor del stock del HTML
-        tempDiv.innerHTML = stockHTML;
-        const stock = parseInt(tempDiv.querySelector('button').textContent);
-        
-        // Determinar las clases basadas en el stock
-        const stockClass = stock > 0 ? 'text-success' : 'text-danger';
-        const btnClass = stock > 0 ? 'btn-agregar' : 'btn-agregar disabled';
-        
-        // Extraer el ID del producto del botón
-        tempDiv.innerHTML = producto[5];
-        const idProducto = tempDiv.querySelector('button').getAttribute('idProducto');
-        
-        productoCard.innerHTML = `
-          <img src="${imagenSrc}" class="producto-imagen" alt="${descripcion}" onerror="this.src='vistas/img/productos/default/anonymous.png'">
-          <div class="producto-nombre">${descripcion}</div>
-          <div class="producto-stock ${stockClass}">Stock: ${stock}</div>
-          <div class="producto-precio">Bs ${precio_venta || '0.00'}</div>
-          <button class="${btnClass} recuperarBoton" ${stock > 0 ? '' : 'disabled'} 
-                  idProducto="${idProducto}">
-            <i class="fa fa-plus"></i> Agregar
-          </button>
-        `;
-
-        catalogoContainer.appendChild(productoCard);
-      });
-
-      // Inicializar eventos de los botones
-      inicializarBotonesAgregar();
-    }
-  });
-}
-
-function inicializarBotonesAgregar() {
-  $('.btn-agregar').on('click', function() {
-    const idProducto = $(this).attr('idProducto');
-    $(this).addClass('disabled').prop('disabled', true);
-    
-    // Reutilizar la lógica existente de agregar producto
-    const datos = new FormData();
-    datos.append("idProducto", idProducto);
-    
-    $.ajax({
-      url: "ajax/productos.ajax.php",
-      method: "POST",
-      data: datos,
-      cache: false,
-      contentType: false,
-      processData: false,
-      dataType: "json",
-      success: function(respuesta) {
-        // Reutilizar la lógica existente de agregar producto
-        agregarProductoAVenta(respuesta);
-      }
-    });
-  });
-}
-
-// Función para filtrar productos
-$('#buscarProducto').on('input', function() {
-  const busqueda = $(this).val().toLowerCase();
-  $('.producto-card').each(function() {
-    const nombre = $(this).find('.producto-nombre').text().toLowerCase();
-    $(this).toggle(nombre.includes(busqueda));
-  });
-});
-
-// Cargar el catálogo cuando el documento esté listo
-$(document).ready(function() {
-  cargarCatalogoProductos();
 });
 
 function agregarProductoAVenta(producto) {
@@ -946,9 +952,9 @@ function agregarProductoAVenta(producto) {
       </div>
     </div>`);
 
-  // Actualizar totales
   sumarTotalPrecios();
   listarProductos();
   $(".nuevoPrecioProducto").number(true, 2);
 }
 </script>
+<script src="vistas/js/catalogo-productos.js"></script>

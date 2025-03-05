@@ -43,8 +43,8 @@ class TablaCategorias
                 "' . ($i + 1) . '",
                 "' . $categorias[$i]["categoria"] . '",
                 "' . $categorias[$i]["fecha"] . '",
-                "' . $botones . '"
-                
+                "' . $botones . '",
+                "' . $categorias[$i]["id"] . '"
                 ],';
                 }
     
