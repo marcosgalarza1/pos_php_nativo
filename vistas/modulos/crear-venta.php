@@ -47,8 +47,6 @@ if ($_SESSION["perfil"] == "") {
     .catalogo-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(150px, 1fr));
-      /* gap: 20px;
-      padding: 15px;*/
       gap: 20px;
       padding: 15px;
     }
@@ -56,7 +54,6 @@ if ($_SESSION["perfil"] == "") {
     .producto-card {
       background: white;
       border: 1px solid #e0e0e0;
-     /*border-radius: 8px;*/
       border-radius: 0px;
       padding: 10px;
       text-align: center;
@@ -92,9 +89,14 @@ if ($_SESSION["perfil"] == "") {
     }
 
     .producto-stock {
+      position: absolute;
+      top: 5px;
+      right: 5px;
       font-size: 12px;
-      color: #666;
-      margin-bottom: 5px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     .producto-precio {
@@ -187,19 +189,36 @@ if ($_SESSION["perfil"] == "") {
     /* Estilos para la paginación */
     .catalogo-paginacion {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      padding: 20px 20px;
+      padding: 20px;
       border-top: 1px solid #dee2e6;
+      gap: 15px;
     }
 
-    .paginacion-info {
-      color: #6c757d;
+    .paginacion-controles-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .registros-por-pagina {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .paginacion-controles {
       display: flex;
       gap: 5px;
+    }
+
+    .paginacion-info {
+      color: #6c757d;
+      text-align: center;
+      margin-top: 10px;
     }
 
     .paginacion-controles button {
@@ -224,18 +243,6 @@ if ($_SESSION["perfil"] == "") {
     .paginacion-paginas {
       display: flex;
       gap: 5px;
-    }
-
-    .registros-por-pagina {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .registros-por-pagina select {
-      padding: 6px;
-      border: 1px solid #dee2e6;
-      border-radius: 4px;
     }
   </style>
 <div class="content-wrapper text-uppercase ">

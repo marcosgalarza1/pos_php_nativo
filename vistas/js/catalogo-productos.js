@@ -189,15 +189,18 @@ class CatalogoProductos {
     contenedor.empty();
 
     productosActuales.forEach(producto => {
-      const stockClass = producto.stock > 0 ? 'text-success' : 'text-danger';
+      var stockClass = producto.stock <= 10 ? 'text-danger' :  'text-success';
       const btnClass = producto.stock > 0 ? 'btn-agregar' : 'btn-agregar disabled';
+      console.log(producto.stock);
+   
+
 
       contenedor.append(`
         <div class="producto-card">
+          <div class="producto-stock ${stockClass}">Stock: ${producto.stock}</div>
           <img src="${producto.imagen}" class="producto-imagen" alt="${producto.descripcion}" 
                onerror="this.src='vistas/img/productos/default/anonymous.png'">
           <div class="producto-nombre">${producto.descripcion}</div>
-          <div class="producto-stock ${stockClass}">Stock: ${producto.stock}</div>
           <div class="producto-precio">Bs ${producto.precio_venta || '0.00'}</div>
           <button class="${btnClass} recuperarBoton" ${producto.stock > 0 ? '' : 'disabled'} 
                   idProducto="${producto.id}">
@@ -208,7 +211,6 @@ class CatalogoProductos {
     });
 
     this.actualizarPaginacion(productosFiltrados.length);
-    //inicializarBotonesAgregar();
   }
 
   actualizarPaginacion(totalProductos) {
@@ -216,27 +218,73 @@ class CatalogoProductos {
     const inicio = (this.paginaActual - 1) * this.registrosPorPagina + 1;
     const fin = Math.min(inicio + this.registrosPorPagina - 1, totalProductos);
 
-    // Actualizar información de paginación
-    $('#paginacionInfo').text(
-      `Mostrando registros del ${inicio} al ${fin} de un total de ${totalProductos}`
-    );
+    // Actualizar estructura de paginación
+    const paginacionContainer = $('.catalogo-paginacion');
+    paginacionContainer.empty();
 
-    // Actualizar botones de navegación
-    $('#btnAnterior').prop('disabled', this.paginaActual === 1);
-    $('#btnSiguiente').prop('disabled', this.paginaActual === totalPaginas);
+    // Agregar controles de paginación
+    paginacionContainer.append(`
+      <div class="paginacion-controles-wrapper">
+        <div class="registros-por-pagina">
+          <span>Mostrar</span>
+          <select id="registrosPorPagina">
+            <option value="12" ${this.registrosPorPagina === 12 ? 'selected' : ''}>12</option>
+            <option value="24" ${this.registrosPorPagina === 24 ? 'selected' : ''}>24</option>
+            <option value="48" ${this.registrosPorPagina === 48 ? 'selected' : ''}>48</option>
+          </select>
+          <span>registros</span>
+        </div>
+        <div class="paginacion-controles">
+          <button id="btnAnterior" ${this.paginaActual === 1 ? 'disabled' : ''}>Anterior</button>
+          <div class="paginacion-paginas">
+            ${this.generarBotonesPaginas(totalPaginas)}
+          </div>
+          <button id="btnSiguiente" ${this.paginaActual === totalPaginas ? 'disabled' : ''}>Siguiente</button>
+        </div>
+      </div>
+      <div class="paginacion-info">
+        Mostrando registros del ${inicio} al ${fin} de un total de ${totalProductos}
+      </div>
+    `);
 
-    // Renderizar números de página
-    const paginasContainer = $('#paginacionPaginas');
-    paginasContainer.empty();
+    // Reinicializar eventos después de actualizar la estructura
+    this.inicializarEventosPaginacion();
+  }
 
+  generarBotonesPaginas(totalPaginas) {
+    let html = '';
     for (let i = 1; i <= totalPaginas; i++) {
-      paginasContainer.append(`
+      html += `
         <button class="btn-pagina ${i === this.paginaActual ? 'active' : ''}"
                 onclick="catalogoProductos.irAPagina(${i})">
           ${i}
         </button>
-      `);
+      `;
     }
+    return html;
+  }
+
+  inicializarEventosPaginacion() {
+    $('#registrosPorPagina').on('change', (e) => {
+      this.registrosPorPagina = parseInt(e.target.value);
+      this.paginaActual = 1;
+      this.renderizarCatalogo();
+    });
+
+    $('#btnAnterior').on('click', () => {
+      if (this.paginaActual > 1) {
+        this.paginaActual--;
+        this.renderizarCatalogo();
+      }
+    });
+
+    $('#btnSiguiente').on('click', () => {
+      const totalPaginas = Math.ceil(this.productosFiltrados.length / this.registrosPorPagina);
+      if (this.paginaActual < totalPaginas) {
+        this.paginaActual++;
+        this.renderizarCatalogo();
+      }
+    });
   }
 
   irAPagina(pagina) {
