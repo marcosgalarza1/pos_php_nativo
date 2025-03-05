@@ -17,6 +17,144 @@ if ($_SESSION["perfil"] == "") {
       padding: 15px; /* Para darle un buen espaciado */
       min-width: 300px; /* Ancho mínimo del formulario */
     }
+
+    /* Estilos para el catálogo de productos */
+    .catalogo-productos {
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .catalogo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 10px 0;
+      border-bottom: 2px solid #f4f4f4;
+    }
+
+    .catalogo-header h3 {
+      margin: 0;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .catalogo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      /* gap: 20px;
+      padding: 15px;*/
+      gap: 20px;
+      padding: 15px;
+    }
+
+    .producto-card {
+      background: white;
+      border: 1px solid #e0e0e0;
+     /*border-radius: 8px;*/
+      border-radius: 0px;
+      padding: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .producto-card:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .producto-imagen {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin: 0 auto 10px;
+    }
+
+    .producto-nombre {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      margin: 8px 0;
+      height: 40px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .producto-stock {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .producto-precio {
+      font-size: 16px;
+      font-weight: 600;
+      color: #28a745;
+      margin-bottom: 10px;
+    }
+
+    .btn-agregar {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 15px;
+      border-radius: 4px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-agregar:hover {
+      background-color: #218838;
+    }
+
+    .btn-agregar.disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+
+    /* Estilos para el filtro y búsqueda */
+    .catalogo-filtros {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .catalogo-busqueda {
+      flex: 1;
+      max-width: 300px;
+    }
+
+    .catalogo-busqueda input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .catalogo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+      }
+
+      .producto-imagen {
+        width: 80px;
+        height: 80px;
+      }
+
+      .producto-nombre {
+        font-size: 12px;
+      }
+    }
   </style>
 <div class="content-wrapper text-uppercase ">
 
@@ -410,27 +548,23 @@ if ($_SESSION["perfil"] == "") {
 
         <div class="box box-warning">
 
-          <div class="box-header with-border"></div>
+          <div class="box-header with-border">
+            <div class="catalogo-header">
+              <h3>Catálogo de Productos</h3>
+              <div class="catalogo-filtros">
+                <div class="catalogo-busqueda">
+                  <input type="text" id="buscarProducto" class="form-control" placeholder="Buscar productos...">
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="box-body">
-
-            <table class="table table-bordered table-striped dt-responsive tablaVentas text-uppercase ">
-
-              <thead>
-
-                <tr>
-                  <th style="width: 10px">#</th>
-                  <th>Imagen</th>
-                  <th>Código</th>
-                  <th>Descripcion</th>
-                  <th>Stock</th>
-                  <th>Acciones</th>
-                </tr>
-
-              </thead>
-
-            </table>
-
+            <div class="catalogo-productos">
+              <div class="catalogo-grid" id="catalogoProductos">
+                <!-- Los productos se cargarán dinámicamente aquí -->
+              </div>
+            </div>
           </div>
 
         </div>
@@ -671,4 +805,150 @@ document.getElementById("guardarVentaBtn").addEventListener("click", function() 
    
 });
 
+/*=============================================
+CARGAR EL CATÁLOGO DE PRODUCTOS
+=============================================*/
+function cargarCatalogoProductos() {
+  $.ajax({
+    url: "ajax/datatable-ventas.ajax.php",
+    success: function(respuesta) {
+      const productos = JSON.parse(respuesta);
+      const catalogoContainer = document.getElementById('catalogoProductos');
+      catalogoContainer.innerHTML = '';
+
+      productos.data.forEach(producto => {
+        const productoCard = document.createElement('div');
+        productoCard.className = 'producto-card';
+        
+        // Extraer los datos del array
+        const id = producto[0];
+        const imagenHTML = producto[1];
+        const codigo = producto[2];
+        const descripcion = producto[3];
+        const stockHTML = producto[4];
+        const precio_venta = producto[6];
+        
+        // Extraer la URL de la imagen del HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = imagenHTML;
+        const imagenSrc = tempDiv.querySelector('img').src;
+        
+        // Extraer el valor del stock del HTML
+        tempDiv.innerHTML = stockHTML;
+        const stock = parseInt(tempDiv.querySelector('button').textContent);
+        
+        // Determinar las clases basadas en el stock
+        const stockClass = stock > 0 ? 'text-success' : 'text-danger';
+        const btnClass = stock > 0 ? 'btn-agregar' : 'btn-agregar disabled';
+        
+        // Extraer el ID del producto del botón
+        tempDiv.innerHTML = producto[5];
+        const idProducto = tempDiv.querySelector('button').getAttribute('idProducto');
+        
+        productoCard.innerHTML = `
+          <img src="${imagenSrc}" class="producto-imagen" alt="${descripcion}" onerror="this.src='vistas/img/productos/default/anonymous.png'">
+          <div class="producto-nombre">${descripcion}</div>
+          <div class="producto-stock ${stockClass}">Stock: ${stock}</div>
+          <div class="producto-precio">Bs ${precio_venta || '0.00'}</div>
+          <button class="${btnClass} recuperarBoton" ${stock > 0 ? '' : 'disabled'} 
+                  idProducto="${idProducto}">
+            <i class="fa fa-plus"></i> Agregar
+          </button>
+        `;
+
+        catalogoContainer.appendChild(productoCard);
+      });
+
+      // Inicializar eventos de los botones
+      inicializarBotonesAgregar();
+    }
+  });
+}
+
+function inicializarBotonesAgregar() {
+  $('.btn-agregar').on('click', function() {
+    const idProducto = $(this).attr('idProducto');
+    $(this).addClass('disabled').prop('disabled', true);
+    
+    // Reutilizar la lógica existente de agregar producto
+    const datos = new FormData();
+    datos.append("idProducto", idProducto);
+    
+    $.ajax({
+      url: "ajax/productos.ajax.php",
+      method: "POST",
+      data: datos,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "json",
+      success: function(respuesta) {
+        // Reutilizar la lógica existente de agregar producto
+        agregarProductoAVenta(respuesta);
+      }
+    });
+  });
+}
+
+// Función para filtrar productos
+$('#buscarProducto').on('input', function() {
+  const busqueda = $(this).val().toLowerCase();
+  $('.producto-card').each(function() {
+    const nombre = $(this).find('.producto-nombre').text().toLowerCase();
+    $(this).toggle(nombre.includes(busqueda));
+  });
+});
+
+// Cargar el catálogo cuando el documento esté listo
+$(document).ready(function() {
+  cargarCatalogoProductos();
+});
+
+function agregarProductoAVenta(producto) {
+  if(producto.stock == 0) {
+    swal({
+      title: "No hay stock disponible",
+      type: "error",
+      confirmButtonText: "¡Cerrar!"
+    });
+    return;
+  }
+
+  $(".nuevoProducto").append(`
+    <div class="row" style="padding:5px 15px">
+      <div class="col-xs-6" style="padding-right:0px">
+        <div class="input-group">
+          <span class="input-group-addon" style="padding: 0px 4px 0px 4px;">
+            <button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="${producto.id}">
+              <i class="fa fa-times"></i>
+            </button>
+          </span>
+          <input type="text" class="form-control input-sm nuevaDescripcionProducto text-uppercase"
+                 idProducto="${producto.id}" name="agregarProducto" 
+                 value="${producto.descripcion}" readonly required>
+        </div>
+      </div>
+      <div class="col-xs-3">
+        <input type="number" class="form-control input-sm nuevaCantidadProducto" 
+               name="nuevaCantidadProducto" min="1" value="1" 
+               stock="${producto.stock}" nuevoStock="${Number(producto.stock-1)}" required>
+      </div>
+      <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+        <div class="input-group">
+          <span class="input-group-addon"><i><b>Bs</b></i></span>
+          <input type="text" class="form-control input-sm nuevoPrecioProducto" 
+                 precioReal="${producto.precio_venta}" name="nuevoPrecioProducto" 
+                 value="${producto.precio_venta}" readonly required>
+          <input type="hidden" precioRealCompra="${producto.precio_compra}" 
+                 name="nuevoPrecioCompraProducto" class="nuevoPrecioCompraProducto" 
+                 value="${producto.precio_compra}">
+        </div>
+      </div>
+    </div>`);
+
+  // Actualizar totales
+  sumarTotalPrecios();
+  listarProductos();
+  $(".nuevoPrecioProducto").number(true, 2);
+}
 </script>

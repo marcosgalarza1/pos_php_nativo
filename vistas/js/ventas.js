@@ -2,7 +2,7 @@
 CARGAR LA TABLA DINÁMICA DE VENTAS
 =============================================*/
 
-/* $.ajax({
+ /* $.ajax({
 
 	url: "ajax/datatable-ventas.ajax.php",
 	success:function(respuesta){
@@ -201,7 +201,6 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 	/*=============================================
 	ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
 	=============================================*/
-
 	if(localStorage.getItem("quitarProducto") == null){
 
 		idQuitarProducto = [];
@@ -215,10 +214,10 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 	idQuitarProducto.push({"idProducto":idProducto});
 
 	localStorage.setItem("quitarProducto", JSON.stringify(idQuitarProducto));
+    
+	$("button.recuperarBoton[idProducto='"+idProducto+"']").removeClass('disabled');
+	$("button.recuperarBoton[idProducto='"+idProducto+"']").attr('disabled', false);
 
-	$("button.recuperarBoton[idProducto='"+idProducto+"']").removeClass('btn-default');
-
-	$("button.recuperarBoton[idProducto='"+idProducto+"']").addClass('btn-primary agregarProducto');
 
 	if($(".nuevoProducto").children().length == 0){
 
