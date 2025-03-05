@@ -583,6 +583,10 @@ MODAL AGREGAR MESERO
 </div>
 
 <script>
+  const idUsuario = <?php echo $_SESSION["id"]; ?>;
+</script>
+<script src="vistas/js/validar-caja.js"></script>
+<script>
    // Prevenir que el dropdown se cierre al interactuar con el formulario
    $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();

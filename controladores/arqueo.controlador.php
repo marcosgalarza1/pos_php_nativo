@@ -109,14 +109,20 @@ class ControladorArqueo {
 
     /**
      * Verifica si existe una caja abierta para un usuario
-     * @param int $id_usuario ID del usuario a verificar
-     * @return array|bool Datos de la caja abierta o false si no existe
+     * @param int $idUsuario ID del usuario
+     * @return array|false Datos de la caja o false si no existe
      */
-    static public function ctrVerificarCajaAbierta($id_usuario) {
-        if(!is_numeric($id_usuario)) {
+    static public function ctrVerificarCajaAbierta($idUsuario) {
+        try {
+            if (!is_numeric($idUsuario)) {
+                throw new Exception("ID de usuario no válido");
+            }
+
+            return ModeloArqueo::mdlVerificarCajaAbierta($idUsuario);
+        } catch (Exception $e) {
+            error_log("Error en ctrVerificarCajaAbierta: " . $e->getMessage());
             return false;
         }
-        return ModeloArqueo::mdlVerificarCajaAbierta($id_usuario);
     }
 
     /**

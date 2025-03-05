@@ -270,7 +270,7 @@
 </style>
  <!-- Toastr -->
  <script src="vistas/plugins/toastr/js/jquery-3.6.0.min.js"></script>
-  <script src="vistas/plugins/toastr/js/toastr.min.js"></script>
+ <script src="vistas/plugins/toastr/js/toastr.min.js"></script>
   
 <script>
   const idUsuario = <?php echo $_SESSION["id"]; ?>;
