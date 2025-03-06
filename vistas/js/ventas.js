@@ -128,7 +128,7 @@ $(".btnAgregarProducto").click(function(){
 
 	          '<div class="col-xs-3 ingresoCantidad">'+
 	            
-	             '<input type="number" class="form-control input-sm nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="1" stock nuevoStock required>'+
+	             '<input type="number" class="form-control input-sm nuevaCantidadProducto" name="nuevaCantidadProducto" min="1" value="0" stock nuevoStock required>'+
 
 	          '</div>' +
 
@@ -167,9 +167,7 @@ $(".btnAgregarProducto").click(function(){
 	         }
 
 	         // SUMAR TOTAL DE PRECIOS
-
     		sumarTotalPrecios()
-
     		
 
 	        // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
@@ -216,9 +214,11 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
       	    $(nuevaCantidadProducto).attr("nuevoStock", Number(respuesta["stock"])-1);
       	    $(nuevoPrecioProducto).val(respuesta["precio_venta"]);
       	    $(nuevoPrecioProducto).attr("precioReal", respuesta["precio_venta"]);
+			$(nuevaCantidadProducto).val(1);
       	    $(nuevoPrecioCompraProducto).attr("precioRealCompra", respuesta["precio_compra"]);
-  	      // AGRUPAR PRODUCTOS EN FORMATO JSON
+  	        // AGRUPAR PRODUCTOS EN FORMATO JSON
 	        listarProductos()
+			sumarTotalPrecios()
       	}
 
       })
