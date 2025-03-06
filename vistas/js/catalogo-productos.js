@@ -159,28 +159,15 @@ class CatalogoProductos {
       this.productosAgregados.delete(idProducto); // Eliminar de la lista de agregados
       this.renderizarCatalogo(); // Actualizar el catálogo
       if($(".nuevoProducto").children().length == 0){
-
         $("#nuevoImpuestoVenta").val(0);
         $("#nuevoTotalVenta").val(0);
         $("#totalVenta").val(0);
-      
         $("#nuevoTotalVenta").attr("total",0);
         $("#listaProductos").val(""); /* id para validar la eliminacio de los prodcutos de crear venta */
     
       }else{
-    
-        // SUMAR TOTAL DE PRECIOS
-    
-          sumarTotalPrecios()
-    
-          // AGREGAR IMPUESTO
-              
-            //agregarImpuesto()
-    
-            // AGRUPAR PRODUCTOS EN FORMATO JSON
-    
-            listarProductos()
-    
+        sumarTotalPrecios()
+        listarProductos()
       }
     });
   }
@@ -233,18 +220,18 @@ class CatalogoProductos {
       
       let stockClass;
       if (stock <= 10) {
-          stockClass = 'btn-danger';
+          stockClass = 'pull-right badge bg-red';
       } else if (stock >= 11 && stock <= 15) {
-          stockClass = 'text-warning';
+          stockClass = 'pull-right badge bg-yellow';
       } else {
-          stockClass = 'text-success';
+          stockClass = 'pull-right badge bg-green';
       }
 
       contenedor.append(`<div class="col-sm-3 col-md-3 col-lg-3">
         <div class="thumbnail" style="height: 100%;">
           <div class="first">
             <div class="d-flex justify-content-between"> 
-              <span class="discount ${stockClass}">${producto.stock} stock</span> 
+              <span class="${stockClass}">STOCK: ${producto.stock}</span> 
             </div>
           </div> 
           <div style="overflow: hidden;">

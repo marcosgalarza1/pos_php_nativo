@@ -271,17 +271,6 @@ if ($_SESSION["perfil"] == "") {
             width: 100%;
         }
 
-        .discount {
-            background-color: red;
-            padding-top: 1px;
-            padding-bottom: 1px;
-            padding-left: 4px;
-            padding-right: 4px;
-            font-size: 10px;
-            border-radius: 6px;
-            color: #fff
-        }
-
         .first {
             position: absolute;
             width: 100%;
