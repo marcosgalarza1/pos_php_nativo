@@ -6,6 +6,7 @@ class CatalogoProductos {
     this.registrosPorPagina = 12;
     this.categoriaSeleccionada = 'todos';
     this.terminoBusqueda = '';
+    this.productosAgregados = new Set();
     
     this.inicializar();
   }
@@ -126,10 +127,14 @@ class CatalogoProductos {
       this.renderizarCatalogo();
     });
 
-    // Inicializar eventos de los botones de agregar
-    $(document).on('click', '.btn-agregar:not(.disabled)', function() {
-      const idProducto = $(this).attr('idProducto');
-      $(this).addClass('disabled').prop('disabled', true);
+    // Modificar el evento de click para agregar productos
+    $(document).on('click', '.btn-agregar:not(.disabled)', (e) => {
+      const boton = $(e.currentTarget);
+      const idProducto = boton.attr('idProducto');
+      
+      // Deshabilitar el botón y agregar a la lista de productos agregados
+      boton.addClass('disabled').prop('disabled', true);
+      this.productosAgregados.add(idProducto);
       
       const datos = new FormData();
       datos.append("idProducto", idProducto);
@@ -146,6 +151,37 @@ class CatalogoProductos {
           agregarProductoAVenta(respuesta);
         }
       });
+    });
+
+    // Agregar evento para quitar productos
+    $('.formularioVenta').on('click', '.quitarProducto', (e) => {
+      const idProducto = $(e.currentTarget).attr('idProducto');
+      this.productosAgregados.delete(idProducto); // Eliminar de la lista de agregados
+      this.renderizarCatalogo(); // Actualizar el catálogo
+      if($(".nuevoProducto").children().length == 0){
+
+        $("#nuevoImpuestoVenta").val(0);
+        $("#nuevoTotalVenta").val(0);
+        $("#totalVenta").val(0);
+      
+        $("#nuevoTotalVenta").attr("total",0);
+        $("#listaProductos").val(""); /* id para validar la eliminacio de los prodcutos de crear venta */
+    
+      }else{
+    
+        // SUMAR TOTAL DE PRECIOS
+    
+          sumarTotalPrecios()
+    
+          // AGREGAR IMPUESTO
+              
+            //agregarImpuesto()
+    
+            // AGRUPAR PRODUCTOS EN FORMATO JSON
+    
+            listarProductos()
+    
+      }
     });
   }
 
@@ -189,13 +225,12 @@ class CatalogoProductos {
     contenedor.empty();
 
     productosActuales.forEach(producto => {
-      //let stockClass = producto.stock <= 10 ? 'text-danger' :  'text-success';
-      // Validar que stock sea un número y manejar casos no definidos
       const stock = parseInt(producto.stock, 10) || 0;
-      const btnClass = stock > 0 ? 'btn-agregar' : 'btn-agregar disabled';
-      console.log(stock);
+      // Verificar si el producto está en la lista de agregados
+      const estaAgregado = this.productosAgregados.has(producto.id);
+      const btnClass = estaAgregado ? 'btn-agregar disabled' : 
+                      (stock > 0 ? 'btn-agregar' : 'btn-agregar disabled');
       
-      // Determinar la clase del stock usando if-else
       let stockClass;
       if (stock <= 10) {
           stockClass = 'btn-danger';
@@ -206,7 +241,7 @@ class CatalogoProductos {
       }
 
       contenedor.append(`<div class="col-sm-3 col-md-3 col-lg-3">
-        <div class="thumbnail" style="height: 100%; ">
+        <div class="thumbnail" style="height: 100%;">
           <div class="first">
             <div class="d-flex justify-content-between"> 
               <span class="discount ${stockClass}">${producto.stock} stock</span> 
@@ -229,10 +264,10 @@ class CatalogoProductos {
               </div>
             </div>
             <div style="margin-top: auto;">
-              <button class="btn btn-success recuperarBoton btn-sm w-100 ${btnClass}"  
+              <button class="btn btn-success btn-sm w-100 ${btnClass}"  
                  href="javascript:void(0)" 
                  role="button" 
-                 ${producto.stock > 0 ? '' : 'disabled'} 
+                 ${(stock > 0 && !estaAgregado) ? '' : 'disabled'} 
                  idProducto="${producto.id}">
                  <i class="fa fa-plus"></i> Agregar
               </button>
