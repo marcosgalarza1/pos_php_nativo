@@ -170,7 +170,7 @@ $(".tablaVentas").on("draw.dt", function(){
 	if(localStorage.getItem("quitarProducto") != null){
 
 		var listaIdProductos = JSON.parse(localStorage.getItem("quitarProducto"));
-
+		alert(listaIdProductos);
 		for(var i = 0; i < listaIdProductos.length; i++){
 
 			$("button.recuperarBoton[idProducto='"+listaIdProductos[i]["idProducto"]+"']").removeClass('btn-default');
@@ -214,7 +214,7 @@ $(".formularioVenta").on("click", "button.quitarProducto", function(){
 	idQuitarProducto.push({"idProducto":idProducto});
 
 	localStorage.setItem("quitarProducto", JSON.stringify(idQuitarProducto));
-    
+
 	$("button.recuperarBoton[idProducto='"+idProducto+"']").removeClass('disabled');
 	$("button.recuperarBoton[idProducto='"+idProducto+"']").attr('disabled', false);
 
@@ -712,7 +712,7 @@ function quitarAgregarProducto(){
 
 	//Capturamos todos los id de productos que fueron elegidos en la venta
 	var idProductos = $(".quitarProducto");
-
+	alert("hola");
 	//Capturamos todos los botones de agregar que aparecen en la tabla
 	var botonesTabla = $(".tablaVentas tbody button.agregarProducto");
 

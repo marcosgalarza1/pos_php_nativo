@@ -205,31 +205,41 @@ class CatalogoProductos {
           stockClass = 'text-success';
       }
 
-      contenedor.append(`<div class="col-sm-3 col-md-3 col-lg-3 col-xs-3  ">
-              <div class="thumbnail">
-                <div class="first">
-                    <div class="d-flex justify-content-between align-items-center"> 
-                        <span class="discount ${stockClass} ">${producto.stock} stock</span> 
-                    </div>
-                </div> 
-                <img src="${producto.imagen}" alt="${producto.descripcion}" class="img-responsive thumbnail-image  " onerror="this.src='vistas/img/productos/default/anonymous.png'">
-                <div class="caption">
-                  <div class="p-0">
-                    <div class="d-flex justify-content-between">
-                        <span class="dress-name ">${producto.descripcion}</span>
-                        <div class="d-flex flex-column"> 
-                            <span class="new-price">Bs ${producto.precio_venta || '0.00'}</span> 
-                        </div>
-                    </div>
-                  
-                    <div class="pt-1 p-0">
-                      <a class="btn btn-success btn-sm w-100 recuperarBoton ${btnClass}"  href="#" role="button" ${producto.stock > 0 ? '' : 'disabled'} idProducto="${producto.id}"><i class="fa fa-plus"></i> Agregar</a>
-                    </div>
-                  </div>
-                </div>
+      contenedor.append(`<div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="thumbnail" style="height: 100%; ">
+          <div class="first">
+            <div class="d-flex justify-content-between"> 
+              <span class="discount ${stockClass}">${producto.stock} stock</span> 
+            </div>
+          </div> 
+          <div style="overflow: hidden;">
+            <img src="${producto.imagen}" 
+                 alt="${producto.descripcion}" 
+                 class="thumbnail-image" 
+                 style="object-fit: cover;"
+                 onerror="this.src='vistas/img/productos/default/anonymous.png'">
+          </div>
+          <div class="caption" style=" display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div class="d-flex justify-content-between">
+                <span class="dress-name" style="height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                  ${producto.descripcion}
+                </span>
+                <span class="new-price">Bs ${producto.precio_venta || '0.00'}</span> 
               </div>
             </div>
-      `);
+            <div style="margin-top: auto;">
+              <button class="btn btn-success recuperarBoton btn-sm w-100 ${btnClass}"  
+                 href="javascript:void(0)" 
+                 role="button" 
+                 ${producto.stock > 0 ? '' : 'disabled'} 
+                 idProducto="${producto.id}">
+                 <i class="fa fa-plus"></i> Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>`);
     });
 
     this.actualizarPaginacion(productosFiltrados.length);
