@@ -189,24 +189,46 @@ class CatalogoProductos {
     contenedor.empty();
 
     productosActuales.forEach(producto => {
-      var stockClass = producto.stock <= 10 ? 'text-danger' :  'text-success';
-      const btnClass = producto.stock > 0 ? 'btn-agregar' : 'btn-agregar disabled';
-      console.log(producto.stock);
-   
+      //let stockClass = producto.stock <= 10 ? 'text-danger' :  'text-success';
+      // Validar que stock sea un número y manejar casos no definidos
+      const stock = parseInt(producto.stock, 10) || 0;
+      const btnClass = stock > 0 ? 'btn-agregar' : 'btn-agregar disabled';
+      console.log(stock);
+      
+      // Determinar la clase del stock usando if-else
+      let stockClass;
+      if (stock <= 10) {
+          stockClass = 'btn-danger';
+      } else if (stock >= 11 && stock <= 15) {
+          stockClass = 'text-warning';
+      } else {
+          stockClass = 'text-success';
+      }
 
-
-      contenedor.append(`
-        <div class="producto-card">
-          <div class="producto-stock ${stockClass}">Stock: ${producto.stock}</div>
-          <img src="${producto.imagen}" class="producto-imagen" alt="${producto.descripcion}" 
-               onerror="this.src='vistas/img/productos/default/anonymous.png'">
-          <div class="producto-nombre">${producto.descripcion}</div>
-          <div class="producto-precio">Bs ${producto.precio_venta || '0.00'}</div>
-          <button class="${btnClass} recuperarBoton" ${producto.stock > 0 ? '' : 'disabled'} 
-                  idProducto="${producto.id}">
-            <i class="fa fa-plus"></i> Agregar
-          </button>
-        </div>
+      contenedor.append(`<div class="col-sm-3 col-md-3 col-lg-3 col-xs-3  ">
+              <div class="thumbnail">
+                <div class="first">
+                    <div class="d-flex justify-content-between align-items-center"> 
+                        <span class="discount ${stockClass} ">${producto.stock} stock</span> 
+                    </div>
+                </div> 
+                <img src="${producto.imagen}" alt="${producto.descripcion}" class="img-responsive thumbnail-image  " onerror="this.src='vistas/img/productos/default/anonymous.png'">
+                <div class="caption">
+                  <div class="p-0">
+                    <div class="d-flex justify-content-between">
+                        <span class="dress-name ">${producto.descripcion}</span>
+                        <div class="d-flex flex-column"> 
+                            <span class="new-price">Bs ${producto.precio_venta || '0.00'}</span> 
+                        </div>
+                    </div>
+                  
+                    <div class="pt-1 p-0">
+                      <a class="btn btn-success btn-sm w-100 recuperarBoton ${btnClass}"  href="#" role="button" ${producto.stock > 0 ? '' : 'disabled'} idProducto="${producto.id}"><i class="fa fa-plus"></i> Agregar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
       `);
     });
 

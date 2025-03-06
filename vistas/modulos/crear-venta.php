@@ -32,9 +32,8 @@ if ($_SESSION["perfil"] == "") {
       justify-content: space-between;
      
       margin-bottom: 0px;
-      padding-left: 15px;
-      padding-right: 15px;
-      padding-top: 15px;
+      padding: 15px;
+    
       border-bottom: 2px solid #f4f4f4;
     }
 
@@ -44,36 +43,41 @@ if ($_SESSION["perfil"] == "") {
       font-weight: 600;
     }
 
-    .catalogo-grid {
+    /*.catalogo-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(150px, 1fr));
       gap: 20px;
       padding: 15px;
-    }
+    } */
 
-    .producto-card {
+    .thumbnail {
       background: white;
       border: 1px solid #e0e0e0;
       border-radius: 0px;
-      padding: 10px;
       text-align: center;
       transition: all 0.3s ease;
       cursor: pointer;
       position: relative;
+      padding: 0px;
+      background-color: #fff;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
-    .producto-card:hover {
+    .thumbnail:hover {
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       transform: translateY(-2px);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
     .producto-imagen {
-      width: 100px;
-      height: 100px;
       object-fit: cover;
       border-radius: 4px;
       margin: 0 auto 10px;
+      width: 100%;
+      height: 100%;
     }
 
     .producto-nombre {
@@ -146,10 +150,10 @@ if ($_SESSION["perfil"] == "") {
 
     /* Responsividad */
     @media (max-width: 768px) {
-      .catalogo-grid {
+       /*.catalogo-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 10px;
-      }
+      }*/
 
       .producto-imagen {
         width: 80px;
@@ -188,11 +192,11 @@ if ($_SESSION["perfil"] == "") {
 
     /* Estilos para la paginación */
     .catalogo-paginacion {
-      display: flex;
+      display: block;
       flex-direction: column;
       align-items: center;
       padding: 20px;
-      border-top: 1px solid #dee2e6;
+       /*border-bottom: 10px solid #dee2e6;*/
       gap: 15px;
     }
 
@@ -245,6 +249,102 @@ if ($_SESSION["perfil"] == "") {
       gap: 5px;
     }
   </style>
+
+<style>
+
+        .card {
+            background-color: #fff;
+            border: none;
+            border-radius: 10px;
+            width:  150px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            position: relative
+        }
+
+        .thumbnail-image {
+            border-top-left-radius: 10px !important;
+            border-top-right-radius: 10px !important;
+            width: 100%;
+        }
+
+        .discount {
+            background-color: red;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-left: 4px;
+            padding-right: 4px;
+            font-size: 10px;
+            border-radius: 6px;
+            color: #fff
+        }
+
+        .first {
+            position: absolute;
+            width: 100%;
+            padding: 9px
+        }
+
+        .dress-name {
+            font-size: 13px;
+            font-weight: bold;
+            width: 75%
+        }
+
+        .new-price {
+            font-size: 13px;
+            font-weight: bold;
+            color: red
+        }
+
+        .buy {
+            font-size: 12px;
+            color: purple;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+       /*  .product-detail-container {
+            padding: 10px;
+        }*/
+        
+        /* Helper classes for Bootstrap 3 compatibility */
+        .d-flex {
+            display: flex;
+        }
+        
+        .justify-content-between {
+            justify-content: space-between;
+        }
+        
+        .align-items-center {
+            align-items: center;
+        }
+        
+        .flex-column {
+            flex-direction: column;
+        }
+        
+        .pt-1 {
+            padding-top: 5px;
+        }
+        
+        .mb-2 {
+            margin-bottom: 10px;
+        }
+        
+        .p-2 {
+            padding: 10px;
+        }
+        
+        .w-100 {
+            width: 100%;
+        }
+    </style>
+
 <div class="content-wrapper text-uppercase ">
 
   <section class="content-header">
@@ -269,6 +369,8 @@ if ($_SESSION["perfil"] == "") {
   </section>
 
   <section class="content">
+
+
 
     <div class="row">
 
@@ -296,8 +398,8 @@ if ($_SESSION["perfil"] == "") {
           </div>
 
           <div class="">
-            <div class="catalogo-productos">
-              <div class="catalogo-grid" id="catalogoProductos">
+            <div class="">
+              <div class="" id="catalogoProductos">
                 <!-- Los productos se cargarán dinámicamente aquí -->
               </div>
               <div class="catalogo-paginacion">
