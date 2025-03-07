@@ -458,7 +458,7 @@ if ($_SESSION["perfil"] == "") {
                 <!--=====================================
                 ENTRADA DEL CÓDIGO
                 ======================================-->
-
+             
                 <div class="form-group">
 
                   <div class="input-group">
@@ -468,28 +468,19 @@ if ($_SESSION["perfil"] == "") {
                     <?php
 
                     $item = null;
-                    $valor = null;
 
-
-                    $ventas = ControladorVentas::ctrMostrarVentas($item, $valor,);
-
-                    if (!$ventas) {
-
-                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="10001" readonly>';
+                    $ultimoNroTicket = 0;
+                    if (isset($_SESSION["idArqueoCaja"])) {
+                      echo'<input type="hidden" name="idArqueoCaja" value="'.$_SESSION["idArqueoCaja"].'" hidden>
+                          <input type="hidden" name="idCaja" value="'.$_SESSION["idCaja"].'" hidden>
+                          ';
+                      $ultimoNroTicket = ControladorArqueo::ctrObtenerUltimoNroTicket($_SESSION["idArqueoCaja"]);
+                      $ultimoNroTicket++;
+                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="' .str_pad($ultimoNroTicket, 8, '0', STR_PAD_LEFT). '" readonly>';
                     } else {
-
-                      foreach ($ventas as $key => $value) {
-                      }
-
-
-
-                      $codigo = $value["codigo"] + 1;
-
-                      echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="' . $codigo . '" readonly>';
+                       echo '<input type="text" class="form-control" value="0" readonly>';
                     }
-
                     ?>
-
 
                   </div>
 
@@ -779,7 +770,11 @@ if ($_SESSION["perfil"] == "") {
       </div>
 
     </div>
-
+    <?php
+    echo "<pre>";
+    print_r($_SESSION);
+    echo "</pre>";
+    ?>
   </section>
 
 </div>

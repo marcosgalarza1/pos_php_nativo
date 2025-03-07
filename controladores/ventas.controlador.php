@@ -29,9 +29,6 @@ class ControladorVentas{
 
 	static public function ctrCrearVenta(){
 
-
-		
-
 		if(isset($_POST["nuevaVenta"])){
 
 			/*=============================================
@@ -144,7 +141,7 @@ class ControladorVentas{
 			/*=============================================
 			GUARDAR LA VENTA
 			=============================================*/	
-
+			
 			$tabla = "ventas";
 
 			$datos = array("id_vendedor"=>$_POST["idVendedor"],
@@ -157,23 +154,25 @@ class ControladorVentas{
 						   "tipo_pago"=>$tipoPago,
 						   "cambio"=>$_POST["nuevoCambioEfectivo"],
 						   "forma_atencion"=>$formaAtencion,
+						   "id_arqueo_caja" => $_POST["idArqueoCaja"],
 							"total_pagado"=>$_POST["nuevoValorEfectivo"],
 							"cliente"=>$_POST["cliente"]
 						);
 						
-		
+						
 			// $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
 			$respuesta = ModeloVentas::mdlRegistrarVenta($tabla, $datos);
 
-
 			
-			if($respuesta == "ok"){
+			if($respuesta["status"] == "ok"){
+				$arqueoActual = ModeloArqueo::mdlObtnerArqueoPorIDUsuario($_POST["idVendedor"]);
+
+				ModeloArqueo::mdlActualizarNroCajaDelArqueo($arqueoActual ,$_POST["nuevaVenta"], $_POST["totalVenta"]);
 
 				$imprimir = isset($_POST["sinImprimir"]) ? $_POST["sinImprimir"] : false;
 				if ($imprimir == false) {
-					$codigoVenta = $_POST["nuevaVenta"];
 					echo "<script type='text/javascript'>
-							 window.open('extensiones/tcpdf/pdf/factura.php?codigo={$codigoVenta}', '_blank');
+							 window.open('extensiones/tcpdf/pdf/factura.php?codigo={$respuesta["idVenta"]}', '_blank');
 							  window.location = 'crear-venta';
 						</script>"; 
 				}else{

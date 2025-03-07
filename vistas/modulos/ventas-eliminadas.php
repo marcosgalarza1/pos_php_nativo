@@ -63,8 +63,6 @@ if ($_SESSION["perfil"] == "") {
               <th>Total</th>
               <th>Fecha</th>
               <th>Acciones</th>
-
-
             </tr>
 
           </thead>

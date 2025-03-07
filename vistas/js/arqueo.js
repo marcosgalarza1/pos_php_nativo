@@ -194,7 +194,7 @@ class ArqueoCaja {
 
     mostrarDatosApertura(datos) {
         const campos = {
-            'nro_ticket': datos.nroTicket,
+            'nro_ticket': datos.nroTicket  || '0',
             'monto_apertura': datos.monto_apertura || '0.00',
             'idCaja': datos.id_caja,
             'monto_ventas': datos.monto_ventas || '0.00',
@@ -249,7 +249,7 @@ class ArqueoCaja {
         const validaciones = [
             { condicion: !document.getElementById('idVendedor').value, mensaje: 'El usuario es obligatorio' },
             { condicion: !document.getElementById('idCaja').value, mensaje: 'Debe seleccionar una caja' },
-            { condicion: !document.getElementById('nro_ticket').value || document.getElementById('nro_ticket').value === "0", mensaje: 'El número de ticket es obligatorio' },
+            { condicion: !document.getElementById('nro_ticket').value || document.getElementById('nro_ticket').value < "0", mensaje: 'El número de ticket es obligatorio' },
             { condicion: !document.getElementById('total_efectivo_en_caja').value || document.getElementById('total_efectivo_en_caja').value === "0.00", mensaje: 'Debe ingresar el efectivo en caja' }
         ];
 
@@ -344,15 +344,16 @@ class ArqueoCaja {
             });
 
             const respuesta = JSON.parse(response);
+            console.log(respuesta)
             if (respuesta.status === "ok") {
                 await this.mostrarExito(this.estado);
                 window.location.reload();
             } else {
-                throw new Error('Ocurrió un error en la operación');
+                throw new Error(respuesta.mensaje);
             }
         } catch (error) {
             console.error('Error:', error);
-            this.mostrarError('Error al procesar la operación');
+            this.mostrarError('Error al procesar la operación: '+ error);
         }
     }
 

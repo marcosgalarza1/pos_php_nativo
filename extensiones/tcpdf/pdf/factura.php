@@ -24,7 +24,7 @@ class imprimirFactura
     {
 
         // Obtener información de la venta
-        $itemVenta = "codigo";
+        $itemVenta = "id";
         $valorVenta = $this->codigo;
 
         $respuestaVenta = ControladorVentas::ctrMostrarVentas($itemVenta, $valorVenta);
@@ -87,7 +87,7 @@ class imprimirFactura
             <tr>
                <td>
                 <strong>&lt;&lt; COMANDA &gt;&gt;</strong><br>
-                <span style="font-size: 13px; font-weight: bold;">' . $valorVenta . '</span>
+                <span style="font-size: 13px; font-weight: bold;">' . $respuestaVenta["codigo"] . '</span>
             </td>
 
             </tr>
@@ -173,7 +173,7 @@ class imprimirFactura
             <tr>
                 <td>
                     <strong>SISTEMA POS</strong><br>
-                    <strong>Ticket de Venta: </strong>' . $valorVenta . '<br>
+                    <strong>Ticket de Venta: </strong>' . $respuestaVenta["codigo"] . '<br>
                     <strong>Fecha y Hora: </strong>' . $fecha . '
                 </td>
             </tr>

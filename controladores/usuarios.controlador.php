@@ -39,7 +39,12 @@ class ControladorUsuarios{
 							$_SESSION["usuario"] = $respuesta["usuario"];
 							$_SESSION["foto"] = $respuesta["foto"];
 							$_SESSION["perfil"] = $respuesta["perfil"];
-
+							$arqueoActual =ModeloArqueo::mdlObtnerArqueoPorIDUsuario($respuesta["id"]);
+							if($arqueoActual){
+								$_SESSION["idArqueoCaja"] = $arqueoActual["id"];
+								$_SESSION["idCaja"] = $arqueoActual["id_caja"];
+							}
+							
 							/*=============================================
 						REGISTRAR FECHA PARA SABER EL ÚLTIMO LOGIN
 						=============================================*/

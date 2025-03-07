@@ -10,7 +10,6 @@ class TablaProductosVentasEliminadas{
   	=============================================*/ 
 
 	public function mostrarTablaProductosVentasEliminadas(){
-	
 		if (isset($_GET["fechaInicial"]) && isset($_GET["fechaFinal"])) {
 			$fechaInicial = $_GET["fechaInicial"];
 			$fechaFinal = $_GET["fechaFinal"];
@@ -27,7 +26,6 @@ class TablaProductosVentasEliminadas{
   		if(count($ventas) == 0){
   			// En caso de que no haya compras, retornamos un JSON vacío
   			echo json_encode(["data" => []]);
-		  	return;
   		}
 		
 		
@@ -41,7 +39,7 @@ class TablaProductosVentasEliminadas{
 			  /*=============================================
 			  TRAEMOS LAS ACCIONES
 			  =============================================*/
-			  $botones.= "<button class='btn btn-info btnImprimirFactura' codigoVenta='".$ventas[$i]["codigo"]."'><i class='fa fa-print'></i></button>"; 
+			  $botones.= "<button class='btn btn-info btnImprimirFactura' codigoVenta='".$ventas[$i]["id"]."'><i class='fa fa-print'></i></button>"; 
 			  $botones.="</div>";
 
 		  	// Formateamos cada registro de compra como un array

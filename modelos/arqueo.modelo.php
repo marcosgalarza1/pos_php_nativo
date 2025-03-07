@@ -12,9 +12,12 @@ class ModeloArqueo {
      * @param array $datos Datos de la apertura
      * @return string Resultado de la operación ('ok' o 'error')
      */
+  
+    
     static public function mdlRegistraAperturaCaja($datos) {
         try {
-            $stmt = Conexion::conectar()->prepare("INSERT INTO arqueo_caja (
+            $pdo = Conexion::conectar(); // Guardamos la conexión en una variable
+            $stmt = $pdo->prepare("INSERT INTO arqueo_caja (
                 fecha_apertura,
                 monto_apertura,
                 total_ingresos,
@@ -45,6 +48,15 @@ class ModeloArqueo {
 
             if($stmt->execute()){
                 self::mdlActualizarNroCaja($datos["id_caja"], $datos["nro_ticket"]);
+                 // Obtenemos el id recién insertado
+                $idRecienCreado = $pdo->lastInsertId();
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                // Guardamos el id en la variable de sesión
+                $_SESSION["idArqueoCaja"] = $idRecienCreado;
+                $_SESSION["idCaja"] = $datos["id_caja"];
+
                 return "ok";
             }
             
@@ -92,18 +104,21 @@ class ModeloArqueo {
 
     /**
      * Obtiene el último número de ticket registrado
-     * @return int|false Último número de ticket o false en caso de error
+     * @return int Último número de ticket o false en caso de error
      */
-    static public function mdlObtenerUltimoNroTicket() {
+    static public function mdlObtenerUltimoNroTicket($id_arqueo) {
         try {
-            $stmt = Conexion::conectar()->prepare("SELECT MAX(nroTicket) as ultimo FROM arqueo_caja");
+            $pdo = Conexion::conectar();
+            $stmt = $pdo->prepare("SELECT nroTicket as ultimo FROM arqueo_caja WHERE id = :id_arqueo");
+            $stmt->bindParam(":id_arqueo", $id_arqueo, PDO::PARAM_INT);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC)["ultimo"] ?? 0;
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $resultado && $resultado["ultimo"] !== null ? (int)($resultado["ultimo"]) : 0;
         } catch (PDOException $e) {
             error_log("Error en mdlObtenerUltimoNroTicket: " . $e->getMessage());
-            return false;
+            return 0;
         } finally {
-            if(isset($stmt)) {
+            if (isset($stmt)) {
                 $stmt->closeCursor();
                 $stmt = null;
             }
@@ -116,7 +131,7 @@ class ModeloArqueo {
      * @param int $nro_ticket Nuevo número de ticket
      * @return string Resultado de la operación ('ok' o 'error')
      */
-    private static function mdlActualizarNroCaja($id_caja, $nro_ticket) {
+    public static function mdlActualizarNroCaja($id_caja, $nro_ticket) {
         try {
             $stmt = Conexion::conectar()->prepare(
                 "UPDATE cajas SET nro_ticket = :nro_ticket WHERE id = :id_caja"
@@ -134,6 +149,56 @@ class ModeloArqueo {
                 $stmt->closeCursor();
                 $stmt = null;
             }
+        }
+    }
+    
+    public static function mdlActualizarNroCajaDelArqueo($Arqueo, $nroTicket, $totalVentas) {
+        $db = Conexion::conectar(); // Obtener la conexión PDO
+        $db->beginTransaction(); // Iniciar transacción
+        try {
+
+            // Preparar y ejecutar la actualización en la tabla arqueo_caja
+            $stmtArqueo = $db->prepare("UPDATE arqueo_caja 
+            SET nroTicket = :nroTicket,
+             monto_ventas = monto_ventas + (:totalVentas) 
+             WHERE id = :idArqueo");
+            $stmtArqueo->bindParam(":idArqueo", $Arqueo["id"], PDO::PARAM_INT);
+            $stmtArqueo->bindParam(":nroTicket", $nroTicket, PDO::PARAM_STR);
+            $stmtArqueo->bindParam(":totalVentas", $totalVentas, PDO::PARAM_STR); 
+
+            $actualizacionExitosa = $stmtArqueo->execute();
+
+            if (!$actualizacionExitosa) {
+                throw new Exception("Fallo al actualizar el número de ticket en arqueo_caja.");
+            }
+            // Llamar a la segunda actualización en la otra tabla
+            $resultadoSegundaActualizacion = self::mdlActualizarNroCaja($Arqueo["id_caja"], $nroTicket);
+
+            if ($resultadoSegundaActualizacion !== "ok") {
+                throw new Exception("Fallo al actualizar el número de ticket en la segunda tabla.");
+            }
+
+            // Si todo está bien, confirmar la transacción
+            $db->commit();
+            return [
+                'status' => 'ok',
+                'message' => 'Actualización exitosa de ambas tablas.'
+            ];
+
+        } catch (Exception $e) {
+            // Revertir la transacción en caso de error
+            $db->rollBack();
+            error_log("Error en mdlActualizarNroCajaDelArqueo: " . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Error al actualizar: ' . $e->getMessage()
+            ];
+        } finally {
+            // Liberar recursos (opcional, PDO lo hace automáticamente)
+            if (isset($stmtArqueo)) {
+                $stmtArqueo = null;
+            }
+            $db = null; // Cerrar la conexión (opcional si usas un singleton)
         }
     }
 
@@ -194,6 +259,12 @@ class ModeloArqueo {
             if($stmt->execute()) {
                 // Reiniciar el número de ticket al cerrar la caja
                 self::mdlActualizarNroCaja($datos["id_caja"], 0);
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION["idArqueoCaja"] = null; // Elimina solo esa clave
+                $_SESSION["idCaja"] = null;
+
                 return "ok";
             }
             
@@ -209,17 +280,36 @@ class ModeloArqueo {
         }
     }
 
-    static public function mdlObtenerArqueoPendiente($id_usuario) {
-        $stmt = Conexion::conectar()->prepare("SELECT id, monto_apertura 
+
+    static public function mdlObtnerArqueoPorIDUsuario($id_usuario) {
+        try {
+            $stmt = Conexion::conectar()->prepare("SELECT * 
             FROM arqueo_caja 
             WHERE id_usuario = :id_usuario 
             AND estado = 'abierta' 
             AND date(fecha_apertura) = date(now())
+            ORDER BY id DESC 
             LIMIT 1");
-        
-        $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
-        $stmt->execute();
-        
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $stmt->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            // Verificar si se obtuvo algún resultado
+            if ($resultado) {
+                return $resultado; // Devuelve solo el ID
+            }
+            return null; // Si no hay resultado, devuelve null
+        } catch (PDOException $e) {
+            error_log("Error en mdlObtnerIdArqueoDelUsuario: " . $e->getMessage());
+            return null;
+        } finally {
+            if (isset($stmt)) {
+                $stmt->closeCursor();
+                $stmt = null;
+            }
+        }
     }
+    
 } 

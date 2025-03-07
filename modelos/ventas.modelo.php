@@ -100,7 +100,7 @@ class ModeloVentas
 			}
 
 			// 1. Registrar la venta principal en la tabla "ventas"
-			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_mesero,id_cliente, id_vendedor, total,total_pagado,nota,tipo_pago,cambio, forma_atencion) VALUES (:codigo, :id_mesero,:id_cliente, :id_vendedor, :total,:total_pagado, :nota, :tipo_pago,:cambio,:forma_atencion)");
+			$stmt = $conexion->prepare("INSERT INTO $tabla(codigo, id_mesero,id_cliente, id_vendedor, total,total_pagado,nota,tipo_pago,cambio, forma_atencion, id_arqueo_caja) VALUES (:codigo, :id_mesero,:id_cliente, :id_vendedor, :total,:total_pagado, :nota, :tipo_pago,:cambio,:forma_atencion, :id_arqueo_caja)");
 
 			$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_INT);
 			$stmt->bindParam(":id_mesero", $datos["id_mesero"], PDO::PARAM_INT);
@@ -112,6 +112,7 @@ class ModeloVentas
 			$stmt->bindParam(":tipo_pago", $datos["tipo_pago"], PDO::PARAM_STR);
 			$stmt->bindParam(":cambio", $datos["cambio"], PDO::PARAM_STR);
 			$stmt->bindParam(":forma_atencion", $datos["forma_atencion"], PDO::PARAM_STR);
+			$stmt->bindParam(":id_arqueo_caja", $datos["id_arqueo_caja"], PDO::PARAM_INT);
 
 			if (!$stmt->execute()) {
 				throw new Exception("Error al registrar la venta");
@@ -152,7 +153,7 @@ class ModeloVentas
 			// Confirmar la transacción si todo sale bien
 			$conexion->commit();
 
-			return "ok";
+			return ["status" =>"ok", "idVenta"=> $idVenta];
 		} catch (Exception $e) {
 			// Revertir la transacción en caso de error
 			$conexion->rollBack();

@@ -74,7 +74,6 @@ class AjaxArqueo {
             ]);
             return;
         }
-
         try {
             $respuesta = ControladorArqueo::ctrRegistrarArqueo();
             echo $respuesta;

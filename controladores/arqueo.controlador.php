@@ -26,7 +26,7 @@ class ControladorArqueo {
         } catch(Exception $e) {
             return json_encode([
                 "status" => "error", 
-                "mensaje" => "Error al procesar la operación: " . $e->getMessage()
+                "mensaje" => "Error al procesar la operación 21: " . $e->getMessage()
             ]);
         }
     }
@@ -37,7 +37,7 @@ class ControladorArqueo {
      */
     private static function registrarAperturaCaja() {
         // Validar datos requeridos
-        $camposRequeridos = ["fechaApertura", "montoApertura", "nroTicket", "estado", "idCaja", "idUsuario"];
+        $camposRequeridos = ["fechaApertura", "montoApertura", "estado", "idCaja", "idUsuario"];
         foreach($camposRequeridos as $campo) {
             if(!isset($_POST[$campo]) || empty($_POST[$campo])) {
                 return json_encode([
@@ -50,7 +50,7 @@ class ControladorArqueo {
         $datos = array(
             "fecha_apertura" => self::sanitizarInput($_POST["fechaApertura"]),
             "monto_apertura" => floatval($_POST["montoApertura"]),
-            "nro_ticket" => intval($_POST["nroTicket"]),
+            "nro_ticket" => floatval($_POST["nroTicket"]),
             "total_ingresos" => floatval($_POST["totalIngresos"]),
             "resultado_neto" => floatval($_POST["resultadoNeto"]),
             "estado" => self::sanitizarInput($_POST["estado"]),
@@ -59,6 +59,7 @@ class ControladorArqueo {
         );
 
         $respuesta = ModeloArqueo::mdlRegistraAperturaCaja($datos);
+        
         return json_encode(["status" => $respuesta]);
     }
 
@@ -141,5 +142,13 @@ class ControladorArqueo {
      */
     private static function sanitizarCantidad($monto) {
         return intval($monto ?? 0);
+    }
+
+    /**
+     * Obtiene el número de ticket actual de la apertura de caja
+     * @return int
+     */
+    static public function ctrObtenerUltimoNroTicket($idArqueo) {
+        return ModeloArqueo::mdlObtenerUltimoNroTicket($idArqueo);
     }
 } 

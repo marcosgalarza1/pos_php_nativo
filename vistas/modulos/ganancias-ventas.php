@@ -1,7 +1,11 @@
 <?php
+
+
+$report = new ControladorReportes();
+
 $item = null;
 $valor = null;
-$datos = ControladorReportes::ctrGananciasMesesAnios();
+$datos = $report -> ctrGananciasMesesAnios();
 
 // Array de nombres de meses en español
 $mesesEspanol = [
