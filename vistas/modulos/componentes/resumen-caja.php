@@ -20,11 +20,11 @@
         <tbody>
             <!-- Ingresos -->
             <tr>
-                <td class="cell-padded">Dinero Inicial en Caja</td>
+                <td class="cell-padded">Saldo Inicial en Caja</td>
                 <td class="text-right cell-value total-column" id="monto_apertura">0.00</td>
             </tr>
             <tr>
-                <td class="cell-padded">Ventas del Día</td>
+                <td class="cell-padded">Ventas</td>
                 <td class="text-right cell-value total-column" id="monto_ventas">0.00</td>
             </tr>
 
@@ -34,15 +34,15 @@
                 <td class="text-right total-column" id="total_egresos">0.00</td>
             </tr>
             <tr>
-                <td class="cell-padded">Gastos del Día</td>
+                <td class="cell-padded">Gastos</td>
                 <td class="text-right cell-value total-column" id="gastos_operativos">0.00</td>
             </tr>
             <tr>
-                <td class="cell-padded">Compras del Día</td>
+                <td class="cell-padded">Compras</td>
                 <td class="text-right cell-value total-column" id="monto_compras">0.00</td>
             </tr>
             <tr class="row-dark">
-                <td>GANANCIA O PÉRDIDA DEL DÍA</td>
+                <td>SALDO NETO</td>
                 <td class="text-right total-column" id="resultado_neto">0.00</td>
             </tr>
         </tbody>

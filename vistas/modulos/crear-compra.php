@@ -52,6 +52,15 @@ if($_SESSION["perfil"] == ""){
 
           <form role="form" method="post" class="formularioCompra">
 
+
+          <?php 
+            if (isset($_SESSION["idArqueoCaja"])) {
+              echo '<input type="hidden" name="idArqueoCaja" value="'.$_SESSION["idArqueoCaja"].'" hidden>';
+            }else{
+               return '<input type="hidden" name="idArqueoCaja" value="0" hidden>';
+            }
+          ?>
+
             <div class="box-body">
   
               <div class="box">

@@ -151,8 +151,14 @@ class ModeloArqueo {
             }
         }
     }
-    
-    public static function mdlActualizarNroCajaDelArqueo($Arqueo, $nroTicket, $totalVentas) {
+     /**
+      * Registra el egreso em arqueo de caja 
+      * @param int $Arqueo ID de la caja
+      * @param int $nroTicket Nuevo número de ticket
+      * @param int $totalVentas Total de Ingresos
+      * @return string Resultado de la operación ('ok' o 'error')
+      */
+    public static function mdlRegistrarIngreso($Arqueo, $nroTicket, $totalVentas) {
         $db = Conexion::conectar(); // Obtener la conexión PDO
         $db->beginTransaction(); // Iniciar transacción
         try {
@@ -204,6 +210,101 @@ class ModeloArqueo {
         }
     }
 
+     /**
+      * Elimina el egreso en arqueo de caja 
+      * @param int $Arqueo ID de la caja
+      * @param int $totalIngreso Total de Ingresos
+      * @return string Resultado de la operación ('ok' o 'error')
+      */
+    public static function mdlEliminarIngreso($idArqueo, $totalIngreso) {
+        $db = Conexion::conectar(); // Obtener la conexión PDO
+        $db->beginTransaction(); // Iniciar transacción
+        try {
+
+            // Preparar y ejecutar la actualización en la tabla arqueo_caja
+            $stmtArqueo = $db->prepare("UPDATE arqueo_caja 
+            SET monto_ventas = monto_ventas - (:totalCompra),
+             total_ingresos = total_ingresos - (:totalCompra),
+             resultado_neto = (total_ingresos - total_egresos),
+             resultado_neto = (total_ingresos - total_egresos),
+             resultado_neto = (total_ingresos - total_egresos)
+             WHERE id = :idArqueo");
+            $stmtArqueo->bindParam(":idArqueo", $idArqueo, PDO::PARAM_INT);
+            $stmtArqueo->bindParam(":totalCompra", $totalIngreso, PDO::PARAM_STR); 
+
+            $actualizacionExitosa = $stmtArqueo->execute();
+
+            if (!$actualizacionExitosa) {
+                throw new Exception("Fallo al actualizar el ingreso en arqueo_caja.");
+            }
+
+            // Si todo está bien, confirmar la transacción
+            $db->commit();
+            return [
+                'status' => 'ok',
+                'message' => 'Actualización exitosa del total de ingreso.'
+            ];
+
+        } catch (Exception $e) {
+            // Revertir la transacción en caso de error
+            $db->rollBack();
+            error_log("Error en mdlEliminarIngreso: " . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Error al actualizar: ' . $e->getMessage()
+            ];
+        } finally {
+            // Liberar recursos (opcional, PDO lo hace automáticamente)
+            if (isset($stmtArqueo)) {
+                $stmtArqueo = null;
+            }
+            $db = null; // Cerrar la conexión (opcional si usas un singleton)
+        }
+    }
+
+    public static function mdlRegistrarEgreso($idArqueo, $totalEgreso) {
+        $db = Conexion::conectar(); // Obtener la conexión PDO
+        $db->beginTransaction(); // Iniciar transacción
+        try {
+
+            // Preparar y ejecutar la actualización en la tabla arqueo_caja
+            $stmtArqueo = $db->prepare("UPDATE arqueo_caja 
+            SET monto_compras = monto_compras + (:totalCompras), 
+             total_egresos = total_egresos + (:totalCompras), 
+             resultado_neto = (total_ingresos - total_egresos) 
+             WHERE id = :idArqueo");
+            $stmtArqueo->bindParam(":idArqueo", $idArqueo, PDO::PARAM_INT);
+            $stmtArqueo->bindParam(":totalCompras", $totalEgreso, PDO::PARAM_STR); 
+
+            $actualizacionExitosa = $stmtArqueo->execute();
+
+            if (!$actualizacionExitosa) {
+                throw new Exception("Fallo al actualizar el número de ticket en arqueo_caja.");
+            }
+
+            // Si todo está bien, confirmar la transacción
+            $db->commit();
+            return [
+                'status' => 'ok',
+                'message' => 'Actualización exitosa del total de egreso.'
+            ];
+
+        } catch (Exception $e) {
+            // Revertir la transacción en caso de error
+            $db->rollBack();
+            error_log("Error en mdlRegistrarEgreso: " . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Error al actualizar: ' . $e->getMessage()
+            ];
+        } finally {
+            // Liberar recursos (opcional, PDO lo hace automáticamente)
+            if (isset($stmtArqueo)) {
+                $stmtArqueo = null;
+            }
+            $db = null; // Cerrar la conexión (opcional si usas un singleton)
+        }
+    }
     /**
      * Registra el cierre de una caja
      * @param array $datos Datos del cierre

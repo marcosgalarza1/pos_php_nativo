@@ -167,7 +167,7 @@ class ControladorVentas{
 			if($respuesta["status"] == "ok"){
 				$arqueoActual = ModeloArqueo::mdlObtnerArqueoPorIDUsuario($_POST["idVendedor"]);
 
-				ModeloArqueo::mdlActualizarNroCajaDelArqueo($arqueoActual ,$_POST["nuevaVenta"], $_POST["totalVenta"]);
+				ModeloArqueo::mdlRegistrarIngreso($arqueoActual ,$_POST["nuevaVenta"], $_POST["totalVenta"]);
 
 				$imprimir = isset($_POST["sinImprimir"]) ? $_POST["sinImprimir"] : false;
 				if ($imprimir == false) {
@@ -212,6 +212,28 @@ class ControladorVentas{
 
 			$traerVenta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
 			
+			if (session_status() == PHP_SESSION_NONE) {
+				session_start();
+			}
+			
+			if ($_SESSION["idArqueoCaja"] != $traerVenta["idArqueoCaja"]) {
+				echo '<script>
+						swal({ 
+							type: "error",
+							title: "La venta no puede eliminarse dado que su caja ha sido cerrada",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+										if (result.value) {
+		
+										window.location = "crear-venta";
+		
+										}
+									})
+						</script>';
+					return;
+				}
+				
 			/*=============================================
 			ACTUALIZAR FECHA ÚLTIMA COMPRA
 			=============================================*/
@@ -233,7 +255,7 @@ class ControladorVentas{
 						array_push($guardarFechas, $value["fecha"]);
 					}
 				}
-			} 
+			}
 
 			
 			if(count($guardarFechas) > 1){
@@ -322,7 +344,7 @@ class ControladorVentas{
 			$respuesta = ModeloVentas::mdlEliminarVenta($tabla, $_GET["idVenta"]);
 			
 			if($respuesta == "ok"){
-			
+				ModeloArqueo::mdlEliminarIngreso($traerVenta["id_arqueo_caja"], $traerVenta["total"]);
 				echo'<script>
 
 				swal({
