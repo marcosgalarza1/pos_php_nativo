@@ -53,11 +53,11 @@
         <h4 class="text-center" ><strong>Efectivo <span class="vs-text">VS</span> Sistema</strong></h4>
         <table class="dt-responsive" >
             <tr>
-                <td class="text-right"  style="padding-top: 6px !important;">GANANCIA O PÉRDIDA TOTAL </td>
+                <td class="text-right"  style="padding-top: 6px !important;">TOTAL MOVIMIENTO EN CAJA</td>
                 <td class="text-right cell-value bold-value total-column" style="padding-top: 6px !important;" id="total_ganancia_perdida">0.00</td>
             </tr>
             <tr>
-                <td class="cell-padded text-right">EFECTIVO EN CAJA </td>
+                <td class="cell-padded text-right text-bold">TOTAL EFECTIVO EN CAJA </td>
                 <td class="text-right cell-value bold-value border-bottom total-column" id="efectivo_en_caja">0.00</td>
             </tr>
             <tr class="row-dark">

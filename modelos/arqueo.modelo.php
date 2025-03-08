@@ -160,7 +160,9 @@ class ModeloArqueo {
             // Preparar y ejecutar la actualización en la tabla arqueo_caja
             $stmtArqueo = $db->prepare("UPDATE arqueo_caja 
             SET nroTicket = :nroTicket,
-             monto_ventas = monto_ventas + (:totalVentas) 
+             monto_ventas = monto_ventas + (:totalVentas), 
+             total_ingresos = total_ingresos + (:totalVentas), 
+             resultado_neto = total_ingresos - total_egresos 
              WHERE id = :idArqueo");
             $stmtArqueo->bindParam(":idArqueo", $Arqueo["id"], PDO::PARAM_INT);
             $stmtArqueo->bindParam(":nroTicket", $nroTicket, PDO::PARAM_STR);

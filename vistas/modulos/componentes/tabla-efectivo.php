@@ -6,7 +6,7 @@
 ?>
 <div class="tabla-efectivo">
     <div style="float:left;">
-        <table class="table-bordered table-striped dt-responsive text-uppercase no-footer dtr-inline">
+        <table class="table-bordered dt-responsive text-uppercase no-footer dtr-inline">
             <thead>
                 <tr>
                     <th colspan="3" class="text-center">

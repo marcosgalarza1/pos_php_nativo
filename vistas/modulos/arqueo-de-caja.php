@@ -72,7 +72,6 @@
 }
 /* Estilos de filas y celdas */
 .row-dark {
-    background-color: #f2f2f2;
     font-weight: bold;
 }
 
