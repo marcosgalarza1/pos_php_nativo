@@ -388,7 +388,7 @@ if ($_SESSION["perfil"] == "") {
 
           <div class="">
             <div class="">
-              <div class="" id="catalogoProductos">
+              <div style="padding-left: 15px;" id="catalogoProductos">
                 <!-- Los productos se cargarán dinámicamente aquí -->
               </div>
               <div class="catalogo-paginacion">
@@ -1015,7 +1015,7 @@ function agregarProductoAVenta(producto) {
 
   $(".nuevoProducto").append(`
     <div class="row" style="padding:5px 15px">
-      <div class="col-xs-6" style="padding-right:0px">
+      <div class="col-xs-5" style="padding-right:0px">
         <div class="input-group">
           <span class="input-group-addon" style="padding: 0px 4px 0px 4px;">
             <button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="${producto.id}">
@@ -1027,7 +1027,14 @@ function agregarProductoAVenta(producto) {
                  value="${producto.descripcion}" readonly required>
         </div>
       </div>
-      <div class="col-xs-3">
+       <div class="col-xs-2"  style="padding-right:0px">
+        <select class="form-control input-sm"  style="padding:2px">
+          <option value="1" >🥡 LL</option>
+          <option value="2"selected>🍽️ M</option>
+          </select>
+      </div>
+
+      <div class="col-xs-2">
         <input type="number" class="form-control input-sm nuevaCantidadProducto" 
                name="nuevaCantidadProducto" min="1" value="1" 
                stock="${producto.stock}" nuevoStock="${Number(producto.stock-1)}" required>

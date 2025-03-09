@@ -70,3 +70,9 @@ CREATE TABLE `cajas` (
   `nro_ticket` int(10) UNSIGNED ZEROFILL NOT NULL,
   `estado` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+
+
+tareas
+seleccionar la brasa por defecto
+corriger el eliminar comprar

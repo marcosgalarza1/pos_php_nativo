@@ -438,7 +438,6 @@ LISTAR TODOS LOS PRODUCTOS EN FORMATO JSON DENTRO DEL INPUT
 function listarProductos(){
 
 	var listaProductos = [];
-
 	var descripcion = $(".nuevaDescripcionProducto");
 	var cantidad = $(".nuevaCantidadProducto");
 	var precio = $(".nuevoPrecioProducto");

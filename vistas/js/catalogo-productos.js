@@ -227,7 +227,7 @@ class CatalogoProductos {
           stockClass = 'pull-right badge bg-green';
       }
 
-      contenedor.append(`<div class="col-sm-3 col-md-3 col-lg-3">
+      contenedor.append(`<div class="col-sm-3 col-md-3 col-lg-3" style="padding-left:0px">
         <div class="thumbnail" style="height: 100%;">
           <div class="first">
             <div class="d-flex justify-content-between"> 

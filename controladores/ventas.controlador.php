@@ -212,28 +212,30 @@ class ControladorVentas{
 
 			$traerVenta = ModeloVentas::mdlMostrarVentas($tabla, $item, $valor);
 			
+
+			/*=============================================
+			VERIFICAR QUE LA CAJA O ARQUEO A LA QUE PERTENECE ESTE ABIERTO
+			=============================================*/
 			if (session_status() == PHP_SESSION_NONE) {
 				session_start();
 			}
+
+			if ($_SESSION["idArqueoCaja"] != $traerVenta["id_arqueo_caja"]) {
+			echo '<script>
+					swal({ 
+						type: "error",
+						title: "La venta no puede eliminarse dado que su caja ha sido cerrada",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+						}).then(function(result){
+									if (result.value) {
+									window.location = "ventas";
+									}
+								})
+					</script>';
+				return;
+			}
 			
-			if ($_SESSION["idArqueoCaja"] != $traerVenta["idArqueoCaja"]) {
-				echo '<script>
-						swal({ 
-							type: "error",
-							title: "La venta no puede eliminarse dado que su caja ha sido cerrada",
-							showConfirmButton: true,
-							confirmButtonText: "Cerrar"
-							}).then(function(result){
-										if (result.value) {
-		
-										window.location = "crear-venta";
-		
-										}
-									})
-						</script>';
-					return;
-				}
-				
 			/*=============================================
 			ACTUALIZAR FECHA ÚLTIMA COMPRA
 			=============================================*/
