@@ -12,11 +12,58 @@ if ($_SESSION["perfil"] == "") {
 }
 
 ?>
+<style>/* Actualizar los estilos existentes */
+/* Actualizar los estilos existentes */
+
+ .select2-results__option[aria-selected=true] {
+   background-color: #ddd !important;
+ }
+
+.nota-dropdown {
+  padding: 10px;
+ /*  min-width: 280px;*/
+ position: absolute;
+  right: 0;
+  left: auto;
+  top: 100%;
+  z-index: 9999;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  display: none;
+}
+
+.nota-dropdown.show {
+  display: block;
+}
+
+.nota-producto-dropdown {
+  position: relative;
+}
+
+.select2-nota-container .select2-container {
+  width: 100% !important;
+  z-index: 10000;
+}
+
+.nota-form-container {
+  padding: 10px;
+  width: 100%;
+}
+
+/* Asegurar que el dropdown de Select2 esté por encima de otros elementos */
+.select2-dropdown {
+  z-index: 10001 !important;
+}
+
+/* Ajustar el tamaño del botón de notas */
+.btn-xs.dropdown-toggle {
+  padding: 1px 5px;
+}
+</style>
  <style>
-    .dropdown-menu {
-      padding: 15px; /* Para darle un buen espaciado */
-      min-width: 300px; /* Ancho mínimo del formulario */
-    }
+ 
 
     /* Estilos para el catálogo de productos */
     .catalogo-productos {
@@ -543,7 +590,7 @@ if ($_SESSION["perfil"] == "") {
                     <div class="form-group">
                       <label for="tipo_pago">FORMA DE ATENCIÓN:</label>
                       <select class="form-control input-sm" id="formaAtencion" name="formaAtencion">
-                        <option value="1">🥡 Para Llevar</option>
+                        <option value="1">🚚 Para Llevar</option>
                         <option value="2" selected>🍽️ En Mesa</option>
                         <option value="3" >🔀 Mixto</option>
                       </select>
@@ -1012,34 +1059,73 @@ function agregarProductoAVenta(producto) {
     });
     return;
   }
-
   $(".nuevoProducto").append(`
-    <div class="row" style="padding:5px 15px">
-      <div class="col-xs-5" style="padding-right:0px">
+    <div class="row" style="padding:4px 15px">
+        <div class="row" style="padding:0px 15px">
+      <!-- Columna para descripción y botones -->
+      <div class="col-xs-4" style="padding-right:0px">
         <div class="input-group">
-          <span class="input-group-addon" style="padding: 0px 4px 0px 4px;">
-            <button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="${producto.id}">
+          <span class="input-group-addon" style="padding: 0px 4px">
+           <button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="${producto.id}">
               <i class="fa fa-times"></i>
             </button>
           </span>
-          <input type="text" class="form-control input-sm nuevaDescripcionProducto text-uppercase"
+       <input type="text" class="form-control input-sm nuevaDescripcionProducto text-uppercase"
                  idProducto="${producto.id}" name="agregarProducto" 
                  value="${producto.descripcion}" readonly required>
+          <span class="input-group-addon" style="padding: 0px 4px">
+            <div class="dropdown">
+              <button class="btn btn-default btn-xs dropdown-toggle" type="button" 
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-file-text-o"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right nota-dropdown">
+                <li style="width: 250px; padding: 10px;">
+                  <form class="noteForm" onsubmit="return false;">
+                    <label for="nota">Nota</label>
+                    <div class="form-group">
+                      <select class="select2-nota form-control input-sm" multiple="multiple" name="states[]>
+                        <option value="1">✔️Solo Arroz</option>
+                        <option value="2">✔️Solo Fideo</option>
+                        <option value="3">❌No Fideo</option>
+                        <option value="4">❌No Papas</option>
+                        <option value="5">✔️Solo Papas</option>
+                        <option value="6">➕ Más fideos</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="nota">Descripción</label>
+                      <textarea class="form-control input-sm" rows="2" 
+                                placeholder="Descripción..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-xs mt-4" style="margin-top: 10px; float: left; width: 100%;">
+                      Guardar
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </span>
         </div>
       </div>
-       <div class="col-xs-2"  style="padding-right:0px">
-        <select class="form-control input-sm"  style="padding:2px">
-          <option value="1" >🥡 LL</option>
-          <option value="2"selected>🍽️ M</option>
-          </select>
+
+      <!-- Columna para tipo de servicio -->
+      <div class="col-xs-2" style="padding-right:0px">
+        <select class="form-control input-sm" style="padding:2px">
+          <option value="1">🚚 LL</option>
+          <option value="2" selected>🍽️ M</option>
+        </select>
       </div>
 
+      <!-- Columna para cantidad -->
       <div class="col-xs-2">
         <input type="number" class="form-control input-sm nuevaCantidadProducto" 
                name="nuevaCantidadProducto" min="1" value="1" 
                stock="${producto.stock}" nuevoStock="${Number(producto.stock-1)}" required>
       </div>
-      <div class="col-xs-3 ingresoPrecio" style="padding-left:0px">
+
+      <!-- Columna para precio -->
+      <div class="col-xs-4 ingresoPrecio" style="padding-left:0px">
         <div class="input-group">
           <span class="input-group-addon"><i><b>Bs</b></i></span>
           <input type="text" class="form-control input-sm nuevoPrecioProducto" 
@@ -1052,9 +1138,77 @@ function agregarProductoAVenta(producto) {
       </div>
     </div>`);
 
+  // Inicializar Select2 para las notas con un timeout para asegurar que el DOM esté listo
+  setTimeout(function() {
+    $('.select2-nota').each(function() {
+      if (!$(this).hasClass('select2-hidden-accessible')) {
+        $(this).select2({
+          theme: "classic",
+          multiple: true,
+          width: '100%',
+          dropdownParent: $(this).closest('.nota-dropdown'),
+          language: {
+            noResults: function() {
+              return "No hay resultados";
+            }
+          }
+        });
+      }
+    });
+  }, 100);
+
   sumarTotalPrecios();
   listarProductos();
   $(".nuevoPrecioProducto").number(true, 2);
 }
+
+// Actualizar el código de inicialización de Select2
+$(document).ready(function() {
+  // Prevenir que el dropdown se cierre al hacer clic dentro
+  $(document).on('click', '.nota-dropdown', function(e) {
+    e.stopPropagation();
+  });
+  
+  // Detener la propagación de eventos en el select2
+  $(document).on('click', '.select2-container', function(e) {
+    e.stopPropagation();
+  });
+
+  // Manejar la apertura del dropdown de notas
+  $(document).on('click', '.nota-producto-dropdown .dropdown-toggle', function() {
+    var $dropdown = $(this).closest('.nota-producto-dropdown').find('.dropdown-menu');
+    
+    // Cerrar todos los otros dropdowns primero
+    $('.nota-producto-dropdown .dropdown-menu').not($dropdown).removeClass('show');
+    
+    // Alternar la visibilidad de este dropdown
+    $dropdown.toggleClass('show');
+    
+    // Reinicializar Select2 cuando se abre el dropdown
+    if ($dropdown.hasClass('show')) {
+      setTimeout(function() {
+        $dropdown.find('.select2-nota').select2({
+          theme: "classic",
+          width: '100%',
+          dropdownParent: $dropdown,
+          language: {
+            noResults: function() {
+              return "No hay resultados";
+            }
+          }
+        });
+      }, 10);
+    }
+    
+    return false;
+  });
+  
+  // Cerrar dropdowns al hacer clic fuera
+  $(document).on('click', function(e) {
+    if (!$(e.target).closest('.nota-producto-dropdown').length) {
+      $('.nota-producto-dropdown .dropdown-menu').removeClass('show');
+    }
+  });
+});
 </script>
 <script src="vistas/js/catalogo-productos.js"></script>
