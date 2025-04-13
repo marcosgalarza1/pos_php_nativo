@@ -671,3 +671,74 @@ $(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function(){
 VALIDAR QUE LA FECHA NO PERMITA SELECIONAR UNA FECHA MAYOR A LA ACTUAL
 =============================================*/
 
+/*=============================================
+DUPLICAR PRODUCTO
+=============================================*/
+$(".formularioVenta").on("click", "button[title='Duplicar Producto']", function(){
+    // Obtener el contenedor del producto (la fila completa)
+    var $productoRow = $(this).closest('.row');
+    
+    // Obtener los valores actuales antes de clonar
+    var idProducto = $productoRow.find('.nuevaDescripcionProducto').attr('idProducto');
+    var stock = parseInt($productoRow.find('.nuevaCantidadProducto').attr('stock'));
+    var cantidad = parseInt($productoRow.find('.nuevaCantidadProducto').val());
+    
+    // Verificar si hay suficiente stock
+    if(cantidad >= stock) {
+        swal({
+            title: "No hay suficiente stock",
+            text: "Solo quedan " + stock + " unidades disponibles",
+            type: "error",
+            confirmButtonText: "¡Cerrar!"
+        });
+        return;
+    }
+    
+    // Clonar la fila
+    var $nuevoProducto = $productoRow.clone();
+    
+    // Limpiar los elementos Select2 del clon
+    $nuevoProducto.find('.select2-container').remove();
+    $nuevoProducto.find('.nota-producto').removeClass('select2-hidden-accessible');
+    
+    // Limpiar los valores de las notas y preferencias
+    $nuevoProducto.find('.nota-producto').val(null);
+    $nuevoProducto.find('.descripcion-producto').val('');
+    
+    // Insertar el nuevo producto después del original
+    $productoRow.after($nuevoProducto);
+    
+    // Reinicializar Select2 en el nuevo elemento
+    var $newSelect = $nuevoProducto.find('.nota-producto');
+    $newSelect.select2({
+        theme: "classic",
+        multiple: true,
+        width: '100%',
+        dropdownParent: $nuevoProducto.find('.nota-dropdown'),
+        language: {
+            noResults: function() {
+                return "No hay resultados";
+            }
+        }
+    });
+    
+    // Asegurar que los eventos estén vinculados al nuevo elemento
+    $nuevoProducto.find('.descripcion-producto').on('change keyup', function() {
+        listarProductos();
+    });
+    
+    $newSelect.on('change', function() {
+        listarProductos();
+    });
+    
+    // Actualizar los totales
+    sumarTotalPrecios();
+    listarProductos();
+
+    // Restaurar los valores seleccionados
+    var selectedPreferences = $productoRow.find('.nota-producto').val() || [];
+    var notaAdicional = $productoRow.find('.descripcion-producto').val() || '';
+    $newSelect.val(selectedPreferences).trigger('change');
+    $nuevoProducto.find('.descripcion-producto').val(notaAdicional);
+});
+

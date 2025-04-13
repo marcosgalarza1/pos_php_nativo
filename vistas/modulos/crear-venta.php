@@ -1013,8 +1013,8 @@ function agregarProductoAVenta(producto) {
     return;
   }
   $(".nuevoProducto").append(`
-    <div class="row" style="padding:4px 15px">
-        <div class="row" style="padding:0px 15px">
+    <div class="row" style="padding:0px 15px">
+        <div class="row" style="padding:4px 15px">
       <!-- Columna para descripción y botones -->
       <div class="col-xs-4" style="padding-right:0px">
         <div class="input-group">
@@ -1038,12 +1038,12 @@ function agregarProductoAVenta(producto) {
                     <label for="nota">Preferencias</label>
                     <div class="form-group">
                       <select class="select2-nota form-control input-sm nota-producto" multiple="multiple" name="states[]">
-                        <option value="1">✔️Solo Arroz</option>
-                        <option value="2">✔️Solo Fideo</option>
-                        <option value="3">❌No Fideo</option>
-                        <option value="4">❌No Papas</option>
-                        <option value="5">✔️Solo Papas</option>
-                        <option value="6">➕ Más fideos</option>
+                        <option value="1">Solo Arroz</option>
+                        <option value="2">Solo Fideo</option>
+                        <option value="3">No Fideo</option>
+                        <option value="4">No Papas</option>
+                        <option value="5">Solo Papas</option>  
+                        <option value="6">Más fideos</option>
                       </select>
                     </div>
                     <div class="form-group">
@@ -1084,6 +1084,11 @@ function agregarProductoAVenta(producto) {
           <input type="hidden" precioRealCompra="${producto.precio_compra}" 
                  name="nuevoPrecioCompraProducto" class="nuevoPrecioCompraProducto" 
                  value="${producto.precio_compra}">
+          <span class="input-group-addon" style="padding: 0px 4px">
+            <button type="button" class="btn btn-primary btn-xs" title="Duplicar Producto"">
+            <i class="fa fa-files-o" aria-hidden="true"></i>
+            </button>
+          </span>
         </div>
       </div>
     </div>`);

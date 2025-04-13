@@ -71,12 +71,14 @@ class imprimirFactura
         // Crear el documento con la altura calculada
          $pdf = new TCPDF('P', 'mm', array(80, $alturaTotal), true, 'UTF-8', false);
 
-        //$pdf = new TCPDF('P', 'mm', array(80, 60), true, 'UTF-8', false);
 
         $pdf->SetMargins(5, 5, 5); // Establece el margen inferior en 0
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);
         $pdf->SetAutoPageBreak(true, 5); // Desactiva el salto de página automático y margen inferior
+
+        // Configuración adicional para caracteres especiales
+        $pdf->setFontSubsetting(true);
 
         $pdf->AddPage();
         $pdf->SetFont('helvetica', '', 8);
@@ -141,9 +143,16 @@ class imprimirFactura
         foreach ($productos as $item) {
             $valorUnitario = number_format($item["precio_venta"], 2);
             $precioTotal = number_format($item["subtotal"], 2);
+            $preferencias = $item['preferencias'] ?? '';
+            $nota = $item['nota_adicional'] ?? '';
+            $texto = implode(' - ', array_filter([$preferencias, $nota]));
+            $preferenciasYNotaAdicional = $texto 
+                ? '<br><span style="font-size: 6px; color: #666666;">(' . $texto . ')</span>' 
+                : '';
+
             $html .= '
                 <tr>
-                    <td>' . $item["producto"] . '</td>
+                    <td>' . $item["producto"] . $preferenciasYNotaAdicional . '</td>
                     <td style="text-align:center;">' . $item["cantidad"] . '</td>
                     <td style="text-align:right;">' . $valorUnitario . '</td>
                     <td style="text-align:right;">' . $precioTotal . '</td>
@@ -233,9 +242,16 @@ class imprimirFactura
         foreach ($productos as $item) {
             $valorUnitario = number_format($item["precio_venta"], 2);
             $precioTotal = number_format($item["subtotal"], 2);
+            $preferencias = $item['preferencias'] ?? '';
+            $nota = $item['nota_adicional'] ?? '';
+            $texto = implode(' - ', array_filter([$preferencias, $nota]));
+            $preferenciasYNotaAdicional = $texto 
+                ? '<br><span style="font-size: 6px; color: #666666;">(' . $texto . ')</span>' 
+                : '';
+          
             $html .= '
                 <tr>
-                    <td>' . $item["producto"] . '</td>
+                    <td>' . $item["producto"] . $preferenciasYNotaAdicional . '</td>
                     <td style="text-align:center;">' . $item["cantidad"] . '</td>
                     <td style="text-align:right;">' . $valorUnitario . '</td>
                     <td style="text-align:right;">' . $precioTotal . '</td>
