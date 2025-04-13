@@ -133,10 +133,11 @@ class imprimirFactura
         $html = '<table border="0" cellpadding="1" style="width:100%; font-size: 7px; ">
             <tbody>
             <tr>
-                <th style="border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; width:40%; text-align:left;font-weight: bold; ">PRODUCTO</th>
-                <th style="border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; width:20%; text-align:center; font-weight: bold;">CANT.</th>
-                <th style="border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; width:15%; text-align:right; font-weight: bold;">PRECIO</th>
-                <th style="border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; width:25%; text-align:right; font-weight: bold;">SUBTOTAL</th>
+                <th style="width:42%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000;  text-align:left;font-weight: bold; ">PRODUCTO</th>
+                <th style="width:9%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; text-align:center; font-weight: bold;">F.A.</th>
+                <th style="width:12%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; text-align:center; font-weight: bold;">CANT.</th>
+                <th style="width:15%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000;text-align:right; font-weight: bold;">PRECIO</th>
+                <th style="width:22%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; text-align:right; font-weight: bold;">SUBTOTAL</th>
             </tr>
              ';
 
@@ -153,6 +154,7 @@ class imprimirFactura
             $html .= '
                 <tr>
                     <td>' . $item["producto"] . $preferenciasYNotaAdicional . '</td>
+                    <td style="text-align:center;">' . $item["forma_atencion"] . '</td>
                     <td style="text-align:center;">' . $item["cantidad"] . '</td>
                     <td style="text-align:right;">' . $valorUnitario . '</td>
                     <td style="text-align:right;">' . $precioTotal . '</td>
@@ -160,7 +162,7 @@ class imprimirFactura
         }
 
         $html .= '
-            <tr><td colspan="4"  style="border-top: 0.5px solid #000000; font-size: 9px;"></td></tr>
+            <tr><td colspan="5"  style="border-top: 0.5px solid #000000; font-size: 9px;"></td></tr>
             <tr >
                 <td width="20%"><strong>NOTA</strong></td>
                 <td width="3%"><strong>:</strong></td>
@@ -232,10 +234,11 @@ class imprimirFactura
         $html = '<table border="0" cellpadding="1" style="width:100%; font-size: 7px; ">
             <tbody>
             <tr>
-                <th style="border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; width:40%; text-align:left;font-weight: bold; ">PRODUCTO</th>
-                <th style="border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; width:20%; text-align:center; font-weight: bold;">CANT.</th>
-                <th style="border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; width:15%; text-align:right; font-weight: bold;">PRECIO</th>
-                <th style="border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; width:25%; text-align:right; font-weight: bold;">SUBTOTAL</th>
+                <th style="width:42%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000;  text-align:left;font-weight: bold; ">PRODUCTO</th>
+                <th style="width:9%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; text-align:center; font-weight: bold;">F.A.</th>
+                <th style="width:12%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; text-align:center; font-weight: bold;">CANT.</th>
+                <th style="width:15%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000;text-align:right; font-weight: bold;">PRECIO</th>
+                <th style="width:22%; border-top: 0.5px solid #000000; border-bottom: 0.5px solid  #000000; text-align:right; font-weight: bold;">SUBTOTAL</th>
             </tr>
              ';
 
@@ -252,6 +255,7 @@ class imprimirFactura
             $html .= '
                 <tr>
                     <td>' . $item["producto"] . $preferenciasYNotaAdicional . '</td>
+                    <td style="text-align:center;">' . $item["forma_atencion"] . '</td>
                     <td style="text-align:center;">' . $item["cantidad"] . '</td>
                     <td style="text-align:right;">' . $valorUnitario . '</td>
                     <td style="text-align:right;">' . $precioTotal . '</td>

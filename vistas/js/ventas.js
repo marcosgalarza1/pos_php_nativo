@@ -435,17 +435,16 @@ $(".formularioVenta").on("change", "input#nuevoCodigoTransaccion", function(){
 /*=============================================
 LISTAR TODOS LOS PRODUCTOS EN FORMATO JSON DENTRO DEL INPUT
 =============================================*/
-
+var listaProductos = [];
 function listarProductos(){
-
-	var listaProductos = [];
+	listaProductos = []; // Limpiar el array antes de llenarlo
 	var descripcion = $(".nuevaDescripcionProducto");
 	var cantidad = $(".nuevaCantidadProducto");
 	var precio = $(".nuevoPrecioProducto");
 	var precioCompra = $(".nuevoPrecioCompraProducto");
 	var nota = $(".nota-producto");
 	var descripcionAdicional = $(".descripcion-producto");
-	var formaAtencionDetalle = $("#formaAtencionDetalle");
+	var formaAtencionDetalle = $("select[name='formaAtencionDetalle']"); // Cambio aquí para seleccionar todos los selects
 
 	for(var i = 0; i < descripcion.length; i++){
 		// Obtener los textos de las opciones seleccionadas
@@ -466,11 +465,11 @@ function listarProductos(){
 			"total" : $(precio[i]).val(),
 			"preferencias" : preferenciasSeleccionadas.join(",") || null,
 			"nota_adicional" : $(descripcionAdicional[i]).val() || null,
-			"forma_atencion" : formaAtencionDetalle.val() || null
-		})
+			"forma_atencion" : $(formaAtencionDetalle[i]).val() || null // Obtener el valor del select específico
+		});
 	}
-	console.log(listaProductos);
-	$("#listaProductos").val(JSON.stringify(listaProductos)); 
+
+	$("#listaProductos").val(JSON.stringify(listaProductos));
 }
 
 /*=============================================
@@ -745,3 +744,36 @@ $(".formularioVenta").on("click", "button[title='Duplicar Producto']", function(
     $nuevoProducto.find('.descripcion-producto').val(notaAdicional);
 });
 
+/*=============================================
+CAMBIO EN LA FORMA DE ATENCIÓN INDIVIDUAL
+=============================================*/
+$(".formularioVenta").on("change", "select[name='formaAtencionDetalle']", function(){
+    // Actualizar la lista de productos cuando se cambia la forma de atención individual
+    listarProductos();
+	console.log(listaProductos);
+});
+
+/*=============================================
+CAMBIO EN LA FORMA DE ATENCIÓN GENERAL
+=============================================*/
+$("#formaAtencion").change(function() {
+    var nuevaFormaAtencion = $(this).val();
+    
+    // Actualizar todos los selectores de forma de atención en los productos
+    $(".nuevoProducto select[name='formaAtencionDetalle']").each(function() {
+        switch(nuevaFormaAtencion) {
+            case "1": // Para Llevar
+                $(this).val("2"); // LL
+                break;
+            case "2": // En Mesa
+                $(this).val("1"); // M
+                break;
+            case "3": // Mixto
+                // No cambiar las selecciones individuales en modo mixto
+                break;
+        }
+    });
+    
+    // Actualizar la lista de productos
+    listarProductos();
+});

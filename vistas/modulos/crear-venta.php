@@ -1049,6 +1049,15 @@ function agregarProductoAVenta(producto) {
         </div>
       </span>`;
   }
+  // Determinar el valor inicial de formaAtencionDetalle basado en formaAtencion general
+  let valorFormaAtencion = "1"; // Por defecto M
+  const formaAtencionGeneral = $("#formaAtencion").val();
+  
+  if(formaAtencionGeneral === "1") { // Para Llevar
+    valorFormaAtencion = "2"; // LL
+  } else if(formaAtencionGeneral === "2") { // En Mesa
+    valorFormaAtencion = "1"; // M
+  }
 
 
   $(".nuevoProducto").append(`
@@ -1070,10 +1079,10 @@ function agregarProductoAVenta(producto) {
       </div>
 
       <!-- Columna para tipo de servicio -->
-      <div class="col-xs-2" style="padding-right:0px">
+    <div class="col-xs-2" style="padding-right:0px">
         <select class="form-control input-sm" name="formaAtencionDetalle" id="formaAtencionDetalle" style="padding:2px">
-          <option value="1">🍽️ M</option>
-          <option value="2">🚚 LL</option>
+          <option value="1" ${valorFormaAtencion === "1" ? "selected" : ""}>🍽️ M</option>
+          <option value="2" ${valorFormaAtencion === "2" ? "selected" : ""}>🚚 LL</option>
         </select>
       </div>
 
