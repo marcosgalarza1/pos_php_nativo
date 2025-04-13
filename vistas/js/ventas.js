@@ -447,10 +447,10 @@ function listarProductos(){
 
 	for(var i = 0; i < descripcion.length; i++){
 		// Obtener los textos de las opciones seleccionadas
-		var notasSeleccionadas = [];
+		var preferenciasSeleccionadas = [];
 		if($(nota[i]).length > 0) {
 			$(nota[i]).find("option:selected").each(function() {
-				notasSeleccionadas.push($(this).text());
+				preferenciasSeleccionadas.push($(this).text());
 			});
 		}
 
@@ -462,8 +462,8 @@ function listarProductos(){
 			"precio" : $(precio[i]).attr("precioReal"),
 			"precioCompra" : $(precioCompra[i]).attr("precioRealCompra"),
 			"total" : $(precio[i]).val(),
-			"nota" : notasSeleccionadas.join(",") || null,
-			"descripcion_adicional" : $(descripcionAdicional[i]).val() || null
+			"preferencias" : preferenciasSeleccionadas.join(",") || null,
+			"nota_adicional" : $(descripcionAdicional[i]).val() || null
 		})
 	}
 	console.log(listaProductos);

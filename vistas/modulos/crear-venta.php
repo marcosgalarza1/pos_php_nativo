@@ -1035,7 +1035,7 @@ function agregarProductoAVenta(producto) {
               <ul class="dropdown-menu dropdown-menu-right nota-dropdown">
                 <li style="width: 250px; padding: 10px;">
                   <form class="noteForm" onsubmit="return false;">
-                    <label for="nota">Nota</label>
+                    <label for="nota">Preferencias</label>
                     <div class="form-group">
                       <select class="select2-nota form-control input-sm nota-producto" multiple="multiple" name="states[]">
                         <option value="1">✔️Solo Arroz</option>
@@ -1047,9 +1047,9 @@ function agregarProductoAVenta(producto) {
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="descripcion">Descripción</label>
+                      <label for="descripcion">Nota Adicional</label>
                       <textarea class="form-control input-sm descripcion-producto" rows="2" 
-                                placeholder="Descripción adicional..."></textarea>
+                                placeholder="Nota adicional..."></textarea>
                     </div>
                   </form>
                 </li>
