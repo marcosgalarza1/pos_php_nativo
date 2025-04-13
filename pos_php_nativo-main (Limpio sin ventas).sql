@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-03-2025 a las 22:44:38
+-- Tiempo de generación: 13-04-2025 a las 15:06:18
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pos_php_nativo-main`
+-- Base de datos: `pos_php_nativo-main-clean`
 --
 
 -- --------------------------------------------------------
@@ -76,8 +76,8 @@ CREATE TABLE `cajas` (
 --
 
 INSERT INTO `cajas` (`id`, `nombre`, `numero_caja`, `nro_ticket`, `estado`) VALUES
-(1, 'caja administrativa', '1', 0000000000, 1),
-(2, 'caja de ventas', '2', 0000000000, 1);
+(1, 'Caja de ventas', '1', 0000000000, 1),
+(2, 'Caja Administrativa', '2', 0000000000, 0);
 
 -- --------------------------------------------------------
 
@@ -223,7 +223,10 @@ CREATE TABLE `detalle_venta` (
   `cantidad` int(11) NOT NULL,
   `precio_venta` decimal(10,2) NOT NULL,
   `precio_compra` decimal(10,2) NOT NULL,
-  `subtotal` decimal(10,2) NOT NULL
+  `subtotal` decimal(10,2) NOT NULL,
+  `preferencias` varchar(200) DEFAULT NULL,
+  `nota_adicional` text DEFAULT NULL,
+  `forma_atencion` char(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
