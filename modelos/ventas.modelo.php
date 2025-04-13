@@ -122,8 +122,8 @@ class ModeloVentas
 			$idVenta = $conexion->lastInsertId();
 
 			// 2. Preparar el statement para insertar los productos en "detalle_venta"
-			$stmtDetalle = $conexion->prepare("INSERT INTO detalle_venta(id_venta, id_producto, producto, cantidad, precio_venta, precio_compra, subtotal, preferencias, nota_adicional) 
-											   VALUES (:id_venta, :id_producto, :producto, :cantidad, :precio_venta, :precio_compra, :subtotal, :preferencias, :nota_adicional)");
+			$stmtDetalle = $conexion->prepare("INSERT INTO detalle_venta(id_venta, id_producto, producto, cantidad, precio_venta, precio_compra, subtotal, preferencias, nota_adicional, forma_atencion) 
+											   VALUES (:id_venta, :id_producto, :producto, :cantidad, :precio_venta, :precio_compra, :subtotal, :preferencias, :nota_adicional, :forma_atencion)");
 
 			// Enlazamos los parámetros estáticos (que no cambian en el bucle)
 			$stmtDetalle->bindParam(":id_venta", $idVenta, PDO::PARAM_INT);
@@ -145,6 +145,20 @@ class ModeloVentas
 				$stmtDetalle->bindValue(":subtotal", $producto["total"], PDO::PARAM_STR);
 				$stmtDetalle->bindValue(":preferencias", isset($producto["preferencias"]) ? $producto["preferencias"] : null, PDO::PARAM_STR);
 				$stmtDetalle->bindValue(":nota_adicional", isset($producto["nota_adicional"]) ? $producto["nota_adicional"] : null, PDO::PARAM_STR);
+
+				switch ($producto["forma_atencion"]) {
+					case 1:
+						$formaAtencion = "M";
+						break;
+					case 2:
+						$formaAtencion = "LL";
+						break;
+					default:
+						$formaAtencion = "";
+						break;
+				}
+
+				$stmtDetalle->bindValue(":forma_atencion", $formaAtencion, PDO::PARAM_STR);
 
 				// Ejecutar el registro para cada producto
 				if (!$stmtDetalle->execute()) {

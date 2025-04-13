@@ -1071,9 +1071,9 @@ function agregarProductoAVenta(producto) {
 
       <!-- Columna para tipo de servicio -->
       <div class="col-xs-2" style="padding-right:0px">
-        <select class="form-control input-sm" style="padding:2px">
-          <option value="1">🚚 LL</option>
-          <option value="2" selected>🍽️ M</option>
+        <select class="form-control input-sm" name="formaAtencionDetalle" id="formaAtencionDetalle" style="padding:2px">
+          <option value="1">🍽️ M</option>
+          <option value="2">🚚 LL</option>
         </select>
       </div>
 

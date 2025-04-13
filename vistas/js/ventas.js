@@ -192,7 +192,7 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
 	var nuevoPrecioProducto = $(this).parent().parent().parent().children(".ingresoPrecio").children().children(".nuevoPrecioProducto");
 	var nuevoPrecioCompraProducto = $(this).parent().parent().parent().children(".ingresoPrecio").children().children(".nuevoPrecioCompraProducto");
 	var nuevaCantidadProducto = $(this).parent().parent().parent().children(".ingresoCantidad").children(".nuevaCantidadProducto");
-
+	var formaAtencion = $("#formaAtencionDetalle");
 
 	var datos = new FormData();
     datos.append("nombreProducto", nombreProducto);
@@ -215,6 +215,7 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
       	    $(nuevoPrecioProducto).val(respuesta["precio_venta"]);
       	    $(nuevoPrecioProducto).attr("precioReal", respuesta["precio_venta"]);
 			$(nuevaCantidadProducto).val(1);
+			$(formaAtencion).val(1);
       	    $(nuevoPrecioCompraProducto).attr("precioRealCompra", respuesta["precio_compra"]);
   	        // AGRUPAR PRODUCTOS EN FORMATO JSON
 	        listarProductos()
@@ -444,6 +445,7 @@ function listarProductos(){
 	var precioCompra = $(".nuevoPrecioCompraProducto");
 	var nota = $(".nota-producto");
 	var descripcionAdicional = $(".descripcion-producto");
+	var formaAtencionDetalle = $("#formaAtencionDetalle");
 
 	for(var i = 0; i < descripcion.length; i++){
 		// Obtener los textos de las opciones seleccionadas
@@ -463,7 +465,8 @@ function listarProductos(){
 			"precioCompra" : $(precioCompra[i]).attr("precioRealCompra"),
 			"total" : $(precio[i]).val(),
 			"preferencias" : preferenciasSeleccionadas.join(",") || null,
-			"nota_adicional" : $(descripcionAdicional[i]).val() || null
+			"nota_adicional" : $(descripcionAdicional[i]).val() || null,
+			"forma_atencion" : formaAtencionDetalle.val() || null
 		})
 	}
 	console.log(listaProductos);
