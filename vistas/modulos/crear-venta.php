@@ -1012,6 +1012,45 @@ function agregarProductoAVenta(producto) {
     });
     return;
   }
+
+   // Bloque condicional para agregar el dropdown si producto.inventariable es 0
+   let extra = '';
+   
+  if (producto.inventariable === 0) {
+    extra = `
+      <span class="input-group-addon" style="padding: 0px 4px">
+        <div class="dropdown">
+          <button class="btn btn-default btn-xs dropdown-toggle" type="button" 
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-file-text-o"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right nota-dropdown">
+            <li style="width: 250px; padding: 10px;">
+              <form class="noteForm" onsubmit="return false;">
+                <label for="nota">Preferencias</label>
+                <div class="form-group">
+                  <select class="select2-nota form-control input-sm nota-producto" multiple="multiple" name="states[]">
+                    <option value="1">Solo Arroz</option>
+                    <option value="2">Solo Fideo</option>
+                    <option value="3">No Fideo</option>
+                    <option value="4">No Papas</option>
+                    <option value="5">Solo Papas</option>  
+                    <option value="6">Más fideos</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Nota Adicional</label>
+                  <textarea class="form-control input-sm descripcion-producto" rows="2" 
+                            placeholder="Nota adicional..."></textarea>
+                </div>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </span>`;
+  }
+
+
   $(".nuevoProducto").append(`
     <div class="row" style="padding:0px 15px">
         <div class="row" style="padding:4px 15px">
@@ -1026,36 +1065,7 @@ function agregarProductoAVenta(producto) {
        <input type="text" class="form-control input-sm nuevaDescripcionProducto text-uppercase"
                  idProducto="${producto.id}" name="agregarProducto" 
                  value="${producto.descripcion}" readonly required>
-          <span class="input-group-addon" style="padding: 0px 4px">
-            <div class="dropdown">
-              <button class="btn btn-default btn-xs dropdown-toggle" type="button" 
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-file-text-o"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-right nota-dropdown">
-                <li style="width: 250px; padding: 10px;">
-                  <form class="noteForm" onsubmit="return false;">
-                    <label for="nota">Preferencias</label>
-                    <div class="form-group">
-                      <select class="select2-nota form-control input-sm nota-producto" multiple="multiple" name="states[]">
-                        <option value="1">Solo Arroz</option>
-                        <option value="2">Solo Fideo</option>
-                        <option value="3">No Fideo</option>
-                        <option value="4">No Papas</option>
-                        <option value="5">Solo Papas</option>  
-                        <option value="6">Más fideos</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="descripcion">Nota Adicional</label>
-                      <textarea class="form-control input-sm descripcion-producto" rows="2" 
-                                placeholder="Nota adicional..."></textarea>
-                    </div>
-                  </form>
-                </li>
-              </ul>
-            </div>
-          </span>
+                 ${extra}
         </div>
       </div>
 
