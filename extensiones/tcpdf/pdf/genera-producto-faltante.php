@@ -20,8 +20,8 @@ class reporteProductoFaltante
 
 
     public $idUsuario;
-    private $nombreTienda = "Cabañas El Gallito";
-    private $direccionTienda = "Rio Pirai";
+    private $nombreTienda = "Pollos Rosy";
+    private $direccionTienda = "Refineria";
 
     public function generarPdfProductoFaltante()
     {
