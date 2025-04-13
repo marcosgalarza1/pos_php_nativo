@@ -164,7 +164,7 @@ class ControladorVentas{
 			$respuesta = ModeloVentas::mdlRegistrarVenta($tabla, $datos);
 
 			
-			if($respuesta["status"] == "ok"){
+			if(is_array($respuesta) && $respuesta["status"] == "ok"){
 				$arqueoActual = ModeloArqueo::mdlObtnerArqueoPorIDUsuario($_POST["idVendedor"]);
 
 				ModeloArqueo::mdlRegistrarIngreso($arqueoActual ,$_POST["nuevaVenta"], $_POST["totalVenta"]);
@@ -189,6 +189,20 @@ class ControladorVentas{
 					</script>';
 				}
 		
+			} else {
+				echo '<script>
+					swal({
+						type: "error",
+						title: "Error al guardar la venta",
+						text: "' . (is_string($respuesta) ? $respuesta : "Error desconocido") . '",
+						showConfirmButton: true,
+						confirmButtonText: "Cerrar"
+					}).then(function(result){
+						if (result.value) {
+							window.location = "crear-venta";
+						}
+					});
+				</script>';
 			}
 
 		}

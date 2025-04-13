@@ -588,24 +588,16 @@ if ($_SESSION["perfil"] == "") {
                 <div class="row ">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="tipo_pago">FORMA DE ATENCIÓN:</label>
-                      <select class="form-control input-sm" id="formaAtencion" name="formaAtencion">
-                        <option value="1">🚚 Para Llevar</option>
-                        <option value="2" selected>🍽️ En Mesa</option>
-                        <option value="3" >🔀 Mixto</option>
-                      </select>
+                      <label for="tipo_pago text-right">FORMA DE ATENCIÓN:</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                        <select class="select2 text-uppercase form-control input-sm" name="states[]" multiple="multiple">
-                            <option value="1">✔️Solo Arroz</option>
-                            <option value="2">✔️Solo Fideo</option>
-                            <option value="3">❌No Fideo</option>
-                            <option value="4">❌No Papas</option>
-                            <option value="5">✔️Solo Papas</option>
-                            <option value="6">➕ Más fideos</option>
-                        </select>
+                    <select class="form-control input-sm" id="formaAtencion" name="formaAtencion">
+                        <option value="1">🚚 Para Llevar</option>
+                        <option value="2" selected>🍽️ En Mesa</option>
+                        <option value="3" >🔀 Mixto</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -682,45 +674,6 @@ if ($_SESSION["perfil"] == "") {
 
                 </div>
                 <hr>
-
-
-          
-
-
-                <div class="dropdown">
-                  <!-- Botón que activa el dropdown -->
-                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-file-text-o" aria-hidden="true"></i><span class="caret"></span>
-                  </button>
-                  <!-- Dropdown con el formulario -->
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li>
-                      <form id="noteForm" onsubmit="return false;">
-                        <div class="form-group">
-                          <label for="noteTitle">Título</label>
-                          <input type="text" class="form-control" id="noteTitle" placeholder="Título de la nota">
-                        </div>
-                        <div class="form-group">
-                          <label for="noteType">Tipo</label>
-                            <select class="select2 text-uppercase form-control input-sm" name="states[]" multiple="multiple">
-                                <option value="1">✔️Solo Arroz</option>
-                                <option value="2">✔️Solo Fideo</option>
-                                <option value="3">❌No Fideo</option>
-                                <option value="4">❌No Papas</option>
-                                <option value="5">✔️Solo Papas</option>
-                                <option value="6">➕ Más fideos</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="noteDescription">Descripción</label>
-                          <textarea class="form-control" id="noteDescription" rows="3" placeholder="Escribe tu nota..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success btn-block">Guardar Nota</button>
-                      </form>
-                    </li>
-                  </ul>
-                </div>
-
 
 
                 <!--=====================================
@@ -1084,7 +1037,7 @@ function agregarProductoAVenta(producto) {
                   <form class="noteForm" onsubmit="return false;">
                     <label for="nota">Nota</label>
                     <div class="form-group">
-                      <select class="select2-nota form-control input-sm" multiple="multiple" name="states[]>
+                      <select class="select2-nota form-control input-sm nota-producto" multiple="multiple" name="states[]">
                         <option value="1">✔️Solo Arroz</option>
                         <option value="2">✔️Solo Fideo</option>
                         <option value="3">❌No Fideo</option>
@@ -1094,13 +1047,10 @@ function agregarProductoAVenta(producto) {
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="nota">Descripción</label>
-                      <textarea class="form-control input-sm" rows="2" 
-                                placeholder="Descripción..."></textarea>
+                      <label for="descripcion">Descripción</label>
+                      <textarea class="form-control input-sm descripcion-producto" rows="2" 
+                                placeholder="Descripción adicional..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-xs mt-4" style="margin-top: 10px; float: left; width: 100%;">
-                      Guardar
-                    </button>
                   </form>
                 </li>
               </ul>
@@ -1152,10 +1102,17 @@ function agregarProductoAVenta(producto) {
               return "No hay resultados";
             }
           }
+        }).on('change', function() {
+          listarProductos();
         });
       }
     });
   }, 100);
+
+  // Agregar evento change para la descripción
+  $('.descripcion-producto').on('change keyup', function() {
+    listarProductos();
+  });
 
   sumarTotalPrecios();
   listarProductos();

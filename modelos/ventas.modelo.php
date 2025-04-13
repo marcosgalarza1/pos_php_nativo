@@ -122,8 +122,8 @@ class ModeloVentas
 			$idVenta = $conexion->lastInsertId();
 
 			// 2. Preparar el statement para insertar los productos en "detalle_venta"
-			$stmtDetalle = $conexion->prepare("INSERT INTO detalle_venta(id_venta, id_producto, producto, cantidad, precio_venta, precio_compra, subtotal) 
-											   VALUES (:id_venta, :id_producto, :producto, :cantidad, :precio_venta, :precio_compra, :subtotal)");
+			$stmtDetalle = $conexion->prepare("INSERT INTO detalle_venta(id_venta, id_producto, producto, cantidad, precio_venta, precio_compra, subtotal, nota, descripcion) 
+											   VALUES (:id_venta, :id_producto, :producto, :cantidad, :precio_venta, :precio_compra, :subtotal, :nota, :descripcion)");
 
 			// Enlazamos los parámetros estáticos (que no cambian en el bucle)
 			$stmtDetalle->bindParam(":id_venta", $idVenta, PDO::PARAM_INT);
@@ -143,6 +143,8 @@ class ModeloVentas
 				$stmtDetalle->bindValue(":precio_venta", $producto["precio"], PDO::PARAM_STR);
 				$stmtDetalle->bindValue(":precio_compra", $producto["precioCompra"], PDO::PARAM_STR);
 				$stmtDetalle->bindValue(":subtotal", $producto["total"], PDO::PARAM_STR);
+				$stmtDetalle->bindValue(":nota", isset($producto["nota"]) ? $producto["nota"] : null, PDO::PARAM_STR);
+				$stmtDetalle->bindValue(":descripcion", isset($producto["descripcion_adicional"]) ? $producto["descripcion_adicional"] : null, PDO::PARAM_STR);
 
 				// Ejecutar el registro para cada producto
 				if (!$stmtDetalle->execute()) {

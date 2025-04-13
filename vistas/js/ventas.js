@@ -442,17 +442,31 @@ function listarProductos(){
 	var cantidad = $(".nuevaCantidadProducto");
 	var precio = $(".nuevoPrecioProducto");
 	var precioCompra = $(".nuevoPrecioCompraProducto");
+	var nota = $(".nota-producto");
+	var descripcionAdicional = $(".descripcion-producto");
 
 	for(var i = 0; i < descripcion.length; i++){
+		// Obtener los textos de las opciones seleccionadas
+		var notasSeleccionadas = [];
+		if($(nota[i]).length > 0) {
+			$(nota[i]).find("option:selected").each(function() {
+				notasSeleccionadas.push($(this).text());
+			});
+		}
 
-		listaProductos.push({ "id" : $(descripcion[i]).attr("idProducto"), 
-							  "descripcion" : $(descripcion[i]).val(),
-							  "cantidad" : $(cantidad[i]).val(),
-							  "stock" : $(cantidad[i]).attr("nuevoStock"),
-							  "precio" : $(precio[i]).attr("precioReal"),
-							  "precioCompra" : $(precioCompra[i]).attr("precioRealCompra"),
-							  "total" : $(precio[i]).val()})
+		listaProductos.push({ 
+			"id" : $(descripcion[i]).attr("idProducto"), 
+			"descripcion" : $(descripcion[i]).val(),
+			"cantidad" : $(cantidad[i]).val(),
+			"stock" : $(cantidad[i]).attr("nuevoStock"),
+			"precio" : $(precio[i]).attr("precioReal"),
+			"precioCompra" : $(precioCompra[i]).attr("precioRealCompra"),
+			"total" : $(precio[i]).val(),
+			"nota" : notasSeleccionadas.join(",") || null,
+			"descripcion_adicional" : $(descripcionAdicional[i]).val() || null
+		})
 	}
+	console.log(listaProductos);
 	$("#listaProductos").val(JSON.stringify(listaProductos)); 
 }
 
