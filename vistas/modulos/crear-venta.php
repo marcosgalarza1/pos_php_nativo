@@ -594,9 +594,9 @@ if ($_SESSION["perfil"] == "") {
                   <div class="col-md-6">
                     <div class="form-group">
                     <select class="form-control input-sm" id="formaAtencion" name="formaAtencion">
-                        <option value="1">🚚 Para Llevar</option>
-                        <option value="2" selected>🍽️ En Mesa</option>
-                        <option value="3" >🔀 Mixto</option>
+                        <option value="1" selected>🍽️ En Mesa</option>
+                        <option value="2">🚚 Para Llevar</option>
+                        <option value="3">🔀 Mixto</option>
                       </select>
                     </div>
                   </div>
@@ -1049,16 +1049,7 @@ function agregarProductoAVenta(producto) {
         </div>
       </span>`;
   }
-  // Determinar el valor inicial de formaAtencionDetalle basado en formaAtencion general
-  let valorFormaAtencion = "1"; // Por defecto M
-  const formaAtencionGeneral = $("#formaAtencion").val();
-  
-  if(formaAtencionGeneral === "1") { // Para Llevar
-    valorFormaAtencion = "2"; // LL
-  } else if(formaAtencionGeneral === "2") { // En Mesa
-    valorFormaAtencion = "1"; // M
-  }
-
+  var formaAtencionGeneral = $("#formaAtencion").val();
 
   $(".nuevoProducto").append(`
     <div class="row" style="padding:0px 15px">
@@ -1080,9 +1071,9 @@ function agregarProductoAVenta(producto) {
 
       <!-- Columna para tipo de servicio -->
     <div class="col-xs-2" style="padding-right:0px">
-        <select class="form-control input-sm" name="formaAtencionDetalle" id="formaAtencionDetalle" style="padding:2px">
-          <option value="1" ${valorFormaAtencion === "1" ? "selected" : ""}>🍽️ M</option>
-          <option value="2" ${valorFormaAtencion === "2" ? "selected" : ""}>🚚 LL</option>
+        <select class="form-control input-sm" name="formaAtencionDetalle" id="formaAtencionDetalle" style="padding:2px" >
+          <option value="1" ${formaAtencionGeneral === "1" ? "selected" : ""}>🍽️ M</option>
+          <option value="2" ${formaAtencionGeneral === "2" ? "selected" : ""}>🚚 LL</option>
         </select>
       </div>
 
@@ -1111,6 +1102,16 @@ function agregarProductoAVenta(producto) {
         </div>
       </div>
     </div>`);
+
+
+ 
+  // Después de agregar el producto, verificar el estado actual del selector general
+  var nuevoSelector = $(".nuevoProducto").find("select[name='formaAtencionDetalle']").last();
+  
+  if(formaAtencionGeneral !== "3") { // Si no es mixto
+    nuevoSelector.prop("disabled", true); // Deshabilitar el selector del nuevo producto
+  }
+
 
   // Inicializar Select2 para las notas con un timeout para asegurar que el DOM esté listo
   setTimeout(function() {

@@ -31,51 +31,52 @@ var idQuitarProducto = [];
 
 localStorage.removeItem("quitarProducto");
 
+// Función para contar cuántas veces aparece un producto en la venta
+function contarProductoEnVenta(idProducto) {
+    var contador = 0;
+    $(".nuevoProducto .nuevaDescripcionProducto").each(function() {
+        if($(this).attr("idProducto") == idProducto) {
+            contador++;
+        }
+    });
+    return contador;
+}
+
 $(".formularioVenta").on("click", "button.quitarProducto", function(){
+    var idProducto = $(this).attr("idProducto");
+    
+    // Eliminar el elemento
+    $(this).closest('.row').remove();
 
-	$(this).parent().parent().parent().parent().remove();
+    // Contar cuántas veces sigue apareciendo el producto
+    var apariciones = contarProductoEnVenta(idProducto);
+    
+    // Solo habilitar el botón si no quedan apariciones del producto
+    if(apariciones === 0) {
+        // Habilitar el botón en el catálogo
+        $("button.recuperarBoton[idProducto='"+idProducto+"']").removeClass('disabled');
+        $("button.recuperarBoton[idProducto='"+idProducto+"']").attr('disabled', false);
+        
+        // Notificar al catálogo que el producto fue eliminado
+        if(typeof catalogoProductos !== 'undefined') {
+            catalogoProductos.productosAgregados.delete(idProducto);
+            catalogoProductos.renderizarCatalogo();
+        }
+    }
 
-	var idProducto = $(this).attr("idProducto");
-
-	/*=============================================
-	ALMACENAR EN EL LOCALSTORAGE EL ID DEL PRODUCTO A QUITAR
-	=============================================*/
-	if(localStorage.getItem("quitarProducto") == null){
-
-		idQuitarProducto = [];
-	
-	}else{
-
-		idQuitarProducto.concat(localStorage.getItem("quitarProducto"))
-
-	}
-
-	idQuitarProducto.push({"idProducto":idProducto});
-
-	localStorage.setItem("quitarProducto", JSON.stringify(idQuitarProducto));
-
-	$("button.recuperarBoton[idProducto='"+idProducto+"']").removeClass('disabled');
-	$("button.recuperarBoton[idProducto='"+idProducto+"']").attr('disabled', false);
-
-
-	if($(".nuevoProducto").children().length == 0){
-
-		$("#nuevoImpuestoVenta").val(0);
-		$("#nuevoTotalVenta").val(0);
-		$("#totalVenta").val(0);
-	
-		$("#nuevoTotalVenta").attr("total",0);
-		$("#listaProductos").val(""); /* id para validar la eliminacio de los prodcutos de crear venta */
-
-	}else{
-		// SUMAR TOTAL DE PRECIOS
-    	sumarTotalPrecios()
-
+    if($(".nuevoProducto").children().length == 0){
+        $("#nuevoImpuestoVenta").val(0);
+        $("#nuevoTotalVenta").val(0);
+        $("#totalVenta").val(0);
+        $("#nuevoTotalVenta").attr("total",0);
+        $("#listaProductos").val("");
+    } else {
+        // SUMAR TOTAL DE PRECIOS
+        sumarTotalPrecios();
         // AGRUPAR PRODUCTOS EN FORMATO JSON
-        listarProductos()
-	}
-
-})
+        listarProductos();
+    }
+});
 
 
 /*=============================================
@@ -281,29 +282,17 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function(){
 =============================================*/
 
 function sumarTotalPrecios(){
+    var precioItem = $(".nuevoPrecioProducto");
+    var sumaTotalPrecio = 0;
 
-	var precioItem = $(".nuevoPrecioProducto");
-	var arraySumaPrecio = [];  
-
-	for(var i = 0; i < precioItem.length; i++){
-
-		 arraySumaPrecio.push(Number($(precioItem[i]).val()));
-		 
-	}
-
-	function sumaArrayPrecios(total, numero){
-
-		return total + numero;
-
-	}
-
-	var sumaTotalPrecio = arraySumaPrecio.reduce(sumaArrayPrecios);
-	
-	$("#nuevoTotalVenta").val(sumaTotalPrecio);
-	$("#totalVenta").val(sumaTotalPrecio);
-	$("#nuevoTotalVenta").attr("total",sumaTotalPrecio);
-
-
+    // Sumar directamente los valores sin usar reduce
+    precioItem.each(function() {
+        sumaTotalPrecio += Number($(this).val()) || 0;
+    });
+    
+    $("#nuevoTotalVenta").val(sumaTotalPrecio);
+    $("#totalVenta").val(sumaTotalPrecio);
+    $("#nuevoTotalVenta").attr("total", sumaTotalPrecio);
 }
 
 
@@ -668,19 +657,11 @@ $(".daterangepicker.opensleft .range_inputs .cancelBtn").on("click", function(){
 	window.location = "ventas";
 })
 
-
-/*=============================================
-VALIDAR QUE LA FECHA NO PERMITA SELECIONAR UNA FECHA MAYOR A LA ACTUAL
-=============================================*/
-
 /*=============================================
 DUPLICAR PRODUCTO
 =============================================*/
-$(".formularioVenta").on("click", "button[title='Duplicar Producto']", function(){
-    // Obtener el contenedor del producto (la fila completa)
+$(document).on("click", "button[title='Duplicar Producto']", function() {
     var $productoRow = $(this).closest('.row');
-    
-    // Obtener los valores actuales antes de clonar
     var idProducto = $productoRow.find('.nuevaDescripcionProducto').attr('idProducto');
     var stock = parseInt($productoRow.find('.nuevaCantidadProducto').attr('stock'));
     var cantidad = parseInt($productoRow.find('.nuevaCantidadProducto').val());
@@ -695,6 +676,10 @@ $(".formularioVenta").on("click", "button[title='Duplicar Producto']", function(
         });
         return;
     }
+    
+    // Al duplicar, asegurarse de que el botón del catálogo permanezca deshabilitado
+    $("button.recuperarBoton[idProducto='"+idProducto+"']").addClass('disabled');
+    $("button.recuperarBoton[idProducto='"+idProducto+"']").attr('disabled', true);
     
     // Clonar la fila
     var $nuevoProducto = $productoRow.clone();
@@ -750,7 +735,6 @@ CAMBIO EN LA FORMA DE ATENCIÓN INDIVIDUAL
 $(".formularioVenta").on("change", "select[name='formaAtencionDetalle']", function(){
     // Actualizar la lista de productos cuando se cambia la forma de atención individual
     listarProductos();
-	console.log(listaProductos);
 });
 
 /*=============================================
@@ -758,22 +742,44 @@ CAMBIO EN LA FORMA DE ATENCIÓN GENERAL
 =============================================*/
 $("#formaAtencion").change(function() {
     var nuevaFormaAtencion = $(this).val();
+    var selectores = $(".nuevoProducto select[name='formaAtencionDetalle']");
     
     // Actualizar todos los selectores de forma de atención en los productos
-    $(".nuevoProducto select[name='formaAtencionDetalle']").each(function() {
+    selectores.each(function() {
         switch(nuevaFormaAtencion) {
-            case "1": // Para Llevar
-                $(this).val("2"); // LL
+            case "1": // En Mesa
+                $(this).val("1"); 
+                $(this).prop("disabled", true); // Usar prop en lugar de attr en el select directamente
                 break;
-            case "2": // En Mesa
-                $(this).val("1"); // M
+            case "2": // Para Llevar
+                $(this).val("2"); 
+                $(this).prop("disabled", true); // Usar prop en lugar de attr en el select directamente
                 break;
             case "3": // Mixto
-                // No cambiar las selecciones individuales en modo mixto
+                $(this).prop("disabled", false); // Habilitar el selector
                 break;
         }
     });
     
     // Actualizar la lista de productos
     listarProductos();
+});
+
+// Asegurar que el estado inicial sea correcto cuando se carga la página
+$(document).ready(function() {
+    // Obtener el valor inicial del selector general
+    var formaAtencionInicial = $("#formaAtencion").val();
+    
+    // Aplicar el estado inicial a los selectores existentes
+    $(".nuevoProducto select[name='formaAtencionDetalle']").each(function() {
+        if(formaAtencionInicial === "1") { // En Mesa
+            $(this).val("1");
+            $(this).prop("disabled", true);
+        } else if(formaAtencionInicial === "2") { // Para Llevar
+            $(this).val("2");
+            $(this).prop("disabled", true);
+        } else { // Mixto
+            $(this).prop("disabled", false);
+        }
+    });
 });

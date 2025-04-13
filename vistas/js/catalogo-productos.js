@@ -138,7 +138,6 @@ class CatalogoProductos {
       
       const datos = new FormData();
       datos.append("idProducto", idProducto);
-      
       $.ajax({
         url: "ajax/productos.ajax.php",
         method: "POST",
@@ -151,24 +150,6 @@ class CatalogoProductos {
           agregarProductoAVenta(respuesta);
         }
       });
-    });
-
-    // Agregar evento para quitar productos
-    $('.formularioVenta').on('click', '.quitarProducto', (e) => {
-      const idProducto = $(e.currentTarget).attr('idProducto');
-      this.productosAgregados.delete(idProducto); // Eliminar de la lista de agregados
-      this.renderizarCatalogo(); // Actualizar el catálogo
-      if($(".nuevoProducto").children().length == 0){
-        $("#nuevoImpuestoVenta").val(0);
-        $("#nuevoTotalVenta").val(0);
-        $("#totalVenta").val(0);
-        $("#nuevoTotalVenta").attr("total",0);
-        $("#listaProductos").val(""); /* id para validar la eliminacio de los prodcutos de crear venta */
-    
-      }else{
-        sumarTotalPrecios()
-        listarProductos()
-      }
     });
   }
 
@@ -215,6 +196,7 @@ class CatalogoProductos {
       const stock = parseInt(producto.stock, 10) || 0;
       // Verificar si el producto está en la lista de agregados
       const estaAgregado = this.productosAgregados.has(producto.id);
+      
       const btnClass = estaAgregado ? 'btn-agregar disabled' : 
                       (stock > 0 ? 'btn-agregar' : 'btn-agregar disabled');
       

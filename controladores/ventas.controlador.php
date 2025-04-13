@@ -129,10 +129,13 @@ class ControladorVentas{
 
 			switch ($_POST["formaAtencion"]) {
 				case 1:
-					$formaAtencion = "Para Llevar";
+					$formaAtencion = "En Mesa";
 					break;
 				case 2:
-					$formaAtencion = "En Mesa";
+					$formaAtencion = "Para Llevar";
+					break;
+				case 3:
+					$formaAtencion = "Mixto";
 					break;
 				default:
 					$formaAtencion = "No Especificado";
